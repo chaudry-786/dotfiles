@@ -2,8 +2,8 @@ local keymap = vim.api.nvim_set_keymap
 
 keymap("n", "]h", "<Plug>(GitGutterNextHunk)", {})
 keymap("n", "[h", "<Plug>(GitGutterPrevHunk)", {})
-keymap("n", "<leader>ghs", "<Plug>(GitGutterStageHunk)", {})
-keymap("x", "<leader>ghs", "<Plug>(GitGutterStageHunk)", {})
+keymap("n", "<leader>gha", "<Plug>(GitGutterStageHunk)", {})
+keymap("x", "<leader>gha", "<Plug>(GitGutterStageHunk)", {})
 keymap("n", "<leader>ghu", "<Plug>(GitGutterUndoHunk)", {})
 keymap("n", "<leader>ghp", "<Plug>(GitGutterPreviewHunk)", {})
 
