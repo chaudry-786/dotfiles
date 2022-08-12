@@ -64,6 +64,15 @@ setup_tmux() {
     ln -sf ~/dotfiles/tmux/.tmux.conf ~/.tmux.conf
 }
 
+link_kitty() {
+    echo "==================================="
+    echo "Linking kitty config"
+    echo "==================================="
+
+    touch ~/.config/kitty/kitty.conf
+    ln -sf ~/dotfiles/kitty/kitty.conf ~/.config/kitty/kitty.conf
+}
+
 setup_vim(){
     echo "==================================="
     echo "Downlading plug manager"
@@ -152,6 +161,7 @@ fi
 install_packages "$install_prefix"
 setup_vim
 setup_tmux
+link_kitty
 install_zsh
 download_and_setup_powerleveltheme
 install_font $machine
