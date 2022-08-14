@@ -7,12 +7,12 @@ require('lualine').setup({
                 component_separators = { left = "", right = "" } },
             { "filename", padding = { left = 1 }, color = { gui = "bold,italic", fg = "#ebdbb2" } }
         },
-        lualine_x = { "encoding", "fileformat" },
+        lualine_x = { { "aerial", padding = { right = 2, left = 2 }, dense = true, } },
         lualine_y = {
             {
                 "diagnostics",
                 sources = { "coc" },
-                sections = { "hint", "warn", "error"},
+                sections = { "hint", "warn", "error" },
                 symbols = { error = " " },
                 always_visible = true -- Show diagnostics even if there are none.
             }
