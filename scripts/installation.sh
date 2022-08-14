@@ -62,6 +62,9 @@ setup_tmux() {
 
     touch ~/.tmux.conf
     ln -sf ~/dotfiles/tmux/.tmux.conf ~/.tmux.conf
+
+    # pluging to display cpu and gpu usage in status bar
+    git clone https://github.com/tmux-plugins/tmux-cpu ~/tmux-cpu
 }
 
 link_kitty() {
