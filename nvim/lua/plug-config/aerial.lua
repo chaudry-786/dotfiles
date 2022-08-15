@@ -11,9 +11,7 @@ require('aerial').setup({
 
 -- toggle | also disables fade plugin
 vim.api.nvim_set_keymap("n", "<leader>to", ":AerialToggle <CR>", {})
-vim.api.nvim_command("hi link AerialLine CursorLineNr")
-vim.highlight.create("AerialLine", { gui = "bold", guibg = "#32302f" })
--- cterm=bold gui=bold guifg=#665c54
+vim.highlight.create("AerialLine", { gui = "bold", guibg = "#3d3c3b" })
 
 -- Colour for Icons, same as cocPopMenu
 local symbolKind = {

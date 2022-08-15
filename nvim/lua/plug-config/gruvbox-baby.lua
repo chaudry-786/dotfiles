@@ -6,5 +6,5 @@ vim.g.gruvbox_baby_background_color = "dark"
 vim.g.gruvbox_baby_string_style = "italic"
 
 vim.cmd [[colorscheme gruvbox-baby]]
-vim.highlight.create("Folded", { guifg = "#d65d0e", guibg = "#171717", gui = "italic,bold", ctermfg = 45,
+vim.highlight.create("Folded", { guifg = "#d65d0e", gui = "italic,bold", ctermfg = 45,
     cterm = "bold,underline" })
