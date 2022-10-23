@@ -22,7 +22,7 @@ Plug("unblevable/quick-scope")                                  -- Highlights ch
 Plug("christoomey/vim-tmux-navigator")                          -- Easy navigation between tmux panes and vim windows
 
 -- Text objects
-Plug("tpope/vim-surround")                                      -- Easy text-object surrounding plugin
+Plug("kylechui/nvim-surround")                                  -- Easy text-object surrounding plugin
 
 -- Git
 Plug("tpope/vim-fugitive")                                      -- Git integration
@@ -64,6 +64,7 @@ require("plug-config/hop")                                      -- hop.vim
 require("plug-config/fzf")                                      -- fzf | fuzzy search finder
 require("plug-config/vimspector")                               -- vimspector | debuggging
 require('plug-config/quickScope')                               -- quick-scope
+require("plug-config/nvim-surround")                            -- nvim-surround
 require('plug-config/whichKey')                                 -- which-key
 require("plug-config/coc")                                      -- coc.vim
 
