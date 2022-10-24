@@ -11,6 +11,9 @@ Plug("PeterRincker/vim-searchlight")                            -- Under cursor 
 Plug("lukas-reineke/indent-blankline.nvim")                     -- Indent guide
 Plug("karb94/neoscroll.nvim")                                   -- Smooth scroll
 Plug("mhinz/vim-startify")                                      -- Startup screen
+Plug("folke/noice.nvim")                                        -- UI for commandline, messages and popupmenu
+Plug("MunifTanjim/nui.nvim")                                    -- required for noice.nvim
+Plug("rcarriga/nvim-notify")                                    -- required for noice.nvim
 
 -- Autocompletion And IDE Features
 Plug("neoclide/coc.nvim", { branch = 'release' })               -- Conquer of Completion
@@ -65,6 +68,7 @@ require("plug-config/fzf")                                      -- fzf | fuzzy s
 require("plug-config/vimspector")                               -- vimspector | debuggging
 require('plug-config/quickScope')                               -- quick-scope
 require("plug-config/nvim-surround")                            -- nvim-surround
+require("plug-config/noice")                                    -- noice
 require('plug-config/whichKey')                                 -- which-key
 require("plug-config/coc")                                      -- coc.vim
 
