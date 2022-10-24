@@ -1,9 +1,10 @@
-vim.highlight.create("NormalFloat", { guifg = "#ebdbb2", guibg = "#282828" })
+vim.api.nvim_set_hl(0, "NormalFloat", { fg = "#ebdbb2", bg = "#282828" })
 -- FloatBorder
-vim.highlight.create("FloatBorder", { guifg = "#363630", gui = "bold" })
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#363630", bold = true })
 
--- visually highlighted text colour
-vim.highlight.create("Visual", { guibg = "#6e1515" })
+-- visually highligh0,ted text colour
+vim.api.nvim_set_hl(0, "Visual", { bg = "#6e1515" })
 
--- for word under cursor | "PeterRincker/vim-searchlight"
-vim.highlight.create("Searchlight", { guifg = "#202020", guibg = "#cc241d" })
+-- for word under cu0,rsor | "PeterRincker/vim-searchlight"
+vim.api.nvim_set_hl(0, "Searchlight", { fg = "#202020", bg = "#cc241d" })
+vim.api.nvim_set_hl(0, "Searchlight", { fg = "#202020", bg = "#cc241d" })

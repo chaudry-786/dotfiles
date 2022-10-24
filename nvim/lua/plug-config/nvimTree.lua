@@ -52,8 +52,8 @@ vim.api.nvim_set_keymap("n", "<C-n>", ":NvimTreeToggle<CR>", { silent = true })
 
 -- highlights
 -- colours for git signs
-vim.highlight.create("NvimTreeGitDirty", { guifg = "#26A269" })
-vim.highlight.create("NvimTreeGitStaged", { guifg = "#26A269" })
+vim.api.nvim_set_hl(0,"NvimTreeGitDirty", { fg = "#26A269" })
+vim.api.nvim_set_hl(0,"NvimTreeGitStaged", { fg = "#26A269" })
 
 -- cursorline
 vim.api.nvim_create_autocmd("BufEnter", {

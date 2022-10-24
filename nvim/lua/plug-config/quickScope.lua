@@ -2,7 +2,5 @@
 vim.g["qs_highlight_on_keys"] = { 'f', 'F', 't', 'T' }
 
 -- highlights
-vim.highlight.create("QuickScopePrimary", { guifg = '#00dfff', gui = "bold,underline", ctermfg = 45,
-    cterm = "bold,underline" })
-vim.highlight.create("QuickScopeSecondary", { guifg = '#afff5f', gui = "bold,underline", ctermfg = 155,
-    cterm = "bold,underline" })
+vim.api.nvim_set_hl(0, "QuickScopePrimary", { fg = '#00dfff', bold = true, underline = true })
+vim.api.nvim_set_hl(0, "QuickScopeSecondary", { fg = '#afff5f', bold = true, underline = true })

@@ -3,9 +3,9 @@ vim.g["gruvbox_sign_column"] = "bg0"
 vim.g["gruvbox_italic"] = 1
 vim.g["gruvbox_italicize_strings"] = 1
 vim.cmd [[colorscheme gruvbox]]
-vim.highlight.create("CocHintSign", { guifg = "#f5e342" }) --Colour for coc hintSign
+vim.api.nvim_set_hl(0, "CocHintSign", { fg = "#f5e342" }) --Colour for coc hintSign
 -- fold colour
-vim.highlight.create("Folded", { guifg = "#d65d0e", guibg = "#171717", gui = "italic,bold", ctermfg = 45,
+vim.api.nvim_set_hl(0, "Folded", { fg = "#d65d0e", bg = "#171717", italic = true, bold = true, ctermfg = 45,
     cterm = "bold,underline" })
 -- " For even darker background
 -- "cd ~/.vim/plugged/gruvbox/colors/gruvbox.vim let s:gb.dark0_hard  = ['#171717', 233]     " 29-32-33

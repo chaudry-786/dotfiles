@@ -17,13 +17,13 @@ vim.g["coc_global_extensions"] = {
 
 -- highlight
 -- for custom pop menu
-vim.highlight.create("CocCustomPopup", { guifg = "#ebdbb2", guibg = "#282828" })
+vim.api.nvim_set_hl(0, "CocCustomPopup", { fg = "#ebdbb2", bg = "#282828" })
 -- border
-vim.highlight.create("CocCustomPopupBoder", { guifg = "#5F5F5F", gui = "bold" })
+vim.api.nvim_set_hl(0, "CocCustomPopupBoder", { fg = "#5F5F5F", bold = true })
 -- selected row
-vim.highlight.create("CocMenuSel", { guibg = "#3c3836", gui = "bold" })
+vim.api.nvim_set_hl(0, "CocMenuSel", { bg = "#3c3836", bold = true })
 -- matched_text
-vim.highlight.create("CocSearch", { guifg = "#fabd2f" })
+vim.api.nvim_set_hl(0, "CocSearch", { fg = "#fabd2f" })
 
 -- AutoCmds
 -- highlight the symbol and its references when holding the cursor.
