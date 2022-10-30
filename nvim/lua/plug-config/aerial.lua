@@ -1,5 +1,7 @@
 require('aerial').setup({
-    default_direction = "right",
+    layout = {
+        default_direction = "right"
+    },
     nerd_font = true,
     show_guides = true,
     icons = {

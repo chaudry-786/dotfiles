@@ -14,6 +14,7 @@
             "javascript-react"
         ]
     },
+    "snippets.loadFromExtensions": false, // do not load snippets from coc extensions
     "session.saveOnVimLeave": false,
     "signature.target": "echo",
     "coc.preferences.formatOnSaveFiletypes": [

@@ -1,3 +1,4 @@
+; extends
 ; Module docstring
 (module . (expression_statement (string) @comment))
 

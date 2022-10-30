@@ -24,6 +24,8 @@ vim.api.nvim_set_hl(0, "CocCustomPopupBoder", { fg = "#5F5F5F", bold = true })
 vim.api.nvim_set_hl(0, "CocMenuSel", { bg = "#3c3836", bold = true })
 -- matched_text
 vim.api.nvim_set_hl(0, "CocSearch", { fg = "#fabd2f" })
+-- unused code
+vim.api.nvim_set_hl(0, "CocUnusedHighlight", {underline = true})
 
 -- AutoCmds
 -- highlight the symbol and its references when holding the cursor.
