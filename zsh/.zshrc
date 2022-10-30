@@ -19,6 +19,7 @@ alias dot="cd ~/dotfiles"
 alias notes="cd ~/Desktop/notes"
 alias testP="cd ~/Desktop/test/python"
 alias testJ="cd ~/Desktop/test/java"
+alias testC="cd ~/Desktop/test/c"
 alias testJS="cd ~/Desktop/test/JS"
 
 # py

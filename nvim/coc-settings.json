@@ -29,12 +29,12 @@
         "java",
         "javascriptreact"
     ],
+    "inlayHint.enable": false,
     // python
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
     "python.formatting.provider": "black",
     "python.formatting.blackPath": "~/vim_venv/bin/black",
-    "pyright.inlayHints.enable": false,
     // Lua
     "sumneko-lua.enableNvimLuaDev": true,
     "sumneko-lua.checkUpdate": false,
