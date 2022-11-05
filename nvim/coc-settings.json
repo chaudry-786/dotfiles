@@ -15,6 +15,7 @@
         ]
     },
     "snippets.loadFromExtensions": false, // do not load snippets from coc extensions
+    "snippets.snipmate.enable": false,
     "session.saveOnVimLeave": false,
     "signature.target": "echo",
     "coc.preferences.formatOnSaveFiletypes": [

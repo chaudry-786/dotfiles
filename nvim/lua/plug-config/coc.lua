@@ -26,7 +26,7 @@ vim.api.nvim_set_hl(0, "CocMenuSel", { bg = "#3c3836", bold = true })
 -- matched_text
 vim.api.nvim_set_hl(0, "CocSearch", { fg = "#fabd2f" })
 -- unused code
-vim.api.nvim_set_hl(0, "CocUnusedHighlight", {underline = true})
+vim.api.nvim_set_hl(0, "CocUnusedHighlight", { underline = true })
 
 -- AutoCmds
 -- highlight the symbol and its references when holding the cursor.
@@ -37,8 +37,6 @@ vim.api.nvim_create_autocmd("CursorHold", { pattern = '*', command = [[call CocA
 keymap("n", "<leader>ta", ":call CocAction('diagnosticToggle')<CR>", {})
 
 -- use CTRL-J and K to move on snippets and auto completion
-vim.g["coc_snippet_next"] = ""
-vim.g["coc_snippet_prev"] = ""
 keymap(
     "i",
     "<c-j>",
@@ -64,6 +62,8 @@ keymap(
 
 -- use <c-space> to trigger completion.
 keymap("i", "<c-space>", [[coc#refresh()]], expr_opts)
+-- expand snippet
+keymap("i", "<c-l>", [[<Plug>(coc-snippets-expand-jump)]], {})
 
 -- navigate diagnostic
 keymap("n", "[a", "<Plug>(coc-diagnostic-prev)", { silent = true })
