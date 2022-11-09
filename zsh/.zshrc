@@ -28,6 +28,10 @@ alias csrc="python3 -m venv venv"
 
 # programs
 alias v="nvim"
+# open all git changed files
+alias vd='nvim $(git diff --name-only)'
+# select diff files to open
+alias vds='nvim $(git diff --name-only | fzf -m)'
 
 # others
 alias fp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"

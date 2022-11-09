@@ -70,3 +70,4 @@ set.clipboard = "unnamedplus"                           --copy to system clipboa
 set.splitright = true                                   --default vertical split to right
 set.splitbelow = true                                   --default horizental split to below
 
+set.mouse = ""                                          --disable mouse

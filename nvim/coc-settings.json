@@ -16,6 +16,7 @@
     },
     "snippets.loadFromExtensions": false, // do not load snippets from coc extensions
     "snippets.snipmate.enable": false,
+    "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/",
     "session.saveOnVimLeave": false,
     "signature.target": "echo",
     "coc.preferences.formatOnSaveFiletypes": [
@@ -33,6 +34,7 @@
     "inlayHint.enable": false,
     // python
     "python.linting.enabled": true,
+    "python.analysis.typeCheckingMode": "off",
     "python.linting.pylintEnabled": true,
     "python.formatting.provider": "black",
     "python.formatting.blackPath": "~/vim_venv/bin/black",

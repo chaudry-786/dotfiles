@@ -35,6 +35,7 @@ keymap("n", "<leader>-", ":split<CR>", opts)
 -- edit common files quickly
 keymap("n", "<leader>ev", ":edit $MYVIMRC<cr>", opts)
 keymap("n", "<leader>ez", ":edit ~/.zshrc<cr>", opts)
+keymap("n", "<leader>es", ":CocCommand snippets.editSnippets<cr>", opts)
 -- TODO: make sure this reloads lua modules
 keymap("n", "<leader>so", ":so $MYVIMRC <cr> | :echom 'Loaded' <cr>", opts)
 
