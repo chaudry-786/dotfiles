@@ -44,6 +44,7 @@ Plug("junegunn/fzf.vim")                                        -- Fuzzy finder
 Plug("stevearc/aerial.nvim")                                    -- Code outline
 Plug("jiangmiao/auto-pairs")                                    -- Auto pairs
 Plug("folke/which-key.nvim")                                    -- Which key
+Plug("tpope/vim-obsession")                                     -- Session management plugin
 vim.call("plug#end")
 
 

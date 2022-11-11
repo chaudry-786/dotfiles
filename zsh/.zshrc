@@ -15,6 +15,7 @@ export EDITOR='nvim'
 alias up="cd .."
 alias des="cd ~/Desktop"
 alias dev="cd ~/Desktop/development"
+alias dow="cd ~/Downloads"
 alias dot="cd ~/dotfiles"
 alias notes="cd ~/Desktop/notes"
 alias testP="cd ~/Desktop/test/python"
@@ -25,9 +26,12 @@ alias testJS="cd ~/Desktop/test/JS"
 # py
 alias src="source venv/bin/activate"
 alias csrc="python3 -m venv venv"
+alias dsrc="rm -rf venv"
 
 # programs
 alias v="nvim"
+alias vs="nvim -S Session.vim"
+
 # open all git changed files
 alias vd='nvim $(git diff --name-only)'
 # select diff files to open
@@ -36,6 +40,8 @@ alias vds='nvim $(git diff --name-only | fzf -m)'
 # others
 alias fp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 alias cat="bat"
+alias c="clear"
+alias e="exit"
 
 # Better colour for directory in ls
 LS_COLORS=$LS_COLORS:'di=1;36:' ; export LS_COLORS

@@ -8,4 +8,4 @@ vim.g.gruvbox_baby_string_style = "italic"
 vim.g.gruvbox_baby_color_overrides = {soft_yellow = "#fe8019"}
 
 vim.cmd [[colorscheme gruvbox-baby]]
-vim.api.nvim_set_hl(0, "Folded", { fg = "#d65d0e", italic = true, bold = true })
+vim.api.nvim_set_hl(0, "Folded", { fg = "#665c54", italic = true, bold = true })

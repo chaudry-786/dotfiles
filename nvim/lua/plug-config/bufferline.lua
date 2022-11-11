@@ -3,7 +3,7 @@ require("bufferline").setup {
         show_buffer_close_icons = false,
         show_close_icon = false,
         separator_style = "thick",
-        numbers = "ordinal" -- or "buffer_id"
+        numbers = "buffer_id" -- or "ordinal"
         -- diagnostics = "coc"
     }
 }
