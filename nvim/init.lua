@@ -34,6 +34,7 @@ Plug("airblade/vim-gitgutter")                                  -- Show git chan
 -- TreeSitter
 Plug("nvim-treesitter/nvim-treesitter", { ['do'] = ':TSUpdate' }) -- Syntax tree plugin
 Plug("nvim-treesitter/nvim-treesitter-textobjects")             -- Text objects based on treesitter
+Plug("nvim-treesitter/nvim-treesitter-context")                 -- Context pinned on top
 
 -- General
 Plug("tpope/vim-commentary")                                    -- Comment easily
