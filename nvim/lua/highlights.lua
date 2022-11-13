@@ -7,4 +7,3 @@ vim.api.nvim_set_hl(0, "Visual", { bg = "#6e1515" })
 
 -- for word under cu0,rsor | "PeterRincker/vim-searchlight"
 vim.api.nvim_set_hl(0, "Searchlight", { fg = "#202020", bg = "#cc241d" })
-vim.api.nvim_set_hl(0, "Searchlight", { fg = "#202020", bg = "#cc241d" })
