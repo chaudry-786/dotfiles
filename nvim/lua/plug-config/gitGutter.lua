@@ -14,4 +14,4 @@ keymap("x", "ih", "<Plug>(GitGutterTextObjectInnerVisual)", {})
 keymap("x", "ah", "<Plug>(GitGutterTextObjectOuterVisual)", {})
 
 -- toggle
-keymap("n", "tg", ":GitGutterToggle<CR>", {})
+keymap("n", "<leader>tg", ":GitGutterToggle<CR>", {})

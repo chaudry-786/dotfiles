@@ -9,6 +9,7 @@ keymap("n", "<leader>gc", ":Gread<CR>", opts)
 keymap("n", "<leader>ga", ":Gwrite<CR>", opts)
 keymap("n", "<leader>gd", ":G diff<CR>", opts)
 keymap("n", "<leader>gds", ":G diff --staged<CR>", opts)
+keymap("n", "<leader>gb", ":G blame<CR>", opts)
 -- " Notes: useful commands
 -- " Git blame       - Open git blame on left, press o open the commit
 -- " Git difftool    - Open diff for current buffer in quickfix list

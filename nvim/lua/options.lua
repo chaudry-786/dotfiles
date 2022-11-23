@@ -58,7 +58,8 @@ function _G.MyFoldText()
         "  " .. foldLineCount .. " lines: " .. string.rep(" ", 2 - string.len(tostring(foldPercInBuf))) .. foldPercInBuf .. "%"
 end
 set.foldtext      = 'v:lua.MyFoldText()'
-vim.opt.fillchars = { fold = " " }
+vim.opt.fillchars = { fold = " ", foldopen = "", foldclose = "", foldsep = " " }
+set.foldcolumn = "1"
 
 --4 spaces with tab
 set.tabstop = 4                                         --number of spaces that a <Tab> in the file counts for
