@@ -29,7 +29,7 @@ Plug("kylechui/nvim-surround")                                  -- Easy text-obj
 
 -- Git
 Plug("tpope/vim-fugitive")                                      -- Git integration
-Plug("airblade/vim-gitgutter")                                  -- Show git changes on left
+Plug("lewis6991/gitsigns.nvim")                                 -- Git signs, hunk actions and text objects
 
 -- TreeSitter
 Plug("nvim-treesitter/nvim-treesitter", { ["do"] = ":TSUpdate" }) -- Syntax tree plugin
@@ -67,7 +67,7 @@ require("plug-config/lualine")                                  -- lualine.nvim 
 require("plug-config/bufferline")                               -- bufferline.nvim
 require("plug-config/treeSitter")                               -- tree-sitter
 require("plug-config/gitFugitive")                              -- vim-fugitive
-require("plug-config/gitGutter")                                -- vim-gitgutter
+require("plug-config/gitSigns")                                 -- vim-gitgutter
 require("plug-config/aerial")                                   -- aerial | code outline
 require("plug-config/hop")                                      -- hop.vim
 require("plug-config/fzf")                                      -- fzf | fuzzy search finder
