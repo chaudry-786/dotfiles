@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd("BufWritePre", { pattern = '*', callback = TrimWhite
 
 -- briefly highlight yanked text
 -- move cursor (invoking CusorMoved) so coc highlight briefly goes away for clear highlight
-vim.api.nvim_set_keymap("n", "y", "lhy", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "y", "lhy", { noremap = true, silent = true })
 vim.api.nvim_set_hl(0, "YankHighlight", { bg = "#34495E" })
 vim.api.nvim_create_autocmd("TextYankPost",
     { pattern = '*', callback = function() vim.highlight.on_yank({ timeout = 300, higroup = "YankHighlight" }) end })

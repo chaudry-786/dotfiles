@@ -10,7 +10,7 @@ Plug("akinsho/bufferline.nvim", { tag = "v2.*" })               -- Bufferline
 Plug("PeterRincker/vim-searchlight")                            -- Under cursor highlighted text in different colour
 Plug("lukas-reineke/indent-blankline.nvim")                     -- Indent guide
 Plug("karb94/neoscroll.nvim")                                   -- Smooth scroll
-Plug("mhinz/vim-startify")                                      -- Startup screen
+Plug("goolord/alpha-nvim")                                      -- Startup screen
 Plug("folke/noice.nvim")                                        -- UI for commandline, messages and popupmenu
 Plug("MunifTanjim/nui.nvim")                                    -- required for noice.nvim
 Plug("rcarriga/nvim-notify")                                    -- required for noice.nvim
@@ -77,6 +77,7 @@ require("plug-config/nvim-surround")                            -- nvim-surround
 require("plug-config/noice")                                    -- noice
 require("plug-config/whichKey")                                 -- which-key
 require("plug-config/sql-dadbod")                               -- sql-vim-dadbod
+require("plug-config/alpha")                                    -- startup screen
 require("plug-config/coc")                                      -- coc.vim
 
 -- vim-commentary

@@ -14,7 +14,8 @@ vim.g["coc_global_extensions"] = {
     "coc-sh",
     "coc-sumneko-lua",
     "coc-clangd",
-    "coc-db"
+    "coc-db",
+    "coc-sql"
 }
 
 -- highlight

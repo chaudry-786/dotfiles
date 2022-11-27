@@ -29,9 +29,13 @@
         "json",
         "python",
         "java",
-        "javascriptreact"
+        "javascriptreact",
+        "sql"
     ],
     "inlayHint.enable": false,
+    "sql.formatOptions": {
+        "tabWidth": 4
+    },
     // python
     "python.linting.enabled": true,
     "python.analysis.typeCheckingMode": "off",
