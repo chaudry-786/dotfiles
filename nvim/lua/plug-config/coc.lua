@@ -15,7 +15,9 @@ vim.g["coc_global_extensions"] = {
     "coc-sumneko-lua",
     "coc-clangd",
     "coc-db",
-    "coc-sql"
+    "coc-sql",
+    "@yaegassy/coc-tailwindcss3",
+    "coc-marketplace"
 }
 
 -- highlight

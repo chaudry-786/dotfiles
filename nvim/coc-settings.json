@@ -11,7 +11,7 @@
     "snippets.extends": {
         "javascript": [
             "html",
-            "javascript-react"
+            "javascriptreact"
         ]
     },
     "snippets.loadFromExtensions": false, // do not load snippets from coc extensions
