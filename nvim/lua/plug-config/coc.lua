@@ -4,20 +4,21 @@ local opts = { noremap = true, silent = true }
 
 -- Extensions
 vim.g["coc_global_extensions"] = {
-    "coc-json",
-    "coc-pyright",
-    "coc-java",
-    "coc-snippets",
-    "coc-tsserver",
-    "coc-vimlsp",
-    "coc-lists",
-    "coc-sh",
-    "coc-sumneko-lua",
-    "coc-clangd",
-    "coc-db",
-    "coc-sql",
-    "@yaegassy/coc-tailwindcss3",
-    "coc-marketplace"
+    "coc-json",                     -- LSP for JSON
+    "coc-pyright",                  -- LSP for python
+    "coc-java",                     -- LSP for java
+    "coc-tsserver",                 -- LSP for typescript and javascript
+    "coc-eslint",                   -- Linter for typescript and javascript
+    "@yaegassy/coc-tailwindcss3",   -- LSP for tailwindcss3
+    "coc-sh",                       -- LSP for bash
+    "coc-sumneko-lua",              -- LSP for lua, neovim autocompletion included
+    "coc-clangd",                   -- LSP for c
+    "coc-db",                       -- Database auto completion for vim-dadbod
+    "coc-sql",                      -- LSP for .sql files
+    "coc-vimlsp",                   -- LSP for vimscript
+    "coc-lists",                    -- Lists e.g buffers, symbols
+    "coc-snippets",                 -- Snippet support
+    "coc-marketplace",              -- Browse coc extensions
 }
 
 -- highlight
