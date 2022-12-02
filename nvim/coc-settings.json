@@ -9,10 +9,7 @@
     "diagnostic.virtualText": true,
     "diagnostic.virtualTextPrefix": "        ",
     "snippets.extends": {
-        "javascript": [
-            "html",
-            "javascriptreact"
-        ]
+        "javascript": ["html", "javascriptreact"]
     },
     "snippets.loadFromExtensions": false, // do not load snippets from coc extensions
     "snippets.snipmate.enable": false,
@@ -48,6 +45,7 @@
     "Lua.telemetry.enable": false,
     "Lua.window.statusBar": false,
     "Lua.hint.enable": false,
+    "prettier.tabWidth": 4,
     "list.source.files.excludePatterns": [
         "**/venv/**",
         "**/node_modules/**",
@@ -55,21 +53,12 @@
         "**/node_modules/**/.*/**",
         "**/.git/**"
     ],
-    "list.source.files.args": [
-        "--hidden",
-        "--files"
-    ],
-    "list.source.grep.excludePatterns": [
-        "**/venv/**",
-        "**/.git/**"
-    ],
+    "list.source.files.args": ["--hidden", "--files"],
+    "list.source.grep.excludePatterns": ["**/venv/**", "**/.git/**"],
     //suggest
     "coc.source.around.enable": false, // disables buffer, file and around completion
     "suggest.noselect": true,
-    "suggest.formatItems": [
-        "abbr",
-        "kind"
-    ],
+    "suggest.formatItems": ["abbr", "kind"],
     "suggest.floatConfig": {
         "border": true,
         "rounded": true,

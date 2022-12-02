@@ -56,6 +56,9 @@ require 'nvim-treesitter.configs'.setup {
             },
         },
     },
+
+    -- Auto tag for typescript, javascript
+    autotag = { enable = true }
 }
 
 -- context

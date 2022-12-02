@@ -19,6 +19,7 @@ vim.g["coc_global_extensions"] = {
     "coc-lists",                    -- Lists e.g buffers, symbols
     "coc-snippets",                 -- Snippet support
     "coc-marketplace",              -- Browse coc extensions
+    "coc-prettier",                 -- Formatter for javascript, typescript and JSON
 }
 
 -- highlight

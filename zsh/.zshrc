@@ -43,6 +43,9 @@ alias cat="bat"
 alias c="clear"
 alias e="exit"
 
+# environment variables
+ANDROID_HOME=$HOME/Android/Sdk
+
 # Better colour for directory in ls
 LS_COLORS=$LS_COLORS:'di=1;36:' ; export LS_COLORS
 # style for fzf-tab ls

@@ -48,6 +48,7 @@ Plug("junegunn/fzf", { ["do"] = vim.fn["fzf#install"] })        -- Installs FZF
 Plug("junegunn/fzf.vim")                                        -- Fuzzy finder
 Plug("stevearc/aerial.nvim")                                    -- Code outline
 Plug("jiangmiao/auto-pairs")                                    -- Auto pairs
+Plug("windwp/nvim-ts-autotag")                                  -- Auto tag for typescript, javascript
 Plug("folke/which-key.nvim")                                    -- Which key
 Plug("tpope/vim-obsession")                                     -- Session management plugin
 vim.call("plug#end")
