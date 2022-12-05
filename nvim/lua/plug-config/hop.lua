@@ -4,10 +4,10 @@ require 'hop'.setup()
 
 -- key-mappings
 keymap("", "s", "<cmd>HopChar1<CR>", opts)
-keymap("", "<leader>k", "<cmd>HopLineBC<CR>", opts)
-keymap("", "<leader>j", "<cmd>HopLineAC<CR>", opts)
-keymap("", "<leader><leader>k", "<cmd>HopWordBC<CR>", opts)
-keymap("", "<leader><leader>j", "<cmd>HopWordAC<CR>", opts)
+keymap("", "<leader><leader>k", "<cmd>HopLineBC<CR>", opts)
+keymap("", "<leader><leader>j", "<cmd>HopLineAC<CR>", opts)
+keymap("", "<leader>k", "<cmd>HopWordBC<CR>", opts)
+keymap("", "<leader>j", "<cmd>HopWordAC<CR>", opts)
 
 -- highlights
 vim.api.nvim_set_hl(0, "HopNextKey", { bold=true, fg = "#ff007c", bg = "None" })
