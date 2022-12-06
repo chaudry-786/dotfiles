@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Exit on error
+set -e
+
 what_os(){
     unameOut="$(uname -s)"
     case "${unameOut}" in
@@ -19,7 +23,6 @@ install_homebrew(){
         echo "==================================="
         ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
-    brew install reattach-to-user-namespace
 }
 
 install_packages(){
@@ -33,18 +36,26 @@ install_packages(){
     echo "NPM: treesitter"
     echo "silverSearcher"
     echo "==================================="
-    $1 install neovim
-    $1 install nodejs
+    $1 install curl
     $1 install tmux
     $1 install git
     $1 install ripgrep
-    sudo npm -g install tree-sitter-cli
-    sudo npm -g install tree-sitter
     if [ "$machine" == "Mac" ]
     then
-        brew install the_silver_searcher
+        $1 install the_silver_searcher
+        $1 install reattach-to-user-namespace
+        $1 install nodejs
+        $1 install neovim
     elif [[ "$machine" == "Linux" ]]; then
-        apt-get install silversearcher-ag
+        $1 install silversearcher-ag
+        $1 install xclip
+        # node 19.x https://github.com/nodesource/distributions
+        curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash - &&\
+        sudo apt-get install -y nodejs
+        # latest neovim nightly
+        curl -L -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
+        sudo apt install -y ./nvim-linux64.deb
+        rm nvim-linux64.deb
     fi
 }
 
@@ -53,17 +64,12 @@ setup_tmux() {
     echo "Linking tmux config"
     echo "==================================="
 
-    if [ "$machine" == "Mac" ]
-    then
-        echo "Installing reattach-to-user-namespace"
-        brew install reattach-to-user-namespace
-    fi
     cd ~/
-
     touch ~/.tmux.conf
     ln -sf ~/dotfiles/tmux/.tmux.conf ~/.tmux.conf
 
-    # pluging to display cpu and gpu usage in status bar
+    # plugin to display cpu and gpu usage in status bar
+    rm -rf ~/tmux-cpu
     git clone https://github.com/tmux-plugins/tmux-cpu ~/tmux-cpu
 }
 
@@ -72,7 +78,7 @@ link_kitty() {
     echo "Linking kitty config"
     echo "==================================="
 
-    touch ~/.config/kitty/kitty.conf
+    mkdir -p ~/.config/kitty
     ln -sf ~/dotfiles/kitty/kitty.conf ~/.config/kitty/kitty.conf
 }
 
@@ -86,6 +92,7 @@ setup_vim(){
     echo "==================================="
     echo "Create python3 venv with necessary pacakges"
     echo "==================================="
+    #if venv module not installed; on linux run "apt install python3-venv"
     rm -rf ~/vim_venv
     python3 -m venv ~/vim_venv
     source ~/vim_venv/bin/activate
@@ -94,7 +101,7 @@ setup_vim(){
     echo "==================================="
     echo "Creating Symlinks for Vim"
     echo "==================================="
-    ln -s ~/dotfiles/nvim ~/.config/nvim
+    ln -sfn ~/dotfiles/nvim ~/.config/nvim
 
     echo "==================================="
     echo "Vim and neovim setup complete"
@@ -120,10 +127,12 @@ install_zsh() {
     # auto suggestion plugin
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     # fzf download and setup
+    rm -rf ~/.fzf
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     yes | ~/.fzf/install
 
     #fzf-tab (replaces zsh default tab completion with fuzzy finder)
+    rm -rf ~/.fzf-tab
     git clone https://github.com/Aloxaf/fzf-tab.git ~/.fzf-tab
     #sourced in ~/.zshrc
 
@@ -140,7 +149,8 @@ download_and_setup_powerleveltheme(){
 
 install_font(){
     # insatll jetBrainsMono Nerd Font
-    cd ~ && git clone --filter=blob:none --sparse git@github.com:ryanoasis/nerd-fonts
+    cd ~ && rm -rf nerd-fonts
+    git clone --filter=blob:none --sparse https://www.github.com/ryanoasis/nerd-fonts
     cd nerd-fonts
     git sparse-checkout add patched-fonts/JetBrainsMono install.sh
     ./install.sh JetBrainsMono
@@ -165,9 +175,12 @@ install_packages "$install_prefix"
 setup_vim
 setup_tmux
 link_kitty
-install_zsh
 download_and_setup_powerleveltheme
 install_font $machine
+install_zsh
 
 # link gitignore
 ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
+
+GREEN='\033[0;32m'
+echo -e "${GREEN} SUCCESSFULLY installed all packages and set symbolic links"

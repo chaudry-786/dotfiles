@@ -1,13 +1,12 @@
 Ubuntu Extensions
 1) APP store download gnome extensions
 2) https://extensions.gnome.org/ install web browser extension to easily instll extensions
+    Option should pop up in gnome site to install extension
+    Also Install "sudo apt-get install chrome-gnome-shell" for native host connection
 3) Installed extensions:
     https://extensions.gnome.org/extension/307/dash-to-dock/
     https://extensions.gnome.org/extension/2141/horizontal-workspaces/
-    https://extensions.gnome.org/extension/723/pixel-saver/
-        To remove title bar from terminal
-        exec: gsettings set org.gnome.Terminal.Legacy.Settings headerbar false
-        preference > [untick] Show menu bar
+    https://extensions.gnome.org/extension/1287/unite/
 
 To get, set and reset keys to move between work spaces:
     get:        gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-right
@@ -17,3 +16,5 @@ To get, set and reset keys to move between work spaces:
 
     reset:      gsettings reset org.gnome.desktop.wm.keybindings switch-to-workspace-left
 
+Change CAPS LOCK to CTRL
+    Install and use gnome-tweak-tool > Keyboard & Mouse > Keyboard > Additional Layout Options > Caps Lock behavior.
