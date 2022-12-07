@@ -59,6 +59,13 @@ install_packages(){
     $1 install tmux
     $1 install git
     $1 install ripgrep
+    # kitty
+    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/
+    cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+    sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+    sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+
     if [ "$machine" == "Mac" ]
     then
         $1 install the_silver_searcher
@@ -68,6 +75,7 @@ install_packages(){
     elif [[ "$machine" == "Linux" ]]; then
         $1 install silversearcher-ag
         $1 install xclip
+        $1 install g++
         # node 19.x https://github.com/nodesource/distributions
         curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash - &&\
         sudo apt-get install -y nodejs
@@ -75,14 +83,15 @@ install_packages(){
         curl -L -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
         sudo apt install -y ./nvim-linux64.deb
         rm nvim-linux64.deb
+        #chrome
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        sudo apt-get install libappindicator1
+        sudo dpkg -i google-chrome-stable_current_amd64.deb
+        rm google-chrome-stable_current_amd64.deb
     fi
 }
 
 setup_tmux() {
-    echo "==================================="
-    echo "Linking tmux config"
-    echo "==================================="
-
 
     # plugin to display cpu and gpu usage in status bar
     rm -rf ~/tmux-cpu
@@ -91,41 +100,27 @@ setup_tmux() {
 
 
 setup_vim(){
-    echo "==================================="
-    echo "Downlading plug manager"
-    echo "==================================="
+
+    #Plugin manager
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-    echo "==================================="
-    echo "Create python3 venv with necessary pacakges"
-    echo "==================================="
-    #if venv module not installed; on linux run "apt install python3-venv"
+    #Neovim Python virtualenv
     rm -rf ~/vim_venv
     python3 -m venv ~/vim_venv
     source ~/vim_venv/bin/activate
     pip install black neovim
-
-
-    echo "==================================="
-    echo "Vim and neovim setup complete"
-    echo "Once this process is complete open vim and run :PlugInstall"
-    echo "==================================="
 }
 
-install_zsh() {
-    echo "==================================="
-    echo "Installing oh-my-zsh"
-    echo "WARNING: if oh-my-zsh is not installed, this script will end here. Simply run this script again"
-    sleep 5
-    rm -rf ~/.oh-my-zsh
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &
-    echo "WAITING FOR oh-my-zsh to finish installing"
-    sleep 15
+setup_zsh() {
 
-    echo "==================================="
-    echo "Executing rest of zsh related setup "
-    echo "==================================="
+    # change default zsh for usr
+    chsh -s $(which zsh)
+
+    # install oh-my-zhs
+    rm -rf ~/.oh-my-zsh
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
     # auto suggestion plugin
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     # fzf download and setup
@@ -138,13 +133,7 @@ install_zsh() {
     git clone https://github.com/Aloxaf/fzf-tab.git ~/.fzf-tab
     #sourced in ~/.zshrc
 
-    # set font for terminal
-}
-
-download_and_setup_powerleveltheme(){
-    echo "==================================="
-    echo "installing and seting up P10k theme"
-    echo "==================================="
+    #download p10k theme
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 }
 
@@ -173,13 +162,11 @@ fi
 
 
 install_packages "$install_prefix"
-link_files
 setup_vim
 setup_tmux
-link_kitty
-download_and_setup_powerleveltheme
 install_font $machine
-install_zsh
+setup_zsh
+link_files
 
 
 GREEN='\033[0;32m'

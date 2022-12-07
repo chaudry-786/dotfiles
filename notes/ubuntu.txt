@@ -5,7 +5,6 @@ Ubuntu Extensions
     Also Install "sudo apt-get install chrome-gnome-shell" for native host connection
 3) Installed extensions:
     https://extensions.gnome.org/extension/307/dash-to-dock/
-    https://extensions.gnome.org/extension/2141/horizontal-workspaces/
     https://extensions.gnome.org/extension/1287/unite/
 
 To get, set and reset keys to move between work spaces:
