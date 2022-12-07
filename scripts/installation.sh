@@ -15,6 +15,25 @@ what_os(){
     echo "$machine"
 }
 
+link_files () {
+    # Link all the config files
+
+    # tmux
+    cd ~/
+    ln -sf ~/dotfiles/tmux/.tmux.conf ~/.tmux.conf
+    # kitty
+    mkdir -p ~/.config/kitty
+    ln -sf ~/dotfiles/kitty/kitty.conf ~/.config/kitty/kitty.conf
+    # nvim
+    ln -sfn ~/dotfiles/nvim ~/.config/nvim
+    # .zshrc and p10k theme config
+    ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
+    ln -sf ~/dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
+    # link gitignore
+    ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
+
+}
+
 install_homebrew(){
     which -s brew
     if [[ $? != 0 ]] ; then
@@ -64,23 +83,12 @@ setup_tmux() {
     echo "Linking tmux config"
     echo "==================================="
 
-    cd ~/
-    touch ~/.tmux.conf
-    ln -sf ~/dotfiles/tmux/.tmux.conf ~/.tmux.conf
 
     # plugin to display cpu and gpu usage in status bar
     rm -rf ~/tmux-cpu
     git clone https://github.com/tmux-plugins/tmux-cpu ~/tmux-cpu
 }
 
-link_kitty() {
-    echo "==================================="
-    echo "Linking kitty config"
-    echo "==================================="
-
-    mkdir -p ~/.config/kitty
-    ln -sf ~/dotfiles/kitty/kitty.conf ~/.config/kitty/kitty.conf
-}
 
 setup_vim(){
     echo "==================================="
@@ -98,10 +106,6 @@ setup_vim(){
     source ~/vim_venv/bin/activate
     pip install black neovim
 
-    echo "==================================="
-    echo "Creating Symlinks for Vim"
-    echo "==================================="
-    ln -sfn ~/dotfiles/nvim ~/.config/nvim
 
     echo "==================================="
     echo "Vim and neovim setup complete"
@@ -122,8 +126,6 @@ install_zsh() {
     echo "==================================="
     echo "Executing rest of zsh related setup "
     echo "==================================="
-    # Link .zshrc file
-    ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
     # auto suggestion plugin
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     # fzf download and setup
@@ -144,7 +146,6 @@ download_and_setup_powerleveltheme(){
     echo "installing and seting up P10k theme"
     echo "==================================="
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-    ln -sf ~/dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
 }
 
 install_font(){
@@ -172,6 +173,7 @@ fi
 
 
 install_packages "$install_prefix"
+link_files
 setup_vim
 setup_tmux
 link_kitty
@@ -179,8 +181,6 @@ download_and_setup_powerleveltheme
 install_font $machine
 install_zsh
 
-# link gitignore
-ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
 
 GREEN='\033[0;32m'
 echo -e "${GREEN} SUCCESSFULLY installed all packages and set symbolic links"
