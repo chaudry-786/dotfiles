@@ -29,8 +29,14 @@ alias csrc="python3 -m venv venv"
 alias dsrc="rm -rf venv"
 
 # programs
-alias v="nvim"
-alias vs="nvim -S Session.vim"
+# Load sessin if file exists || if no arguments passed
+alias v='f() {
+    if [ -f "Session.vim" ] && [ $# -eq 0 ]; then
+        nvim -S Session.vim
+    else
+        nvim $@
+    fi
+};f'
 
 # open all git changed files
 alias vd='nvim $(git diff --name-only)'
