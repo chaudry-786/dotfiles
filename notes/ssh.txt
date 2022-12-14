@@ -1,0 +1,14 @@
+# example git
+#   e.g git clone personal:sabah1994/dotfiles
+#   e.g git remote add origin personal:sabah1994/dotfiles
+
+# example ssh
+#   ssh personal
+
+# To manage multiple ssh keys edit "~/ssh/config" and add identities as done below
+
+Host personal github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/{ssh_private_key}
+
