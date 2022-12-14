@@ -162,14 +162,18 @@ else
     exit 1
 fi
 
-
-install_packages "$install_prefix"
-setup_vim
-setup_tmux
-install_font $machine
-setup_zsh
-link_files
-
-
 GREEN='\033[0;32m'
-echo -e "${GREEN} SUCCESSFULLY installed all packages and set symbolic links"
+
+read -p "Are you sure to install PACKAGES? " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    install_packages "$install_prefix"
+    setup_vim
+    setup_tmux
+    install_font $machine
+    setup_zsh
+    echo -e "${GREEN} SUCCESSFULLY installed all the packages"
+fi
+
+link_files
+echo -e "\n ${GREEN} SUCCESSFULLY linked all the config files"

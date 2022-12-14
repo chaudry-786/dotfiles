@@ -50,7 +50,6 @@ function _G.ReloadConfig()
     dofile(vim.env.MYVIMRC)
     vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO)
 end
--- keymap("n", "<leader>so", ":so $MYVIMRC <cr> | :echom 'Loaded' <cr>", opts)
 keymap("n", "<leader>so", "<cmd>lua ReloadConfig()<CR>", { noremap = true, silent = false })
 
 --  move code alt+arrows
