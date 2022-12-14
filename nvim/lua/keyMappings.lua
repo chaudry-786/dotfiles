@@ -37,8 +37,21 @@ keymap("n", "<leader>ev", ":edit $MYVIMRC<cr>", opts)
 keymap("n", "<leader>ez", ":edit ~/.zshrc<cr>", opts)
 keymap("n", "<leader>es", ":CocCommand snippets.editSnippets<cr>", opts)
 keymap("n", "<leader>ec", ":CocConfig<cr>", opts)
--- TODO: make sure this reloads lua modules
-keymap("n", "<leader>so", ":so $MYVIMRC <cr> | :echom 'Loaded' <cr>", opts)
+
+-- reload Config and all the modules
+function _G.ReloadConfig()
+    local customUserModules = { ["options"] = true, ["keyMappings"] = true, ["autocmds"] = true, ["highlights"] = true,
+        ["textObjects"] = true }
+    for name, _ in pairs(package.loaded) do
+        if string.match(name, "^plug%-config") or customUserModules[name] then
+            package.loaded[name] = nil
+        end
+    end
+    dofile(vim.env.MYVIMRC)
+    vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO)
+end
+-- keymap("n", "<leader>so", ":so $MYVIMRC <cr> | :echom 'Loaded' <cr>", opts)
+keymap("n", "<leader>so", "<cmd>lua ReloadConfig()<CR>", { noremap = true, silent = false })
 
 --  move code alt+arrows
 keymap("n", "<M-Up>", [[:<C-U>exec "exec 'norm m`' \| move -" . (1+v:count1)<CR>``]], opts)
