@@ -2,6 +2,7 @@ require("nvim-tree").setup({
     sort_by = "case_sensitive",
     hijack_cursor = true,
     sync_root_with_cwd = true,
+    update_focused_file = { enable = true },
     git = {
         show_on_dirs = false,
         ignore = true
@@ -62,5 +63,5 @@ vim.api.nvim_create_autocmd("BufEnter", {
         if vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
             vim.cmd "setlocal cursorline"
         end
-  end
+    end
 })

@@ -31,6 +31,7 @@ link_files () {
     ln -sf ~/dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
     # link gitignore
     ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
+    git config --global core.excludesfile ~/.gitignore
 
 }
 
@@ -59,6 +60,7 @@ install_packages(){
     $1 install tmux
     $1 install git
     $1 install ripgrep
+    $1 install bat
     # kitty
     curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
     ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/

@@ -44,8 +44,8 @@ alias vd='nvim $(git diff --name-only)'
 alias vds='nvim $(git diff --name-only | fzf -m)'
 
 # others
-alias fp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
-alias cat="bat"
+alias fp="fzf --preview 'batcat --style=numbers --color=always --line-range :500 {}'"
+alias cat="batcat"
 alias c="clear"
 alias e="exit"
 
