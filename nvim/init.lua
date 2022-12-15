@@ -51,6 +51,7 @@ Plug("jiangmiao/auto-pairs")                                    -- Auto pairs
 Plug("windwp/nvim-ts-autotag")                                  -- Auto tag for typescript, javascript
 Plug("folke/which-key.nvim")                                    -- Which key
 Plug("tpope/vim-obsession")                                     -- Session management plugin
+Plug("preservim/vimux")                                         -- Vim to tmux panes (e.g execute current file, run tests)
 vim.call("plug#end")
 
 
@@ -79,6 +80,7 @@ require("plug-config/noice")                                    -- noice
 require("plug-config/whichKey")                                 -- which-key
 require("plug-config/sql-dadbod")                               -- sql-vim-dadbod
 require("plug-config/alpha")                                    -- startup screen
+require("plug-config/vimux")                                    -- vim to tmux panes
 require("plug-config/coc")                                      -- coc.vim
 
 -- vim-commentary

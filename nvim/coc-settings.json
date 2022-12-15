@@ -11,7 +11,6 @@
     "snippets.extends": {
         "javascript": ["html", "javascriptreact"]
     },
-    "snippets.loadFromExtensions": false, // do not load snippets from coc extensions
     "snippets.snipmate.enable": false,
     "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/",
     "session.saveOnVimLeave": false,
