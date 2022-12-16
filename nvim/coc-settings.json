@@ -33,9 +33,6 @@
         "tabWidth": 4
     },
     // python
-    "python.linting.enabled": true,
-    "python.analysis.typeCheckingMode": "off",
-    "python.linting.pylintEnabled": true,
     "python.formatting.provider": "black",
     "python.formatting.blackPath": "~/vim_venv/bin/black",
     // Lua
