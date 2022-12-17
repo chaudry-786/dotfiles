@@ -7,22 +7,17 @@ DebugMode = false
 function ToggleDebugMode()
     if DebugMode then
         -- unmape all keys
-        local keysToUnmap = { "<Up>", "<Left>", "<Right>", "<Down>", "<Leader>ds", "<Leader>de", "<Leader>dc",
-            "<Leader>db", "<Leader>dB" }
+        local keysToUnmap = { "<Up>", "<Left>", "<Right>", "<Down>", "<Leader>Ds", "<Leader>De", "<Leader>Dc" }
         for key in pairs(keysToUnmap) do
             del_unmap("n", keysToUnmap[key])
         end
-        keymap("n", "<leader>d", ":bdelete<CR>", opts)
         vim.cmd("call vimspector#Reset()")
         print("DebugMode is OFF")
     else
-        keymap("n", "<Leader>ds", ":call vimspector#Launch()<CR>", opts)
-        keymap("n", "<Leader>de", ":call vimspector#Reset()<CR>", opts)
-        keymap("n", "<Leader>dc", ":call vimspector#Continue()<CR>", opts)
-
-        -- breakpoints
-        keymap("n", "<Leader>db", ":call vimspector#ToggleBreakpoint()<CR>", opts)
-        keymap("n", "<Leader>dB", ":call vimspector#ClearBreakpoints()<CR>", opts)
+        keymap("n", "<Leader>Ds", ":call vimspector#Launch()<CR>", opts)
+        keymap("n", "<Leader>De", ":call vimspector#Reset()<CR>", opts)
+        -- continue until next break point
+        keymap("n", "<Leader>Dc", ":call vimspector#Continue()<CR>", opts)
 
         -- arrow keys
         keymap("n", "<Up>", "<Plug>VimspectorRestart", {})
@@ -30,16 +25,22 @@ function ToggleDebugMode()
         keymap("n", "<Right>", "<Plug>VimspectorStepInto", {})
         keymap("n", "<Down>", "<Plug>VimspectorStepOver", {})
 
-        del_unmap("n", "<leader>d")
         vim.cmd("call vimspector#Launch()")
         print("DebugMode is ON")
     end
     DebugMode = not DebugMode
 end
 
+-- Launch and end debug session
 keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", opts)
 
+-- breakpoints
+keymap("n", "<Leader>tb", ":call vimspector#ToggleBreakpoint()<CR>", opts)
+keymap("n", "<Leader>tB", ":call vimspector#ClearBreakpoints()<CR>", opts)
+
+
 -- reference https://puremourning.github.io/vimspector/configuration.html#predefined-variables
+-- examples ~/.vim/plugged/vimspector/support/test
 -- TODO: dynamically create debug configs, reduce repeated lines
 local breakPointDict = {
     exception = {
