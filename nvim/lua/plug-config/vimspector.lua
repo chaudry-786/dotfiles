@@ -7,15 +7,12 @@ DebugMode = false
 function ToggleDebugMode()
     if DebugMode then
         -- unmape all keys
-        local keysToUnmap = { "<Up>", "<Left>", "<Right>", "<Down>", "<Leader>Ds", "<Leader>De", "<Leader>Dc" }
+        local keysToUnmap = { "<Up>", "<Left>", "<Right>", "<Down>", "<Leader>Dc" }
         for key in pairs(keysToUnmap) do
             del_unmap("n", keysToUnmap[key])
         end
         vim.cmd("call vimspector#Reset()")
-        print("DebugMode is OFF")
     else
-        keymap("n", "<Leader>Ds", ":call vimspector#Launch()<CR>", opts)
-        keymap("n", "<Leader>De", ":call vimspector#Reset()<CR>", opts)
         -- continue until next break point
         keymap("n", "<Leader>Dc", ":call vimspector#Continue()<CR>", opts)
 
@@ -26,13 +23,14 @@ function ToggleDebugMode()
         keymap("n", "<Down>", "<Plug>VimspectorStepOver", {})
 
         vim.cmd("call vimspector#Launch()")
-        print("DebugMode is ON")
     end
     DebugMode = not DebugMode
 end
 
 -- Launch and end debug session
 keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", opts)
+keymap("n", "<Leader>Ds", ":call vimspector#Launch()<CR>", opts)
+keymap("n", "<Leader>De", ":call vimspector#Reset()<CR>", opts)
 
 -- breakpoints
 keymap("n", "<Leader>tb", ":call vimspector#ToggleBreakpoint()<CR>", opts)
