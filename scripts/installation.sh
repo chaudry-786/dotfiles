@@ -31,7 +31,7 @@ link_files () {
     ln -sf ~/dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
     # link gitignore
     ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
-    git config --global core.excludesfile ~/.gitignore
+    ln -sf ~/dotfiles/git/.gitconfig ~/.gitconfig
 
 }
 
@@ -74,6 +74,7 @@ install_packages(){
         $1 install reattach-to-user-namespace
         $1 install nodejs
         $1 install neovim
+        $1 install git-delta
     elif [[ "$machine" == "Linux" ]]; then
         $1 install silversearcher-ag
         $1 install xclip
@@ -85,11 +86,17 @@ install_packages(){
         curl -L -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
         sudo apt install -y ./nvim-linux64.deb
         rm nvim-linux64.deb
-        #chrome
+        # chrome
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo apt-get install libappindicator1
         sudo dpkg -i google-chrome-stable_current_amd64.deb
         rm google-chrome-stable_current_amd64.deb
+        # git-delta | better git diff
+        gitDeltaFile="git-delta_x.xx.x_amd64.deb"
+        curl -s https://api.github.com/repos/dandavison/delta/releases/latest \
+        | grep "browser_download_url.*amd64.deb" | grep -v "musl" \
+        | cut -d : -f 2,3 | tr -d \" | wget -qi - -O $gitDeltaFile
+        sudo dpkg -i $gitDeltaFile && rm $gitDeltaFile
     fi
 }
 
