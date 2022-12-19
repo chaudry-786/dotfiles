@@ -1,30 +1,55 @@
 local keymap = vim.api.nvim_set_keymap
-local del_unmap = vim.api.nvim_del_keymap
+local buff_keymap = vim.api.nvim_buf_set_keymap
+local del_keymap = vim.api.nvim_buf_del_keymap
 local opts = { noremap = true, silent = true }
 -- Use arrow keys when debugging, makes it much simpler.
 -- Because debug mode is rare, only map keys when it's turned on
-DebugMode = false
+local debugMode = false
 function ToggleDebugMode()
-    if DebugMode then
-        -- unmape all keys
-        local keysToUnmap = { "<Up>", "<Left>", "<Right>", "<Down>", "<Leader>Dc" }
-        for key in pairs(keysToUnmap) do
-            del_unmap("n", keysToUnmap[key])
-        end
+    --[[ Launch or Reset debugger. Set debug mapping for the current buffer and create
+    Autocmd to create mappings for buffers of the same file type
+    --]]
+    if debugMode then
         vim.cmd("call vimspector#Reset()")
+        -- unmape all keys from the debugging buffers
+        local keysToUnmap = { "<Up>", "<Left>", "<Right>", "<Down>", "<Leader>Dc" }
+        for buff, v in pairs(DebugBuffers) do
+            -- ensure buffer exists
+            if vim.fn.buflisted(buff) == 1 then
+                for key in pairs(keysToUnmap) do
+                    del_keymap(buff, "n", keysToUnmap[key])
+                end
+            end
+        end
     else
-        -- continue until next break point
-        keymap("n", "<Leader>Dc", ":call vimspector#Continue()<CR>", opts)
-
-        -- arrow keys
-        keymap("n", "<Up>", "<Plug>VimspectorRestart", {})
-        keymap("n", "<Left>", "<Plug>VimspectorStepOut", {})
-        keymap("n", "<Right>", "<Plug>VimspectorStepInto", {})
-        keymap("n", "<Down>", "<Plug>VimspectorStepOver", {})
+        DebugBuffers = {}
+        local debug_filetype = vim.bo.filetype
+        -- create an autocommand to create debug mappings automatically for "debug_filetype" buffers
+        vim.api.nvim_create_augroup("DebugAutocmd", { clear = true })
+        vim.api.nvim_create_autocmd("FileType",
+            { group = "DebugAutocmd", pattern = { debug_filetype },
+                command = [[lua MapDebugKeys()]] })
+        -- Trigger fileType autocmd for existing "debug_filetype" buffers so above command can run
+        vim.cmd(string.format("let buf=bufnr('%%') | bufdo if &ft == '%s' | doautocmd FileType | endif | exec 'b' buf",
+            debug_filetype))
 
         vim.cmd("call vimspector#Launch()")
     end
-    DebugMode = not DebugMode
+    debugMode = not debugMode
+end
+
+function MapDebugKeys()
+    -- continue until next break point
+    buff_keymap(0, "n", "<Leader>Dc", ":call vimspector#Continue()<CR>", opts)
+
+    -- -- arrow keys
+    buff_keymap(0, "n", "<Up>", "<Plug>VimspectorRestart", {})
+    buff_keymap(0, "n", "<Left>", "<Plug>VimspectorStepOut", {})
+    buff_keymap(0, "n", "<Right>", "<Plug>VimspectorStepInto", {})
+    buff_keymap(0, "n", "<Down>", "<Plug>VimspectorStepOver", {})
+
+    -- Keep a track of buffers for which debug keymaps have been set
+    DebugBuffers[vim.fn.bufnr()] = true
 end
 
 -- Launch and end debug session
