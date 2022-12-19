@@ -59,6 +59,7 @@ vim.api.nvim_set_hl(0,"NvimTreeGitStaged", { fg = "#26A269" })
 
 -- cursorline
 vim.api.nvim_create_autocmd("BufEnter", {
+    group = "CustomAutoCmds",
     callback = function()
         if vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
             vim.cmd "setlocal cursorline"

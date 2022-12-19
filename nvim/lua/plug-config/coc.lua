@@ -36,7 +36,7 @@ vim.api.nvim_set_hl(0, "CocUnusedHighlight", { underline = true })
 
 -- AutoCmds
 -- highlight the symbol and its references when holding the cursor.
-vim.api.nvim_create_autocmd("CursorHold", { pattern = '*', command = [[call CocActionAsync("highlight")]] })
+vim.api.nvim_create_autocmd("CursorHold", { group = "CustomAutoCmds", pattern = '*', command = [[call CocActionAsync("highlight")]] })
 
 -- key mappings
 -- toggle diagnostics

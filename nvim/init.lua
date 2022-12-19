@@ -54,6 +54,8 @@ Plug("tpope/vim-obsession")                                     -- Session manag
 Plug("preservim/vimux")                                         -- Vim to tmux panes (e.g execute current file, run tests)
 vim.call("plug#end")
 
+-- This is autocmd group for all the autocmds
+vim.api.nvim_create_augroup("CustomAutoCmds", { clear = true })
 
 -- Basic configuration
 require("options")
@@ -84,7 +86,7 @@ require("plug-config/vimux")                                    -- vim to tmux p
 require("plug-config/coc")                                      -- coc.vim
 
 -- vim-commentary
-vim.api.nvim_create_autocmd("FileType", { pattern = { "json" }, command = [[setlocal commentstring=//\ %s]] })
+vim.api.nvim_create_autocmd("FileType", { group = "CustomAutoCmds", pattern = { "json" }, command = [[setlocal commentstring=//\ %s]] })
 
 -- vim-repeat
 vim.api.nvim_command([[silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)]])
