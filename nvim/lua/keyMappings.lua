@@ -67,7 +67,7 @@ keymap("n", "<C-o>", "<C-o>zz", opts)
 keymap("n", "<C-i>", "<C-i>zz", opts)
 
 -- copy whole buffer
-keymap("n", "<F5>", ":%y+<CR>", opts)
+keymap("n", "<leader>y", ":%y+<CR>", opts)
 
 -- escape: also clears highlighting
 keymap("n", "<esc>", "<Cmd>noh<return><esc>", opts)
