@@ -103,7 +103,7 @@ keymap("n", "K", ":lua Show_documentation() <CR>", opts)
 keymap("n", "<leader>rn", "<Plug>(coc-rename)", {})
 
 -- " Formatting selected code. Followed by highlighted code
-keymap("x", "<leader>f", "<Plug>(coc-format-selected)", {})
+keymap("x", "<leader>F", "<Plug>(coc-format-selected)", {})
 
 -- " Mappings for CoCList
 -- " Show all diagnostics (Errors and warnings).

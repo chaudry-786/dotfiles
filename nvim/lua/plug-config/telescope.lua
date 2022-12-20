@@ -12,6 +12,7 @@ require('telescope').setup({
             },
         },
         prompt_prefix = "   ",
+        selection_caret = " ",
         sorting_strategy = "ascending",
         layout_strategy = "horizontal",
         layout_config = {
@@ -28,11 +29,11 @@ require('telescope').setup({
     },
 })
 
-keymap("n", "<leader>fG", ":Telescope live_grep<CR>", opts)
+keymap("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>", opts)
 keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
 keymap("n", "<leader>fc", ":Telescope commands<CR>", opts)
 keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-keymap("n", "<leader>fg", ":Telescope current_buffer_fuzzy_find<CR>", opts)
+keymap("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
 keymap("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
 keymap("n", "<leader>fo", ":Telescope vim_options<CR>", opts)
 keymap("n", "<leader>fs", ":Telescope spell_suggest<CR>", opts)
