@@ -30,8 +30,10 @@ link_files () {
     ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
     ln -sf ~/dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
     # link gitignore
-    ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
     ln -sf ~/dotfiles/git/.gitconfig ~/.gitconfig
+    ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
+    # rg uses this is ignore
+    ln -sf ~/dotfiles/git/.gitignore ~/.ignore
 
 }
 
@@ -70,13 +72,11 @@ install_packages(){
 
     if [ "$machine" == "Mac" ]
     then
-        $1 install the_silver_searcher
         $1 install reattach-to-user-namespace
         $1 install nodejs
         $1 install neovim
         $1 install git-delta
     elif [[ "$machine" == "Linux" ]]; then
-        $1 install silversearcher-ag
         $1 install xclip
         $1 install g++
         # node 19.x https://github.com/nodesource/distributions

@@ -2,3 +2,5 @@ venv/
 .venv/
 __pycache__/
 Session.vim
+# Needed for gitignore
+.git/

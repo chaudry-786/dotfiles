@@ -27,6 +27,16 @@ require('telescope').setup({
             preview_cutoff = 120
         }
     },
+    pickers = {
+        find_files = {
+            find_command = { "rg", "--files", "--hidden" },
+        },
+        live_grep = {
+            additional_args = function()
+                return { "--hidden" }
+            end
+        },
+    },
 })
 
 keymap("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>", opts)
