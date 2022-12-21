@@ -72,3 +72,6 @@ set.splitright = true                                   --default vertical split
 set.splitbelow = true                                   --default horizental split to below
 
 set.mouse = ""                                          --disable mouse
+
+set.pumwidth = 30                                       --minimum width for
+set.pumheight = 15                                      --maximum number of items listed in pum

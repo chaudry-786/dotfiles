@@ -5,5 +5,5 @@ require("which-key").setup {
     window = {
         border = "single"
     },
-    hidden = { "Telescope","<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }
+    hidden = { "Telescope",  "Fzf","<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }
 }
