@@ -32,7 +32,7 @@ link_files () {
     # link gitignore
     ln -sf ~/dotfiles/git/.gitconfig ~/.gitconfig
     ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
-    # rg uses this is ignore
+    # rg uses this in non-git repos
     ln -sf ~/dotfiles/git/.gitignore ~/.ignore
 
 }
