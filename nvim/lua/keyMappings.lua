@@ -2,6 +2,30 @@ local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 local expr_opts = { noremap = true, silent = true, expr = true }
 
+-- avoid repeating hjkl keys
+local id
+for _, key in ipairs({ "h", "j", "k", "l" }) do
+    local count = 0
+    vim.keymap.set("n", key, function()
+        if count >= 10 then
+            id = vim.notify("Hold it Cowboy!", vim.log.levels.WARN, {
+                icon = "🤠",
+                replace = id,
+                keep = function()
+                    return count >= 10
+                end,
+            })
+        else
+            count = count + 1
+            -- after 5 seconds decrement
+            vim.defer_fn(function()
+                count = count - 1
+            end, 5000)
+            return key
+        end
+    end, { expr = true })
+end
+
 -- set space as leader
 keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
