@@ -22,18 +22,6 @@ vim.g["coc_global_extensions"] = {
     "coc-prettier",                 -- Formatter for javascript, typescript and JSON
 }
 
--- highlight
--- for custom pop menu
-vim.api.nvim_set_hl(0, "CocCustomPopup", { fg = "#ebdbb2", bg = "#282828" })
--- border
-vim.api.nvim_set_hl(0, "CocCustomPopupBoder", { fg = "#5F5F5F", bold = true })
--- selected row
-vim.api.nvim_set_hl(0, "CocMenuSel", { bg = "#3c3836", bold = true })
--- matched_text
-vim.api.nvim_set_hl(0, "CocSearch", { fg = "#fabd2f" })
--- unused code
-vim.api.nvim_set_hl(0, "CocUnusedHighlight", { underline = true })
-
 -- AutoCmds
 -- highlight the symbol and its references when holding the cursor.
 vim.api.nvim_create_autocmd("CursorHold", { group = "CustomAutoCmds", pattern = '*', command = [[call CocActionAsync("highlight")]] })
