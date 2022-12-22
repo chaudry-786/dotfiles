@@ -56,6 +56,44 @@ keymap("n", "<leader>q", ":quit<CR>", opts)
 keymap("n", "<leader>|", ":vsplit<CR>", opts)
 keymap("n", "<leader>-", ":split<CR>", opts)
 
+-- sane resize mappings for windows <C-w>hjkl
+local funs = {}
+function funs.winResizeMapping()
+    local keysToMap = { h = { ">" }, j = { "+" }, k = { "+" }, l = { ">" } }
+    -- map all the relevant keys to Nop
+    for key in pairs(keysToMap) do
+        -- not sure how to do silent with nvim api
+        vim.cmd("nmap <C-w>" .. string.upper(key) .. " <Nop>")
+    end
+    -- if only one window than return
+    if vim.fn.winnr("$") == 1 then
+        return
+    end
+
+    local currentWin = vim.fn.winnr()
+    local horizontal = vim.fn.winnr("h") ~= currentWin or vim.fn.winnr("l") ~= currentWin
+    local vertical = vim.fn.winnr("j") ~= currentWin or vim.fn.winnr("k") ~= currentWin
+
+    -- top bottom
+    for key, value in pairs(keysToMap) do
+        if vim.fn.winnr(key) ~= currentWin then
+            -- positives in valid directions
+            keymap("n", "<C-w>" .. string.upper(key), "<C-w>5" .. value[1], { noremap = true })
+        elseif (key == "h" or key == "l") and horizontal then
+            -- left right minus
+            keymap("n", "<C-w>" .. string.upper(key), "<C-w>5" .. "<", { noremap = true })
+        elseif (key == "j" or key == "k") and vertical then
+            -- up down minus
+            keymap("n", "<C-w>" .. string.upper(key), "<C-w>5" .. "-", { noremap = true })
+        end
+    end
+end
+
+vim.api.nvim_create_autocmd("WinEnter",
+    { group = "CustomAutoCmds", pattern = '*',
+        callback = funs.winResizeMapping })
+
+
 -- edit common files quickly
 keymap("n", "<leader>ev", ":edit $MYVIMRC<cr>", opts)
 keymap("n", "<leader>ez", ":edit ~/.zshrc<cr>", opts)
@@ -74,6 +112,7 @@ function _G.ReloadConfig()
     dofile(vim.env.MYVIMRC)
     vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO)
 end
+
 keymap("n", "<leader>so", "<cmd>lua ReloadConfig()<CR>", { noremap = true, silent = false })
 
 --  move code alt+arrows
