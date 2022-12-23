@@ -51,6 +51,7 @@ keymap("n", "<leader>h", ":bprevious<CR>", opts)
 keymap("n", "<leader>d", ":bdelete<CR>", opts)
 keymap("n", "<leader>w", ":write<CR>", opts)
 keymap("n", "<leader>q", ":quit<CR>", opts)
+keymap("n", "<leader><leader>q", ":qall<CR>", opts)
 
 --  easier split window
 keymap("n", "<leader>|", ":vsplit<CR>", opts)
