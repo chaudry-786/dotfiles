@@ -52,6 +52,7 @@ Plug("windwp/nvim-ts-autotag")                                  -- Auto tag for 
 Plug("folke/which-key.nvim")                                    -- Which key
 Plug("tpope/vim-obsession")                                     -- Session management plugin
 Plug("preservim/vimux")                                         -- Vim to tmux panes (e.g execute current file, run tests)
+Plug("mrjones2014/smart-splits.nvim")                           -- Sane split resize with Alt-hjkl
 vim.call("plug#end")
 
 -- This is autocmd group for all the autocmds
@@ -83,6 +84,7 @@ require("plug-config/whichKey")                                 -- which-key
 require("plug-config/sql-dadbod")                               -- sql-vim-dadbod
 require("plug-config/alpha")                                    -- startup screen
 require("plug-config/vimux")                                    -- vim to tmux panes
+require("plug-config/smart-splits")                             -- smart split resize with Alt-hjkl
 require("plug-config/coc")                                      -- coc.vim
 
 -- vim-commentary
