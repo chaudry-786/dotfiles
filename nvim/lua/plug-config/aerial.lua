@@ -1,6 +1,7 @@
 require('aerial').setup({
     layout = {
-        default_direction = "right"
+        default_direction = "right",
+        min_width = 20,
     },
     nerd_font = true,
     show_guides = true,

@@ -104,5 +104,19 @@ vim.g.vimspector_configurations = {
             type = "python",
         },
         breakpoints = breakPointDict
+    },
+    ScrapySpider = {
+        adapter = "debugpy",
+        filetypes = { "python" },
+        configuration = {
+            args = { "crawl", "*${spiderName}"},
+            cwd = "${cwd}",
+            program = "${cwd}/venv/bin/scrapy",
+            python = "${cwd}/venv/bin/python",
+            request = "launch",
+            stopOnEntry = false,
+            type = "python",
+        },
+        breakpoints = breakPointDict
     }
 }
