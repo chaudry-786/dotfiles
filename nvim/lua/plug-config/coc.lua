@@ -96,8 +96,6 @@ keymap("x", "<leader>f", "<Plug>(coc-format-selected)", {})
 -- " Mappings for CoCList
 -- " Show all diagnostics (Errors and warnings).
 keymap("n", "<leader>a", ":<C-u>CocList diagnostics<CR>", opts)
--- " Find symbol of current document
-keymap("n", "<leader>o", ":<C-u>CocList outline<CR>", opts)
 
 -- HAVNE'T FOUND A GOOD USE-CASE YET
 -- " Applying codeAction to the selected region.

@@ -7,7 +7,7 @@ require('lualine').setup({
                 component_separators = { left = "", right = "" } },
             { "filename", padding = { left = 1 }, color = { gui = "bold,italic", fg = "#ebdbb2" } }
         },
-        lualine_x = { { "aerial", padding = { right = 2, left = 2 }, dense = true, } },
+        lualine_x = { { "aerial", padding = { right = 2, left = 2 }, dense = false, } },
         lualine_y = {
             {
                 "diagnostics",
