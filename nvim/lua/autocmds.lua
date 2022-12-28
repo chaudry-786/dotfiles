@@ -25,12 +25,7 @@ vim.api.nvim_create_autocmd("VimEnter",
         callback = function()
             vim.defer_fn(function()
                 if not sessionLoaded then
-                    if vim.fn.filereadable("Session.vim") == 1 then
-                        vim.notify("Session.vim exits! Not tracking!")
-                    else
-                        vim.cmd("Obsession")
-                        vim.notify("Tracking Session!")
-                    end
+                    vim.cmd("Obsession")
                 end
             end, 1000)
         end
