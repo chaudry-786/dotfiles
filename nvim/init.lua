@@ -53,6 +53,7 @@ Plug("folke/which-key.nvim")                                    -- Which key
 Plug("tpope/vim-obsession")                                     -- Session management plugin
 Plug("preservim/vimux")                                         -- Vim to tmux panes (e.g execute current file, run tests)
 Plug("mrjones2014/smart-splits.nvim")                           -- Sane split resize with Alt-hjkl
+Plug("vimwiki/vimwiki")                                         -- personal wiki
 vim.call("plug#end")
 
 -- This is autocmd group for all the autocmds
@@ -95,6 +96,11 @@ vim.api.nvim_command([[silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 
 -- neoscroll
 require("neoscroll").setup()
+
+-- vimwiki
+vim.g.vimwiki_list = {{path = '$HOME/Dropbox/wiki'}}
+vim.g.vimwiki_ext = '.md'
+vim.g.vimwiki_global_ext = 0
 
 -- highlights
 require("highlights")
