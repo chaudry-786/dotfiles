@@ -54,6 +54,7 @@ end
 
 -- Launch and end debug session
 keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", opts)
+keymap("n", "<leader>td", ":lua ToggleDebugMode()<CR>", opts)
 keymap("n", "<Leader>Ds", ":call vimspector#Launch()<CR>", opts)
 keymap("n", "<Leader>De", ":call vimspector#Reset()<CR>", opts)
 

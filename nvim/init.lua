@@ -26,6 +26,7 @@ Plug("christoomey/vim-tmux-navigator")                          -- Easy navigati
 
 -- Text objects
 Plug("kylechui/nvim-surround")                                  -- Easy text-object surrounding plugin
+Plug("echasnovski/mini.nvim")                                   -- Common plugins bundeled together (only using AI module)
 
 -- Git
 Plug("tpope/vim-fugitive")                                      -- Git integration
@@ -63,10 +64,10 @@ vim.api.nvim_create_augroup("CustomAutoCmds", { clear = true })
 require("options")
 require("keyMappings")
 require("autocmds")
-require("textObjects")
 
 
 -- PLUGINS configuration
+require('mini.ai').setup()                                      -- better text objects including quote and brackets
 require("plug-config/gruvbox-baby")                             -- gruvbox | theme
 require("plug-config/nvimTree")                                 -- nvim-tree | file explorer
 require("plug-config/lualine")                                  -- lualine.nvim | statusline

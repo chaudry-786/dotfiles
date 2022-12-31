@@ -17,11 +17,7 @@ end
 -- signcolumn
 set.number = true                                       --show cursorline number
 set.relativenumber = true                               --relative line numbers
-if  vim.fn.has("nvim-0.5.0") or vim.fn.has("patch-8.1.1564") then
-    set.signcolumn = "number"                           -- display signs in the 'number' column
-else
-    set.signcolumn = "yes"
-end
+set.signcolumn = "number"                               -- display signs in the 'number' column
 
 -- cursorline
 -- cursorline should only be visible in active window
