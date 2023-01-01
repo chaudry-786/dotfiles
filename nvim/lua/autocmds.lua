@@ -7,9 +7,14 @@ end
 
 vim.api.nvim_create_autocmd("BufWritePre", { group = "CustomAutoCmds", pattern = '*', callback = TrimWhiteSpace })
 
+local function yankLogic()
+    -- temporarily cancels document highlight by coc
+    vim.cmd("doautocmd CursorMovedI")
+    vim.highlight.on_yank({ timeout = 300, higroup = "YankHighlight" })
+end
 -- briefly highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost",
-    { group = "CustomAutoCmds", pattern = '*', callback = function() vim.highlight.on_yank({ timeout = 300, higroup = "YankHighlight" }) end })
+    { group = "CustomAutoCmds", pattern = '*', callback = yankLogic })
 
 
 --Set to true if a session was loaded
