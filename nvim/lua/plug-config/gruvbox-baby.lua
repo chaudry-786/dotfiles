@@ -1,6 +1,7 @@
 vim.g.gruvbox_baby_highlights = {
     CocHighlightText = { bg = "#32302f" },
     Visual = { bg = "#6e1515" },
+    CursorLineNr = { fg = "#fe8019", style = "bold" },
 }
 vim.g.gruvbox_baby_background_color = "dark"
 vim.g.gruvbox_baby_string_style = "italic"

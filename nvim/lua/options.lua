@@ -20,12 +20,10 @@ set.relativenumber = true                               --relative line numbers
 set.signcolumn = "number"                               -- display signs in the 'number' column
 
 -- cursorline
--- cursorline should only be visible in active window
--- vim.api.nvim_create_autocmd("VimEnter", {pattern = "*", command = [[setlocal cursorline]]} )
--- vim.api.nvim_create_autocmd("WinEnter", {pattern = "*", command = [[setlocal cursorline]]} )
--- vim.api.nvim_create_autocmd("BufWinEnter", {pattern = "*", command = [[setlocal cursorline]]} )
--- vim.api.nvim_create_autocmd("WinLeave", {pattern = "*", command = [[setlocal nocursorline]]} )
--- set.cursorlineopt = "line"                              --do not highlight sign column in cursorline
+vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" },
+    { group = "CustomAutoCmds", pattern = "*", command = [[setlocal cursorline]] })
+vim.api.nvim_create_autocmd("WinLeave", { group = "CustomAutoCmds", pattern = "*", command = [[setlocal nocursorline]] })
+set.cursorlineopt = "number"                            -- only set line number
 
 -- disable backups for coc
 set.backup = false
