@@ -31,12 +31,28 @@ keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- do not copy delete command
-keymap("n", "d", "\"_d", opts)
-keymap("v", "d", "\"_d", opts)
+-- do not copy delete and change command
+keymap("n", "d", [["_d]], opts)
+keymap("v", "d", [["_d]], opts)
+keymap("n", "c", [["_c]], opts)
+keymap("v", "c", [["_c]], opts)
 
--- in visual line mode do not join pasted text to next line
-keymap("v", "p", [[mode() ==# "V" && match(getreg(), "\n$") == -1 ? "\"_dd<esc>O<esc>p" : "\"_dP"]], expr_opts)
+-- better paste mappings
+local function betterPaste()
+    if string.match(vim.fn.getreg(), "\n$") and vim.fn.mode() == "v" then
+        local register_text = vim.fn.getreg()
+        -- get rid of line break at the end
+        register_text = string.gsub(register_text, "\n$", "")
+        -- set content to temporary register
+        vim.fn.setreg("z", register_text)
+        return [["_d"zP]]
+    elseif string.match(vim.fn.getreg(), "\n$") == nil and vim.fn.mode() == "V" then
+        return [["_dd<esc>O<esc>p]]
+    end
+    return [["_dP]]
+end
+vim.keymap.set("v", "p", betterPaste, { expr = true, noremap = true })
+
 -- paste text on new line, if there is already linebreak do not insert a new one
 keymap("n", "<leader>p", [[match(getreg(), "\n$") == -1 ? "o<esc>p" : "p"]], expr_opts)
 keymap("n", "<leader>P", [[match(getreg(), "\n$") == -1 ? "O<esc>p" : "P"]], expr_opts)

@@ -6,13 +6,10 @@ set.syntax = "on"                                       --critical for better sy
 set.scrolloff = 7                                       --allow n lines at the bottom and top
 set.ignorecase = true                                   --ignore case in search
 set.laststatus = 3                                      --global statusline
-set.cmdheight = 2                                       --screen lines for command-line
 set.updatetime = 300                                    --quciker update  time for better experience
 set.shortmess = vim.o.shortmess ..  "c"
 vim.g["python3_host_prog"] = "~/vim_venv/bin/python"    --python virtualenv path
-if vim.fn.exists("+termguicolors") then
-    vim.opt.termguicolors = true                        -- true colours for nvim in tmux
-end
+vim.opt.termguicolors = true                            -- true colours for nvim in tmux
 
 -- signcolumn
 set.number = true                                       --show cursorline number
