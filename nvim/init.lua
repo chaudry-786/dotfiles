@@ -45,8 +45,10 @@ Plug("kristijanhusak/vim-dadbod-ui")                            -- UI for vim-da
 Plug("tpope/vim-commentary")                                    -- Comment easily
 Plug("tpope/vim-repeat")                                        -- Repeat macros and plug mappings with dot
 Plug("puremourning/vimspector")                                 -- Debugger
-Plug("junegunn/fzf", { ["do"] = vim.fn["fzf#install"] })        -- Installs FZF
-Plug("junegunn/fzf.vim")                                        -- Fuzzy finder
+-- Plug("junegunn/fzf", { ["do"] = vim.fn["fzf#install"] })        -- Installs FZF
+-- Plug("junegunn/fzf.vim")                                        -- Fuzzy finder
+Plug("nvim-lua/plenary.nvim")                                   -- required by telescope
+Plug("nvim-telescope/telescope.nvim")                           -- Fuzzy finder
 Plug("stevearc/aerial.nvim")                                    -- Code outline
 Plug("jiangmiao/auto-pairs")                                    -- Auto pairs
 Plug("windwp/nvim-ts-autotag")                                  -- Auto tag for typescript, javascript
@@ -78,7 +80,8 @@ require("plug-config/gitFugitive")                              -- vim-fugitive
 require("plug-config/gitSigns")                                 -- vim-gitgutter
 require("plug-config/aerial")                                   -- aerial | code outline
 require("plug-config/hop")                                      -- hop.vim
-require("plug-config/fzf")                                      -- fzf | fuzzy search finder
+-- require("plug-config/fzf")                                      -- fzf | fuzzy search finder
+require("plug-config/telescope")                                -- telescope | fuzzy search finder
 require("plug-config/vimspector")                               -- vimspector | debuggging
 require("plug-config/quickScope")                               -- quick-scope
 require("plug-config/nvim-surround")                            -- nvim-surround
