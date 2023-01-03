@@ -62,7 +62,7 @@
         "borderhighlight": "CocCustomPopupBoder"
     },
     "suggest.completionItemKindLabels": {
-        "class": "ﴯ Class    ",
+        "class": "\uf0e8 Class",
         "color": " Color    ",
         "constant": " Constant ",
         "default": "\uf29c Default",

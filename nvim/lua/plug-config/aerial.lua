@@ -6,9 +6,9 @@ require('aerial').setup({
     nerd_font = true,
     show_guides = true,
     icons = {
-        Class    = "ﴯ ",
-        Function = " ",
-        Method   = " ",
+        Class    = "\u{f0e8} ",
+        Function = "",
+        Method   = "",
     }
 })
 
