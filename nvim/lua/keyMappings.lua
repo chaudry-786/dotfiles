@@ -62,8 +62,8 @@ keymap("", "H", "^", {})
 keymap("", "L", "$", {})
 
 -- buffers shortcuts
-keymap("n", "<leader>l", ":bnext<CR>", opts)
-keymap("n", "<leader>h", ":bprevious<CR>", opts)
+keymap("n", "]b", ":bnext<CR>", opts)
+keymap("n", "[b", ":bprevious<CR>", opts)
 keymap("n", "<leader>d", ":bdelete<CR>", opts)
 keymap("i", "<C-S>", "<C-O>:update<CR>", opts)
 keymap("n", "<C-S>", ":update<CR>", opts)

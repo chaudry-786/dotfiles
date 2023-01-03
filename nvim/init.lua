@@ -71,7 +71,8 @@ require('mini.ai').setup()                                      -- better text o
 require("plug-config/gruvbox-baby")                             -- gruvbox | theme
 require("plug-config/nvimTree")                                 -- nvim-tree | file explorer
 require("plug-config/lualine")                                  -- lualine.nvim | statusline
-require("plug-config/bufferline")                               -- bufferline.nvim
+-- disabling it temporarily to rely on marks and jumplist
+-- require("plug-config/bufferline")                               -- bufferline.nvim
 require("plug-config/treeSitter")                               -- tree-sitter
 require("plug-config/gitFugitive")                              -- vim-fugitive
 require("plug-config/gitSigns")                                 -- vim-gitgutter
