@@ -119,3 +119,6 @@ keymap("n", "<esc>", "<Cmd>noh<return><esc>", opts)
 -- indent and keep stay in visualMode
 keymap("v", ">", ">gv", opts)
 keymap("v", "<", "<gv", opts)
+
+-- fuzzy help for anything
+keymap("n", "<leader>?", ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", opts)
