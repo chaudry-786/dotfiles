@@ -4,9 +4,8 @@ local function working_dir()
         return " "
     end
     local modified_path = string.gsub(path, "/[^/]*$", "")
-    modified_path = string.gsub(modified_path, "/", "  ")
-    modified_path = " " .. modified_path
-    return modified_path
+    -- modified_path = string.gsub(modified_path, "/", "  ")
+    return "   " .. modified_path
 end
 
 require('lualine').setup({
@@ -14,8 +13,7 @@ require('lualine').setup({
         lualine_a = { "mode" },
         lualine_b = { "branch", { "diff", symbols = { added = " ", modified = "柳", removed = " " } } },
         lualine_c = {
-            { working_dir, component_separators = { right = "" }, color = { gui = "italic" } },
-            { "filetype", padding = { right = 0, left = 0 }, icon_only = true,
+            { "filetype", padding = { right = 0, left = 2 }, icon_only = true,
                 component_separators = { left = "", right = "" } },
             { "filename", padding = { left = 1 }, color = { gui = "bold,italic" } }
         },
@@ -33,7 +31,8 @@ require('lualine').setup({
     },
     winbar = {
         lualine_c = {
-            { "filetype", padding = { right = 0, left = 2 }, icon_only = true,
+            { working_dir, component_separators = { right = "" }, padding = {  left = 1, right = 1 } },
+            { "filetype", padding = { right = 0, left = 0 }, icon_only = true,
                 component_separators = { left = "" }
             },
             { "filename", padding = { left = 1, right = 1 }, color = { gui = "italic" },
@@ -51,7 +50,7 @@ require('lualine').setup({
     },
     options = {
         disabled_filetypes = {
-            winbar = { "aerial", "NvimTree", "dbui" },
+            winbar = { "aerial", "NvimTree", "dbui", "help", "alpha" },
         },
     }
 })

@@ -70,7 +70,7 @@ require("autocmds")
 
 -- PLUGINS configuration
 require('mini.ai').setup()                                      -- better text objects including quote and brackets
-require("plug-config/gruvbox-baby")                             -- gruvbox | theme
+require("plug-config/theme")                                    -- theme
 require("plug-config/nvimTree")                                 -- nvim-tree | file explorer
 require("plug-config/lualine")                                  -- lualine.nvim | statusline
 -- disabling it temporarily to rely on marks and jumplist

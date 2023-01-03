@@ -22,7 +22,7 @@ function custom_actions.fzf_multi_select(prompt_bufnr)
         actions.send_selected_to_qflist(prompt_bufnr)
         actions.open_qflist(prompt_bufnr)
     else
-        actions.file_edit(prompt_bufnr)
+        actions.select_default(prompt_bufnr)
     end
 end
 
