@@ -55,7 +55,7 @@ function ToggleHardMode()
 end
 
 ToggleHardMode()
-keymap("n", "<leader>th", ":lua ToggleHardMode()<CR>", {})
+keymap("n", "<leader>th", ":lua ToggleHardMode()<CR>", opts)
 
 -- do not copy delete and change command
 keymap("n", "d", [["_d]], opts)
