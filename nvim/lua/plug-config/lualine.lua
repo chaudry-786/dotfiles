@@ -30,7 +30,7 @@ require('lualine').setup({
         lualine_z = { "progress", "location" }
     },
     winbar = {
-        lualine_c = {
+        lualine_b = {
             { working_dir, component_separators = { right = "" }, padding = {  left = 1, right = 1 } },
             { "filetype", padding = { right = 0, left = 0 }, icon_only = true,
                 component_separators = { left = "" }
@@ -42,7 +42,7 @@ require('lualine').setup({
         },
     },
     inactive_winbar = {
-        lualine_c = {
+        lualine_b = {
             { "filetype", padding = { right = 0, left = 2 }, icon_only = true,
                 component_separators = { left = "", right = "" } },
             { "filename", padding = { left = 1, right = 2 }, color = { gui = "italic" } },

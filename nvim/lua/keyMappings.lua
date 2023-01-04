@@ -2,34 +2,60 @@ local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 local expr_opts = { noremap = true, silent = true, expr = true }
 
--- avoid repeating hjkl keys
-local id
-for _, key in ipairs({ "h", "j", "k", "l" }) do
-    local count = 0
-    vim.keymap.set("n", key, function()
-        if count >= 10 then
-            id = vim.notify("Hold it Cowboy!", vim.log.levels.WARN, {
-                icon = "🤠",
-                replace = id,
-                keep = function()
-                    return count >= 10
-                end,
-            })
-        else
-            count = count + 1
-            -- after 5 seconds decrement
-            vim.defer_fn(function()
-                count = count - 1
-            end, 5000)
-            return key
-        end
-    end, { expr = true })
-end
-
 -- set space as leader
 keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+-- avoid repeating hjkl keys
+local id
+local function avoid_hjkl(mode, mov_keys)
+    for _, key in ipairs(mov_keys) do
+        local count = 0
+        vim.keymap.set(mode, key, function()
+            if count >= 5 then
+                id = vim.notify("Hold it Cowboy!", vim.log.levels.WARN, {
+                    icon = "🤠",
+                    replace = id,
+                    keep = function()
+                        return count >= 5
+                    end,
+                })
+            else
+                count = count + 1
+                -- after 5 seconds decrement
+                vim.defer_fn(function()
+                    count = count - 1
+                end, 5000)
+                return key
+            end
+        end, { expr = true })
+    end
+end
+
+-- Hard mode toggle
+HardMode = false
+function ToggleHardMode()
+    local modes = { "n", "v" }
+    local movement_keys = { "h", "j", "k", "l" }
+    if HardMode then
+        for _, mode in pairs(modes) do
+            for _, m_key in pairs(movement_keys) do
+                vim.api.nvim_del_keymap(mode, m_key)
+            end
+        end
+        vim.notify("Hard mode OFF")
+    else
+        for _, mode in pairs(modes) do
+            avoid_hjkl(mode, movement_keys)
+        end
+        vim.notify("Hard mode ON")
+    end
+    HardMode = not HardMode
+end
+
+ToggleHardMode()
+keymap("n", "<leader>th", ":lua ToggleHardMode()<CR>", {})
 
 -- do not copy delete and change command
 keymap("n", "d", [["_d]], opts)
@@ -51,6 +77,7 @@ local function betterPaste()
     end
     return [["_dP]]
 end
+
 vim.keymap.set("v", "p", betterPaste, { expr = true, noremap = true })
 
 -- paste text on new line, if there is already linebreak do not insert a new one
