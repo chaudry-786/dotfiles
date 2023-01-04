@@ -49,6 +49,7 @@ require('lualine').setup({
         },
     },
     options = {
+        theme = "rose-pine",
         disabled_filetypes = {
             winbar = { "aerial", "NvimTree", "dbui", "help", "alpha" },
         },

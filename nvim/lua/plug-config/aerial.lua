@@ -14,7 +14,6 @@ require('aerial').setup({
 
 -- toggle | also disables fade plugin
 vim.api.nvim_set_keymap("n", "<leader>to", ":AerialToggle <CR>", { silent = true, noremap = true })
-vim.api.nvim_set_hl(0, "AerialLine", { bold = true, bg = "#3d3c3b" })
 
 -- Colour for Icons, same as cocPopMenu
 local symbolKind = {

@@ -2,7 +2,7 @@ local Plug = vim.fn["plug#"]
 
 vim.call("plug#begin", "~/.vim/plugged")
 -- UI
-Plug("luisiacc/gruvbox-baby")                                   -- Theme
+Plug("rose-pine/neovim")                                        -- Theme
 Plug("kyazdani42/nvim-web-devicons")                            -- File Icons
 Plug("kyazdani42/nvim-tree.lua")                                -- File explorer
 Plug("nvim-lualine/lualine.nvim")                               -- Status line
