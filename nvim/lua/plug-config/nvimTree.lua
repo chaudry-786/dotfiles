@@ -41,7 +41,7 @@ require("nvim-tree").setup({
     },
     filters = {
         -- dotfiles = true, --don't show hidden files
-        custom = { "venv", "__pycache__", ".git" } -- ignore folders
+        custom = { "venv", "__pycache__", ".git", "Session.vim" } -- ignore folders
     },
     actions = {
         open_file = {
@@ -51,11 +51,6 @@ require("nvim-tree").setup({
 })
 -- keyMappings
 vim.api.nvim_set_keymap("n", "<C-n>", ":NvimTreeToggle<CR>", { silent = true })
-
--- highlights
--- colours for git signs
-vim.api.nvim_set_hl(0,"NvimTreeGitDirty", { fg = "#26A269" })
-vim.api.nvim_set_hl(0,"NvimTreeGitStaged", { fg = "#26A269" })
 
 -- cursorline
 vim.api.nvim_create_autocmd("BufEnter", {

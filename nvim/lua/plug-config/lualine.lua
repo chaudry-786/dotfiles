@@ -13,7 +13,7 @@ local file_and_symbol_section = {
     { "filetype", padding = { right = 0, left = 0 }, icon_only = true,
         component_separators = { left = "" }
     },
-    { "filename", padding = { left = 1, right = 1 }, color = { gui = "italic" },
+    { "filename", padding = { left = 1, right = 1 }, color = { gui = "italic,bold" },
         component_separators = { left = "" }
     },
     { "aerial", sep = "  ", padding = { right = 2, left = 1 }, dense = false }

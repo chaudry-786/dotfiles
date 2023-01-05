@@ -20,7 +20,6 @@ Plug("honza/vim-snippets")                                      -- Snippets
 
 -- Motions | Movements
 Plug("phaazon/hop.nvim")                                        -- Easy hop around
-Plug("unblevable/quick-scope")                                  -- Highlights chars in current line to move easily
 Plug("christoomey/vim-tmux-navigator")                          -- Easy navigation between tmux panes and vim windows
 
 -- Text objects
@@ -80,7 +79,6 @@ require("plug-config/hop")                                      -- hop.vim
 -- require("plug-config/fzf")                                      -- fzf | fuzzy search finder
 require("plug-config/telescope")                                -- telescope | fuzzy search finder
 require("plug-config/vimspector")                               -- vimspector | debuggging
-require("plug-config/quickScope")                               -- quick-scope
 require("plug-config/nvim-surround")                            -- nvim-surround
 require("plug-config/noice")                                    -- noice
 require("plug-config/whichKey")                                 -- which-key

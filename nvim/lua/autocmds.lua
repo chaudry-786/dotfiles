@@ -23,11 +23,14 @@ vim.api.nvim_create_autocmd("SessionLoadPost",
     { group = "CustomAutoCmds", pattern = '*',
         callback = function() sessionLoaded = true end })
 
--- At start automatically start tracking a session
--- If no session was loaded and Session.vim file doens't exist in current dir
 vim.api.nvim_create_autocmd("VimEnter",
     { group = "CustomAutoCmds", pattern = '*',
         callback = function()
+            -- clear jumps
+            vim.cmd("clearjumps")
+
+            -- At start automatically start tracking a session
+            -- If no session was loaded and Session.vim file doens't exist in current dir
             vim.defer_fn(function()
                 if not sessionLoaded then
                     vim.cmd("Obsession")
