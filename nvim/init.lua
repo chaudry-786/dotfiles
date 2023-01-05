@@ -6,7 +6,6 @@ Plug("rose-pine/neovim")                                        -- Theme
 Plug("kyazdani42/nvim-web-devicons")                            -- File Icons
 Plug("kyazdani42/nvim-tree.lua")                                -- File explorer
 Plug("nvim-lualine/lualine.nvim")                               -- Status line
-Plug("akinsho/bufferline.nvim", { tag = "v2.*" })               -- Bufferline
 Plug("PeterRincker/vim-searchlight")                            -- Under cursor highlighted text in different colour
 Plug("lukas-reineke/indent-blankline.nvim")                     -- Indent guide
 Plug("karb94/neoscroll.nvim")                                   -- Smooth scroll
@@ -73,8 +72,6 @@ require('mini.ai').setup()                                      -- better text o
 require("plug-config/theme")                                    -- theme
 require("plug-config/nvimTree")                                 -- nvim-tree | file explorer
 require("plug-config/lualine")                                  -- lualine.nvim | statusline
--- disabling it temporarily to rely on marks and jumplist
--- require("plug-config/bufferline")                               -- bufferline.nvim
 require("plug-config/treeSitter")                               -- tree-sitter
 require("plug-config/gitFugitive")                              -- vim-fugitive
 require("plug-config/gitSigns")                                 -- vim-gitgutter
