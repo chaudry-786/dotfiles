@@ -26,6 +26,20 @@ function custom_actions.fzf_multi_select(prompt_bufnr)
     end
 end
 
+-- when file is opened with telescope folds do not work.
+-- :h zx zi
+-- https://github.com/nvim-telescope/telescope.nvim/issues/559
+vim.api.nvim_create_autocmd('BufRead', {
+    group = "CustomAutoCmds",
+    callback = function()
+        vim.api.nvim_create_autocmd('BufWinEnter', {
+            group = "CustomAutoCmds",
+            once = true,
+            command = 'normal! zxzi'
+        })
+    end
+})
+
 require('telescope').setup({
     defaults = {
         mappings = {
