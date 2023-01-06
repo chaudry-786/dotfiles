@@ -44,12 +44,12 @@ function ToggleHardMode()
                 vim.api.nvim_del_keymap(mode, m_key)
             end
         end
-        vim.notify("Hard mode OFF")
+        vim.notify("Hard mode OFF", vim.log.levels.INFO, {timeout=5})
     else
         for _, mode in pairs(modes) do
             avoid_hjkl(mode, movement_keys)
         end
-        vim.notify("Hard mode ON")
+        vim.notify("Hard mode ON",vim.log.levels.INFO, {timeout=5})
     end
     HardMode = not HardMode
 end
@@ -118,7 +118,7 @@ function _G.ReloadConfig()
         end
     end
     dofile(vim.env.MYVIMRC)
-    vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO)
+    vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO, {timeout=5})
 end
 
 keymap("n", "<leader>so", "<cmd>lua ReloadConfig()<CR>", { noremap = true, silent = false })
