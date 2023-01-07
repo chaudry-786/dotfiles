@@ -40,7 +40,7 @@ Plug("tpope/vim-dadbod")                                        -- Core plugin f
 Plug("kristijanhusak/vim-dadbod-ui")                            -- UI for vim-dadbod
 
 -- General
-Plug("tpope/vim-commentary")                                    -- Comment easily
+Plug("numToStr/Comment.nvim")                                   -- Comment easily
 Plug("tpope/vim-repeat")                                        -- Repeat macros and plug mappings with dot
 Plug("puremourning/vimspector")                                 -- Debugger
 -- Plug("junegunn/fzf", { ["do"] = vim.fn["fzf#install"] })        -- Installs FZF
@@ -68,6 +68,7 @@ require("autocmds")
 
 -- PLUGINS configuration
 require('mini.ai').setup()                                      -- better text objects including quote and brackets
+require('Comment').setup()                                      -- Comment easily
 require("plug-config/theme")                                    -- theme
 require("plug-config/nvimTree")                                 -- nvim-tree | file explorer
 require("plug-config/lualine")                                  -- lualine.nvim | statusline
