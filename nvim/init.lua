@@ -20,6 +20,7 @@ Plug("honza/vim-snippets")                                      -- Snippets
 
 -- Motions | Movements
 Plug("phaazon/hop.nvim")                                        -- Easy hop around
+Plug("ggandor/leap.nvim")                                       -- Easy movement around buffer
 Plug("christoomey/vim-tmux-navigator")                          -- Easy navigation between tmux panes and vim windows
 
 -- Text objects
@@ -76,7 +77,7 @@ require("plug-config/treeSitter")                               -- tree-sitter
 require("plug-config/gitFugitive")                              -- vim-fugitive
 require("plug-config/gitSigns")                                 -- vim-gitgutter
 require("plug-config/aerial")                                   -- aerial | code outline
-require("plug-config/hop")                                      -- hop.vim
+require("plug-config/movements")                                -- movements config
 -- require("plug-config/fzf")                                      -- fzf | fuzzy search finder
 require("plug-config/telescope")                                -- telescope | fuzzy search finder
 require("plug-config/vimspector")                               -- vimspector | debuggging
