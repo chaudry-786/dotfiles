@@ -50,6 +50,13 @@ require 'nvim-treesitter.configs'.setup {
                 ["]i"] = "@conditional.outer",
                 ["]c"] = "@comment.outer",
             },
+            goto_next_end = {
+                ["]]C"] = "@class.outer",
+                ["]]f"] = "@function.outer",
+                ["]]l"] = "@loop.outer",
+                ["]]i"] = "@conditional.outer",
+                ["]]c"] = "@comment.outer",
+            },
             goto_previous_start = {
                 ["[C"] = "@class.outer",
                 ["[f"] = "@function.outer",
@@ -57,12 +64,22 @@ require 'nvim-treesitter.configs'.setup {
                 ["[i"] = "@conditional.outer",
                 ["[c"] = "@comment.outer",
             },
+            goto_previous_end = {
+                ["[]C"] = "@class.outer",
+                ["[]f"] = "@function.outer",
+                ["[]l"] = "@loop.outer",
+                ["[]i"] = "@conditional.outer",
+                ["[]c"] = "@comment.outer",
+            },
         },
     },
 
     -- Auto tag for typescript, javascript
     autotag = { enable = true }
 }
+
+-- reminder on how to correctly navigate
+vim.keymap.set("", "[[", function() vim.notify("START = [f END = []f ") end, { noremap = true, silent = true })
 
 -- context
 require'treesitter-context'.setup{

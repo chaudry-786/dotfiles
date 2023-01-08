@@ -3,7 +3,10 @@ local set = vim.opt
 -- general
 set.encoding = "utf-8"                                  --default encoding
 set.syntax = "on"                                       --critical for better syntax highlighting
-set.scrolloff = 7                                       --allow n lines at the bottom and top
+set.scrolloff = 7                                       --allow n lines at the bottom and top from cursor
+-- TODO: a scrollbar when text doesn't fit window
+vim.wo.wrap = false                                     --do not wrap text if it doesn't fit in window
+set.sidescrolloff=10                                    --allow n chars on left and right from cusor
 set.ignorecase = true                                   --ignore case in search
 set.laststatus = 3                                      --global statusline
 set.updatetime = 300                                    --quciker update  time for better experience
