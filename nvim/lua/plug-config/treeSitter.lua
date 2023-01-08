@@ -20,7 +20,15 @@ require 'nvim-treesitter.configs'.setup {
         enable = true,
         disable = { "rust" },
     },
-
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "<CR>",
+            node_incremental = "<CR>",
+            node_decremental = "<BS>",
+            scope_incremental = "<Nop>", -- instead use IB
+        },
+    },
     -- nvim-treesitter/nvim-treesitter-textobjects
     textobjects = {
         select = {
@@ -37,6 +45,8 @@ require 'nvim-treesitter.configs'.setup {
                 ["ai"] = "@conditional.outer",
                 ["ii"] = "@conditional.inner",
                 ["ac"] = "@comment.outer",
+                ["aB"] = "@block.outer",
+                ["iB"] = "@block.inner",
             },
         },
 
@@ -49,6 +59,7 @@ require 'nvim-treesitter.configs'.setup {
                 ["]l"] = "@loop.outer",
                 ["]i"] = "@conditional.outer",
                 ["]c"] = "@comment.outer",
+                ["]B"] = "@block.outer",
             },
             goto_next_end = {
                 ["]]C"] = "@class.outer",
@@ -56,6 +67,7 @@ require 'nvim-treesitter.configs'.setup {
                 ["]]l"] = "@loop.outer",
                 ["]]i"] = "@conditional.outer",
                 ["]]c"] = "@comment.outer",
+                ["]]B"] = "@block.outer",
             },
             goto_previous_start = {
                 ["[C"] = "@class.outer",
@@ -63,6 +75,7 @@ require 'nvim-treesitter.configs'.setup {
                 ["[l"] = "@loop.outer",
                 ["[i"] = "@conditional.outer",
                 ["[c"] = "@comment.outer",
+                ["[B"] = "@block.outer",
             },
             goto_previous_end = {
                 ["[]C"] = "@class.outer",
@@ -70,6 +83,7 @@ require 'nvim-treesitter.configs'.setup {
                 ["[]l"] = "@loop.outer",
                 ["[]i"] = "@conditional.outer",
                 ["[]c"] = "@comment.outer",
+                ["[]B"] = "@block.outer",
             },
         },
     },
@@ -80,6 +94,7 @@ require 'nvim-treesitter.configs'.setup {
 
 -- reminder on how to correctly navigate
 vim.keymap.set("", "[[", function() vim.notify("START = [f END = []f ") end, { noremap = true, silent = true })
+vim.keymap.set("", "][", function() vim.notify("START = [f END = []f ") end, { noremap = true, silent = true })
 
 -- context
 require'treesitter-context'.setup{
