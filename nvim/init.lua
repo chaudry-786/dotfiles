@@ -104,5 +104,8 @@ vim.g.vimwiki_list = {{path = '$HOME/Dropbox/wiki'}}
 vim.g.vimwiki_ext = '.md'
 vim.g.vimwiki_global_ext = 0
 
+--indent line sane setting
+vim.g.indent_blankline_show_trailing_blankline_indent = false
+
 -- highlights
 require("highlights")
