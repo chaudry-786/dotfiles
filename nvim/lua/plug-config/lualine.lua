@@ -24,7 +24,13 @@ require('lualine').setup({
         lualine_a = { "mode" },
         lualine_b = { "branch", { "diff", symbols = { added = " ", modified = "柳", removed = " " } } },
         lualine_c = file_and_symbol_section,
-        lualine_x = {},
+        lualine_x = { { "buffers", mode = 2,
+            symbols = {
+                alternate_file = "",
+            },
+            max_length = vim.o.columns * 2 / 4,
+            component_separators = { left = "", right = "" },
+        } },
         lualine_y = {
             {
                 "diagnostics",
