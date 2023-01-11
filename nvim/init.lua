@@ -74,8 +74,7 @@ require("plug-config/theme")                                    -- theme
 require("plug-config/nvimTree")                                 -- nvim-tree | file explorer
 require("plug-config/lualine")                                  -- lualine.nvim | statusline
 require("plug-config/treeSitter")                               -- tree-sitter
-require("plug-config/gitFugitive")                              -- vim-fugitive
-require("plug-config/gitSigns")                                 -- vim-gitgutter
+require("plug-config/gitConfig")                                -- git realted plugs config
 require("plug-config/aerial")                                   -- aerial | code outline
 require("plug-config/movements")                                -- movements config
 -- require("plug-config/fzf")                                      -- fzf | fuzzy search finder
