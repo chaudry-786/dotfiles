@@ -131,9 +131,12 @@ keymap("i", "<M-Down>", [[<C-O>m`<C-O>:move +1<CR><C-O>``]], opts)
 keymap("v", "<M-Up>", [[:<C-U>exec "'<,'>move '<-" . (1+v:count1)<CR>gv]], opts)
 keymap("v", "<M-Down>", [[:<C-U>exec "'<,'>move '>+" . (0+v:count1)<CR>gv]], opts)
 
--- keep jumps and search in middle
-keymap("n", "n", "nzz", opts)
-keymap("n", "N", "Nzz", opts)
+-- keep jumps and search in middle also n and N are smart to go only one way
+-- when serach is going either way (up or down).
+vim.keymap.set("n", "n", function() return vim.v.searchforward == 1 and "nzz" or "Nzz" end,
+    { expr = true, noremap = true })
+vim.keymap.set("n", "N", function() return vim.v.searchforward == 1 and "Nzz" or "nzz" end,
+    { expr = true, noremap = true })
 keymap("n", "<C-o>", "<C-o>zz", opts)
 keymap("n", "<C-i>", "<C-i>zz", opts)
 
