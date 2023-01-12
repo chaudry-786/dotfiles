@@ -1,62 +1,62 @@
-local Plug = vim.fn["plug#"]
+require('packer').startup(function(use)
+    use "wbthomason/packer.nvim"                                -- Plugin manager
 
-vim.call("plug#begin", "~/.vim/plugged")
--- UI
-Plug("rose-pine/neovim")                                        -- Theme
-Plug("kyazdani42/nvim-web-devicons")                            -- File Icons
-Plug("kyazdani42/nvim-tree.lua")                                -- File explorer
-Plug("nvim-lualine/lualine.nvim")                               -- Status line
-Plug("PeterRincker/vim-searchlight")                            -- Under cursor highlighted text in different colour
-Plug("lukas-reineke/indent-blankline.nvim")                     -- Indent guide
-Plug("karb94/neoscroll.nvim")                                   -- Smooth scroll
-Plug("goolord/alpha-nvim")                                      -- Startup screen
-Plug("folke/noice.nvim")                                        -- UI for commandline, messages and popupmenu
-Plug("MunifTanjim/nui.nvim")                                    -- required for noice.nvim
-Plug("rcarriga/nvim-notify")                                    -- required for noice.nvim
+    -- UI
+    use "rose-pine/neovim"                                      -- Theme
+    use "kyazdani42/nvim-web-devicons"                          -- File Icons
+    use "kyazdani42/nvim-tree.lua"                              -- File explorer
+    use "nvim-lualine/lualine.nvim"                             -- Status line
+    use "PeterRincker/vim-searchlight"                          -- Under cursor highlighted text in different colour
+    use "lukas-reineke/indent-blankline.nvim"                   -- Indent guide
+    use "karb94/neoscroll.nvim"                                 -- Smooth scroll
+    use "goolord/alpha-nvim"                                    -- Startup screen
+    use "folke/noice.nvim"                                      -- UI for commandline, messages and popupmenu
+    use "MunifTanjim/nui.nvim"                                  -- required for noice.nvim
+    use "rcarriga/nvim-notify"                                  -- required for noice.nvim
 
--- Autocompletion And IDE Features
-Plug("neoclide/coc.nvim", { branch = "release" })               -- Conquer of Completion
-Plug("honza/vim-snippets")                                      -- Snippets
+    -- Autocompletion And IDE Features
+    use {"neoclide/coc.nvim", branch = "release"  }             -- Conquer of Completion
+    use "honza/vim-snippets"                                    -- Snippets
 
--- Motions | Movements
-Plug("phaazon/hop.nvim")                                        -- Easy hop around
-Plug("ggandor/leap.nvim")                                       -- Easy movement around buffer
-Plug("christoomey/vim-tmux-navigator")                          -- Easy navigation between tmux panes and vim windows
+    -- Motions | Movements
+    use "phaazon/hop.nvim"                                      -- Easy hop around
+    use "ggandor/leap.nvim"                                     -- Easy movement around buffer
+    use "christoomey/vim-tmux-navigator"                        -- Easy navigation between tmux panes and vim windows
 
--- Text objects
-Plug("kylechui/nvim-surround")                                  -- Easy text-object surrounding plugin
-Plug("echasnovski/mini.nvim")                                   -- Common plugins bundeled together (only using AI module)
+    -- Text objects
+    use "kylechui/nvim-surround"                                -- Easy text-object surrounding plugin
+    use "echasnovski/mini.nvim"                                 -- Common plugins bundeled together (only using AI module
 
--- Git
-Plug("tpope/vim-fugitive")                                      -- Git integration
-Plug("lewis6991/gitsigns.nvim")                                 -- Git signs, hunk actions and text objects
+    -- Git
+    use "tpope/vim-fugitive"                                    -- Git integration
+    use "lewis6991/gitsigns.nvim"                               -- Git signs, hunk actions and text objects
 
--- TreeSitter
-Plug("nvim-treesitter/nvim-treesitter", { ["do"] = ":TSUpdate" }) -- Syntax tree plugin
-Plug("nvim-treesitter/nvim-treesitter-textobjects")             -- Text objects based on treesitter
-Plug("nvim-treesitter/nvim-treesitter-context")                 -- Context pinned on top
+    -- TreeSitter
+    use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate" } -- Syntax tree plugin
+    use "nvim-treesitter/nvim-treesitter-textobjects"           -- Text objects based on treesitter
+    use "nvim-treesitter/nvim-treesitter-context"               -- Context pinned on top
 
--- SQL client | database
-Plug("tpope/vim-dadbod")                                        -- Core plugin for sql
-Plug("kristijanhusak/vim-dadbod-ui")                            -- UI for vim-dadbod
+    -- SQL client | database
+    use "tpope/vim-dadbod"                                      -- Core plugin for sql
+    use "kristijanhusak/vim-dadbod-ui"                          -- UI for vim-dadbod
 
--- General
-Plug("numToStr/Comment.nvim")                                   -- Comment easily
-Plug("tpope/vim-repeat")                                        -- Repeat macros and plug mappings with dot
-Plug("puremourning/vimspector")                                 -- Debugger
--- Plug("junegunn/fzf", { ["do"] = vim.fn["fzf#install"] })        -- Installs FZF
--- Plug("junegunn/fzf.vim")                                        -- Fuzzy finder
-Plug("nvim-lua/plenary.nvim")                                   -- required by telescope
-Plug("nvim-telescope/telescope.nvim")                           -- Fuzzy finder
-Plug("stevearc/aerial.nvim")                                    -- Code outline
-Plug("jiangmiao/auto-pairs")                                    -- Auto pairs
-Plug("windwp/nvim-ts-autotag")                                  -- Auto tag for typescript, javascript
-Plug("folke/which-key.nvim")                                    -- Which key
-Plug("tpope/vim-obsession")                                     -- Session management plugin
-Plug("preservim/vimux")                                         -- Vim to tmux panes (e.g execute current file, run tests)
-Plug("mrjones2014/smart-splits.nvim")                           -- Sane split resize with Alt-hjkl
-Plug("vimwiki/vimwiki")                                         -- personal wiki
-vim.call("plug#end")
+    -- General
+    use "numToStr/Comment.nvim"                                 -- Comment easily
+    use "tpope/vim-repeat"                                      -- Repeat macros and plug mappings with dot
+    use "puremourning/vimspector"                               -- Debugger
+    -- Plug("junegunn/fzf", { ["do"] = vim.fn["fzf#install"] })        -- Installs FZF
+    -- Plug("junegunn/fzf.vim")                                        -- Fuzzy finder
+    use "nvim-lua/plenary.nvim"                                 -- required by telescope
+    use "nvim-telescope/telescope.nvim"                         -- Fuzzy finder
+    use "stevearc/aerial.nvim"                                  -- Code outline
+    use "jiangmiao/auto-pairs"                                  -- Auto pairs
+    use "windwp/nvim-ts-autotag"                                -- Auto tag for typescript, javascript
+    use "folke/which-key.nvim"                                  -- Which key
+    use "tpope/vim-obsession"                                   -- Session management plugin
+    use "preservim/vimux"                                       -- Vim to tmux panes (e.g execute current file, run tests
+    use "mrjones2014/smart-splits.nvim"                         -- Sane split resize with Alt-hjkl
+    use "vimwiki/vimwiki"                                       -- personal wiki
+end)
 
 -- This is autocmd group for all the autocmds
 vim.api.nvim_create_augroup("CustomAutoCmds", { clear = true })
