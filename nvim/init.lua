@@ -46,8 +46,8 @@ require('packer').startup(function(use)
     use "puremourning/vimspector"                               -- Debugger
     -- Plug("junegunn/fzf", { ["do"] = vim.fn["fzf#install"] })        -- Installs FZF
     -- Plug("junegunn/fzf.vim")                                        -- Fuzzy finder
-    use "nvim-lua/plenary.nvim"                                 -- required by telescope
-    use "nvim-telescope/telescope.nvim"                         -- Fuzzy finder
+    use { "nvim-telescope/telescope.nvim",                      -- Fuzzy finder
+        requires = "nvim-lua/plenary.nvim" }
     use "stevearc/aerial.nvim"                                  -- Code outline
     use "jiangmiao/auto-pairs"                                  -- Auto pairs
     use "windwp/nvim-ts-autotag"                                -- Auto tag for typescript, javascript
