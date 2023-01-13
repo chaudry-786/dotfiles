@@ -1,3 +1,11 @@
+-- This is autocmd group for all the autocmds
+vim.api.nvim_create_augroup("CustomAutoCmds", { clear = true })
+
+-- Basic configuration
+require("options")
+require("keyMappings")
+require("autocmds")
+
 require('packer').startup(function(use)
     use "wbthomason/packer.nvim"                                -- Plugin manager
 
@@ -57,14 +65,6 @@ require('packer').startup(function(use)
     use "mrjones2014/smart-splits.nvim"                         -- Sane split resize with Alt-hjkl
     use "vimwiki/vimwiki"                                       -- personal wiki
 end)
-
--- This is autocmd group for all the autocmds
-vim.api.nvim_create_augroup("CustomAutoCmds", { clear = true })
-
--- Basic configuration
-require("options")
-require("keyMappings")
-require("autocmds")
 
 
 -- PLUGINS configuration
