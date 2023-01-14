@@ -10,101 +10,114 @@ require('packer').startup(function(use)
     use "wbthomason/packer.nvim"                                -- Plugin manager
 
     -- UI
-    use "rose-pine/neovim"                                      -- Theme
+    use { "rose-pine/neovim", config = function()
+        require("plug-config/theme")
+    end }                                                       -- Theme
     use "kyazdani42/nvim-web-devicons"                          -- File Icons
-    use "kyazdani42/nvim-tree.lua"                              -- File explorer
-    use "nvim-lualine/lualine.nvim"                             -- Status line
+    use { "kyazdani42/nvim-tree.lua", config = function()
+        require("plug-config/nvimTree")
+    end }                                                       -- File explorer
+    use { "nvim-lualine/lualine.nvim", config = function()
+        require("plug-config/lualine")
+    end }                                                       -- Status line
     use "PeterRincker/vim-searchlight"                          -- Under cursor highlighted text in different colour
-    use "lukas-reineke/indent-blankline.nvim"                   -- Indent guide
-    use "karb94/neoscroll.nvim"                                 -- Smooth scroll
-    use "goolord/alpha-nvim"                                    -- Startup screen
-    use "folke/noice.nvim"                                      -- UI for commandline, messages and popupmenu
-    use "MunifTanjim/nui.nvim"                                  -- required for noice.nvim
-    use "rcarriga/nvim-notify"                                  -- required for noice.nvim
+    use { "lukas-reineke/indent-blankline.nvim", config = function()
+        vim.g.indent_blankline_show_trailing_blankline_indent = false
+    end }                                                       -- Indent guide
+    use { "karb94/neoscroll.nvim", config = function()
+        require("neoscroll").setup()
+    end }                                                       -- Smooth scroll
+    use { "goolord/alpha-nvim", config = function()
+        require("plug-config/alpha")
+    end }                                                       -- Startup screen
+    use { "folke/noice.nvim", config = function()
+        require("plug-config/noice")
+    end, requires = { "MunifTanjim/nui.nvim",
+        "rcarriga/nvim-notify" } }                              -- UI for commandline, messages and popupmenu
+
 
     -- Autocompletion And IDE Features
-    use {"neoclide/coc.nvim", branch = "release"  }             -- Conquer of Completion
+    use { "neoclide/coc.nvim", branch = "release",
+        config = function() require("plug-config/coc") end }    -- Conquer of Completion
     use "honza/vim-snippets"                                    -- Snippets
+
 
     -- Motions | Movements
     use "phaazon/hop.nvim"                                      -- Easy hop around
     use "ggandor/leap.nvim"                                     -- Easy movement around buffer
     use "christoomey/vim-tmux-navigator"                        -- Easy navigation between tmux panes and vim windows
 
+
     -- Text objects
-    use "kylechui/nvim-surround"                                -- Easy text-object surrounding plugin
-    use "echasnovski/mini.nvim"                                 -- Common plugins bundeled together (only using AI module
+    use { "kylechui/nvim-surround", config = function()
+        require("plug-config/nvim-surround")
+    end }                                                       -- Easy text-object surrounding plugin
+    use { "echasnovski/mini.nvim", config = function()
+        require('mini.ai').setup()
+    end }                                                       -- Common plugins bundeled together (only using AI module
+
 
     -- Git
     use "tpope/vim-fugitive"                                    -- Git integration
     use "lewis6991/gitsigns.nvim"                               -- Git signs, hunk actions and text objects
 
+
     -- TreeSitter
-    use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate" } -- Syntax tree plugin
-    use "nvim-treesitter/nvim-treesitter-textobjects"           -- Text objects based on treesitter
-    use "nvim-treesitter/nvim-treesitter-context"               -- Context pinned on top
+    use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate",
+        requires = "nvim-treesitter/nvim-treesitter-textobjects",
+        config = function()
+            require("plug-config/treeSitter")
+        end }                                                   -- Syntax tree plugin
+
 
     -- SQL client | database
-    use "tpope/vim-dadbod"                                      -- Core plugin for sql
-    use "kristijanhusak/vim-dadbod-ui"                          -- UI for vim-dadbod
+    use { "tpope/vim-dadbod", config = function()
+        require("plug-config/sql-dadbod")
+    end, requires = "kristijanhusak/vim-dadbod-ui" }            -- Core plugin for sql
+
 
     -- General
-    use "numToStr/Comment.nvim"                                 -- Comment easily
-    use "tpope/vim-repeat"                                      -- Repeat macros and plug mappings with dot
-    use "puremourning/vimspector"                               -- Debugger
-    -- Plug("junegunn/fzf", { ["do"] = vim.fn["fzf#install"] })        -- Installs FZF
-    -- Plug("junegunn/fzf.vim")                                        -- Fuzzy finder
+    use { "numToStr/Comment.nvim", config = function()
+        require('Comment').setup()
+        vim.api.nvim_create_autocmd("FileType", { group = "CustomAutoCmds", pattern = { "json" }, command = [[setlocal commentstring=//\ %s]] })
+    end }                                                       -- Comment easily
+    use { "tpope/vim-repeat", config = function()
+        vim.api.nvim_command([[silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)]])
+    end }                                                       -- Repeat macros and plug mappings with dot
+    use { "puremourning/vimspector", config = function()
+        require("plug-config/vimspector")
+    end }                                                       -- Debugger
     use { "nvim-telescope/telescope.nvim",                      -- Fuzzy finder
-        requires = "nvim-lua/plenary.nvim" }
-    use "stevearc/aerial.nvim"                                  -- Code outline
+        requires = "nvim-lua/plenary.nvim", config = function()
+            require("plug-config/telescope")
+        end }
+    use { "stevearc/aerial.nvim", config = function()
+        require("plug-config/aerial")
+    end }                                                       -- Code outline
     use "jiangmiao/auto-pairs"                                  -- Auto pairs
     use "windwp/nvim-ts-autotag"                                -- Auto tag for typescript, javascript
-    use "folke/which-key.nvim"                                  -- Which key
+    use { "folke/which-key.nvim", config = function()
+        require("plug-config/whichKey")
+    end }                                                       -- Which key
     use "tpope/vim-obsession"                                   -- Session management plugin
-    use "preservim/vimux"                                       -- Vim to tmux panes (e.g execute current file, run tests
-    use "mrjones2014/smart-splits.nvim"                         -- Sane split resize with Alt-hjkl
-    use "vimwiki/vimwiki"                                       -- personal wiki
+    use { "preservim/vimux", config = function()
+        require("plug-config/vimux")
+    end }                                                       -- Vim to tmux panes (e.g execute current file, run tests
+    use { "mrjones2014/smart-splits.nvim", config = function()
+        require("plug-config/smart-splits")
+    end }                                                       -- Sane split resize with Alt-hjkl
+    use { "vimwiki/vimwiki", config = function()
+        vim.g.vimwiki_list = { { path = '$HOME/Dropbox/wiki' } }
+        vim.g.vimwiki_ext = '.md'
+        vim.g.vimwiki_global_ext = 0
+    end }                                                       -- personal wiki
 end)
 
 
 -- PLUGINS configuration
-require('mini.ai').setup()                                      -- better text objects including quote and brackets
-require('Comment').setup()                                      -- Comment easily
-require("plug-config/theme")                                    -- theme
-require("plug-config/nvimTree")                                 -- nvim-tree | file explorer
-require("plug-config/lualine")                                  -- lualine.nvim | statusline
-require("plug-config/treeSitter")                               -- tree-sitter
 require("plug-config/gitConfig")                                -- git realted plugs config
-require("plug-config/aerial")                                   -- aerial | code outline
 require("plug-config/movements")                                -- movements config
--- require("plug-config/fzf")                                      -- fzf | fuzzy search finder
-require("plug-config/telescope")                                -- telescope | fuzzy search finder
-require("plug-config/vimspector")                               -- vimspector | debuggging
-require("plug-config/nvim-surround")                            -- nvim-surround
-require("plug-config/noice")                                    -- noice
-require("plug-config/whichKey")                                 -- which-key
-require("plug-config/sql-dadbod")                               -- sql-vim-dadbod
-require("plug-config/alpha")                                    -- startup screen
-require("plug-config/vimux")                                    -- vim to tmux panes
-require("plug-config/smart-splits")                             -- smart split resize with Alt-hjkl
-require("plug-config/coc")                                      -- coc.vim
 
--- vim-commentary
-vim.api.nvim_create_autocmd("FileType", { group = "CustomAutoCmds", pattern = { "json" }, command = [[setlocal commentstring=//\ %s]] })
-
--- vim-repeat
-vim.api.nvim_command([[silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)]])
-
--- neoscroll
-require("neoscroll").setup()
-
--- vimwiki
-vim.g.vimwiki_list = {{path = '$HOME/Dropbox/wiki'}}
-vim.g.vimwiki_ext = '.md'
-vim.g.vimwiki_global_ext = 0
-
---indent line sane setting
-vim.g.indent_blankline_show_trailing_blankline_indent = false
 
 -- highlights
 require("highlights")

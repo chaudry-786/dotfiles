@@ -96,11 +96,3 @@ require 'nvim-treesitter.configs'.setup {
 vim.keymap.set("", "[[", function() vim.notify("START = [f END = []f ") end, { noremap = true, silent = true })
 vim.keymap.set("", "][", function() vim.notify("START = [f END = []f ") end, { noremap = true, silent = true })
 
--- context
-require'treesitter-context'.setup{
-    max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
-    separator = "-",
-}
---disable by default
-vim.cmd(":TSContextDisable")
-vim.api.nvim_set_keymap("n", "<leader>tc", ":TSContextToggle<CR>  :echo 'Context toggeled'<CR>", {noremap = true, silent = true})
