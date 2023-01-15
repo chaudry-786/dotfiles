@@ -29,8 +29,12 @@
         "sql"
     ],
     "inlayHint.enable": false,
+    // sql
+    "sql.database": "mysql",
     "sql.formatOptions": {
-        "tabWidth": 4
+        "tabWidth": 4,
+        // https://github.com/sql-formatter-org/sql-formatter/blob/master/docs/language.md
+        "language": "mysql"
     },
     // python
     "python.formatting.provider": "black",
