@@ -6,6 +6,7 @@
 #   ssh personal
 
 # To manage multiple ssh keys edit "~/ssh/config" and add identities as done below
+# To test connection ssh -T git@personal
 
 Host personal github.com
     HostName github.com

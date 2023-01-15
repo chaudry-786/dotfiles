@@ -6,6 +6,11 @@ Ubuntu Extensions
 3) Installed extensions:
     https://extensions.gnome.org/extension/307/dash-to-dock/
     https://extensions.gnome.org/extension/1287/unite/
+4) diable wayland (cursor doesn't hide in kitty)
+    sudo vim /etc/gdm3/custom.conf
+    remove #
+    #WaylandEnable=false
+    restart sudo systemctl restart gdm3
 
 To get, set and reset keys to move between work spaces:
     get:        gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-right
@@ -14,6 +19,12 @@ To get, set and reset keys to move between work spaces:
     set:        gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Control>Left']"
 
     reset:      gsettings reset org.gnome.desktop.wm.keybindings switch-to-workspace-left
+
+move window betwen monitors:
+    shift + win + arrow
+move window between workspaces:
+    caps +shift + alt + arrow
+
 
 Change CAPS LOCK to CTRL
     Install and use gnome-tweak-tool > Keyboard & Mouse > Keyboard > Additional Layout Options > Caps Lock behavior.

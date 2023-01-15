@@ -77,6 +77,7 @@ install_packages(){
         $1 install neovim
         $1 install git-delta
     elif [[ "$machine" == "Linux" ]]; then
+        $1 install zsh
         $1 install xclip
         $1 install g++
         # node 19.x https://github.com/nodesource/distributions
