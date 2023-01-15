@@ -111,6 +111,11 @@ require('packer').startup(function(use)
         vim.g.vimwiki_ext = '.md'
         vim.g.vimwiki_global_ext = 0
     end }                                                       -- personal wiki
+    use {
+        'glacambre/firenvim',
+        run = function() vim.fn['firenvim#install'](0) end,
+        config = function() require("plug-config.firenvim") end
+    }                                                          -- embed neovim in web browser
 end)
 
 

@@ -1,3 +1,9 @@
+-- disable lualine if launched by firenvim in web browser
+if vim.g.started_by_firenvim then
+  vim.cmd("set laststatus=0")
+  return
+end
+
 local function working_dir()
     local path = vim.fn.expand("%:~:.")
     if string.find(path, "/") == nil then
