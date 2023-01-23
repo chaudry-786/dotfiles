@@ -3,6 +3,9 @@ local set = vim.opt
 -- general
 set.encoding = "utf-8"                                  --default encoding
 set.syntax = "on"                                       --critical for better syntax highlighting
+set.spelloptions = "camel"                              --camel case for spellcheck
+set.spelllang = "en_gb"                                 --spell check language
+set.spell = true                                        --spell check enabled
 set.scrolloff = 7                                       --allow n lines at the bottom and top from cursor
 -- TODO: a scrollbar when text doesn't fit window
 vim.wo.wrap = false                                     --do not wrap text if it doesn't fit in window
