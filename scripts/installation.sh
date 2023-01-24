@@ -108,9 +108,8 @@ install_packages(){
 
 setup_tmux() {
 
-    # plugin to display cpu and gpu usage in status bar
-    rm -rf ~/tmux-cpu
-    git clone https://github.com/tmux-plugins/tmux-cpu ~/tmux-cpu
+    # tmux-plugin manager
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 }
 
 
