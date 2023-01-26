@@ -12,7 +12,8 @@ require 'nvim-treesitter.configs'.setup {
         "html",
         "css",
         "lua",
-        "regex"
+        "regex",
+        "sql"
     },
 
     -- TS modules

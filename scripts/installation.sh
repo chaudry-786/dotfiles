@@ -80,9 +80,15 @@ install_packages(){
         $1 install zsh
         $1 install xclip
         $1 install g++
+
         # node 19.x https://github.com/nodesource/distributions
         curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash - &&\
         sudo apt-get install -y nodejs
+        # npm global packages install issue fix
+        mkdir ~/.npm-global
+        npm config set prefix '~/.npm-global'
+        npm install -g tree-sitter-cli
+
         # latest neovim nightly
         curl -L -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
         sudo apt install -y ./nvim-linux64.deb

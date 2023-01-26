@@ -52,6 +52,9 @@ alias e="exit"
 # environment variables
 ANDROID_HOME=$HOME/Android/Sdk
 
+# npm global packages install fix
+export PATH=~/.npm-global/bin:$PATH
+
 # Better colour for directory in ls
 LS_COLORS=$LS_COLORS:'di=1;36:' ; export LS_COLORS
 # style for fzf-tab ls

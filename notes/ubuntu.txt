@@ -11,6 +11,10 @@ Ubuntu Extensions
     remove #
     #WaylandEnable=false
     restart sudo systemctl restart gdm3
+5) ensure Nividia graphic card is runnning:
+    run: nvidia-settings
+        if it's running it'll display crd information along with stats.
+        turn on performance mode
 
 To get, set and reset keys to move between work spaces:
     get:        gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-right
