@@ -34,6 +34,8 @@ link_files () {
     ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
     # rg uses this in non-git repos
     ln -sf ~/dotfiles/git/.gitignore ~/.ignore
+    # clang-format
+    ln -sf ~/dotfiles/langSettings/.clang-format ~/.clang-format
 
 }
 
