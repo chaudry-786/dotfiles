@@ -152,3 +152,8 @@ keymap("v", "<", "<gv", opts)
 
 -- fuzzy help for anything
 keymap("n", "<leader>?", ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", opts)
+
+-- very magic mode enabled by default (lua not behaving as expected with slashes)
+vim.cmd[[nnoremap / /\v]]
+vim.cmd[[nnoremap :s :%s/\v]]
+vim.cmd[[nnoremap :g :g/\v]]
