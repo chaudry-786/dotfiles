@@ -25,6 +25,13 @@ local file_and_symbol_section = {
     { "aerial", sep = "  ", padding = { right = 2, left = 1 }, dense = false }
 }
 
+-- easier to know how many lines to run the macro on in any direction
+local function lines_above_and_below()
+    local totalLines = vim.api.nvim_buf_line_count(0)
+    local currentLine, currentChar = unpack(vim.api.nvim_win_get_cursor(0))
+    return currentLine .. ":" .. totalLines - currentLine + 1
+end
+
 require('lualine').setup({
     sections = {
         lualine_a = { "mode" },
@@ -46,7 +53,7 @@ require('lualine').setup({
                 always_visible = true -- Show diagnostics even if there are none.
             }
         },
-        lualine_z = { "progress", "location" }
+        lualine_z = { "progress", lines_above_and_below  }
     },
     options = {
         theme = "rose-pine",
