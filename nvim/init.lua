@@ -20,7 +20,6 @@ require('packer').startup(function(use)
     use { "nvim-lualine/lualine.nvim", config = function()
         require("plug-config/lualine")
     end }                                                       -- Status line
-    use "PeterRincker/vim-searchlight"                          -- Under cursor highlighted text in different colour
     use { "lukas-reineke/indent-blankline.nvim", config = function()
         vim.g.indent_blankline_show_trailing_blankline_indent = false
     end }                                                       -- Indent guide
