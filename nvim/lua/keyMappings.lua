@@ -157,3 +157,9 @@ keymap("n", "<leader>?", ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", op
 vim.cmd[[nnoremap / /\v]]
 vim.cmd[[nnoremap :s :%s/\v]]
 vim.cmd[[nnoremap :g :g/\v]]
+
+--quick fix list
+--TODO make this toggle
+keymap("n", "<leader>tq", ":copen<CR>", opts)
+keymap("n", "[q", ":cprevious<CR>", opts)
+keymap("n", "]q", ":cnext<CR>", opts)

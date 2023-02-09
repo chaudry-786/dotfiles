@@ -40,6 +40,8 @@ set.dir = os.getenv("HOME") .. "/tmp"                   --swap file directory
 -- fold
 set.foldmethod = "expr"                                 --treesitter for folds
 set.foldexpr = "nvim_treesitter#foldexpr()"             --treesitter for folds
+vim.api.nvim_create_autocmd("FileType",
+    { group = "CustomAutoCmds", pattern = "sql", command = [[ setlocal foldmethod=indent ]] })
 set.foldenable = false                                  --do not auto create folds when file opens
 set.foldnestmax = 3                                     --max nested fold level
 set.foldlevel = 2                                       --fold level: zr or zm

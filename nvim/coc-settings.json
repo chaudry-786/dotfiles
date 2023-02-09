@@ -31,11 +31,11 @@
     ],
     "inlayHint.enable": false,
     // sql
-    "sql.database": "mysql",
+    "sql.database": "bigquery",
     "sql.formatOptions": {
         "tabWidth": 4,
         // https://github.com/sql-formatter-org/sql-formatter/blob/master/docs/language.md
-        "language": "mysql"
+        "language": "bigquery"
     },
     // python
     "python.formatting.provider": "black",
