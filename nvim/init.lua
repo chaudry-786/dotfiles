@@ -33,7 +33,9 @@ require('packer').startup(function(use)
         require("plug-config/noice")
     end, requires = { "MunifTanjim/nui.nvim",
         "rcarriga/nvim-notify" } }                              -- UI for commandline, messages and popupmenu
-
+    use { "danilamihailov/beacon.nvim", config = function()
+        vim.g.beacon_ignore_filetypes = { "NvimTree", "aerial" }
+    end }                                                       -- Flashes cursor on movements (e.g jump between windows)
 
     -- Autocompletion And IDE Features
     use { "neoclide/coc.nvim", branch = "release",
