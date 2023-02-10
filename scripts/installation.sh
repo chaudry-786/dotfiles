@@ -49,6 +49,13 @@ install_homebrew(){
     fi
 }
 
+install_languages() {
+
+    # gcc and make
+    $1 install build-essential
+    $1 install lua5.3
+}
+
 install_packages(){
     echo "==================================="
     echo "Installing Packages"
@@ -188,6 +195,7 @@ read -p "Are you sure to install PACKAGES? " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     install_packages "$install_prefix"
+    install_languages "$install_prefix"
     setup_vim
     setup_tmux
     install_font $machine
