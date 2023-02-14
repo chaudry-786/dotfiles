@@ -44,8 +44,12 @@ require('packer').startup(function(use)
 
 
     -- Motions | Movements
-    use "phaazon/hop.nvim"                                      -- Easy hop around
-    use "ggandor/leap.nvim"                                     -- Easy movement around buffer
+    use { "ggandor/leap.nvim", config = function()
+        local keymap = vim.api.nvim_set_keymap
+        require("leap").opts.safe_labels = {}
+        keymap("", "<leader>j", "<Plug>(leap-forward-to)", { silent = true })
+        keymap("", "<leader>k", "<Plug>(leap-backward-to)", { silent = true })
+    end }                                                       -- Easy movement around buffer
     use "christoomey/vim-tmux-navigator"                        -- Easy navigation between tmux panes and vim windows
 
 
@@ -122,7 +126,6 @@ end)
 
 -- PLUGINS configuration
 require("plug-config/gitConfig")                                -- git realted plugs config
-require("plug-config/movements")                                -- movements config
 
 
 -- highlights
