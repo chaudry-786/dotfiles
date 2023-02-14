@@ -25,12 +25,22 @@ local file_and_symbol_section = {
     { "aerial", sep = "  ", padding = { right = 2, left = 1 }, dense = false }
 }
 
--- easier to know how many lines to run the macro on in any direction
-local function lines_above_and_below()
+local function lines_and_search_count()
+    -- easier to know how many lines to run the macro on in any direction
     local totalLines = vim.api.nvim_buf_line_count(0)
     local currentLine, currentChar = unpack(vim.api.nvim_win_get_cursor(0))
-    return currentLine .. ":" .. totalLines - currentLine + 1
+    -- search count
+    local search_stat
+    if vim.v.hlsearch == 1 then
+        local sinfo = vim.fn.searchcount { maxcount = 0 }
+        search_stat = sinfo.incomplete > 0 and '[?/?]'
+            or sinfo.total > 0 and ('[%s/%s]'):format(sinfo.current, sinfo.total)
+            or nil
+    end
+    return (search_stat and " " .. search_stat or "") .. " " .. currentLine .. ":" .. totalLines - currentLine + 1
 end
+-- do not show search count message when searching, e.g. "[2/5]" because above function shows in lualine
+vim.o.shortmess = vim.o.shortmess .. "S"
 
 require('lualine').setup({
     sections = {
@@ -53,7 +63,7 @@ require('lualine').setup({
                 always_visible = true -- Show diagnostics even if there are none.
             }
         },
-        lualine_z = { "progress", lines_above_and_below  }
+        lualine_z = { "progress", lines_and_search_count  }
     },
     options = {
         theme = "rose-pine",
