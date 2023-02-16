@@ -155,8 +155,10 @@ keymap("n", "<leader>?", ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", op
 
 -- very magic mode enabled by default (lua not behaving as expected with slashes)
 vim.cmd[[nnoremap / /\v]]
-vim.cmd[[nnoremap :s :%s/\v]]
-vim.cmd[[nnoremap :g :g/\v]]
+vim.cmd[[nnoremap ? ?\v]]
+-- check if start of command line
+vim.cmd [[cnoremap <expr> s getcmdtype() == ":" && getcmdline() == "" ? "%s/\\v" : getcmdline() == "'<,'>" ? "s/\\v" : "s"]]
+vim.cmd [[cnoremap <expr> g getcmdtype() == ":" && getcmdline() == "" ? "g/\\v" : getcmdline() == "'<,'>" ? "g/\\v" :"g"]]
 
 --quick fix list
 --TODO make this toggle
