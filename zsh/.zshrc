@@ -26,7 +26,7 @@ alias testJS="cd ~/Desktop/test/JS"
 # py
 alias src="source venv/bin/activate"
 alias csrc="python3 -m venv venv && source venv/bin/activate"
-alias dsrc="deactivate && rm -rf venv"
+alias dsrc="rm -rf venv && deactivate"
 
 # programs
 # Load sessin if file exists || if no arguments passed
