@@ -15,20 +15,21 @@
     "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/",
     "session.saveOnVimLeave": false,
     "signature.target": "echo",
-    "coc.preferences.formatOnSaveFiletypes": [
-        "css",
-        "markdown",
-        "javascript",
-        "graphql",
-        "html",
-        "yaml",
-        "json",
-        "python",
-        "java",
-        "javascriptreact",
-        "sql",
-        "c"
-    ],
+    // auto format
+    // "coc.preferences.formatOnSaveFiletypes": [
+    //     "css",
+    //     "markdown",
+    //     "javascript",
+    //     "graphql",
+    //     "html",
+    //     "yaml",
+    //     "json",
+    //     "python",
+    //     "java",
+    //     "javascriptreact",
+    //     "sql",
+    //     "c"
+    // ],
     "inlayHint.enable": false,
     // sql
     "sql.database": "bigquery",

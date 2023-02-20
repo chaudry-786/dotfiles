@@ -54,7 +54,7 @@ function ToggleHardMode()
     HardMode = not HardMode
 end
 
-ToggleHardMode()
+-- ToggleHardMode()
 keymap("n", "<leader>th", ":lua ToggleHardMode()<CR>", opts)
 
 -- do not copy delete and change command
