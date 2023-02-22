@@ -41,6 +41,7 @@
     // python
     "python.formatting.provider": "black",
     "python.formatting.blackPath": "~/vim_venv/bin/black",
+    "python.analysis.typeCheckingMode": "off",
     // Lua
     "sumneko-lua.enableNvimLuaDev": true,
     "sumneko-lua.checkUpdate": false,
