@@ -14,7 +14,9 @@
     "snippets.snipmate.enable": false,
     "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/",
     "session.saveOnVimLeave": false,
-    "signature.target": "echo",
+    // doc shown when in insert mode, easily points what args are required
+    "signature.target": "float",
+    "signature.preferShownAbove": false,
     // auto format
     // "coc.preferences.formatOnSaveFiletypes": [
     //     "css",
