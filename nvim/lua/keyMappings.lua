@@ -44,12 +44,12 @@ function ToggleHardMode()
                 vim.api.nvim_del_keymap(mode, m_key)
             end
         end
-        vim.notify("Hard mode OFF", vim.log.levels.INFO, {timeout=5})
+        vim.notify("Hard mode OFF", vim.log.levels.INFO, { timeout = 5 })
     else
         for _, mode in pairs(modes) do
             avoid_hjkl(mode, movement_keys)
         end
-        vim.notify("Hard mode ON",vim.log.levels.INFO, {timeout=5})
+        vim.notify("Hard mode ON", vim.log.levels.INFO, { timeout = 5 })
     end
     HardMode = not HardMode
 end
@@ -118,7 +118,7 @@ function _G.ReloadConfig()
         end
     end
     dofile(vim.env.MYVIMRC)
-    vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO, {timeout=5})
+    vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO, { timeout = 5 })
 end
 
 keymap("n", "<leader>so", "<cmd>lua ReloadConfig()<CR>", { noremap = true, silent = false })
@@ -153,12 +153,42 @@ keymap("v", "<", "<gv", opts)
 -- fuzzy help for anything
 keymap("n", "<leader>?", ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", opts)
 
--- very magic mode enabled by default (lua not behaving as expected with slashes)
-vim.cmd[[nnoremap / /\v]]
-vim.cmd[[nnoremap ? ?\v]]
--- check if start of command line
-vim.cmd [[cnoremap <expr> s getcmdtype() == ":" && getcmdline() == "" ? "%s/\\v" : getcmdline() == "'<,'>" ? "s/\\v" : "s"]]
-vim.cmd [[cnoremap <expr> g getcmdtype() == ":" && getcmdline() == "" ? "g/\\v" : getcmdline() == "'<,'>" ? "g/\\v" :"g"]]
+-- very magic mode enabled by default
+-- do not use silent in command mode, it delays rhs key input until the next key
+keymap("n", "/", [[/\v]], { noremap = true })
+keymap("n", "?", [[?\v]], { noremap = true })
+local function t(key)
+    return vim.api.nvim_replace_termcodes(key, true, true, true)
+end
+-- ["cmdLineValue"] = { incomingKey = [[valueToBeSetInCmdLine] },
+local cmdLineReturns = {
+    [""] = { [t("s")] = [[%s/\v]], [t("g")] = [[g/\v]] },
+    ["'<,'>"] = { [t("s")] = [['<,'>s/\v]], [t("g")] = [['<,'>g/\v]] },
+    ["%s/\\v"] = { [t("<BS>")] = "s" },
+    ["g/\\v"] = { [t "<BS>"] = "g" },
+    ["'<,'>s/\\v"] = { [t("<BS>")] = "'<,'>s" },
+    ["'<,'>g/\\v"] = { [t("<BS>")] = "'<,'>g" }
+}
+
+function _G.cmdLineMappings(key)
+    local cmdline, cmdtype = vim.fn.getcmdline(), vim.fn.getcmdtype()
+
+    -- incoming keys are automataically converted to termcode
+    if cmdtype == ":" and cmdLineReturns[cmdline] and cmdLineReturns[cmdline][key] then
+        vim.fn.setcmdline("")
+        return cmdLineReturns[cmdline][key]
+    end
+
+    return key
+end
+
+local function set_cmdline_keymaps(keys)
+    for _, key in ipairs(keys) do
+        local mapping = string.format([[v:lua.cmdLineMappings("%s")]], key)
+        keymap("c", key, mapping, { noremap = true, expr = true })
+    end
+end
+set_cmdline_keymaps({ "s", "g", "<BS>" })
 
 --quick fix list
 --TODO make this toggle
