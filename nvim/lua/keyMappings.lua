@@ -160,25 +160,19 @@ keymap("n", "?", [[?\v]], { noremap = true })
 local function t(key)
     return vim.api.nvim_replace_termcodes(key, true, true, true)
 end
--- ["cmdLineValue"] = { incomingKey = [[valueToBeSetInCmdLine] },
+-- ["incomingKey"] = { currentCmdValue = [[valueToBeSetInCmdLine] },
 local cmdLineReturns = {
-    [""] = { [t("s")] = [[%s/\v]], [t("g")] = [[g/\v]] },
-    ["'<,'>"] = { [t("s")] = [['<,'>s/\v]], [t("g")] = [['<,'>g/\v]] },
-    ["%s/\\v"] = { [t("<BS>")] = "s" },
-    ["g/\\v"] = { [t "<BS>"] = "g" },
-    ["'<,'>s/\\v"] = { [t("<BS>")] = "'<,'>s" },
-    ["'<,'>g/\\v"] = { [t("<BS>")] = "'<,'>g" }
+    [t("s")] = { [""] = [[%s/\v]], ["'<,'>"] = [['<,'>s/\v]] },
+    [t("g")] = { [""] = [[g/\v]], ["'<,'>"] = [['<,'>g/\v]] },
+    [t("<BS>")] = { ["%s/\\v"] = "s", ["g/\\v"] = "g", ["'<,'>s/\\v"] = "'<,'>s", ["'<,'>g/\\v"] = "'<,'>g" }
 }
-
 function _G.cmdLineMappings(key)
     local cmdline, cmdtype = vim.fn.getcmdline(), vim.fn.getcmdtype()
-
     -- incoming keys are automataically converted to termcode
-    if cmdtype == ":" and cmdLineReturns[cmdline] and cmdLineReturns[cmdline][key] then
+    if cmdtype == ":" and cmdLineReturns[key] and cmdLineReturns[key][cmdline] then
         vim.fn.setcmdline("")
-        return cmdLineReturns[cmdline][key]
+        return cmdLineReturns[key][cmdline]
     end
-
     return key
 end
 
