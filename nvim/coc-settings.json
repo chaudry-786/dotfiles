@@ -16,7 +16,11 @@
     "session.saveOnVimLeave": false,
     // doc shown when in insert mode, easily points what args are required
     "signature.target": "float",
-    "signature.preferShownAbove": false,
+    "signature.floatConfig": {
+        "maxHeight": 5,
+        "border": true,
+        "rounded": true
+    },
     // auto format
     // "coc.preferences.formatOnSaveFiletypes": [
     //     "css",
@@ -44,7 +48,7 @@
     "python.formatting.provider": "black",
     "python.formatting.blackPath": "~/vim_venv/bin/black",
     "python.linting.enabled": true,
-    "python.analysis.typeCheckingMode": "off",
+    "python.analysis.typeCheckingMode": "basic",
     "python.linting.pylintEnabled": true,
     // Lua
     "sumneko-lua.enableNvimLuaDev": true,
@@ -69,8 +73,6 @@
     "suggest.floatConfig": {
         "border": true,
         "rounded": true,
-        "highlight": "CocCustomPopup",
-        "borderhighlight": "CocCustomPopupBoder"
     },
     "suggest.completionItemKindLabels": {
         "class": "\uf0e8 Class",
