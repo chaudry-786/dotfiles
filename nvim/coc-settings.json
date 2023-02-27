@@ -8,12 +8,12 @@
     "diagnostic.enableMessage": "jump",
     "diagnostic.virtualText": true,
     "diagnostic.virtualTextPrefix": "        ",
+    // snippets
     "snippets.extends": {
         "javascript": ["html", "javascriptreact"]
     },
     "snippets.snipmate.enable": false,
     "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/",
-    "session.saveOnVimLeave": false,
     // doc shown when in insert mode, easily points what args are required
     "signature.target": "float",
     "signature.floatConfig": {
@@ -21,22 +21,6 @@
         "border": true,
         "rounded": true
     },
-    // auto format
-    // "coc.preferences.formatOnSaveFiletypes": [
-    //     "css",
-    //     "markdown",
-    //     "javascript",
-    //     "graphql",
-    //     "html",
-    //     "yaml",
-    //     "json",
-    //     "python",
-    //     "java",
-    //     "javascriptreact",
-    //     "sql",
-    //     "c"
-    // ],
-    "inlayHint.enable": false,
     // sql
     "sql.database": "bigquery",
     "sql.formatOptions": {
@@ -57,16 +41,9 @@
     "Lua.telemetry.enable": false,
     "Lua.window.statusBar": false,
     "Lua.hint.enable": false,
+    // general
     "prettier.tabWidth": 4,
-    "list.source.files.excludePatterns": [
-        "**/venv/**",
-        "**/node_modules/**",
-        "**/node_modules/**/.*",
-        "**/node_modules/**/.*/**",
-        "**/.git/**"
-    ],
-    "list.source.files.args": ["--hidden", "--files"],
-    "list.source.grep.excludePatterns": ["**/venv/**", "**/.git/**"],
+    "inlayHint.enable": false,
     //suggest
     "coc.source.around.enable": false, // disables buffer, file and around completion
     "suggest.noselect": true,
