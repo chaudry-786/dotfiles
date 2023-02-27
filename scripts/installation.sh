@@ -139,6 +139,7 @@ setup_vim(){
     python3 -m venv ~/vim_venv
     source ~/vim_venv/bin/activate
     pip install black neovim
+    pip install pylint
 }
 
 setup_zsh() {
