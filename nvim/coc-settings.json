@@ -34,7 +34,7 @@
     "pyright.disableDiagnostics": true,                     // disable pyright linting
     "python.linting.enabled": true,                         // enable external linters
     "python.linting.pylintEnabled": true,                   // enable pylint
-    "python.linting.pylintArgs": ["-d", "C0114,C0116"],     // errors to ignore
+    "python.linting.pylintArgs": ["-d", "C0114,C0116,W0511"],     // errors to ignore
     // Lua
     "sumneko-lua.enableNvimLuaDev": true,
     "sumneko-lua.checkUpdate": false,
