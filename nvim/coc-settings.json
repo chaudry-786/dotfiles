@@ -41,6 +41,8 @@
     "Lua.telemetry.enable": false,
     "Lua.window.statusBar": false,
     "Lua.hint.enable": false,
+    //html
+    "htmldjango.djlint.profile": "jinja",
     // general
     "prettier.tabWidth": 4,
     "inlayHint.enable": false,

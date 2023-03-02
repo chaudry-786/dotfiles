@@ -20,6 +20,7 @@ vim.g["coc_global_extensions"] = {
     "coc-snippets",                 -- Snippet support
     "coc-marketplace",              -- Browse coc extensions
     "coc-prettier",                 -- Formatter for javascript, typescript and JSON
+    "coc-htmldjango"                -- Format, Lint and compl for html-django (jinja templating)
 }
 
 -- AutoCmds
@@ -119,3 +120,5 @@ vim.api.nvim_create_user_command("Format", ":call CocAction('format')", { nargs 
 -- Add `:OR` command for organize imports of the current buffer.
 vim.api.nvim_create_user_command("OI", ":call CocActionAsync('runCommand', 'editor.action.organizeImport')",
     { nargs = 0 })
+-- set all html files to htmldjango (coc-htmldjango)
+vim.api.nvim_create_autocmd("FileType", { group = "CustomAutoCmds", pattern = 'html', command = [[ set filetype=htmldjango ]] })
