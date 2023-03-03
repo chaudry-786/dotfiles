@@ -43,6 +43,15 @@
     "Lua.hint.enable": false,
     //html
     "htmldjango.djlint.profile": "jinja",
+    "html-css-support.enabledLanguages": [
+        "html",
+        "htmldjango",
+    ],
+    "html-css-support.styleSheets": [
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.css",
+        "/style.css",
+        "style.css"
+    ],
     // general
     "prettier.tabWidth": 4,
     "inlayHint.enable": false,

@@ -20,7 +20,8 @@ vim.g["coc_global_extensions"] = {
     "coc-snippets",                 -- Snippet support
     "coc-marketplace",              -- Browse coc extensions
     "coc-prettier",                 -- Formatter for javascript, typescript and JSON
-    "coc-htmldjango"                -- Format, Lint and compl for html-django (jinja templating)
+    "coc-htmldjango",               -- Format, Lint and compl for html-django (jinja templating)
+    "coc-html-css-support",         -- CSS completion
 }
 
 -- AutoCmds
