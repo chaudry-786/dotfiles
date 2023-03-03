@@ -162,16 +162,18 @@ local function t(key)
 end
 -- ["incomingKey"] = { currentCmdValue = [[valueToBeSetInCmdLine] },
 local cmdLineReturns = {
-    [t("s")] = { [""] = [[%s/\v]], ["'<,'>"] = [['<,'>s/\v]] },
-    [t("g")] = { [""] = [[g/\v]], ["'<,'>"] = [['<,'>g/\v]] },
-    [t("<BS>")] = { ["%s/\\v"] = "s", ["g/\\v"] = "g", ["'<,'>s/\\v"] = "'<,'>s", ["'<,'>g/\\v"] = "'<,'>g" }
+    [t("s")] = { [""] = [[%s/\v]],["'<,'>"] = [['<,'>s/\v]] },
+    [t("g")] = { [""] = [[g/\v]],["'<,'>"] = [['<,'>g/\v]] },
+    [t("v")] = { [""] = [[vimgrep /\v/ **/*.ext]] .. string.rep("<Left>", 10)},
+    [t("<BS>")] = { ["%s/\\v"] = "s",["g/\\v"] = "g",["'<,'>s/\\v"] = "'<,'>s",["'<,'>g/\\v"] = "'<,'>g",
+        ["vimgrep /\\v/ **/*.ext"] = "v" },
 }
 function _G.cmdLineMappings(key)
     local cmdline, cmdtype = vim.fn.getcmdline(), vim.fn.getcmdtype()
     -- incoming keys are automataically converted to termcode
     if cmdtype == ":" and cmdLineReturns[key] and cmdLineReturns[key][cmdline] then
         vim.fn.setcmdline("")
-        return cmdLineReturns[key][cmdline]
+        return t(cmdLineReturns[key][cmdline])
     end
     return key
 end
@@ -182,11 +184,19 @@ local function set_cmdline_keymaps(keys)
         keymap("c", key, mapping, { noremap = true, expr = true })
     end
 end
-set_cmdline_keymaps({ "s", "g", "<BS>" })
+set_cmdline_keymaps({ "s", "g", "v","<BS>" })
 
+function ToggleQuickfixList()
+    for _, win in pairs(vim.fn.getwininfo()) do
+        if win["quickfix"] == 1 then
+            vim.cmd "cclose"
+            return
+        end
+    end
+    vim.cmd "copen"
+end
 --quick fix list
---TODO make this toggle
-keymap("n", "<leader>tq", ":copen<CR>", opts)
+keymap("n", "<leader>tq", ":lua ToggleQuickfixList()<CR>", opts)
 keymap("n", "[q", ":cprevious<CR>", opts)
 keymap("n", "]q", ":cnext<CR>", opts)
 keymap("n", "[Q", ":cfirst<CR>", opts)
