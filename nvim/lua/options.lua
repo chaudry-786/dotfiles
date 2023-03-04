@@ -75,3 +75,15 @@ set.mouse = ""                                          --disable mouse
 
 set.pumwidth = 30                                       --minimum width for
 set.pumheight = 15                                      --maximum number of items listed in pum
+
+-- Any files/directories listed in global gitginore will be ignored by vimgrep
+local file = io.open(os.getenv("HOME") .. "/.gitignore", "r")
+-- If the file exists, read its contents and add each line to the wildignore option in Vim
+if file then
+    local contents = file:read("*all")
+    file:close()
+    for line in contents:gmatch("[^\r\n]+") do
+        local pattern = "*" .. line .. "*"
+        vim.opt.wildignore:append(pattern)
+    end
+end

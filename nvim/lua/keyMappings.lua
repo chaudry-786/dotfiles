@@ -164,9 +164,9 @@ end
 local cmdLineReturns = {
     [t("s")] = { [""] = [[%s/\v]],["'<,'>"] = [['<,'>s/\v]] },
     [t("g")] = { [""] = [[g/\v]],["'<,'>"] = [['<,'>g/\v]] },
-    [t("v")] = { [""] = [[vimgrep /\v/ **/*.ext]] .. string.rep("<Left>", 10)},
+    [t("v")] = { [""] = [[vimgrep /\v/ **/*]] .. string.rep("<Left>", 6)},
     [t("<BS>")] = { ["%s/\\v"] = "s",["g/\\v"] = "g",["'<,'>s/\\v"] = "'<,'>s",["'<,'>g/\\v"] = "'<,'>g",
-        ["vimgrep /\\v/ **/*.ext"] = "v" },
+        ["vimgrep /\\v/ **/*"] = "v" },
 }
 function _G.cmdLineMappings(key)
     local cmdline, cmdtype = vim.fn.getcmdline(), vim.fn.getcmdtype()
