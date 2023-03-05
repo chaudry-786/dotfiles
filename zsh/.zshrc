@@ -3,7 +3,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-plugins=(sudo git web-search history zsh-autosuggestions tmux)
+plugins=(sudo git web-search history zsh-autosuggestions tmux ripgrep)
 
 source $ZSH/oh-my-zsh.sh
 
