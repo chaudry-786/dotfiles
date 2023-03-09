@@ -1,50 +1,40 @@
 -- get rid of traling whitespace
-local function TrimWhiteSpace()
+vim.api.nvim_create_autocmd("BufWritePre", { group = "CustomAutoCmds", pattern = '*', callback = function()
     local save = vim.fn.winsaveview()
     vim.api.nvim_command([[keeppatterns %s/\s\+$//e]])
     vim.fn.winrestview(save)
-end
+end })
 
-vim.api.nvim_create_autocmd("BufWritePre", { group = "CustomAutoCmds", pattern = '*', callback = TrimWhiteSpace })
-
-local function yankLogic()
-    -- temporarily cancels document highlight by coc
-    vim.cmd("doautocmd CursorMovedI")
-    vim.highlight.on_yank({ timeout = 300, higroup = "YankHighlight" })
-end
 -- briefly highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost",
-    { group = "CustomAutoCmds", pattern = '*', callback = yankLogic })
+    { group = "CustomAutoCmds", pattern = '*', callback = function()
+        -- briefly cancel highlight by CoC
+        vim.cmd("doautocmd CursorMovedI")
+        vim.highlight.on_yank({ timeout = 300, higroup = "YankHighlight" })
+    end })
 
-
---Set to true if a session was loaded
+-- At start, if no session loaded and Session.vim exists then start tracking session
 local sessionLoaded = false
 vim.api.nvim_create_autocmd("SessionLoadPost",
     { group = "CustomAutoCmds", pattern = '*',
         callback = function() sessionLoaded = true end })
-
 vim.api.nvim_create_autocmd("VimEnter",
     { group = "CustomAutoCmds", pattern = '*',
         callback = function()
             -- clear jumps
             vim.cmd("clearjumps")
-
-            -- At start, if no session loaded and Session.vim exists then start tracking session
             vim.defer_fn(function()
                 if not sessionLoaded and vim.fn.filereadable("Session.vim") == 1 then
                     vim.cmd("Obsession")
                 end
             end, 1000)
         end
-
     }
 )
 
-
-vim.api.nvim_create_augroup("QfAutoCmds", { clear = true })
 -- automatiaclly, update qf on a given pattern for current buffer.
+vim.api.nvim_create_augroup("QfAutoCmds", { clear = true })
 local function create_qf_autocmds(qf_patterns)
-
     local c_autocmd = vim.api.nvim_create_autocmd
     for file_type, pattern in pairs(qf_patterns) do
         c_autocmd({ "BufWinEnter", "BufWritePost" },
@@ -59,7 +49,6 @@ local function create_qf_autocmds(qf_patterns)
                 end })
     end
 end
-
 local qf_patterns = { ["*.sql"] = [[\v(\a|_)+ AS \(]] }
 create_qf_autocmds(qf_patterns)
 
