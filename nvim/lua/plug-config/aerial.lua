@@ -1,4 +1,4 @@
-require('aerial').setup({
+require("aerial").setup({
     layout = {
         default_direction = "right",
         min_width = 20,

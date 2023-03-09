@@ -82,8 +82,8 @@ keymap("n", "<Leader>tB", ":lua require'dap'.clear_breakpoints()<CR>", opts)
 
 dap.configurations.python = {
     {
-        type = 'python';
-        request = 'launch';
+        type = "python";
+        request = "launch";
         name = "Launch file";
         program = "${file}";
         pythonPath = "${workspaceFolder}" .. "/venv/bin/python"
@@ -91,7 +91,7 @@ dap.configurations.python = {
 }
 
 dap.adapters.python = {
-    type = 'executable',
-    command = vim.fn.stdpath('data') .. '/mason/packages/debugpy/venv/bin/python',
-    args = { '-m', 'debugpy.adapter' },
+    type = "executable",
+    command = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python",
+    args = { "-m", "debugpy.adapter" },
 }

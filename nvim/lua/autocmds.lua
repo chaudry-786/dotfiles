@@ -1,5 +1,5 @@
 -- get rid of traling whitespace
-vim.api.nvim_create_autocmd("BufWritePre", { group = "CustomAutoCmds", pattern = '*', callback = function()
+vim.api.nvim_create_autocmd("BufWritePre", { group = "CustomAutoCmds", pattern = "*", callback = function()
     local save = vim.fn.winsaveview()
     vim.api.nvim_command([[keeppatterns %s/\s\+$//e]])
     vim.fn.winrestview(save)
@@ -7,7 +7,7 @@ end })
 
 -- briefly highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost",
-    { group = "CustomAutoCmds", pattern = '*', callback = function()
+    { group = "CustomAutoCmds", pattern = "*", callback = function()
         -- briefly cancel highlight by CoC
         vim.cmd("doautocmd CursorMovedI")
         vim.highlight.on_yank({ timeout = 300, higroup = "YankHighlight" })
@@ -16,10 +16,10 @@ vim.api.nvim_create_autocmd("TextYankPost",
 -- At start, if no session loaded and Session.vim exists then start tracking session
 local sessionLoaded = false
 vim.api.nvim_create_autocmd("SessionLoadPost",
-    { group = "CustomAutoCmds", pattern = '*',
+    { group = "CustomAutoCmds", pattern = "*",
         callback = function() sessionLoaded = true end })
 vim.api.nvim_create_autocmd("VimEnter",
-    { group = "CustomAutoCmds", pattern = '*',
+    { group = "CustomAutoCmds", pattern = "*",
         callback = function()
             -- clear jumps
             vim.cmd("clearjumps")
@@ -53,4 +53,4 @@ local qf_patterns = { ["*.sql"] = [[\v(\a|_)+ AS \(]] }
 create_qf_autocmds(qf_patterns)
 
 -- ignore quick fix list from buflist
-vim.api.nvim_create_autocmd("FileType", { group = "CustomAutoCmds", pattern = 'qf', command = [[ set nobuflisted ]] })
+vim.api.nvim_create_autocmd("FileType", { group = "CustomAutoCmds", pattern = "qf", command = [[ set nobuflisted ]] })

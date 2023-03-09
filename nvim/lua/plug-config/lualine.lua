@@ -33,8 +33,8 @@ local function lines_and_search_count()
     local search_stat
     if vim.v.hlsearch == 1 then
         local sinfo = vim.fn.searchcount { maxcount = 0 }
-        search_stat = sinfo.incomplete > 0 and '[?/?]'
-            or sinfo.total > 0 and ('[%s/%s]'):format(sinfo.current, sinfo.total)
+        search_stat = sinfo.incomplete > 0 and "[?/?]"
+            or sinfo.total > 0 and ("[%s/%s]"):format(sinfo.current, sinfo.total)
             or nil
     end
     return (search_stat and " " .. search_stat or "") .. " " .. currentLine .. ":" .. totalLines - currentLine + 1
@@ -42,7 +42,7 @@ end
 -- do not show search count message when searching, e.g. "[2/5]" because above function shows in lualine
 vim.o.shortmess = vim.o.shortmess .. "S"
 
-require('lualine').setup({
+require("lualine").setup({
     sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch", { "diff", symbols = { added = " ", modified = "柳", removed = " " } } },

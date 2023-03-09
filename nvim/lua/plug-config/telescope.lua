@@ -1,8 +1,8 @@
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
-local actions = require('telescope.actions')
-local action_state = require('telescope.actions.state')
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
 
 local custom_actions = {}
 -- if more than one items selected, secnd to qf list
@@ -29,25 +29,25 @@ end
 -- when file is opened with telescope folds do not work.
 -- :h zx zi
 -- https://github.com/nvim-telescope/telescope.nvim/issues/559
-vim.api.nvim_create_autocmd('BufRead', {
+vim.api.nvim_create_autocmd("BufRead", {
     group = "CustomAutoCmds",
     callback = function()
-        vim.api.nvim_create_autocmd('BufWinEnter', {
+        vim.api.nvim_create_autocmd("BufWinEnter", {
             group = "CustomAutoCmds",
             once = true,
-            command = 'normal! zxzi'
+            command = "normal! zxzi"
         })
     end
 })
 
-require('telescope').setup({
+require("telescope").setup({
     defaults = {
         mappings = {
             i = {
                 ["<esc>"] = actions.close,
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
-                ['<CR>'] = custom_actions.fzf_multi_select
+                ["<CR>"] = custom_actions.fzf_multi_select
             },
         },
         prompt_prefix = "   ",

@@ -6,7 +6,7 @@ require("options")
 require("keyMappings")
 require("autocmds")
 
-require('packer').startup(function(use)
+require("packer").startup(function(use)
     use "wbthomason/packer.nvim"                                -- Plugin manager
 
     -- UI
@@ -58,7 +58,7 @@ require('packer').startup(function(use)
         require("plug-config/nvim-surround")
     end }                                                       -- Easy text-object surrounding plugin
     use { "echasnovski/mini.nvim", config = function()
-        require('mini.ai').setup()
+        require("mini.ai").setup()
     end }                                                       -- Common plugins bundeled together (only using AI module
 
 
@@ -83,7 +83,7 @@ require('packer').startup(function(use)
 
     -- General
     use { "numToStr/Comment.nvim", config = function()
-        require('Comment').setup()
+        require("Comment").setup()
         vim.api.nvim_create_autocmd("FileType", { group = "CustomAutoCmds", pattern = { "json" }, command = [[setlocal commentstring=//\ %s]] })
     end }                                                       -- Comment easily
     use { "tpope/vim-repeat", config = function()
@@ -112,13 +112,13 @@ require('packer').startup(function(use)
         require("plug-config/smart-splits")
     end }                                                       -- Sane split resize with Alt-hjkl
     use { "vimwiki/vimwiki", config = function()
-        vim.g.vimwiki_list = { { path = '$HOME/Dropbox/wiki' } }
-        vim.g.vimwiki_ext = '.md'
+        vim.g.vimwiki_list = { { path = "$HOME/Dropbox/wiki" } }
+        vim.g.vimwiki_ext = ".md"
         vim.g.vimwiki_global_ext = 0
     end }                                                       -- personal wiki
     use {
-        'glacambre/firenvim',
-        run = function() vim.fn['firenvim#install'](0) end,
+        "glacambre/firenvim",
+        run = function() vim.fn["firenvim#install"](0) end,
         config = function() require("plug-config.firenvim") end
     }                                                          -- embed neovim in web browser
 end)

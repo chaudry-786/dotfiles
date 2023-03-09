@@ -9,15 +9,15 @@
 
 vim.g.firenvim_config = {
     globalSettings = {
-        alt = 'all',
+        alt = "all",
     },
     localSettings = {
-        ['.*'] = {
-            cmdline = 'neovim',
-            content = 'text',
+        [".*"] = {
+            cmdline = "neovim",
+            content = "text",
             priority = 0,
-            selector = 'textarea',
-            takeover = 'never',
+            selector = "textarea",
+            takeover = "never",
         },
     }
 }

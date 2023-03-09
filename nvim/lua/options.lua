@@ -57,7 +57,7 @@ function _G.MyFoldText()
         string.rep("-", ((winWidth - conLen) - 25)) ..
         "  " .. foldLineCount .. " lines: " .. string.rep(" ", 2 - string.len(tostring(foldPercInBuf))) .. foldPercInBuf .. "%"
 end
-set.foldtext      = 'v:lua.MyFoldText()'
+set.foldtext      = "v:lua.MyFoldText()"
 vim.opt.fillchars = { fold = " ", foldopen = "", foldclose = "", foldsep = " " }
 set.foldcolumn = "1"
 

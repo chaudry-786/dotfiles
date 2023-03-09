@@ -26,7 +26,7 @@ vim.g["coc_global_extensions"] = {
 
 -- AutoCmds
 -- highlight the symbol and its references when holding the cursor.
-vim.api.nvim_create_autocmd("CursorHold", { group = "CustomAutoCmds", pattern = '*', command = [[call CocActionAsync("highlight")]] })
+vim.api.nvim_create_autocmd("CursorHold", { group = "CustomAutoCmds", pattern = "*", command = [[call CocActionAsync("highlight")]] })
 
 -- key mappings
 -- toggle diagnostics
@@ -122,4 +122,4 @@ vim.api.nvim_create_user_command("Format", ":call CocAction('format')", { nargs 
 vim.api.nvim_create_user_command("OI", ":call CocActionAsync('runCommand', 'editor.action.organizeImport')",
     { nargs = 0 })
 -- set all html files to htmldjango (coc-htmldjango)
-vim.api.nvim_create_autocmd("FileType", { group = "CustomAutoCmds", pattern = 'html', command = [[ set filetype=htmldjango ]] })
+vim.api.nvim_create_autocmd("FileType", { group = "CustomAutoCmds", pattern = "html", command = [[ set filetype=htmldjango ]] })
