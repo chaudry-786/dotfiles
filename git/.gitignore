@@ -5,3 +5,4 @@ Session.vim
 # Needed for gitignore
 .git/
 node_modules/
+.env*
