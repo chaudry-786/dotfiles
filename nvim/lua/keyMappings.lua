@@ -58,10 +58,10 @@ end
 keymap("n", "<leader>th", ":lua ToggleHardMode()<CR>", opts)
 
 -- do not copy delete and change command
-keymap("n", "d", [["_d]], opts)
-keymap("v", "d", [["_d]], opts)
-keymap("n", "c", [["_c]], opts)
-keymap("v", "c", [["_c]], opts)
+vim.keymap.set({ "n", "v" }, "d", [["_d]], opts)
+vim.keymap.set({ "n", "v" }, "D", [["_D]], opts)
+vim.keymap.set({ "n", "v" }, "c", [["_c]], opts)
+vim.keymap.set({ "n", "v" }, "C", [["_C]], opts)
 
 -- better paste mappings
 local function betterPaste()
