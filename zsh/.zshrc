@@ -39,7 +39,7 @@ alias v='f() {
 };f'
 
 # open all git changed files
-alias vd='nvim $(git diff --name-only)'
+alias vd='nvim $(git diff --name-only | sed "s|^|$(git rev-parse --show-toplevel)/|")'
 # select diff files to open
 alias vds='nvim $(git diff --name-only | fzf -m)'
 
