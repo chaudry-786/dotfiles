@@ -110,8 +110,13 @@ keymap("n", "<leader>ec", ":CocConfig<cr>", opts)
 
 -- reload Config and all the modules
 function _G.ReloadConfig()
-    local customUserModules = { ["options"] = true, ["keyMappings"] = true, ["autocmds"] = true, ["highlights"] = true,
-        ["textObjects"] = true }
+    local customUserModules = {
+        ["options"] = true,
+        ["keyMappings"] = true,
+        ["autocmds"] = true,
+        ["highlights"] = true,
+        ["textObjects"] = true
+    }
     for name, _ in pairs(package.loaded) do
         if string.match(name, "^plug%-config") or customUserModules[name] then
             package.loaded[name] = nil
@@ -164,7 +169,7 @@ end
 local cmdLineReturns = {
     [t("s")] = { [""] = [[%s/\v]],["'<,'>"] = [['<,'>s/\v]] },
     [t("g")] = { [""] = [[g/\v]],["'<,'>"] = [['<,'>g/\v]] },
-    [t("v")] = { [""] = [[vimgrep /\v/ **/*]] .. string.rep("<Left>", 6)},
+    [t("v")] = { [""] = [[vimgrep /\v/ **/*]] .. string.rep("<Left>", 6) },
     [t("<BS>")] = { ["%s/\\v"] = "s",["g/\\v"] = "g",["'<,'>s/\\v"] = "'<,'>s",["'<,'>g/\\v"] = "'<,'>g",
         ["vimgrep /\\v/ **/*"] = "v" },
 }
@@ -184,7 +189,7 @@ local function set_cmdline_keymaps(keys)
         keymap("c", key, mapping, { noremap = true, expr = true })
     end
 end
-set_cmdline_keymaps({ "s", "g", "v","<BS>" })
+set_cmdline_keymaps({ "s", "g", "v", "<BS>" })
 
 function ToggleQuickfixList()
     for _, win in pairs(vim.fn.getwininfo()) do
@@ -195,6 +200,7 @@ function ToggleQuickfixList()
     end
     vim.cmd "copen"
 end
+
 --quick fix list
 keymap("n", "<leader>tq", ":lua ToggleQuickfixList()<CR>", opts)
 keymap("n", "[q", ":cprevious<CR>", opts)
@@ -204,5 +210,5 @@ keymap("n", "]Q", ":clast<CR>", opts)
 
 -- to make sure indent lines update
 for _, keymap in pairs({ "zo", "zO", "zc", "zC", "za", "zA", "zv", "zx", "zX", "zm", "zM", "zr", "zR", }) do
-    vim.api.nvim_set_keymap("n", keymap,  keymap .. "<CMD>IndentBlanklineRefresh<CR>", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap("n", keymap, keymap .. "<CMD>IndentBlanklineRefresh<CR>", { noremap = true, silent = true })
 end

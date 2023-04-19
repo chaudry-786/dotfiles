@@ -7,6 +7,6 @@ require("which-key").setup {
     },
     hidden = { "Telescope", "Fzf", "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " },
     triggers_blacklist = {
-        n = { ":"},
+        n = { ":" },
     },
 }

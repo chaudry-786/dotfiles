@@ -27,8 +27,11 @@ function ToggleDebugMode()
         -- create an autocommand to create debug mappings automatically for "debug_filetype" buffers
         vim.api.nvim_create_augroup("DebugAutocmd", { clear = true })
         vim.api.nvim_create_autocmd("FileType",
-            { group = "DebugAutocmd", pattern = { debug_filetype },
-                command = [[lua MapDebugKeys()]] })
+            {
+                group = "DebugAutocmd",
+                pattern = { debug_filetype },
+                command = [[lua MapDebugKeys()]]
+            })
         -- Trigger fileType autocmd for existing "debug_filetype" buffers so above command can run
         vim.cmd(string.format("let buf=bufnr('%%') | bufdo if &ft == '%s' | doautocmd FileType | endif | exec 'b' buf",
             debug_filetype))
@@ -88,7 +91,6 @@ vim.g.vimspector_configurations = {
         },
         breakpoints = breakPointDict
     },
-
     Flask = {
         adapter = "debugpy",
         filetypes = { "python" },
@@ -110,7 +112,7 @@ vim.g.vimspector_configurations = {
         adapter = "debugpy",
         filetypes = { "python" },
         configuration = {
-            args = { "crawl", "*${spiderName}"},
+            args = { "crawl", "*${spiderName}" },
             cwd = "${cwd}",
             program = "${cwd}/venv/bin/scrapy",
             python = "${cwd}/venv/bin/python",

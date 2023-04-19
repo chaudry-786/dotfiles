@@ -89,4 +89,3 @@ require "nvim-treesitter.configs".setup {
 -- reminder on how to correctly navigate
 vim.keymap.set("", "[[", function() vim.notify("START = [f END = []f ") end, { noremap = true, silent = true })
 vim.keymap.set("", "][", function() vim.notify("START = [f END = []f ") end, { noremap = true, silent = true })
-

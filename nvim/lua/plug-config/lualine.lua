@@ -1,7 +1,7 @@
 -- disable lualine if launched by firenvim in web browser
 if vim.g.started_by_firenvim then
-  vim.cmd("set laststatus=0")
-  return
+    vim.cmd("set laststatus=0")
+    return
 end
 
 local function working_dir()
@@ -22,7 +22,7 @@ local file_and_symbol_section = {
     { "filename", padding = { left = 1, right = 1 }, color = { gui = "italic,bold" },
         component_separators = { left = "" }
     },
-    { "aerial", sep = "  ", padding = { right = 2, left = 1 }, dense = false }
+    { "aerial",    sep = "  ",                         padding = { right = 2, left = 1 }, dense = false }
 }
 
 local function lines_and_search_count()
@@ -63,7 +63,7 @@ require("lualine").setup({
                 always_visible = true -- Show diagnostics even if there are none.
             }
         },
-        lualine_z = { "progress", lines_and_search_count  }
+        lualine_z = { "progress", lines_and_search_count }
     },
     options = {
         theme = "rose-pine",
