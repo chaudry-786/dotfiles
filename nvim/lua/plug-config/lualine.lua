@@ -45,7 +45,7 @@ vim.o.shortmess = vim.o.shortmess .. "S"
 require("lualine").setup({
     sections = {
         lualine_a = { "mode" },
-        lualine_b = { "branch", { "diff", symbols = { added = " ", modified = "柳", removed = " " } } },
+        lualine_b = { "branch", { "diff", symbols = { added = " ", modified = " ", removed = " " } } },
         lualine_c = file_and_symbol_section,
         lualine_x = { { "buffers", mode = 2,
             symbols = {

@@ -7,8 +7,8 @@ require("aerial").setup({
     show_guides = true,
     icons = {
         Class    = "\u{f0e8} ",
-        Function = "",
-        Method   = "",
+        Function = "",
+        Method   = "",
     }
 })
 

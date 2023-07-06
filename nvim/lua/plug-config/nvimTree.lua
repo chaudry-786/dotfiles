@@ -27,7 +27,7 @@ require("nvim-tree").setup({
                 git = {
                     unstaged = "",
                     staged = "",
-                    untracked = "留",
+                    untracked = "",
                 }
             }
         }
