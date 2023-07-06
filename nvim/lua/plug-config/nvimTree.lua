@@ -1,4 +1,16 @@
+local function on_attach(bufnr)
+    local api = require('nvim-tree.api')
+
+    local function opts(desc)
+        return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+    api.config.mappings.default_on_attach(bufnr)
+    vim.keymap.set('n', 'u', api.tree.change_root_to_parent, opts('Up'))
+    vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
+end
 require("nvim-tree").setup({
+    on_attach = on_attach,
     sort_by = "case_sensitive",
     hijack_cursor = true,
     sync_root_with_cwd = true,
@@ -9,12 +21,6 @@ require("nvim-tree").setup({
     },
     view = {
         adaptive_size = true,
-        mappings = {
-            list = {
-                { key = "u", action = "dir_up" },
-                { key = "C", action = "cd" },
-            },
-        },
     },
     renderer = {
         indent_markers = {
