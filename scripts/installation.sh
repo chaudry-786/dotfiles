@@ -15,29 +15,57 @@ what_os(){
     echo "$machine"
 }
 
-link_files () {
-    # Link all the config files
 
-    # tmux
+safe_git_clone() {
+    local repo_url=$1
+    local destination=$2
+    shift 2
+
+    # Check if the destination directory already exists
+    if [ -d "$destination" ]; then
+        echo "Removing existing directory: $destination"
+        rm -rf "$destination"
+    fi
+
+    # Clone the repository with any additional arguments provided
+    git clone "$@" "$repo_url" "$destination"
+}
+
+
+install_and_setup_tmux () {
+    $1 install tmux
     cd ~/
     ln -sf ~/dotfiles/tmux/.tmux.conf ~/.tmux.conf
-    # kitty
+    safe_git_clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm"
+}
+
+
+install_and_setup_kitty () {
+    # install kitty
+    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/
+    cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+    sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+    sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+
+    # link config file
     mkdir -p ~/.config/kitty
     ln -sf ~/dotfiles/kitty/kitty.conf ~/.config/kitty/kitty.conf
-    # nvim
-    ln -sfn ~/dotfiles/nvim ~/.config/nvim
-    # .zshrc and p10k theme config
-    ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
-    ln -sf ~/dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
+}
+
+
+link_files () {
     # link gitignore
     ln -sf ~/dotfiles/git/.gitconfig ~/.gitconfig
     ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
+
     # rg uses this in non-git repos
     ln -sf ~/dotfiles/git/.gitignore ~/.ignore
+
     # clang-format
     ln -sf ~/dotfiles/langSettings/.clang-format ~/.clang-format
-
 }
+
 
 install_homebrew(){
     which -s brew
@@ -49,90 +77,68 @@ install_homebrew(){
     fi
 }
 
-install_languages() {
 
+install_languages() {
     # gcc and make
     $1 install build-essential
     $1 install lua5.3
 }
 
-install_packages(){
-    echo "==================================="
-    echo "Installing Packages"
-    echo "neovim"
-    echo "nodejs"
-    echo "tmux"
-    echo "git"
-    echo "ripgrep"
-    echo "NPM: treesitter"
-    echo "silverSearcher"
-    echo "==================================="
-    $1 install curl
-    $1 install tmux
-    $1 install git
-    $1 install ripgrep
-    $1 install bat
-    # kitty
-    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-    ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/
-    cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
-    sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
-    sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
 
-    if [ "$machine" == "Mac" ]
-    then
-        $1 install reattach-to-user-namespace
-        $1 install nodejs
-        $1 install neovim
-        $1 install git-delta
-    elif [[ "$machine" == "Linux" ]]; then
-        $1 install zsh
-        $1 install xclip
-        $1 install g++
+install_packages() {
+    local installer="$1 install"
 
-        # node 19.x https://github.com/nodesource/distributions
-        curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash - &&\
-        sudo apt-get install -y nodejs
-        # npm global packages install issue fix
-        mkdir ~/.npm-global
-        npm config set prefix '~/.npm-global'
+    # install curl first, becuase it's dependency on other installations
+    "$installer" curl
+
+    local packages=("git" "ripgrep" "bat")
+
+    if [ "$machine" == "Mac" ]; then
+        packages+=("reattach-to-user-namespace" "nodejs" "neovim" "git-delta")
+    elif [ "$machine" == "Linux" ]; then
+        packages+=("xclip" "g++")
+
+        # node and npm installation
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+        nvm install node --lts
         npm install -g tree-sitter-cli
 
-        # latest neovim nightly
-        curl -L -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
-        sudo apt install -y ./nvim-linux64.deb
-        rm nvim-linux64.deb
-        # chrome
-        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo apt-get install libappindicator1
-        sudo dpkg -i google-chrome-stable_current_amd64.deb
-        rm google-chrome-stable_current_amd64.deb
         # git-delta | better git diff
+        # TODO this needs to be fixed
         gitDeltaFile="git-delta_x.xx.x_amd64.deb"
-        curl -s https://api.github.com/repos/dandavison/delta/releases/latest \
+        curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" \
         | grep "browser_download_url.*amd64.deb" | grep -v "musl" \
-        | cut -d : -f 2,3 | tr -d \" | wget -qi - -O $gitDeltaFile
-        sudo dpkg -i $gitDeltaFile && rm $gitDeltaFile
+        | cut -d : -f 2,3 | tr -d \" | wget -qi - -O "$gitDeltaFile"
+        sudo dpkg -i "$gitDeltaFile" && rm "$gitDeltaFile"
 
         # lazy git
-        LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep '"tag_name":' |  sed -E 's/.*"v*([^"]+)".*/\1/')
+        LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v*([^"]+)".*/\1/')
         curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
         sudo tar xf lazygit.tar.gz -C /usr/local/bin lazygit
     fi
+
+    for package in "${packages[@]}"; do
+        "$installer" "$package"
+    done
 }
 
-setup_tmux() {
 
-    # tmux-plugin manager
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-}
+install_and_setup_vim(){
 
+    # stable release neovim
+    curl -L -O https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
+    rm -rf "$HOME/nvim_extracted"
+    mkdir "$HOME/nvim_extracted"
+    tar xzvf nvim-linux64.tar.gz -C "$HOME/nvim_extracted"
+    ln -s "$HOME/nvim_extracted/nvim-linux64/bin/nvim" "/usr/bin/nvim"
+    rm nvim-linux64.tar.gz
 
-setup_vim(){
+    # link the config folder
+    ln -sfn ~/dotfiles/nvim ~/.config/nvim
 
     #Packer (Plugin manager)
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim\
-     ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    safe_git_clone  "https://github.com/wbthomason/packer.nvim"\
+     "~/.local/share/nvim/site/pack/packer/start/packer.nvim" --depth 1
 
     #Neovim Python virtualenv
     rm -rf ~/vim_venv
@@ -141,39 +147,42 @@ setup_vim(){
     pip install black neovim
 }
 
-setup_zsh() {
 
-    # change default zsh for usr
+install_and_setup_zsh() {
+
+    # install zsh and oh-my-zsh
+    $1 install zsh
     chsh -s $(which zsh)
-
-    # install oh-my-zhs
     rm -rf ~/.oh-my-zsh
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
 
     # auto suggestion plugin
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    safe_git_clone "https://github.com/zsh-users/zsh-autosuggestions" ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
     # fzf download and setup
-    rm -rf ~/.fzf
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    safe_git_clone "https://github.com/junegunn/fzf.git" "$HOME/.fzf" --depth 1
     yes | ~/.fzf/install
 
     #fzf-tab (replaces zsh default tab completion with fuzzy finder)
-    rm -rf ~/.fzf-tab
-    git clone https://github.com/Aloxaf/fzf-tab.git ~/.fzf-tab
+    safe_git_clone "https://github.com/Aloxaf/fzf-tab.git" "$HOME/.fzf-tab"
     #sourced in ~/.zshrc
 
     #download p10k theme
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+    safe_git_clone "https://github.com/romkatv/powerlevel10k.git" "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" --depth 1
+    ln -sf ~/dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
 }
+
 
 install_font(){
     # insatll jetBrainsMono Nerd Font
-    cd ~ && rm -rf nerd-fonts
-    git clone --filter=blob:none --sparse https://www.github.com/ryanoasis/nerd-fonts
+    cd ~
+    safe_git_clone "https://www.github.com/ryanoasis/nerd-fonts"  "$HOME/nerd-fonts" --filter=blob:none --sparse
     cd nerd-fonts
     git sparse-checkout add patched-fonts/JetBrainsMono install.sh
     ./install.sh JetBrainsMono
 }
+
 
 machine=$(what_os)
 if [ "$machine" == "Mac" ]
@@ -194,14 +203,16 @@ GREEN='\033[0;32m'
 read -p "Are you sure to install PACKAGES? " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
+    install_and_setup_zsh "$install_prefix"
     install_packages "$install_prefix"
+    install_and_setup_tmux "$install_prefix"
+    install_and_setup_kitty
+    install_and_setup_vim
+    link_files
     install_languages "$install_prefix"
-    setup_vim
-    setup_tmux
     install_font $machine
-    setup_zsh
     echo -e "${GREEN} SUCCESSFULLY installed all the packages"
 fi
 
-link_files
+# link_files
 echo -e "\n ${GREEN} SUCCESSFULLY linked all the config files"
