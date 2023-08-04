@@ -7,7 +7,7 @@ set.spelloptions = "camel"                              --camel case for spellch
 set.spelllang = "en_gb"                                 --spell check language
 set.scrolloff = 7                                       --allow n lines at the bottom and top from cursor
 -- TODO: a scrollbar when text doesn't fit window
-vim.wo.wrap = false                                     --do not wrap text if it doesn't fit in window
+-- vim.wo.wrap = false                                     --do not wrap text if it doesn't fit in window
 set.sidescrolloff=10                                    --allow n chars on left and right from cusor
 set.ignorecase = true                                   --ignore case in search
 set.smartcase = true                                    --if search contains capital then make it case sensitive
@@ -16,7 +16,8 @@ set.laststatus = 3                                      --global statusline
 set.updatetime = 300                                    --quciker update  time for better experience
 set.shortmess = vim.o.shortmess ..  "c"
 vim.g["python3_host_prog"] = "~/vim_venv/bin/python"    --python virtualenv path
-vim.opt.termguicolors = true                            -- true colours for nvim in tmux
+vim.opt.termguicolors = true                            --true colours for nvim in tmux
+set.breakindent = true                                  --every wrapped line will continue visually indented
 
 -- signcolumn
 set.number = true                                       --show cursorline number
