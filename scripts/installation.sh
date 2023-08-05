@@ -198,21 +198,32 @@ else
     exit 1
 fi
 
+
+function ask_for_confirmation() {
+    local action="$1"
+    shift
+    local func_to_execute="$1"
+    shift
+    read -p "Would you like to $action? (y/n): " -n 1 -r
+    echo # Move to a new line after user input
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        $func_to_execute "$@"  # Execute the function passed as an argument along with its arguments
+        return 0  # Return success (0) if the user confirms
+    fi
+}
+
+
 GREEN='\033[0;32m'
 
-read -p "Are you sure to install PACKAGES? " -n 1 -r
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    install_and_setup_zsh "$install_prefix"
-    install_packages "$install_prefix"
-    install_and_setup_tmux "$install_prefix"
-    install_and_setup_kitty
-    install_and_setup_vim
-    link_files
-    install_languages "$install_prefix"
-    install_font $machine
-    echo -e "${GREEN} SUCCESSFULLY installed all the packages"
-fi
+echo "Welcome to the installation script!"
 
-# link_files
-echo -e "\n ${GREEN} SUCCESSFULLY linked all the config files"
+ask_for_confirmation "install and setup Zsh" install_and_setup_zsh "$install_prefix"
+ask_for_confirmation "install packages" install_packages "$install_prefix"
+ask_for_confirmation "install and setup Tmux" install_and_setup_tmux "$install_prefix"
+ask_for_confirmation "install and setup Kitty" install_and_setup_kitty
+ask_for_confirmation "install and setup Vim" install_and_setup_vim
+ask_for_confirmation "link files" link_files
+ask_for_confirmation "install languages" install_languages "$install_prefix"
+ask_for_confirmation "install font" install_font "$machine"
+
+echo -e "${GREEN} SUCCESSFULL"
