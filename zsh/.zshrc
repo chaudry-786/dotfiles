@@ -24,7 +24,18 @@ alias testC="cd ~/Desktop/test/c"
 alias testJS="cd ~/Desktop/test/JS"
 
 # py
-alias src="source venv/bin/activate"
+activate_venv() {
+    # check if we're inside a Git repository
+    if git rev-parse --is-inside-work-tree &>/dev/null; then
+        # if inside Git repo, activate venv using Git repo's root directory
+        source "$(git rev-parse --show-toplevel)/venv/bin/activate"
+    else
+        # if not in Git repo, activate venv using current directory
+        source venv/bin/activate
+    fi
+}
+# Create an alias to call the function
+alias src="activate_venv"
 alias csrc="python3 -m venv venv && source venv/bin/activate && pip install pylint"
 alias dsrc="rm -rf venv && deactivate"
 
