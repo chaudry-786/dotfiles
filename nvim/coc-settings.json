@@ -21,6 +21,7 @@
         "border": true,
         "rounded": true
     },
+    "signature.preferShownAbove": false,
     // sql
     "sql.database": "bigquery",
     "sql.formatOptions": {

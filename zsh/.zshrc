@@ -3,7 +3,11 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-plugins=(sudo git web-search history zsh-autosuggestions tmux ripgrep)
+plugins=(sudo git web-search history zsh-autosuggestions tmux ripgrep copyfile)
+copydir() {
+    # works on linux requires xclip
+    echo -n $PWD | xclip -selection clipboard
+}
 
 source $ZSH/oh-my-zsh.sh
 
@@ -74,6 +78,9 @@ export PATH=~/.npm-global/bin:$PATH
 LS_COLORS=$LS_COLORS:'di=1;36:' ; export LS_COLORS
 # style for fzf-tab ls
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# zoxide
+eval "$(zoxide init zsh)"
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

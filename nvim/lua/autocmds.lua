@@ -5,6 +5,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     callback = function()
         local save = vim.fn.winsaveview()
         vim.api.nvim_command([[keeppatterns %s/\s\+$//e]])
+        -- encoding issue on WSL, which pastes extra line break
+        vim.api.nvim_command([[keeppatterns %s/\r$//e]])
         vim.fn.winrestview(save)
     end
 })

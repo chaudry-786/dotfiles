@@ -6,6 +6,7 @@ set.syntax = "on"                                       --critical for better sy
 set.spelloptions = "camel"                              --camel case for spellcheck
 set.spelllang = "en_gb"                                 --spell check language
 set.scrolloff = 7                                       --allow n lines at the bottom and top from cursor
+set.spell = true                                        --enable spell check by default
 -- TODO: a scrollbar when text doesn't fit window
 -- vim.wo.wrap = false                                     --do not wrap text if it doesn't fit in window
 set.sidescrolloff=10                                    --allow n chars on left and right from cusor
