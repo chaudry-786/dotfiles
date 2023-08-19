@@ -108,6 +108,21 @@ vim.g.vimspector_configurations = {
         },
         breakpoints = breakPointDict
     },
+    PyTest = {
+        adapter = "debugpy",
+        filetypes = { "python" },
+        configuration = {
+            args = { "${file}::${args}" },
+            cwd = "${workspaceRoot}",
+            debugOptions = {},
+            program = "${workspaceRoot}/venv/bin/pytest",
+            python = "${workspaceRoot}/venv/bin/python",
+            request = "launch",
+            stopOnEntry = false,
+            type = "python",
+        },
+        breakpoints = breakPointDict
+    },
     ScrapySpider = {
         adapter = "debugpy",
         filetypes = { "python" },
