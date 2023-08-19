@@ -42,14 +42,16 @@ alias dsrc="rm -rf venv && deactivate"
 [ -f ~/.completion_pytest.zsh ] && source ~/.completion_pytest.zsh
 
 # programs
-# Load sessin if file exists || if no arguments passed
-alias v='f() {
+v() {
+    # activate venv, if exists
+    src
+    # load sessin if file exists || if no arguments passed
     if [ -f "Session.vim" ] && [ $# -eq 0 ]; then
         nvim -S Session.vim
     else
-        nvim $@
+        nvim "$@"
     fi
-};f'
+}
 
 # open all git changed files
 alias vd='nvim $(git diff --name-only | sed "s|^|$(git rev-parse --show-toplevel)/|")'
