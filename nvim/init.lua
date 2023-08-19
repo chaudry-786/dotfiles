@@ -41,7 +41,9 @@ require("packer").startup(function(use)
     use { "neoclide/coc.nvim", branch = "release",
         config = function() require("plug-config/coc") end }    -- Conquer of Completion
     use "honza/vim-snippets"                                    -- Snippets
-
+    use { "vim-test/vim-test", config = function()
+        require("plug-config/vim-test")
+    end }                                                       -- Test plugin
 
     -- Motions | Movements
     use { "ggandor/leap.nvim", config = function()
