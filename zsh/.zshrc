@@ -38,13 +38,8 @@ activate_venv() {
 alias src="activate_venv"
 alias csrc="python3 -m venv venv && source venv/bin/activate && pip install pylint"
 alias dsrc="rm -rf venv && deactivate"
-#pytest autocompletion
-_pytest_complete() {
-    local curcontext="$curcontext" state line
-    typeset -A opt_args
-    compadd "$@" $( pytest --collect-only -q 2>&1 | awk '/^test_/ { print $1 }')
-}
-compdef _pytest_complete pytest
+# python related autocompletion
+[ -f ~/.completion_pytest.zsh ] && source ~/.completion_pytest.zsh
 
 # programs
 # Load sessin if file exists || if no arguments passed

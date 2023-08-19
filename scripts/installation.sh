@@ -171,6 +171,9 @@ install_and_setup_zsh() {
     #download p10k theme
     safe_git_clone "https://github.com/romkatv/powerlevel10k.git" "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" --depth 1
     ln -sf ~/dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
+
+    #pytest autocompletion
+    ln -sf ~/dotfiles/zsh/completion_pytest.zsh ~/.completion_pytest.zsh
 }
 
 
