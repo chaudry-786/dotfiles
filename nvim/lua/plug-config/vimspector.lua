@@ -68,73 +68,32 @@ keymap("n", "<Leader>tB", ":call vimspector#ClearBreakpoints()<CR>", opts)
 
 -- reference https://puremourning.github.io/vimspector/configuration.html#predefined-variables
 -- examples ~/.vim/plugged/vimspector/support/test
--- TODO: dynamically create debug configs, reduce repeated lines
-local breakPointDict = {
-    exception = {
-        raised = "N",
-        uncaught = "",
-        userUnhandled = ""
+local function createPythonDebugConfig(args, program, python, cwd)
+    return {
+        adapter = "debugpy",
+        filetypes = { "python" },
+        configuration = {
+            args = args,
+            cwd = cwd,
+            program = program,
+            python = python,
+            request = "launch",
+            stopOnEntry = false,
+            type = "python",
+        },
+        breakpoints = {
+            exception = {
+                raised = "N",
+                uncaught = "",
+                userUnhandled = ""
+            }
+        }
     }
-}
+end
+
 vim.g.vimspector_configurations = {
-    CurrentFile = {
-        adapter = "debugpy",
-        filetypes = { "python" },
-        configuration = {
-            args = { "*${args}" },
-            cwd = "${workspaceRoot}",
-            program = "${file}",
-            python = "${workspaceRoot}/venv/bin/python",
-            request = "launch",
-            stopOnEntry = false,
-            type = "python",
-        },
-        breakpoints = breakPointDict
-    },
-    Flask = {
-        adapter = "debugpy",
-        filetypes = { "python" },
-        configuration = {
-            args = { "run" },
-            cwd = "${workspaceRoot}",
-            debugOptions = {},
-            env = { FLASK_APP = "app.py" },
-            jinja = true,
-            program = "${workspaceRoot}/venv/bin/flask",
-            python = "${workspaceRoot}/venv/bin/python",
-            request = "launch",
-            stopOnEntry = false,
-            type = "python",
-        },
-        breakpoints = breakPointDict
-    },
-    PyTest = {
-        adapter = "debugpy",
-        filetypes = { "python" },
-        configuration = {
-            args = { "${file}::${args}" },
-            cwd = "${workspaceRoot}",
-            debugOptions = {},
-            program = "${workspaceRoot}/venv/bin/pytest",
-            python = "${workspaceRoot}/venv/bin/python",
-            request = "launch",
-            stopOnEntry = false,
-            type = "python",
-        },
-        breakpoints = breakPointDict
-    },
-    ScrapySpider = {
-        adapter = "debugpy",
-        filetypes = { "python" },
-        configuration = {
-            args = { "crawl", "*${spiderName}" },
-            cwd = "${cwd}",
-            program = "${cwd}/venv/bin/scrapy",
-            python = "${cwd}/venv/bin/python",
-            request = "launch",
-            stopOnEntry = false,
-            type = "python",
-        },
-        breakpoints = breakPointDict
-    }
+    CurrentFile = createPythonDebugConfig({ "*${args}" }, "${file}", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
+    Flask = createPythonDebugConfig({ "run" }, "${workspaceRoot}/venv/bin/flask", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
+    PyTest = createPythonDebugConfig({ "${file}::${args}" }, "${workspaceRoot}/venv/bin/pytest", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
+    ScrapySpider = createPythonDebugConfig({ "crawl", "*${spiderName}" }, "${cwd}/venv/bin/scrapy", "${cwd}/venv/bin/python", "${cwd}")
 }
