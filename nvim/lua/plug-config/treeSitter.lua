@@ -21,14 +21,6 @@ require "nvim-treesitter.configs".setup {
         enable = true,
         disable = { "rust" },
     },
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "<CR>",
-            node_incremental = "<CR>",
-            node_decremental = "<BS>",
-        },
-    },
     -- nvim-treesitter/nvim-treesitter-textobjects
     textobjects = {
         select = {

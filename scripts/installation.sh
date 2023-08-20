@@ -96,7 +96,7 @@ install_packages() {
     if [ "$machine" == "Mac" ]; then
         packages+=("reattach-to-user-namespace" "nodejs" "neovim" "git-delta")
     elif [ "$machine" == "Linux" ]; then
-        packages+=("xclip" "g++")
+        packages+=("xclip" "g++" "gawk")
 
         # node and npm installation
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
@@ -115,6 +115,9 @@ install_packages() {
         LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v*([^"]+)".*/\1/')
         curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
         sudo tar xf lazygit.tar.gz -C /usr/local/bin lazygit
+
+        #zoxide
+        curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
     fi
 
     for package in "${packages[@]}"; do
