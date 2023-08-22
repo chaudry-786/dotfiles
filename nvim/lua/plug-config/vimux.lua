@@ -5,7 +5,7 @@ local function send_commands_to_tmux_pane(filetype_and_commands)
             {
                 group = "CustomAutoCmds",
                 pattern = { fileType },
-                command = "noremap <silent><buffer> <Leader>xf :call VimuxRunCommand(" ..
+                command = "noremap <silent><buffer> <Leader>rf :call VimuxRunCommand(" ..
                 command .. [[)<CR>]]
             })
     end

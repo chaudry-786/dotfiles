@@ -1,9 +1,9 @@
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
-keymap("n", "<leader>xt", ":TestNearest<CR>", opts)
-keymap("n", "<leader>xT", ":TestFile<CR>", opts)
-keymap("n", "<leader>xl", ":TestLast<CR>", opts)
-keymap("n", "<leader>xs", ":TestSuite<CR>", opts)
+keymap("n", "<leader>rt", ":TestNearest<CR>", opts)
+keymap("n", "<leader>rT", ":TestFile<CR>", opts)
+keymap("n", "<leader>rl", ":TestLast<CR>", opts)
+keymap("n", "<leader>rs", ":TestSuite<CR>", opts)
 
 -- global
 vim.g["test#strategy"] = "make"
