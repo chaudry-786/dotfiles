@@ -2,6 +2,11 @@ local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 local expr_opts = { noremap = true, silent = true, expr = true }
 
+-- converts raw string input to termcodes to be fed as keys
+local function t(key)
+    return vim.api.nvim_replace_termcodes(key, true, true, true)
+end
+
 -- set space as leader
 keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
@@ -72,7 +77,7 @@ vim.keymap.set({ "n", "v" }, "C", [["_C]], opts)
 --      exactly the highlighted text.
 
 -- better paste mappings
-local function betterPaste()
+local function betterPasteVisual()
     -- <C-r><C-p>+ :pastes in insert mode and maintains indent
     local register_text = vim.fn.getreg()
     local has_newline = string.match(register_text, "\n$") ~= nil
@@ -87,11 +92,27 @@ local function betterPaste()
 
     return [["_di<C-r><C-p>+<esc>]]
 end
+vim.keymap.set("v", "p", betterPasteVisual, expr_opts)
 
-vim.keymap.set("v", "p", betterPaste, expr_opts)
+local function betterPasteNormal(register)
+    local cmd
+    local pre_cursor = (register == "") and "" or '"'
+    if not register or register == "" then
+        cmd = [[match(getreg(), "\n$") == -1 ? "p" : "o<C-r><C-p>+<esc>\"_ddk"]]
+    else
+        cmd = string.format(
+            [[match(getreg('%s'), "\n$") == -1 ? "\"%sp" : "o<C-r><C-p>%s<esc>\"_ddk"]],
+            register, register, register)
+    end
+    keymap("n", pre_cursor .. register .. "p", cmd, expr_opts)
+end
 
 -- if new line at the end, paste below, also maintain indent and delete extra line
-keymap("n", "p", [[match(getreg(), "\n$") == -1 ? "p" : "o<C-r><C-p>+<esc>\"_dd"]], expr_opts)
+-- for all registers
+for reg in ("abcdefghijklmnopqrstuvwxyz"):gmatch('.') do
+    betterPasteNormal(reg)
+end
+betterPasteNormal('')
 
 -- paste text on new line, if there is already line break do not insert a new one and maintain indent
 keymap("n", "<leader>p", [[match(getreg(), "\n$") == -1 ? "o<C-r><C-p>+<esc>" : "o<C-r><C-p>+<esc>\"_dd"]], expr_opts)
@@ -175,9 +196,6 @@ keymap("n", "<leader>?", ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", op
 -- do not use silent in command mode, it delays rhs key input until the next key
 keymap("n", "/", [[/\v]], { noremap = true })
 keymap("n", "?", [[?\v]], { noremap = true })
-local function t(key)
-    return vim.api.nvim_replace_termcodes(key, true, true, true)
-end
 -- ["incomingKey"] = { currentCmdValue = [[valueToBeSetInCmdLine] },
 local cmdLineReturns = {
     [t("s")] = { [""] = [[%s/\v]],["'<,'>"] = [['<,'>s/\v]] },
