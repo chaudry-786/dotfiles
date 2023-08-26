@@ -75,7 +75,8 @@ local function betterPaste()
         return [["_d"zP]]
     elseif not has_newline and vim.fn.mode() == "V" then
         vim.notify("Pasting after deleting lines", vim.log.levels.INFO, { timeout = 5 })
-        return [["_dd<esc>O<esc>p]]
+        -- <C-r><C-p>+ = pastes in insert mode and maintains indent
+        return [["_dO<C-r><C-p>+<esc>]]
     end
 
     vim.notify("Default paste\n", vim.log.levels.INFO, { timeout = 5 })
