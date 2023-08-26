@@ -63,31 +63,39 @@ vim.keymap.set({ "n", "v" }, "D", [["_D]], opts)
 vim.keymap.set({ "n", "v" }, "c", [["_c]], opts)
 vim.keymap.set({ "n", "v" }, "C", [["_C]], opts)
 
+-- Friction points in nvim default paste behaviour which lead to this customization:
+-- 1) Doesn't indent pasted text.
+-- 2) In visual modes, it copies replaced text.
+-- 3) In visual mode, adds a new line break at the start pasted text.
+-- 4) Personal preference: in visual mode it should get rid of line
+--      break at the end of pasted text. so it would replace
+--      exactly the highlighted text.
+
 -- better paste mappings
 local function betterPaste()
+    -- <C-r><C-p>+ :pastes in insert mode and maintains indent
     local register_text = vim.fn.getreg()
     local has_newline = string.match(register_text, "\n$") ~= nil
 
     if has_newline and vim.fn.mode() == "v" then
         register_text = string.gsub(register_text, "\n$", "")
         vim.fn.setreg("z", register_text)
-        vim.notify("Pasting with modification", vim.log.levels.INFO, { timeout = 5 })
         return [["_d"zP]]
     elseif not has_newline and vim.fn.mode() == "V" then
-        vim.notify("Pasting after deleting lines", vim.log.levels.INFO, { timeout = 5 })
-        -- <C-r><C-p>+ = pastes in insert mode and maintains indent
         return [["_dO<C-r><C-p>+<esc>]]
     end
 
-    vim.notify("Default paste\n", vim.log.levels.INFO, { timeout = 5 })
-    return [["_dP]]
+    return [["_di<C-r><C-p>+<esc>]]
 end
 
-vim.keymap.set("v", "p", betterPaste, { expr = true, noremap = true })
+vim.keymap.set("v", "p", betterPaste, expr_opts)
 
--- paste text on new line, if there is already linebreak do not insert a new one
-keymap("n", "<leader>p", [[match(getreg(), "\n$") == -1 ? "o<esc>p" : "p"]], expr_opts)
-keymap("n", "<leader>P", [[match(getreg(), "\n$") == -1 ? "O<esc>p" : "P"]], expr_opts)
+-- if new line at the end, paste below, also maintain indent and delete extra line
+keymap("n", "p", [[match(getreg(), "\n$") == -1 ? "p" : "o<C-r><C-p>+<esc>\"_dd"]], expr_opts)
+
+-- paste text on new line, if there is already line break do not insert a new one and maintain indent
+keymap("n", "<leader>p", [[match(getreg(), "\n$") == -1 ? "o<C-r><C-p>+<esc>" : "o<C-r><C-p>+<esc>\"_dd"]], expr_opts)
+keymap("n", "<leader>P", [[match(getreg(), "\n$") == -1 ? "O<C-r><C-p>+<esc>" : "O<C-r><C-p>+<esc>\"_dd"]], expr_opts)
 
 -- move at the start and end of line easily
 keymap("", "H", "^", {})
