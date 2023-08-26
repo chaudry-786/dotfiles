@@ -65,16 +65,20 @@ vim.keymap.set({ "n", "v" }, "C", [["_C]], opts)
 
 -- better paste mappings
 local function betterPaste()
-    if string.match(vim.fn.getreg(), "\n$") and vim.fn.mode() == "v" then
-        local register_text = vim.fn.getreg()
-        -- get rid of line break at the end
+    local register_text = vim.fn.getreg()
+    local has_newline = string.match(register_text, "\n$") ~= nil
+
+    if has_newline and vim.fn.mode() == "v" then
         register_text = string.gsub(register_text, "\n$", "")
-        -- set content to temporary register
         vim.fn.setreg("z", register_text)
+        vim.notify("Pasting with modification", vim.log.levels.INFO, { timeout = 5 })
         return [["_d"zP]]
-    elseif string.match(vim.fn.getreg(), "\n$") == nil and vim.fn.mode() == "V" then
+    elseif not has_newline and vim.fn.mode() == "V" then
+        vim.notify("Pasting after deleting lines", vim.log.levels.INFO, { timeout = 5 })
         return [["_dd<esc>O<esc>p]]
     end
+
+    vim.notify("Default paste\n", vim.log.levels.INFO, { timeout = 5 })
     return [["_dP]]
 end
 
