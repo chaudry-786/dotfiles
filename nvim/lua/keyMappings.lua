@@ -132,9 +132,11 @@ keymap("v", "<C-S>", "<C-C>:update<CR>", opts)
 keymap("n", "<leader>q", ":quit<CR>", opts)
 keymap("n", "<leader><leader>q", ":qall<CR>", opts)
 
---  easier split window
+-- windows shortcuts
 keymap("n", "<leader>|", ":vsplit<CR>", opts)
 keymap("n", "<leader>-", ":split<CR>", opts)
+keymap("n", "<leader>>", "<c-w><c-r>", opts)
+keymap("n", "<leader><", "<c-w><c-r>", opts)
 
 -- edit common files quickly
 keymap("n", "<leader>ev", ":edit $MYVIMRC<cr>", opts)
