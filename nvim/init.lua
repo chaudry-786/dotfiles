@@ -44,6 +44,9 @@ require("packer").startup(function(use)
     use { "vim-test/vim-test", config = function()
         require("plug-config/vim-test")
     end }                                                       -- Test plugin
+    use { "Vigemus/iron.nvim", config = function()
+        require("plug-config/iron")
+    end }                                                       -- REPL
 
     -- Motions | Movements
     use { "ggandor/leap.nvim", config = function()
