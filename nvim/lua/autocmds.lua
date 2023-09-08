@@ -98,3 +98,6 @@ vim.api.nvim_create_autocmd("InsertCharPre", {
         vim.api.nvim_input("<Esc>m'" .. row + 1 .. "gg" .. col + 1 .. "|if<Esc>`'la")
     end,
 })
+
+-- automatically reload file when changed outside of vim
+vim.api.nvim_create_autocmd("FocusGained", { group = "CustomAutoCmds", pattern = "*", command = [[checktime]] })
