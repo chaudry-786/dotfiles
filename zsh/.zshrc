@@ -1,21 +1,39 @@
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
+#------------------------------------------------
+# Define variables and settings
+#------------------------------------------------
+ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
+EDITOR="nvim"
+ANDROID_HOME="$HOME/Android/Sdk"
+PATH="$HOME/.npm-global/bin:$PATH"
 
-plugins=(sudo git web-search history zsh-autosuggestions tmux ripgrep copyfile)
-copydir() {
-    # works on linux requires xclip
-    echo -n $PWD | xclip -selection clipboard
-}
+#------------------------------------------------
+# Define plugins
+#------------------------------------------------
+plugins=(
+    sudo
+    git
+    web-search
+    history
+    zsh-autosuggestions
+    tmux
+    ripgrep
+    copyfile
+)
 
+#------------------------------------------------
+# Load Oh My Zsh
+#------------------------------------------------
 source $ZSH/oh-my-zsh.sh
 
-# Preferred editor
-export EDITOR='nvim'
+#------------------------------------------------
+# Powerlevel10k theme
+#------------------------------------------------
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# aliasas
-# easy cd
+#------------------------------------------------
+# Aliases for Navigation
+#------------------------------------------------
 alias up="cd .."
 alias des="cd ~/Desktop"
 alias dev="cd ~/Desktop/development"
@@ -27,96 +45,91 @@ alias testJ="cd ~/Desktop/test/java"
 alias testC="cd ~/Desktop/test/c"
 alias testJS="cd ~/Desktop/test/JS"
 
-# py
-activate_venv() {
-    # check if we're inside a Git repository
+#------------------------------------------------
+# Git-related Aliases
+#------------------------------------------------
+# open modified files with nvim
+alias vd='nvim $(git diff --name-only | sed "s|^|$(git rev-parse --show-toplevel)/|")'
+# choose what modified files to open with nvim
+alias vds='nvim $(git diff --name-only | fzf -m)'
+
+#------------------------------------------------
+# Python virtual Environment and Development
+#------------------------------------------------
+alias csrc="python3 -m venv venv && source venv/bin/activate && pip install pylint"
+alias dsrc="rm -rf venv && deactivate"
+# if in git repo then activate from root directory, or from current dir.
+src() {
     if git rev-parse --is-inside-work-tree &>/dev/null; then
-        # if inside Git repo, activate venv using Git repo's root directory
         source "$(git rev-parse --show-toplevel)/venv/bin/activate"
     else
-        # if not in Git repo, activate venv using current directory
         source venv/bin/activate
     fi
 }
-# Create an alias to call the function
-alias src="activate_venv"
-alias csrc="python3 -m venv venv && source venv/bin/activate && pip install pylint"
-alias dsrc="rm -rf venv && deactivate"
-# python related autocompletion
-[ -f ~/.completion_pytest.zsh ] && source ~/.completion_pytest.zsh
 
-# programs
+#------------------------------------------------
+# Utility Aliases
+#------------------------------------------------
+alias fp="fzf --preview 'batcat --style=numbers --color=always --line-range :500 {}'"
+alias cat="batcat --theme=gruvbox-dark"
+alias c="clear"
+alias e="exit"
+# launch nvim using Session file if it exists
 v() {
-    # activate venv, if exists
     src
-    # load sessin if file exists || if no arguments passed
     if [ -f "Session.vim" ] && [ $# -eq 0 ]; then
         nvim -S Session.vim
     else
         nvim "$@"
     fi
 }
+copydir() {
+    echo -n "$PWD" | xclip -selection clipboard
+}
 
-# open all git changed files
-alias vd='nvim $(git diff --name-only | sed "s|^|$(git rev-parse --show-toplevel)/|")'
-# select diff files to open
-alias vds='nvim $(git diff --name-only | fzf -m)'
+#------------------------------------------------
+# Python related autocompletion
+#------------------------------------------------
+[ -f ~/.completion_pytest.zsh ] && source ~/.completion_pytest.zsh
 
-# others
-alias fp="fzf --preview 'batcat --style=numbers --color=always --line-range :500 {}'"
-alias cat="batcat --theme=gruvbox-dark"
-alias c="clear"
-alias e="exit"
-
-# environment variables
-ANDROID_HOME=$HOME/Android/Sdk
-
-# npm global packages install fix
-export PATH=~/.npm-global/bin:$PATH
-
-# Better colour for directory in ls
-LS_COLORS=$LS_COLORS:'di=1;36:' ; export LS_COLORS
-# style for fzf-tab ls
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-# zoxide
+#------------------------------------------------
+# Zoxide
+#------------------------------------------------
 eval "$(zoxide init zsh)"
 
-# fzf
+#------------------------------------------------
+# FZF
+#------------------------------------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS='--height 70% --layout=reverse --border
-  --color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
-  --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
-'
-# Setting ripgrep as the default source for fzf
-export FZF_DEFAULT_COMMAND='rg --files --hidden'
+export FZF_DEFAULT_OPTS="--height 70% --layout=reverse --border
+    --color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
+    --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
+"
+# use ripgrep as the default command
+export FZF_DEFAULT_COMMAND="rg --files --hidden"
 
-# To apply the command to CTRL-T as well
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-# fzf-tab style
+#------------------------------------------------
+# FZF-TAB | replaces zsh default tab completion with FZF
+#------------------------------------------------
 zstyle ":fzf-tab:*" fzf-flags --height=70% --layout=reverse --border \
---color "fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f" \
---color "info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54"
-
-# p10k theme
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Replaces zsh tab completion with fzf
+    --color "fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f" \
+    --color "info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54"
 source ~/.fzf-tab/fzf-tab.plugin.zsh
 
+#------------------------------------------------
 # Interactive grep with FZF
-search () {
+#------------------------------------------------
+search() {
     RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
     INITIAL_QUERY="${*:-}"
     : | fzf --ansi --disabled --query "$INITIAL_QUERY" \
-        --bind "start:reload:$RG_PREFIX {q}" \
-        --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
-        --delimiter : \
-        --preview 'bat --color=always {1} --highlight-line {2}' \
-        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
-        --bind 'enter:become(nvim {1} +{2})'
+    --bind "start:reload:$RG_PREFIX {q}" \
+    --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+    --delimiter : \
+    --preview "bat --color=always {1} --highlight-line {2}" \
+    --preview-window "up,60%,border-bottom,+{2}+3/3,~3" \
+    --bind "enter:become(nvim {1} +{2})"
 }
-# define widget and bind CTRL-G to it
+# Define widget and bind CTRL-G to it
 zle -N search search
-bindkey '^g' search
+bindkey "^g" search
