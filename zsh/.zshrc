@@ -68,6 +68,22 @@ src() {
 }
 
 #------------------------------------------------
+# Find Aliases
+#------------------------------------------------
+alias findn='find -name'
+alias findf='find . -type f -name'
+alias findd='find . -type d -name'
+alias findsize='find -size +1M'
+# find files based on modification time, respect .gitignore
+findmtime() {
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        git ls-files --exclude-standard --directory | xargs -I {} find {} -type f -mtime "$@"
+    else
+        find . -type f -mtime "$@" | grep -v -f ~/.gitignore
+    fi
+}
+
+#------------------------------------------------
 # Utility Aliases
 #------------------------------------------------
 alias fp="fzf --preview 'batcat --style=numbers --color=always --line-range :500 {}'"
