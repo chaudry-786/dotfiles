@@ -104,7 +104,6 @@ install_packages() {
         npm install -g tree-sitter-cli
 
         # git-delta | better git diff
-        # TODO this needs to be fixed
         gitDeltaFile="git-delta_x.xx.x_amd64.deb"
         curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" \
         | grep "browser_download_url.*amd64.deb" | grep -v "musl" \
