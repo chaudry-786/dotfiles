@@ -9,7 +9,9 @@ require("autocmds")
 require("packer").startup(function(use)
     use "wbthomason/packer.nvim"                                -- Plugin manager
 
+	----------------------------------------
     -- UI
+	----------------------------------------
     use { "rose-pine/neovim", config = function()
         require("plug-config/theme")
     end }                                                       -- Theme
@@ -37,7 +39,9 @@ require("packer").startup(function(use)
         vim.g.beacon_ignore_filetypes = { "NvimTree", "aerial" }
     end }                                                       -- Flashes cursor on movements (e.g jump between windows)
 
+	----------------------------------------
     -- Autocompletion And IDE Features
+	----------------------------------------
     use { "neoclide/coc.nvim", branch = "release",
         config = function() require("plug-config/coc") end }    -- Conquer of Completion
     use "honza/vim-snippets"                                    -- Snippets
@@ -48,7 +52,9 @@ require("packer").startup(function(use)
         require("plug-config/iron")
     end }                                                       -- REPL
 
+	----------------------------------------
     -- Motions | Movements
+	----------------------------------------
     use { "ggandor/leap.nvim", config = function()
         local keymap = vim.api.nvim_set_keymap
         require("leap").opts.safe_labels = {}
@@ -57,8 +63,9 @@ require("packer").startup(function(use)
     end }                                                       -- Easy movement around buffer
     use "christoomey/vim-tmux-navigator"                        -- Easy navigation between tmux panes and vim windows
 
-
+	----------------------------------------
     -- Text objects
+	----------------------------------------
     use { "kylechui/nvim-surround", config = function()
         require("plug-config/nvim-surround")
     end }                                                       -- Easy text-object surrounding plugin
@@ -66,27 +73,31 @@ require("packer").startup(function(use)
         require("mini.ai").setup()
     end }                                                       -- Common plugins bundeled together (only using AI module
 
-
+	----------------------------------------
     -- Git
+	----------------------------------------
     use "tpope/vim-fugitive"                                    -- Git integration
     use "lewis6991/gitsigns.nvim"                               -- Git signs, hunk actions and text objects
 
-
+	----------------------------------------
     -- TreeSitter
+	----------------------------------------
     use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate",
         requires = "nvim-treesitter/nvim-treesitter-textobjects",
         config = function()
             require("plug-config/treeSitter")
         end }                                                   -- Syntax tree plugin
 
-
+	----------------------------------------
     -- SQL client | database
+	----------------------------------------
     use { "tpope/vim-dadbod", config = function()
         require("plug-config/sql-dadbod")
     end, requires = "kristijanhusak/vim-dadbod-ui" }            -- Core plugin for sql
 
-
+	----------------------------------------
     -- General
+	----------------------------------------
     use { "numToStr/Comment.nvim", config = function()
         require("Comment").setup()
         vim.api.nvim_create_autocmd("FileType", { group = "CustomAutoCmds", pattern = { "json" }, command = [[setlocal commentstring=//\ %s]] })
@@ -125,7 +136,7 @@ end)
 
 
 -- PLUGINS configuration
-require("plug-config/gitConfig")                                -- git realted plugs config
+require("plug-config/gitConfig")                                -- git related plugs config
 
 
 -- highlights
