@@ -88,8 +88,8 @@ install_languages() {
 install_packages() {
     local installer="$1 install"
 
-    # install curl first, becuase it's dependency on other installations
-    "$installer" curl
+    # install curl first, because it's dependency on other installations
+    $installer curl
 
     local packages=("git" "ripgrep" "bat")
 
@@ -100,7 +100,7 @@ install_packages() {
 
         # node and npm installation
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-        nvm install node --lts
+        npm install node --lts
         npm install -g tree-sitter-cli
 
         # git-delta | better git diff
@@ -120,7 +120,7 @@ install_packages() {
     fi
 
     for package in "${packages[@]}"; do
-        "$installer" "$package"
+        $installer "$package"
     done
 }
 
@@ -132,7 +132,7 @@ install_and_setup_vim(){
     rm -rf "$HOME/nvim_extracted"
     mkdir "$HOME/nvim_extracted"
     tar xzvf nvim-linux64.tar.gz -C "$HOME/nvim_extracted"
-    ln -s "$HOME/nvim_extracted/nvim-linux64/bin/nvim" "/usr/bin/nvim"
+    sudo ln -sf "$HOME/nvim_extracted/nvim-linux64/bin/nvim" "/usr/bin/nvim"
     rm nvim-linux64.tar.gz
 
     # link the config folder
