@@ -236,10 +236,10 @@ end
 
 --quick fix list
 keymap("n", "<leader>tq", ":lua ToggleQuickfixList()<CR>", opts)
-keymap("n", "[q", ":cprevious<CR>", opts)
-keymap("n", "]q", ":cnext<CR>", opts)
-keymap("n", "[Q", ":cfirst<CR>", opts)
-keymap("n", "]Q", ":clast<CR>", opts)
+keymap("n", "[q", ":cprevious<CR>zz", opts)
+keymap("n", "]q", ":cnext<CR>zz", opts)
+keymap("n", "[Q", ":cfirst<CR>zz", opts)
+keymap("n", "]Q", ":clast<CR>zz", opts)
 
 --fold movement
 keymap("", "[z", "zk", opts)
