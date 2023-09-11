@@ -13,4 +13,4 @@ vim.g["test#strategy"] = "vimux"
 
 --language-specific
 vim.g["test#python#runner"] = "pytest"
-vim.g["test#python#pytest#options"] = "--disable-warnings"
+vim.g["test#python#pytest#options"] = "--disable-warnings -s"

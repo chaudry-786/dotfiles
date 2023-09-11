@@ -37,6 +37,7 @@ require("packer").startup(function(use)
         "rcarriga/nvim-notify" } }                              -- UI for commandline, messages and popupmenu
     use { "danilamihailov/beacon.nvim", config = function()
         vim.g.beacon_ignore_filetypes = { "NvimTree", "aerial" }
+        vim.g.beacon_focus_gained = 1
     end }                                                       -- Flashes cursor on movements (e.g jump between windows)
 
 	----------------------------------------
