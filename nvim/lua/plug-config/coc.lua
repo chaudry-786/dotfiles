@@ -5,6 +5,7 @@ local opts = { noremap = true, silent = true }
 -- Extensions
 vim.g["coc_global_extensions"] = {
     "coc-json",                     -- LSP for JSON
+    "coc-yaml",                     -- LSP for YAML
     "coc-pyright",                  -- LSP for python
     "coc-java",                     -- LSP for java
     "coc-tsserver",                 -- LSP for typescript and javascript

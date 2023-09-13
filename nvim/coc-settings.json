@@ -56,6 +56,11 @@
     // general
     "prettier.tabWidth": 4,
     "inlayHint.enable": false,
+    // hover
+    "hover.floatConfig": {
+        "border": true,
+        "rounded": true
+    },
     //suggest
     "coc.source.around.enable": false, // disables buffer, file and around completion
     "suggest.noselect": true,

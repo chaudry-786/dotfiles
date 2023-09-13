@@ -8,6 +8,11 @@ ANDROID_HOME="$HOME/Android/Sdk"
 PATH="$HOME/.npm-global/bin:$PATH"
 
 #------------------------------------------------
+# Source machine-specific configuration
+#------------------------------------------------
+[[ -f "$HOME/.machine_config" ]] && source "$HOME/.machine_config"
+
+#------------------------------------------------
 # Define plugins
 #------------------------------------------------
 plugins=(
