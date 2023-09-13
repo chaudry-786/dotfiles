@@ -8,11 +8,6 @@ ANDROID_HOME="$HOME/Android/Sdk"
 PATH="$HOME/.npm-global/bin:$PATH"
 
 #------------------------------------------------
-# Source machine-specific configuration
-#------------------------------------------------
-[[ -f "$HOME/.machine_config" ]] && source "$HOME/.machine_config"
-
-#------------------------------------------------
 # Define plugins
 #------------------------------------------------
 plugins=(
@@ -161,3 +156,12 @@ bindkey "^g" search
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# ------------------------------------------------
+# Decrypt and source machine-specific configuration
+# ------------------------------------------------
+encrypted_machine_config="$HOME/.machine_config"
+if [ -f "$encrypted_machine_config" ]; then
+    decrypted_data=$(gpg --quiet --decrypt "$encrypted_machine_config")
+    eval "$decrypted_data"
+fi
