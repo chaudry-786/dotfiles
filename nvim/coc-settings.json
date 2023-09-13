@@ -58,6 +58,9 @@
         "style.css"
     ],
 
+    // YAML settings
+    "yaml.schemas": {"~/yaml_schemas/default.json": "*.yml"},
+
     // General settings
     "prettier.tabWidth": 4,
     "inlayHint.enable": false,
