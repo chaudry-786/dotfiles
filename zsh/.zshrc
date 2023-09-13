@@ -158,10 +158,16 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # ------------------------------------------------
-# Decrypt and source machine-specific configuration
+# Load machine-specific configuration
 # ------------------------------------------------
-encrypted_machine_config="$HOME/.machine_config"
+non_encrypted_machine_config="$HOME/.machine_config"
+if [ -f "$non_encrypted_machine_config" ]; then
+    source "$non_encrypted_machine_config"
+fi
+
+encrypted_machine_config="$HOME/.machine_config_encrypted"
 if [ -f "$encrypted_machine_config" ]; then
+    # Decrypt the encrypted configuration file
     decrypted_data=$(gpg --quiet --decrypt "$encrypted_machine_config")
     eval "$decrypted_data"
 fi
