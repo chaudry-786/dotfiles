@@ -123,6 +123,8 @@ export FZF_DEFAULT_OPTS="--height 70% --layout=reverse --border
 "
 # use ripgrep as the default command
 export FZF_DEFAULT_COMMAND="rg --files --hidden"
+# to apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 #------------------------------------------------
 # FZF-TAB | replaces zsh default tab completion with FZF
