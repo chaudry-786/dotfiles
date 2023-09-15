@@ -2,7 +2,9 @@ local keymap = vim.api.nvim_set_keymap
 local expr_opts = { noremap = true, silent = true, expr = true }
 local opts = { noremap = true, silent = true }
 
+-------------------------------------------------
 -- Extensions
+-------------------------------------------------
 vim.g["coc_global_extensions"] = {
     "coc-json",                     -- LSP for JSON
     "coc-yaml",                     -- LSP for YAML
@@ -24,57 +26,41 @@ vim.g["coc_global_extensions"] = {
     "coc-html-css-support",         -- CSS completion
 }
 
--- AutoCmds
--- highlight the symbol and its references when holding the cursor.
-vim.api.nvim_create_autocmd("CursorHold",
-    { group = "CustomAutoCmds", pattern = "*", command = [[call CocActionAsync("highlight")]] })
-
--- key mappings
+-------------------------------------------------
+-- Key Mappings
+-------------------------------------------------
 -- toggle diagnostics
 keymap("n", "<leader>ta", ":call CocAction('diagnosticToggle')<CR>", {})
 
--- use CTRL-J and K to move on snippets and auto completion
-keymap(
-    "i",
-    "<c-j>",
-    [[coc#pum#visible() ? coc#pum#next(1) : coc#jumpable() ? "\<c-r>=coc#rpc#request('snippetNext', [])<cr>" : "\<c-j>"]]
-    ,
-    expr_opts
-)
-keymap(
-    "i",
-    "<c-k>",
-    [[coc#pum#visible() ? coc#pum#prev(1) : coc#jumpable() ? "\<c-r>=coc#rpc#request('snippetPrev', [])<cr>" : "\<c-k>"]]
-    ,
-    expr_opts
-)
+-- use CTRL-J and K to move through snippets and auto-completion
+keymap("i", "<c-j>",
+    [[coc#pum#visible() ? coc#pum#next(1) : coc#jumpable() ? "\<c-r>=coc#rpc#request('snippetNext', [])<cr>" : "\<c-j>"]],
+    expr_opts)
+keymap("i", "<c-k>",
+    [[coc#pum#visible() ? coc#pum#prev(1) : coc#jumpable() ? "\<c-r>=coc#rpc#request('snippetPrev', [])<cr>" : "\<c-k>"]],
+    expr_opts)
 
 -- use CR to complete
-keymap(
-    "i",
-    "<CR>",
-    [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]],
-    expr_opts
-)
+keymap("i", "<CR>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], expr_opts)
 
--- use <c-space> to trigger completion.
+-- use <C-space> to trigger completion.
 keymap("i", "<c-space>", [[coc#refresh()]], expr_opts)
+
 -- expand snippet
 keymap("i", "<c-l>", [[<Plug>(coc-snippets-expand-jump)]], {})
 
--- navigate diagnostic
+-- navigate diagnostics
 keymap("n", "[a", "<Plug>(coc-diagnostic-prev)", { silent = true })
 keymap("n", "]a", "<Plug>(coc-diagnostic-next)", { silent = true })
 
--- GoTo code navigation.
+-- goto code navigation.
 keymap("n", "gd", "<Plug>(coc-definition)", { silent = true })
 keymap("n", "gs", ":call CocAction('jumpDefinition', 'vsplit') <CR>", { silent = true })
 keymap("n", "gy", "<Plug>(coc-type-definition)", { silent = true })
 keymap("n", "gi", "<Plug>(coc-implementation)", { silent = true })
 keymap("n", "gr", "<Plug>(coc-references)", { silent = true })
 
-
--- Use K to show documentation in preview window.
+-- show documentation
 function Show_documentation()
     local filetype = vim.bo.filetype
     if filetype == "vim" or filetype == "help" then
@@ -87,41 +73,38 @@ function Show_documentation()
         )
     end
 end
-
 keymap("n", "K", ":lua Show_documentation() <CR>", opts)
 
--- Symbol renaming.
+-- symbol renaming.
 keymap("n", "<leader>rn", "<Plug>(coc-rename)", {})
 
--- " Formatting selected code. Followed by highlighted code
+-- formatting
 keymap("x", "<leader><leader>f", "<Plug>(coc-format-selected)", {})
 keymap("n", "<leader><leader>f", ":Format<CR>", opts)
 
--- " Mappings for CoCList
--- " Show all diagnostics (Errors and warnings).
+-- show all diagnostics (errors and warnings).
 keymap("n", "<leader>a", ":<C-u>CocList diagnostics<CR>", opts)
 
--- HAVNE'T FOUND A GOOD USE-CASE YET
--- " Applying codeAction to the selected region.
--- " Example: `<leader>aap` for current paragraph
--- xmap <leader>a  <Plug>(coc-codeaction-selected)
--- nmap <leader>a  <Plug>(coc-codeaction-selected)
+-------------------------------------------------
+-- AutoCommands | Commands
+-------------------------------------------------
+-- highlight the symbol and its references when holding the cursor.
+vim.api.nvim_create_autocmd("CursorHold", {
+    group = "CustomAutoCmds",
+    pattern = "*",
+    command = [[call CocActionAsync("highlight")]]
+})
 
--- " Remap keys for applying codeAction to the current buffer.
--- nmap <leader>ac  <Plug>(coc-codeaction)
--- " Apply AutoFix to problem on the current line.
--- " NOTE: haven't found a use case for it yet. makes quit shortcut wait.
--- " Therefore disabling it for now
--- " nmap <leader>qf  <Plug>(coc-fix-current)
-
-
--- Commands
--- " Add `:Format` command to format current buffer.
+-- add `:Format` command to format the current buffer.
 vim.api.nvim_create_user_command("Format", ":call CocAction('format')", { nargs = 0 })
 
--- Add `:OR` command for organize imports of the current buffer.
+-- add `:OI` command for organizing imports of the current buffer.
 vim.api.nvim_create_user_command("OI", ":call CocActionAsync('runCommand', 'editor.action.organizeImport')",
     { nargs = 0 })
+
 -- set all html files to htmldjango (coc-htmldjango)
-vim.api.nvim_create_autocmd("FileType",
-    { group = "CustomAutoCmds", pattern = "html", command = [[ set filetype=htmldjango ]] })
+vim.api.nvim_create_autocmd("FileType", {
+    group = "CustomAutoCmds",
+    pattern = "html",
+    command = [[ set filetype=htmldjango ]]
+})
