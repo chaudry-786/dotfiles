@@ -1,4 +1,4 @@
--- This is autocmd group for all the autocmds
+-- This is autocmd group for all of the user defined custom auto commands
 vim.api.nvim_create_augroup("CustomAutoCmds", { clear = true })
 
 -- Basic configuration
@@ -52,6 +52,9 @@ require("packer").startup(function(use)
     use { "Vigemus/iron.nvim", config = function()
         require("plug-config/iron")
     end }                                                       -- REPL
+    use { "puremourning/vimspector", config = function()
+        require("plug-config/vimspector")
+    end }                                                       -- Debugger
 
 	----------------------------------------
     -- Motions | Movements
@@ -72,7 +75,7 @@ require("packer").startup(function(use)
     end }                                                       -- Easy text-object surrounding plugin
     use { "echasnovski/mini.nvim", config = function()
         require("mini.ai").setup()
-    end }                                                       -- Common plugins bundeled together (only using AI module
+    end }                                                       -- Common plugins bundled together (only using AI module
 
 	----------------------------------------
     -- Git
@@ -90,13 +93,6 @@ require("packer").startup(function(use)
         end }                                                   -- Syntax tree plugin
 
 	----------------------------------------
-    -- SQL client | database
-	----------------------------------------
-    use { "tpope/vim-dadbod", config = function()
-        require("plug-config/sql-dadbod")
-    end, requires = "kristijanhusak/vim-dadbod-ui" }            -- Core plugin for sql
-
-	----------------------------------------
     -- General
 	----------------------------------------
     use { "numToStr/Comment.nvim", config = function()
@@ -106,9 +102,6 @@ require("packer").startup(function(use)
     use { "tpope/vim-repeat", config = function()
         vim.api.nvim_command([[silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)]])
     end }                                                       -- Repeat macros and plug mappings with dot
-    use { "puremourning/vimspector", config = function()
-        require("plug-config/vimspector")
-    end }                                                       -- Debugger
     use { "nvim-telescope/telescope.nvim",                      -- Fuzzy finder
         requires = "nvim-lua/plenary.nvim", config = function()
             require("plug-config/telescope")

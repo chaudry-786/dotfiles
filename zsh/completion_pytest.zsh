@@ -1,7 +1,7 @@
 # Define the cache directory
 cache_dir=~/.pytest_completion_cache
 
-# ensure_cache_directory exists when Zsh loads
+# ensure_cache_directory exists when zsh loads
 if [ ! -d "$cache_dir" ]; then
     mkdir -p "$cache_dir"
 fi

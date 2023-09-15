@@ -5,25 +5,24 @@ set.encoding = "utf-8"                                  --default encoding
 set.syntax = "on"                                       --critical for better syntax highlighting
 set.spelloptions = "camel"                              --camel case for spellcheck
 set.spelllang = "en_gb"                                 --spell check language
-set.scrolloff = 7                                       --allow n lines at the bottom and top from cursor
+set.spellcapcheck = ""                                  --do not spell check capital at the start of sentence
 set.spell = true                                        --enable spell check by default
--- TODO: a scrollbar when text doesn't fit window
--- vim.wo.wrap = false                                     --do not wrap text if it doesn't fit in window
-set.sidescrolloff=10                                    --allow n chars on left and right from cusor
+set.scrolloff = 7                                       --allow n lines at the bottom and top from cursor
+set.sidescrolloff=10                                    --allow n chars on left and right from cursor
 set.ignorecase = true                                   --ignore case in search
 set.smartcase = true                                    --if search contains capital then make it case sensitive
 set.wrapscan = false                                    --do not cycle search. stop at the bottom and top
 set.laststatus = 3                                      --global statusline
-set.updatetime = 300                                    --quciker update  time for better experience
+set.updatetime = 300                                    --quicker update  time for better experience
 set.shortmess = vim.o.shortmess ..  "c"
 vim.g["python3_host_prog"] = "~/vim_venv/bin/python"    --python virtualenv path
-vim.opt.termguicolors = true                            --true colours for nvim in tmux
+set.termguicolors = true                                --true colours for nvim in tmux
 set.breakindent = true                                  --every wrapped line will continue visually indented
 
 -- signcolumn
 set.number = true                                       --show cursorline number
 set.relativenumber = true                               --relative line numbers
-set.signcolumn = "number"                               -- display signs in the 'number' column
+set.signcolumn = "number"                               --display signs in the 'number' column
 
 -- cursorline
 vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" },
@@ -60,18 +59,18 @@ function _G.MyFoldText()
         "  " .. foldLineCount .. " lines: " .. string.rep(" ", 2 - string.len(tostring(foldPercInBuf))) .. foldPercInBuf .. "%"
 end
 set.foldtext      = "v:lua.MyFoldText()"
-vim.opt.fillchars = { fold = " ", foldopen = "", foldclose = "", foldsep = " " }
+set.fillchars = { fold = " ", foldopen = "", foldclose = "", foldsep = " " }
 set.foldcolumn = "1"
 
 --4 spaces with tab
 set.tabstop = 4                                         --number of spaces that a <Tab> in the file counts for
-set.shiftwidth = 4                                      --this determines indent guide and formating (invalid [--python--])
+set.shiftwidth = 4                                      --this determines indent guide and formatting (invalid [--python--])
 set.expandtab = true
 set.clipboard = "unnamedplus"                           --copy to system clipboard
 
 -- better split window locations
 set.splitright = true                                   --default vertical split to right
-set.splitbelow = true                                   --default horizental split to below
+set.splitbelow = true                                   --default horizontal split to below
 
 set.mouse = ""                                          --disable mouse
 
@@ -86,6 +85,6 @@ if file then
     file:close()
     for line in contents:gmatch("[^\r\n]+") do
         local pattern = "*" .. line .. "*"
-        vim.opt.wildignore:append(pattern)
+        set.wildignore:append(pattern)
     end
 end

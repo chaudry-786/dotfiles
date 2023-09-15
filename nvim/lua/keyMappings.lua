@@ -173,7 +173,7 @@ keymap("v", "<M-Up>", [[:<C-U>exec "'<,'>move '<-" . (1+v:count1)<CR>gv]], opts)
 keymap("v", "<M-Down>", [[:<C-U>exec "'<,'>move '>+" . (0+v:count1)<CR>gv]], opts)
 
 -- keep jumps and search in middle also n and N are smart to go only one way
--- when serach is going either way (up or down).
+-- when search is going either way (up or down).
 vim.keymap.set("n", "n", function() return vim.v.searchforward == 1 and "nzz" or "Nzz" end,
     { expr = true, noremap = true })
 vim.keymap.set("n", "N", function() return vim.v.searchforward == 1 and "Nzz" or "nzz" end,
@@ -208,7 +208,7 @@ local cmdLineReturns = {
 }
 function _G.cmdLineMappings(key)
     local cmdline, cmdtype = vim.fn.getcmdline(), vim.fn.getcmdtype()
-    -- incoming keys are automataically converted to termcode
+    -- incoming keys are automatically converted to termcode
     if cmdtype == ":" and cmdLineReturns[key] and cmdLineReturns[key][cmdline] then
         vim.fn.setcmdline("")
         return t(cmdLineReturns[key][cmdline])

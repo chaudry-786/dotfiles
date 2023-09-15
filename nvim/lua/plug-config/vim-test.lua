@@ -8,7 +8,7 @@ keymap("n", "<leader>rs", ":TestSuite<CR>", opts)
 -- global
 vim.g["test#strategy"] = "vimux"
 -- TODO: explore rest of the strategies, goal is
--- to get erros in qf list AND in colourful output
+-- to get errors in qf list AND in colourful output
 -- potential strategies  neomake, dispatch, make
 
 --language-specific

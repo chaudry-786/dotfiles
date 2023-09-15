@@ -12,5 +12,5 @@ require("aerial").setup({
     }
 })
 
--- toggle | also disables fade plugin
+-- toggle
 vim.api.nvim_set_keymap("n", "<leader>to", ":AerialToggle <CR>", { silent = true, noremap = true })

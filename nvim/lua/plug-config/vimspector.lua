@@ -11,7 +11,7 @@ function ToggleDebugMode()
     --]]
     if debugMode then
         vim.cmd("call vimspector#Reset()")
-        -- unmape all keys from the debugging buffers
+        -- unmap all keys from the debugging buffers
         local keysToUnmap = { "<Up>", "<Left>", "<Right>", "<Down>", "<Leader>Dc" }
         for buff, v in pairs(DebugBuffers) do
             -- ensure buffer exists

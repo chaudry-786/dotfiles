@@ -60,7 +60,7 @@ keymap("n", "<leader>gb", ":G blame<CR>", opts)
 -- " Notes: useful commands
 -- " Git blame       - Open git blame on left, press o open the commit
 -- " Git difftool    - Open diff for current buffer in quickfix list
--- " Git difftool -y - Open all git modifed files in a new tab
+-- " Git difftool -y - Open all git modified files in a new tab
 -- " Gclog           - Open commit history in quick fix list (use cn and cp to
 -- " jump between quickfix items)
 -- <<------------------------------------------------------------------------->>

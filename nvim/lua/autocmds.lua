@@ -1,4 +1,4 @@
--- get rid of traling whitespace
+-- get rid of trailing whitespace
 vim.api.nvim_create_autocmd("BufWritePre", {
     group = "CustomAutoCmds",
     pattern = "*",
@@ -47,7 +47,7 @@ vim.api.nvim_create_autocmd("VimEnter",
     }
 )
 
--- automatiaclly, update qf on a given pattern for current buffer.
+-- automatically, update qf on a given pattern for current buffer.
 vim.api.nvim_create_augroup("QfAutoCmds", { clear = true })
 local function create_qf_autocmds(qf_patterns)
     local c_autocmd = vim.api.nvim_create_autocmd

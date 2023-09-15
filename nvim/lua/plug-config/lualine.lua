@@ -10,7 +10,6 @@ local function working_dir()
         return " "
     end
     local modified_path = string.gsub(path, "/[^/]*$", "")
-    -- modified_path = string.gsub(modified_path, "/", "  ")
     return " " .. modified_path
 end
 
