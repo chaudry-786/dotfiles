@@ -19,6 +19,8 @@ what_os(){
 safe_git_clone() {
     local repo_url=$1
     local destination=$2
+    # Replace tilde with the home directory path
+    destination=$(eval echo "$destination")
     shift 2
 
     # Check if the destination directory already exists
