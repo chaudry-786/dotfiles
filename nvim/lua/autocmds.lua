@@ -101,3 +101,7 @@ vim.api.nvim_create_autocmd("InsertCharPre", {
 
 -- automatically reload file when changed outside of vim
 vim.api.nvim_create_autocmd("FocusGained", { group = "CustomAutoCmds", pattern = "*", command = [[checktime]] })
+
+-- automatically resize windows
+vim.api.nvim_create_autocmd("VimResized",
+    { group = "CustomAutoCmds", pattern = "*", command = [[execute "normal! \<C-w>="]] })
