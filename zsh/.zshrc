@@ -52,6 +52,8 @@ alias testJS="cd ~/Desktop/test/JS"
 alias vd='nvim $(git diff --name-only | sed "s|^|$(git rev-parse --show-toplevel)/|")'
 # choose what modified files to open with nvim
 alias vds='nvim $(git diff --name-only | fzf -m)'
+# open modified files between current branch and master
+alias vdp='nvim $(git diff --name-only master...HEAD | sed "s|^|$(git rev-parse --show-toplevel)/|")'
 
 #------------------------------------------------
 # Python virtual Environment and Development
