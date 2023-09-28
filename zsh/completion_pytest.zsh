@@ -22,7 +22,7 @@ _pytest_complete() {
     if [ ! -f "$cache_file" ] ||
        [ "$(stat -c %Y "$cache_file")" -lt "$(ls -t1 test_*.py | head -n 1 | xargs stat -c %Y)" ] ||
        [ ! -s "$cache_file" ]; then
-        timeout 10 pytest --collect-only -q 2>&1 | awk '/^test_/ { print $1 }' > "$cache_file"
+        timeout 10 pytest --collect-only --continue-on-collection-errors -q 2>&1 | awk '/^test_/ { print $1 }' > "$cache_file"
     fi
 
     # Use cache for autocompletion

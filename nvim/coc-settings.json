@@ -16,6 +16,7 @@
     },
     "snippets.snipmate.enable": false,
     "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/",
+    "snippets.ultisnips.pythonPrompt": false,
 
     // Signature settings
     "signature.target": "float",
