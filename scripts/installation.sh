@@ -102,7 +102,7 @@ install_packages() {
 
         # node and npm installation
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-        npm install node --lts
+        nvm install node --lts
         npm install -g tree-sitter-cli
 
         # git-delta | better git diff
