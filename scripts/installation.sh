@@ -140,10 +140,6 @@ install_and_setup_vim(){
     # link the config folder
     ln -sfn ~/dotfiles/nvim ~/.config/nvim
 
-    #Packer (Plugin manager)
-    safe_git_clone  "https://github.com/wbthomason/packer.nvim"\
-     "~/.local/share/nvim/site/pack/packer/start/packer.nvim" --depth 1
-
     #Neovim Python virtualenv
     rm -rf ~/vim_venv
     python3 -m venv ~/vim_venv
