@@ -175,3 +175,8 @@ if [ -f "$encrypted_machine_config" ]; then
     decrypted_data=$(gpg --quiet --decrypt "$encrypted_machine_config")
     eval "$decrypted_data"
 fi
+
+# ------------------------------------------------
+# Edit terminal command in NeoVim
+# ------------------------------------------------
+bindkey "^v" edit-command-line
