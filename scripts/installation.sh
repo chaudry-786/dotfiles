@@ -119,6 +119,7 @@ install_packages() {
 
         #zoxide
         curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+        ln -sf "$HOME/.local/bin/zoxide" /usr/bin/zoxide
     fi
 
     for package in "${packages[@]}"; do
