@@ -104,6 +104,7 @@ v() {
 copydir() {
     echo -n "$PWD" | xclip -selection clipboard
 }
+alias vim="v"
 
 #------------------------------------------------
 # Python related autocompletion
