@@ -2,13 +2,14 @@
     // Refer to this link https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
     // Diagnostic settings
     "diagnostic.level": "hint",
-    "diagnostic.errorSign": "",
+    "diagnostic.errorSign": "",
     "diagnostic.warningSign": "",
     "diagnostic.infoSign": "",
     "diagnostic.hintSign": "",
     "diagnostic.enableMessage": "jump",
     "diagnostic.virtualText": true,
     "diagnostic.virtualTextPrefix": "        ",
+    "diagnostic.enableHighlightLineNumber": false,
 
     // Snippets settings
     "snippets.extends": {

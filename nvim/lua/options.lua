@@ -19,11 +19,6 @@ vim.g["python3_host_prog"] = "~/vim_venv/bin/python"    --python virtualenv path
 set.termguicolors = true                                --true colours for nvim in tmux
 set.breakindent = true                                  --every wrapped line will continue visually indented
 
--- signcolumn
-set.number = true                                       --show cursorline number
-set.relativenumber = true                               --relative line numbers
-set.signcolumn = "number"                               --display signs in the 'number' column
-
 -- cursorline
 vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" },
     { group = "CustomAutoCmds", pattern = "*", command = [[setlocal cursorline]] })
@@ -59,8 +54,7 @@ vim.api.nvim_create_autocmd("FileType",
 set.foldenable = false                                  --do not auto create folds when file opens
 set.foldnestmax = 3                                     --max nested fold level
 set.foldlevel = 2                                       --fold level: zr or zm
-set.fillchars = { fold = " ", foldopen = "", foldclose = "", foldsep = " " }
-set.foldcolumn = "1"
+set.fillchars = { fold = " ", foldopen = " ", foldclose = "", foldsep = " " }
 
 --4 spaces with tab
 set.tabstop = 4                                         --number of spaces that a <Tab> in the file counts for

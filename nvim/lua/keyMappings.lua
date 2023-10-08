@@ -147,11 +147,11 @@ keymap("n", "<leader>ec", ":CocConfig<cr>", opts)
 -- reload Config and all the modules
 function _G.ReloadConfig()
     local customUserModules = {
-        ["options"] = true,
-        ["keyMappings"] = true,
         ["autocmds"] = true,
         ["highlights"] = true,
-        ["textObjects"] = true
+        ["keyMappings"] = true,
+        ["options"] = true,
+        ["status_column"] = true
     }
     for name, _ in pairs(package.loaded) do
         if string.match(name, "^plug%-config") or customUserModules[name] then
