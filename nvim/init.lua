@@ -45,10 +45,6 @@ require("lazy").setup({
     { "goolord/alpha-nvim", config = function()
         require("plug-config/alpha")
     end },                                                  -- Startup screen
-    { "folke/noice.nvim", config = function()
-        require("plug-config/noice")
-    end, dependencies = { "MunifTanjim/nui.nvim",
-        "rcarriga/nvim-notify" } },                         -- UI for commandline, messages and popupmenu
     { "danilamihailov/beacon.nvim", init = function()
         vim.g.beacon_ignore_filetypes = { "NvimTree", "aerial" }
         vim.g.beacon_focus_gained = 1
