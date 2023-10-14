@@ -249,3 +249,14 @@ function ToggleSpellCheck()
     vim.opt.spell = not (vim.opt.spell:get())
 end
 keymap("n", "<leader>ts", ":lua ToggleSpellCheck()<CR>", opts)
+
+-- by default set this to 2
+vim.o.conceallevel = 2
+function ToggleConceallevel()
+    if vim.o.conceallevel == 2 then
+        vim.o.conceallevel = 0
+    else
+        vim.o.conceallevel = 2
+    end
+end
+vim.api.nvim_set_keymap('n', '<leader>tc', [[:lua ToggleConceallevel()<CR>]], { noremap = true, silent = true })
