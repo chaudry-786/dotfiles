@@ -137,6 +137,14 @@ require("lazy").setup({
         vim.g.vimwiki_ext = ".md"
         vim.g.vimwiki_global_ext = 0
     end },                                                  -- personal wiki
+    {
+        "nvim-neorg/neorg",
+        build = ":Neorg sync-parsers",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("plug-config/neorg")
+        end,
+    },                                                      -- Better notes
 })
 
 
