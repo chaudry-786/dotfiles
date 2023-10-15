@@ -21,7 +21,7 @@ vim.api.nvim_create_autocmd("FileType",
         group = "CustomAutoCmds",
         pattern = "norg",
         callback = function()
-            vim.api.nvim_buf_set_keymap(0, "n", "<leader>tc", ":Neorg toggle-concealer<CR>", { noremap = true })
+            vim.api.nvim_buf_set_keymap(0, "n", "<leader>tc", ":Neorg toggle-concealer<CR>:lua ToggleConceallevel()<CR>", { noremap = true })
         end
     })
 
