@@ -6,6 +6,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 EDITOR="nvim"
 ANDROID_HOME="$HOME/Android/Sdk"
 PATH="$HOME/.npm-global/bin:$PATH"
+# share history between sessions
+setopt share_history
 
 #------------------------------------------------
 # Define plugins
