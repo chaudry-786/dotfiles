@@ -2,7 +2,7 @@ local set = vim.opt
 
 -- status column: fold_col | line_number | sign_col
 set.signcolumn = "yes:1"                                -- 1; fixed number of column
-set.foldcolumn = "1"                                    -- 1; fixed number of column
+-- set.foldcolumn = "1"                                    -- 1; fixed number of column
 set.relativenumber = true                               -- without this relative numbers don't update properly
 
 -- Function to determine the fold character for a given line number
@@ -23,7 +23,7 @@ local line_number = '%=%{ v:relnum ? v:relnum : v:lnum}'
 -- Global function to generate the content for the status column
 _G.get_status_column_content = function()
     local fold_character = get_fold_character(vim.v.lnum)
-    return fold_character .. sign_column .. line_number .. " "
+    return sign_column .. line_number .. " "
 end
 set.statuscolumn = "%!v:lua.get_status_column_content()"
 
