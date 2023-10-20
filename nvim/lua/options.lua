@@ -51,9 +51,9 @@ vim.opt.foldtext = "v:lua.Foldtext()"
 
 vim.api.nvim_create_autocmd("FileType",
     { group = "CustomAutoCmds", pattern = "sql", command = [[ setlocal foldmethod=indent ]] })
-set.foldenable = false                                  --do not auto create folds when file opens
+-- set.foldenable = false                                  --do not auto create folds when file opens
 set.foldnestmax = 3                                     --max nested fold level
-set.foldlevel = 2                                       --fold level: zr or zm
+set.foldlevel = 1                                       --fold level: zr or zm
 set.fillchars = { fold = " ", foldopen = " ", foldclose = "", foldsep = " " }
 
 --4 spaces with tab
