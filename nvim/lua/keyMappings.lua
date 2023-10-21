@@ -1,4 +1,4 @@
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local expr_opts = { noremap = true, silent = true, expr = true }
 
@@ -17,7 +17,7 @@ local id
 local function avoid_hjkl(mode, mov_keys)
     for _, key in ipairs(mov_keys) do
         local count = 0
-        vim.keymap.set(mode, key, function()
+        keymap(mode, key, function()
             if count >= 5 then
                 id = vim.notify("Hold it Cowboy!", vim.log.levels.WARN, {
                     icon = "🤠",
@@ -63,10 +63,10 @@ end
 keymap("n", "<leader>th", ":lua ToggleHardMode()<CR>", opts)
 
 -- do not copy delete and change command
-vim.keymap.set({ "n", "v" }, "d", [["_d]], opts)
-vim.keymap.set({ "n", "v" }, "D", [["_D]], opts)
-vim.keymap.set({ "n", "v" }, "c", [["_c]], opts)
-vim.keymap.set({ "n", "v" }, "C", [["_C]], opts)
+keymap({ "n", "v" }, "d", [["_d]], opts)
+keymap({ "n", "v" }, "D", [["_D]], opts)
+keymap({ "n", "v" }, "c", [["_c]], opts)
+keymap({ "n", "v" }, "C", [["_C]], opts)
 
 -- Friction points in nvim default paste behaviour which lead to this customization:
 -- 1) Doesn't indent pasted text.
@@ -92,7 +92,7 @@ local function betterPasteVisual()
 
     return [["_di<C-r><C-p>+<esc>]]
 end
-vim.keymap.set("v", "p", betterPasteVisual, expr_opts)
+keymap("v", "p", betterPasteVisual, expr_opts)
 
 local function betterPasteNormal(register)
     local cmd
@@ -162,7 +162,7 @@ function _G.ReloadConfig()
     vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO, { timeout = 5 })
 end
 
-keymap("n", "<leader>so", "<cmd>lua ReloadConfig()<CR>", { noremap = true, silent = false })
+keymap("n", "<leader>so", "<cmd>lua ReloadConfig()<CR>", opts)
 
 --  move code alt+arrows
 keymap("n", "<M-Up>", [[:<C-U>exec "exec 'norm m`' \| move -" . (1+v:count1)<CR>``]], opts)
@@ -174,10 +174,10 @@ keymap("v", "<M-Down>", [[:<C-U>exec "'<,'>move '>+" . (0+v:count1)<CR>gv]], opt
 
 -- keep jumps and search in middle also n and N are smart to go only one way
 -- when search is going either way (up or down).
-vim.keymap.set("n", "n", function() return vim.v.searchforward == 1 and "nzz" or "Nzz" end,
-    { expr = true, noremap = true })
-vim.keymap.set("n", "N", function() return vim.v.searchforward == 1 and "Nzz" or "nzz" end,
-    { expr = true, noremap = true })
+keymap("n", "n", function() return vim.v.searchforward == 1 and "nzz" or "Nzz" end,
+    expr_opts)
+keymap("n", "N", function() return vim.v.searchforward == 1 and "Nzz" or "nzz" end,
+    expr_opts)
 keymap("n", "<C-o>", "<C-o>zz", opts)
 keymap("n", "<C-i>", "<C-i>zz", opts)
 
@@ -209,7 +209,7 @@ local function enable_very_magic()
     end
     return "/"
 end
-vim.keymap.set("c", "/", enable_very_magic, { noremap = true, expr = true })
+keymap("c", "/", enable_very_magic, { noremap = true, expr = true })
 
 function ToggleQuickfixList()
     for _, win in pairs(vim.fn.getwininfo()) do
@@ -246,4 +246,4 @@ function ToggleConceallevel()
         vim.o.conceallevel = 2
     end
 end
-vim.api.nvim_set_keymap('n', '<leader>tc', [[:lua ToggleConceallevel()<CR>]], { noremap = true, silent = true })
+keymap('n', '<leader>tc', [[:lua ToggleConceallevel()<CR>]], opts)
