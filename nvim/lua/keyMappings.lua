@@ -194,35 +194,22 @@ keymap("v", "<", "<gv", opts)
 -- fuzzy help for anything
 keymap("n", "<leader>?", ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", opts)
 
--- very magic mode enabled by default
+-- very magic mode enabled by default in command line
 -- do not use silent in command mode, it delays rhs key input until the next key
 keymap("n", "/", [[/\v]], { noremap = true })
 keymap("n", "?", [[?\v]], { noremap = true })
--- ["incomingKey"] = { currentCmdValue = [[valueToBeSetInCmdLine] },
-local cmdLineReturns = {
-    [t("s")] = { [""] = [[%s/\v]],["'<,'>"] = [['<,'>s/\v]] },
-    [t("g")] = { [""] = [[g/\v]],["'<,'>"] = [['<,'>g/\v]] },
-    [t("v")] = { [""] = [[vimgrep /\v/ **/*]] .. string.rep("<Left>", 6) },
-    [t("<BS>")] = { ["%s/\\v"] = "s",["g/\\v"] = "g",["'<,'>s/\\v"] = "'<,'>s",["'<,'>g/\\v"] = "'<,'>g",
-        ["vimgrep /\\v/ **/*"] = "v" },
-}
-function _G.cmdLineMappings(key)
+local function enable_very_magic()
     local cmdline, cmdtype = vim.fn.getcmdline(), vim.fn.getcmdtype()
-    -- incoming keys are automatically converted to termcode
-    if cmdtype == ":" and cmdLineReturns[key] and cmdLineReturns[key][cmdline] then
-        vim.fn.setcmdline("")
-        return t(cmdLineReturns[key][cmdline])
+    -- list of valid command-line inputs that trigger very magic mode
+    local valid_values = { "s", [['<,'>s]], "%s", "g", [['<,'>g]], "g!", [['<,'>g!]] }
+    if cmdtype == ":" and vim.tbl_contains(valid_values, cmdline) then
+        return "/\\v"
+    elseif cmdtype == ":" and cmdline == "v" then
+        return [[imgrep /\v/ **/*]] .. string.rep("<Left>", 6)
     end
-    return key
+    return "/"
 end
-
-local function set_cmdline_keymaps(keys)
-    for _, key in ipairs(keys) do
-        local mapping = string.format([[v:lua.cmdLineMappings("%s")]], key)
-        keymap("c", key, mapping, { noremap = true, expr = true })
-    end
-end
-set_cmdline_keymaps({ "s", "g", "v", "<BS>" })
+vim.keymap.set("c", "/", enable_very_magic, { noremap = true, expr = true })
 
 function ToggleQuickfixList()
     for _, win in pairs(vim.fn.getwininfo()) do
