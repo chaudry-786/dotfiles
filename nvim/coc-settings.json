@@ -44,7 +44,7 @@
     "python.linting.pylintEnabled": true, // enable pylint
     // C0114: missing module docstring
     // C0415: import outside top level
-    // W1201: Use lazy % formatting in logging function
+    // W1203: Use lazy % formatting in logging function
     "python.linting.pylintArgs": ["-d", "C0114,C0116,W0511,E1101,W1514,W0718"], // errors to ignore
 
     // Lua settings
