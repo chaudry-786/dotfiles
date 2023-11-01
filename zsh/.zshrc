@@ -106,6 +106,13 @@ v() {
 copydir() {
     echo -n "$PWD" | xclip -selection clipboard
 }
+# open current dir in file explorer
+if [[ $(grep -i Microsoft /proc/version) ]]; then
+    alias exp="explorer.exe ."
+else
+    alias exp="xdg-open ."
+fi
+
 
 #------------------------------------------------
 # Python related autocompletion
