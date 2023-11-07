@@ -50,11 +50,13 @@ alias testJS="cd ~/Desktop/test/JS"
 #------------------------------------------------
 # Git-related Aliases
 #------------------------------------------------
-# open modified files with nvim
+# open (all | select) modified files with nvim
 alias vd='nvim $(git diff --name-only | sed "s|^|$(git rev-parse --show-toplevel)/|")'
-# choose what modified files to open with nvim
-alias vds='nvim $(git diff --name-only | fzf -m)'
-# open modified files between current branch and master
+alias vds='nvim $(git diff --name-only | sed "s|^|$(git rev-parse --show-toplevel)/|" | fzf -m)'
+# open (all | select) conflicting files with nvim
+alias vc='nvim $(git diff --name-only --diff-filter=U | sed "s|^|$(git rev-parse --show-toplevel)/|")'
+alias vcs='nvim $(git diff --name-only --diff-filter=U | sed "s|^|$(git rev-parse --show-toplevel)/|" | fzf -m)'
+# open modified files between current branch and master | useful for PR reviews
 alias vdp='nvim $(git diff --name-only master...HEAD | sed "s|^|$(git rev-parse --show-toplevel)/|")'
 
 #------------------------------------------------
