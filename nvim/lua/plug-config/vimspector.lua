@@ -91,9 +91,28 @@ local function createPythonDebugConfig(args, program, python, cwd)
     }
 end
 
+local function get_base_directory()
+    --- Get the base directory of a Git repo or the current working directory.
+    local git_dir = io.popen("git rev-parse --show-toplevel 2>/dev/null", "r")
+    if git_dir then
+        local base_dir = git_dir:read('*l')
+        git_dir:close()
+        if base_dir and base_dir ~= '' then
+            return base_dir
+        end
+    end
+    local pwd = io.popen("pwd", "r")
+    if pwd then
+        local current_dir = pwd:read('*l')
+        pwd:close()
+        return current_dir
+    end
+end
+
+local base_dir = get_base_directory()
 vim.g.vimspector_configurations = {
     CurrentFile = createPythonDebugConfig({ "*${args}" }, "${file}", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
     Flask = createPythonDebugConfig({ "run" }, "${workspaceRoot}/venv/bin/flask", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
-    PyTest = createPythonDebugConfig({ "${file}::${args}" }, "${workspaceRoot}/venv/bin/pytest", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
+    PyTest = createPythonDebugConfig({ "${file}::Test::${args}" }, base_dir .. "/venv/bin/pytest", base_dir .. "/venv/bin/python", base_dir),
     ScrapySpider = createPythonDebugConfig({ "crawl", "*${spiderName}" }, "${cwd}/venv/bin/scrapy", "${cwd}/venv/bin/python", "${cwd}")
 }
