@@ -113,6 +113,6 @@ local base_dir = get_base_directory()
 vim.g.vimspector_configurations = {
     CurrentFile = createPythonDebugConfig({ "*${args}" }, "${file}", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
     Flask = createPythonDebugConfig({ "run" }, "${workspaceRoot}/venv/bin/flask", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
-    PyTest = createPythonDebugConfig({ "${file}::Test::${args}" }, base_dir .. "/venv/bin/pytest", base_dir .. "/venv/bin/python", base_dir),
+    PyTest = createPythonDebugConfig({  "-s" ,"${file}::Test::${args}" }, base_dir .. "/venv/bin/pytest", base_dir .. "/venv/bin/python", base_dir),
     ScrapySpider = createPythonDebugConfig({ "crawl", "*${spiderName}" }, "${cwd}/venv/bin/scrapy", "${cwd}/venv/bin/python", "${cwd}")
 }
