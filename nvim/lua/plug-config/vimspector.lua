@@ -5,7 +5,7 @@ local opts = { noremap = true, silent = true }
 -- Use arrow keys when debugging, makes it much simpler.
 -- Because debug mode is rare, only map keys when it's turned on
 local debugMode = false
-function ToggleDebugMode(restart_request)
+function ToggleDebugMode(relaunch)
     --[[ Launch or Reset debugger. Set debug mapping for the current buffer and create
     Autocmd to create mappings for buffers of the same file type
     --]]
@@ -35,8 +35,8 @@ function ToggleDebugMode(restart_request)
         -- Trigger fileType autocmd for existing "debug_filetype" buffers so above command can run
         vim.cmd(string.format("let buf=bufnr('%%') | bufdo if &ft == '%s' | doautocmd FileType | endif | exec 'b' buf",
             debug_filetype))
-        if not restart_request then
-            vim.cmd("call vimspector#Launch()")
+        if not relaunch then
+            vim.cmd("call vimspector#Restart()")
         end
     end
     debugMode = not debugMode
@@ -56,20 +56,19 @@ function MapDebugKeys()
     DebugBuffers[vim.fn.bufnr()] = true
 end
 
-function RestartDebugSession()
+function DebuggerRelaunch()
     if not debugMode then
         ToggleDebugMode(true)
     end
-    vim.cmd("call vimspector#Restart()")
+    vim.cmd("call vimspector#Launch()")
 end
+
 -- restart debug session with same values
-keymap("n", "<Leader>Dr", ":lua RestartDebugSession()<CR>", opts)
+keymap("n", "<Leader>Dr", ":lua DebuggerRelaunch()<CR>", opts)
 
 -- Launch and end debug session
 keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", opts)
 keymap("n", "<leader>td", ":lua ToggleDebugMode()<CR>", opts)
-keymap("n", "<Leader>Ds", ":call vimspector#Launch()<CR>", opts)
-keymap("n", "<Leader>De", ":call vimspector#Reset()<CR>", opts)
 
 -- breakpoints
 keymap("n", "<Leader>tb", ":call vimspector#ToggleBreakpoint()<CR>", opts)
@@ -123,6 +122,6 @@ local base_dir = get_base_directory()
 vim.g.vimspector_configurations = {
     CurrentFile = createPythonDebugConfig({ "*${args}" }, "${file}", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
     Flask = createPythonDebugConfig({ "run" }, "${workspaceRoot}/venv/bin/flask", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
-    PyTest = createPythonDebugConfig({  "-s" ,"${file}::Test::${args}" }, base_dir .. "/venv/bin/pytest", base_dir .. "/venv/bin/python", base_dir),
+    PyTest = createPythonDebugConfig({ "-s", "${file}::Test::${args}" }, base_dir .. "/venv/bin/pytest", base_dir .. "/venv/bin/python", base_dir),
     ScrapySpider = createPythonDebugConfig({ "crawl", "*${spiderName}" }, "${cwd}/venv/bin/scrapy", "${cwd}/venv/bin/python", "${cwd}")
 }
