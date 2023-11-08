@@ -5,7 +5,7 @@ local opts = { noremap = true, silent = true }
 -- Use arrow keys when debugging, makes it much simpler.
 -- Because debug mode is rare, only map keys when it's turned on
 local debugMode = false
-function ToggleDebugMode()
+function ToggleDebugMode(restart_request)
     --[[ Launch or Reset debugger. Set debug mapping for the current buffer and create
     Autocmd to create mappings for buffers of the same file type
     --]]
@@ -35,8 +35,9 @@ function ToggleDebugMode()
         -- Trigger fileType autocmd for existing "debug_filetype" buffers so above command can run
         vim.cmd(string.format("let buf=bufnr('%%') | bufdo if &ft == '%s' | doautocmd FileType | endif | exec 'b' buf",
             debug_filetype))
-
-        vim.cmd("call vimspector#Launch()")
+        if not restart_request then
+            vim.cmd("call vimspector#Launch()")
+        end
     end
     debugMode = not debugMode
 end
@@ -54,6 +55,15 @@ function MapDebugKeys()
     -- Keep a track of buffers for which debug keymaps have been set
     DebugBuffers[vim.fn.bufnr()] = true
 end
+
+function RestartDebugSession()
+    if not debugMode then
+        ToggleDebugMode(true)
+    end
+    vim.cmd("call vimspector#Restart()")
+end
+-- restart debug session with same values
+keymap("n", "<Leader>Dr", ":lua RestartDebugSession()<CR>", opts)
 
 -- Launch and end debug session
 keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", opts)
