@@ -15,6 +15,7 @@ vim.g["coc_global_extensions"] = {
     "@yaegassy/coc-tailwindcss3",   -- LSP for tailwindcss3
     "coc-sh",                       -- LSP for bash
     "coc-sumneko-lua",              -- LSP for lua, neovim autocompletion included
+    "coc-rust-analyzer",            -- LSP for rust
     "coc-clangd",                   -- LSP for c
     "coc-sql",                      -- LSP for .sql files
     "coc-vimlsp",                   -- LSP for vimscript

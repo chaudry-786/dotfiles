@@ -13,13 +13,13 @@ require "nvim-treesitter.configs".setup {
         "css",
         "lua",
         "regex",
-        "sql"
+        "sql",
+        "rust"
     },
 
     -- TS modules
     highlight = {
         enable = true,
-        disable = { "rust" },
     },
     -- nvim-treesitter/nvim-treesitter-textobjects
     textobjects = {

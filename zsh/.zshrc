@@ -21,6 +21,7 @@ plugins=(
     tmux
     ripgrep
     copyfile
+    rust
 )
 
 #------------------------------------------------
