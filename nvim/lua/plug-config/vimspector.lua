@@ -110,9 +110,10 @@ local function get_base_directory()
 end
 
 local base_dir = get_base_directory()
+local venv_dir = base_dir .. "/venv/bin/"
 vim.g.vimspector_configurations = {
-    CurrentFile = createPythonDebugConfig({ "*${args}" }, "${file}", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
-    Flask = createPythonDebugConfig({ "run" }, "${workspaceRoot}/venv/bin/flask", "${workspaceRoot}/venv/bin/python", "${workspaceRoot}"),
-    PyTest = createPythonDebugConfig({ "-s", "${file}::Test::${args}" }, base_dir .. "/venv/bin/pytest", base_dir .. "/venv/bin/python", base_dir),
-    ScrapySpider = createPythonDebugConfig({ "crawl", "*${spiderName}" }, "${cwd}/venv/bin/scrapy", "${cwd}/venv/bin/python", "${cwd}")
+    CurrentFile = createPythonDebugConfig({ "*${args}" }, "${file}", venv_dir .. "python", base_dir),
+    Flask = createPythonDebugConfig({ "run" }, venv_dir .. "flask", venv_dir .. "python", base_dir),
+    PyTest = createPythonDebugConfig({ "-s", "${file}::Test::${args}" }, venv_dir .. "pytest", venv_dir .. "python", base_dir),
+    ScrapySpider = createPythonDebugConfig({ "crawl", "*${spiderName}" }, venv_dir .. "scrapy", venv_dir .. "python", base_dir)
 }
