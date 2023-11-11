@@ -67,7 +67,7 @@ keymap("n", "<Leader>tB", ":call vimspector#ClearBreakpoints()<CR>", opts)
 
 
 -- reference https://puremourning.github.io/vimspector/configuration.html#predefined-variables
--- examples ~/.vim/plugged/vimspector/support/test
+-- examples ~/.local/share/nvim/lazy/vimspector/support/test/
 local function createPythonDebugConfig(args, program, python, cwd)
     return {
         adapter = "debugpy",
