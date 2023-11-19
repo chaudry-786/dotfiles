@@ -62,9 +62,17 @@ require("lazy").setup({
     { "Vigemus/iron.nvim", config = function()
         require("plug-config/iron")
     end },                                                  -- REPL
-    { "puremourning/vimspector", config = function()
-        require("plug-config/vimspector")
-    end },                                                  -- Debugger
+    -- { "puremourning/vimspector", config = function()
+    --     require("plug-config/vimspector")
+    -- end },                                                  -- Debugger
+    {
+        "rcarriga/nvim-dap-ui",
+        dependencies = { "mfussenegger/nvim-dap" },
+        config = function()
+            require("plug-config/debugger")
+        end
+    },                                                      -- Debugger
+    { "williamboman/mason.nvim", config = function() require("mason").setup() end },
 
     ----------------------------------------
     -- Motions | Movements
