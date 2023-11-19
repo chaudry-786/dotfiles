@@ -153,6 +153,10 @@ require("lazy").setup({
             require("plug-config/neorg")
         end,
     },                                                      -- Better notes
+    {
+        'cameron-wags/rainbow_csv.nvim',
+        config = true,
+    }                                                       -- CSV highlighted
 })
 
 
