@@ -167,3 +167,20 @@ dap.configurations.python = {
     createPythonDapConfig("Django", base_dir .. "/manage.py", { "runserver", "--noreload" }),
     createPythonDapConfig("Flask", venv_dir .. "flask", { "run" }),
 }
+
+------------------------------------------------
+-- Neotest - Python
+------------------------------------------------
+keymap("n", "<Leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", opts)
+keymap("n", "<Leader>tt", ":lua require('neotest').summary.toggle()<CR>", opts)
+-- run all the tests in the file
+-- require("neotest").run.run(vim.fn.expand("%"))
+require("neotest").setup({
+    adapters = {
+        require("neotest-python")({
+            dap = { justMyCode = true },
+            python = venv_dir .. "python",
+            runner = "pytest",
+        })
+    }
+})
