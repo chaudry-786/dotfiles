@@ -39,7 +39,8 @@ end
 
 local function set_background_color_with_delay()
     local highlight_groups_to_change = { "FoldColumn", "SignColumn", "LineNr", "CursorLineNr", "GitSignsAdd",
-        "GitSignsChange", "GitSignsDelete", "CocErrorSign", "CocHintSign", "CocInfoSign", "CocWarningSign", }
+        "GitSignsChange", "GitSignsDelete", "CocErrorSign", "CocHintSign", "CocInfoSign", "CocWarningSign",
+        "NeotestRunning", "NeotestPassed", "NeotestFailed"}
     set_background_color(highlight_groups_to_change)
 end
 

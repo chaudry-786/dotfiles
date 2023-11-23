@@ -102,11 +102,12 @@ function DebuggerRelaunch()
     ToggleDebugMode()
 end
 
-keymap("n", "<Leader>Dr", ":lua DebuggerRelaunch()<CR>", opts)
+keymap("n", "<Leader>dr", ":lua DebuggerRelaunch()<CR>", opts)
 keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", opts)
 keymap("n", "<leader>td", ":lua ToggleDebugMode()<CR>", opts)
 keymap("n", "<Leader>tb", ":DapToggleBreakpoint<CR>", opts)
 keymap("n", "<Leader>tB", ":lua require'dap'.clear_breakpoints()<CR>", opts)
+keymap("n", "<Leader>dk", "<Cmd>lua require('dapui').eval()<CR>", opts)
 
 
 ------------------------------------------------
