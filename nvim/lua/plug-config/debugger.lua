@@ -7,6 +7,8 @@ local opts = { noremap = true, silent = true }
 
 local DebugBuffers = {}
 local debugAutocmdGroupName = "DebugAutocmd"
+local DebugMode = false
+local firstIteration = true
 
 -- map debug keys
 function MapDebugKeys()
@@ -34,8 +36,8 @@ function UnmapDebugKeys()
     vim.api.nvim_create_augroup(debugAutocmdGroupName, { clear = true })
 end
 
--- create and trigger the debug autocommand
-function SetupAndTriggerDebugAutocmd()
+local function startDebugger()
+    -- create and trigger the autocommand to map keys
     local debug_filetype = vim.bo.filetype
     vim.api.nvim_create_augroup(debugAutocmdGroupName, { clear = true })
     vim.api.nvim_create_autocmd("FileType", {
@@ -43,29 +45,32 @@ function SetupAndTriggerDebugAutocmd()
         pattern = { debug_filetype },
         command = [[lua MapDebugKeys()]]
     })
-
     -- trigger FileType autocmd for existing buffers
     vim.cmd(string.format("let buf=bufnr('%%') | bufdo if &ft == '%s' | doautocmd FileType | endif | exec 'b' buf",
         debug_filetype))
-end
 
-local DebugMode = false
-local firstIteration = true
--- automatically launch the UI and map unmap keys
-dap.listeners.after.event_initialized["dapui_config"] = function()
-    SetupAndTriggerDebugAutocmd()
+    -- Launch UI
     dapui.open()
     DebugMode = true
+    vim.fn.CocAction('diagnosticToggle')
+end
+
+local function endDebugger()
+    dapui.close()
+    UnmapDebugKeys()
+    DebugMode = false
+    vim.fn.CocAction('diagnosticToggle')
+end
+
+-- automatically launch the UI and map unmap keys
+dap.listeners.after.event_initialized["dapui_config"] = function()
+    startDebugger()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close()
-    UnmapDebugKeys()
-    DebugMode = false
+    endDebugger()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close()
-    UnmapDebugKeys()
-    DebugMode = false
+    endDebugger()
 end
 
 -- Note: if no session: DapContinue is a wrapper over dap_run,
@@ -184,3 +189,13 @@ require("neotest").setup({
         })
     }
 })
+
+
+-- SIGNS
+vim.api.nvim_set_hl(0, "yellow", { fg = "#FFFF00", bg = "#1f1d2e" })
+vim.api.nvim_set_hl(0, "red", { fg = "#ff0000", bg = "#1f1d2e" })
+vim.fn.sign_define("DapBreakpoint", { text = "󰏤", texthl = "red" })
+vim.fn.sign_define("DapBreakpointCondition", { text = "󰏤", texthl = "red" })
+vim.fn.sign_define("DapBreakpointRejected", { text = "•", texthl = "yellow" })
+vim.fn.sign_define("DapStopped", { text = "", texthl = "yellow" })
+vim.fn.sign_define("DapLogPoint", { text = "•", texthl = "yellow" })
