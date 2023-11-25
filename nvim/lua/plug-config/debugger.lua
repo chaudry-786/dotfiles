@@ -95,15 +95,29 @@ function ToggleDebugMode()
     end
 end
 
+local function xO(desc)
+    return vim.tbl_extend("force", opts, { desc = desc })
+end
 -- will ask what config to start the debugger with
-keymap("n", "<Leader>dr", function() firstIteration = true; DebugMode = false; ToggleDebugMode() end, opts)
-keymap("n", "<Leader>de", function() vim.cmd("DapTerminate"); endDebugger() end, opts)
-keymap("n", "<Leader>ds", function() vim.cmd("DapTerminate"); DebugMode = false; ToggleDebugMode() end, opts)
-keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", opts)
-keymap("n", "<leader>td", ":lua ToggleDebugMode()<CR>", opts)
-keymap("n", "<Leader>tb", ":DapToggleBreakpoint<CR>", opts)
-keymap("n", "<Leader>tB", ":lua require'dap'.clear_breakpoints()<CR>", opts)
-keymap("n", "<Leader>dk", "<Cmd>lua require('dapui').eval()<CR>", opts)
+keymap("n", "<Leader>dr", function()
+    firstIteration = true;
+    DebugMode = false;
+    ToggleDebugMode()
+end, xO("Restart debugger"))
+keymap("n", "<Leader>de", function()
+    vim.cmd("DapTerminate");
+    endDebugger()
+end, xO("Terminate Debugger"))
+keymap("n", "<Leader>ds", function()
+    vim.cmd("DapTerminate");
+    DebugMode = false;
+    ToggleDebugMode()
+end, xO("Start Debugger"))
+keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", xO("Toggler debugger"))
+keymap("n", "<leader>td", ":lua ToggleDebugMode()<CR>", xO("Toggle debugger"))
+keymap("n", "<Leader>tb", ":DapToggleBreakpoint<CR>", xO("Toggle breakpoint"))
+keymap("n", "<Leader>tB", ":lua require'dap'.clear_breakpoints()<CR>", xO("Clear breakpoints"))
+keymap("n", "<Leader>dk", "<Cmd>lua require('dapui').eval()<CR>", xO("Debug evaluate (pop up)"))
 
 
 
@@ -174,8 +188,8 @@ dap.configurations.python = {
 ------------------------------------------------
 -- Neotest - Python
 ------------------------------------------------
-keymap("n", "<Leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", opts)
-keymap("n", "<Leader>tt", ":lua require('neotest').summary.toggle()<CR>", opts)
+keymap("n", "<Leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", xO("Debug test"))
+keymap("n", "<Leader>tt", ":lua require('neotest').summary.toggle()<CR>", xO("Toggle test summary"))
 -- run all the tests in the file
 -- require("neotest").run.run(vim.fn.expand("%"))
 require("neotest").setup({
