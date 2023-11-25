@@ -52,14 +52,12 @@ local function startDebugger()
     -- Launch UI
     dapui.open()
     DebugMode = true
-    vim.fn.CocAction('diagnosticToggle')
 end
 
 local function endDebugger()
     dapui.close()
     UnmapDebugKeys()
     DebugMode = false
-    vim.fn.CocAction('diagnosticToggle')
 end
 
 -- automatically launch the UI and map unmap keys
@@ -99,25 +97,18 @@ local function xO(desc)
     return vim.tbl_extend("force", opts, { desc = desc })
 end
 -- will ask what config to start the debugger with
-keymap("n", "<Leader>dr", function()
-    firstIteration = true;
-    DebugMode = false;
-    ToggleDebugMode()
-end, xO("Restart debugger"))
-keymap("n", "<Leader>de", function()
-    vim.cmd("DapTerminate");
-    endDebugger()
-end, xO("Terminate Debugger"))
-keymap("n", "<Leader>ds", function()
-    vim.cmd("DapTerminate");
-    DebugMode = false;
-    ToggleDebugMode()
-end, xO("Start Debugger"))
+keymap("n", "<Leader>dr", function() firstIteration = true; DebugMode = false; ToggleDebugMode() end, xO("Restart debugger"))
+keymap("n", "<Leader>de", function() vim.cmd("DapTerminate"); endDebugger() end, xO("Terminate Debugger"))
+keymap("n", "<Leader>ds", function() vim.cmd("DapTerminate"); DebugMode = false; ToggleDebugMode() end, xO("Start Debugger"))
+keymap("n", "<Leader>tb", ":DapToggleBreakpoint<CR>", xO("Toggle breakpoint"))
+keymap("n", "<Leader>dc", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+    xO("Conditional breakpoint"))
+keymap("n", "<Leader>tB", ":lua require'dap'.clear_breakpoints()<CR>", xO("Clear breakpoints"))
+keymap("n", "<Leader>dk", ":lua require('dapui').eval()<CR>", xO("Debug evaluate (pop up)"))
+keymap("n", "<Leader>dR", ":lua require('dapui').open({reset = true})<CR>", xO("Reset UI"))
+-- Toggle debugger
 keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", xO("Toggler debugger"))
 keymap("n", "<leader>td", ":lua ToggleDebugMode()<CR>", xO("Toggle debugger"))
-keymap("n", "<Leader>tb", ":DapToggleBreakpoint<CR>", xO("Toggle breakpoint"))
-keymap("n", "<Leader>tB", ":lua require'dap'.clear_breakpoints()<CR>", xO("Clear breakpoints"))
-keymap("n", "<Leader>dk", "<Cmd>lua require('dapui').eval()<CR>", xO("Debug evaluate (pop up)"))
 
 
 
