@@ -1,4 +1,38 @@
-require("dapui").setup()
+require("dapui").setup({
+    layouts = { {
+        elements = { {
+            id = "scopes",
+            size = 0.40
+        }, {
+            id = "watches",
+            size = 0.40
+        }, {
+            id = "breakpoints",
+            size = 0.10
+        }, {
+            id = "stacks",
+            size = 0.10
+        }, },
+        position = "left",
+        size = 40
+    },
+        {
+            elements = { {
+                id = "repl",
+                size = 0.5
+            }, {
+                id = "console",
+                size = 0.2
+            } },
+            position = "bottom",
+            size = 10
+        }
+    },
+    mappings = {
+        remove = "<Del>",
+    },
+}
+)
 local dap, dapui = require("dap"), require("dapui")
 local keymap = vim.keymap.set
 local buff_keymap = vim.api.nvim_buf_set_keymap
@@ -104,7 +138,8 @@ keymap("n", "<Leader>tb", ":DapToggleBreakpoint<CR>", xO("Toggle breakpoint"))
 keymap("n", "<Leader>dc", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
     xO("Conditional breakpoint"))
 keymap("n", "<Leader>tB", ":lua require'dap'.clear_breakpoints()<CR>", xO("Clear breakpoints"))
-keymap("n", "<Leader>dk", ":lua require('dapui').eval()<CR>", xO("Debug evaluate (pop up)"))
+keymap("n", "<Leader>dk", ":lua require('dapui').eval()<CR>", xO("Debug Eval"))
+keymap("n", '<Leader>dK', ":lua require('dap.ui.widgets').hover()<CR>", xO("Debug Hover"))
 keymap("n", "<Leader>dR", ":lua require('dapui').open({reset = true})<CR>", xO("Reset UI"))
 -- Toggle debugger
 keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", xO("Toggler debugger"))
