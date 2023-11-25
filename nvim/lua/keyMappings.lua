@@ -125,7 +125,6 @@ keymap("", "L", "$", {})
 -- buffers shortcuts
 keymap("n", "<leader>l", ":bnext<CR>", opts)
 keymap("n", "<leader>h", ":bprevious<CR>", opts)
-keymap("n", "<leader>d", ":bdelete<CR>", opts)
 keymap("i", "<C-S>", "<C-O>:update<CR>", opts)
 keymap("n", "<C-S>", ":update<CR>", opts)
 keymap("v", "<C-S>", "<C-C>:update<CR>", opts)

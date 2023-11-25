@@ -1,6 +1,6 @@
 require("dapui").setup()
 local dap, dapui = require("dap"), require("dapui")
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 local buff_keymap = vim.api.nvim_buf_set_keymap
 local del_keymap = vim.api.nvim_buf_del_keymap
 local opts = { noremap = true, silent = true }
@@ -12,11 +12,11 @@ local firstIteration = true
 
 -- map debug keys
 function MapDebugKeys()
-    buff_keymap(0, "n", "<Up>", "<Cmd>lua require'dap'.restart()<CR>", {})
-    buff_keymap(0, "n", "<Left>", ":DapStepOut<CR>", {})
-    buff_keymap(0, "n", "<Right>", ":DapStepInto<CR>", {})
-    buff_keymap(0, "n", "<Down>", ":DapStepOver<CR>", {})
-    buff_keymap(0, "n", "<Leader><Down>", ":DapContinue<CR>", {})
+    buff_keymap(0, "n", "<Up>", "<Cmd>lua require'dap'.restart()<CR>", opts)
+    buff_keymap(0, "n", "<Left>", ":DapStepOut<CR>", opts)
+    buff_keymap(0, "n", "<Right>", ":DapStepInto<CR>", opts)
+    buff_keymap(0, "n", "<Down>", ":DapStepOver<CR>", opts)
+    buff_keymap(0, "n", "<Leader><Down>", ":DapContinue<CR>", opts)
 
     -- keep track of buffers with debug keymaps
     DebugBuffers[vim.fn.bufnr()] = true
@@ -96,18 +96,15 @@ function ToggleDebugMode()
 end
 
 -- will ask what config to start the debugger with
-function DebuggerRelaunch()
-    firstIteration = true
-    DebugMode = false
-    ToggleDebugMode()
-end
-
-keymap("n", "<Leader>dr", ":lua DebuggerRelaunch()<CR>", opts)
+keymap("n", "<Leader>dr", function() firstIteration = true; DebugMode = false; ToggleDebugMode() end, opts)
+keymap("n", "<Leader>de", function() vim.cmd("DapTerminate"); endDebugger() end, opts)
+keymap("n", "<Leader>ds", function() vim.cmd("DapTerminate"); DebugMode = false; ToggleDebugMode() end, opts)
 keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", opts)
 keymap("n", "<leader>td", ":lua ToggleDebugMode()<CR>", opts)
 keymap("n", "<Leader>tb", ":DapToggleBreakpoint<CR>", opts)
 keymap("n", "<Leader>tB", ":lua require'dap'.clear_breakpoints()<CR>", opts)
 keymap("n", "<Leader>dk", "<Cmd>lua require('dapui').eval()<CR>", opts)
+
 
 
 ------------------------------------------------
