@@ -259,3 +259,6 @@ function ToggleConceallevel()
     end
 end
 keymap('n', '<leader>tc', [[:lua ToggleConceallevel()<CR>]], opts)
+
+-- <Esc> to exit terminal-mode
+keymap("t", "<Esc>", [[<C-\><C-n>]], opts)

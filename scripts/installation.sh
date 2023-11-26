@@ -131,7 +131,7 @@ install_packages() {
 install_and_setup_vim(){
 
     # stable release neovim
-    curl -L -O https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
+    curl -L -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
     rm -rf "$HOME/nvim_extracted"
     mkdir "$HOME/nvim_extracted"
     tar xzvf nvim-linux64.tar.gz -C "$HOME/nvim_extracted"

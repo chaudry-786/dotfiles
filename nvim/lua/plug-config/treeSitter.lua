@@ -10,6 +10,7 @@ require "nvim-treesitter.configs".setup {
         "javascript",
         "typescript",
         "html",
+        "htmldjango",
         "css",
         "lua",
         "regex",
@@ -28,15 +29,14 @@ require "nvim-treesitter.configs".setup {
             -- Automatically jump forward to textobj, similar to targets.vim
             lookahead = true,
             keymaps = {
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
+                ["aC"] = "@class.outer",
+                ["iC"] = "@class.inner",
                 ["af"] = "@function.outer",
                 ["if"] = "@function.inner",
                 ["al"] = "@loop.outer",
                 ["il"] = "@loop.inner",
                 ["ai"] = "@conditional.outer",
                 ["ii"] = "@conditional.inner",
-                ["aC"] = "@comment.outer",
             },
         },
 
@@ -44,32 +44,16 @@ require "nvim-treesitter.configs".setup {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
-                ["]c"] = "@class.outer",
+                ["]C"] = "@class.outer",
                 ["]f"] = "@function.outer",
                 ["]l"] = "@loop.outer",
                 ["]i"] = "@conditional.outer",
-                ["]C"] = "@comment.outer",
-            },
-            goto_next_end = {
-                ["]]c"] = "@class.outer",
-                ["]]f"] = "@function.outer",
-                ["]]l"] = "@loop.outer",
-                ["]]i"] = "@conditional.outer",
-                ["]]C"] = "@comment.outer",
             },
             goto_previous_start = {
-                ["[c"] = "@class.outer",
+                ["[C"] = "@class.outer",
                 ["[f"] = "@function.outer",
                 ["[l"] = "@loop.outer",
                 ["[i"] = "@conditional.outer",
-                ["[C"] = "@comment.outer",
-            },
-            goto_previous_end = {
-                ["[]c"] = "@class.outer",
-                ["[]f"] = "@function.outer",
-                ["[]l"] = "@loop.outer",
-                ["[]i"] = "@conditional.outer",
-                ["[]C"] = "@comment.outer",
             },
         },
     },
@@ -77,7 +61,3 @@ require "nvim-treesitter.configs".setup {
     -- Auto tag for typescript, javascript
     autotag = { enable = true }
 }
-
--- reminder on how to correctly navigate
-vim.keymap.set("", "[[", function() vim.notify("START = [f END = []f ") end, { noremap = true, silent = true })
-vim.keymap.set("", "][", function() vim.notify("START = [f END = []f ") end, { noremap = true, silent = true })

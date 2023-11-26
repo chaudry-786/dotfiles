@@ -59,9 +59,14 @@ require("lazy").setup({
     { "vim-test/vim-test", config = function()
         require("plug-config/vim-test")
     end },                                                  -- Test plugin
-    { "Vigemus/iron.nvim", config = function()
-        require("plug-config/iron")
-    end },                                                  -- REPL
+    { "luk400/vim-jukit", init = function()
+        vim.g.jukit_terminal = "nvimterm"
+        vim.g.jukit_in_style = 4
+        vim.g.jukit_mappings_ext_enabled = { "py", "ipynb" }
+        vim.g.jukit_mappings = 0
+    end, config = function()
+        require("plug-config/jukit")
+    end },                                                  -- notebook REPL
     -- { "puremourning/vimspector", config = function()
     --     require("plug-config/vimspector")
     -- end },                                                  -- Debugger
@@ -78,18 +83,32 @@ require("lazy").setup({
             require("plug-config/debugger")
         end
     },                                                      -- Debugger
-    { "williamboman/mason.nvim", config = function() require("mason").setup() end },
+    { "williamboman/mason.nvim", config = function()
+        require("mason").setup()
+    end,
+        opts = { ensure_installed = { "debugpy"} }
+    },
 
     ----------------------------------------
     -- Motions | Movements
     ----------------------------------------
     { "ggandor/leap.nvim", config = function()
-        local keymap = vim.api.nvim_set_keymap
+        local keymap = vim.keymap.set
         require("leap").opts.safe_labels = {}
         keymap("", "<leader>j", "<Plug>(leap-forward-to)", { silent = true })
         keymap("", "<leader>k", "<Plug>(leap-backward-to)", { silent = true })
     end },                                                  -- Easy movement around buffer
-    "christoomey/vim-tmux-navigator",                       -- Easy navigation between tmux panes and vim windows
+    { "alexghergh/nvim-tmux-navigation", config = function()
+        local nvim_tmux_nav = require('nvim-tmux-navigation')
+        local keymap = vim.keymap.set
+        nvim_tmux_nav.setup {
+            disable_when_zoomed = true
+        }
+        keymap({ "n", "t" }, "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
+        keymap({ "n", "t" }, "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
+        keymap({ "n", "t" }, "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
+        keymap({ "n", "t" }, "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
+    end },                                                  -- Easy navigation between tmux panes and vim windows
 
     ----------------------------------------
     -- Text objects
