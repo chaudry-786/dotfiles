@@ -105,3 +105,12 @@ vim.api.nvim_create_autocmd("FocusGained", { group = "CustomAutoCmds", pattern =
 -- automatically resize windows
 vim.api.nvim_create_autocmd("VimResized",
     { group = "CustomAutoCmds", pattern = "*", command = [[execute "normal! \<C-w>="]] })
+
+-- turn off spellcheck in terminal
+vim.api.nvim_create_autocmd("TermOpen", {
+    group = "CustomAutoCmds",
+    pattern = "*",
+    callback = function()
+        vim.cmd("setlocal nospell")
+    end
+})
