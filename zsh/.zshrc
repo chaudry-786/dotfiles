@@ -63,7 +63,7 @@ alias vdp='nvim $(git diff --name-only master...HEAD | sed "s|^|$(git rev-parse 
 #------------------------------------------------
 # Python virtual Environment and Development
 #------------------------------------------------
-alias csrc="python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip pylint"
+alias csrc="python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip pylint ipython matplotlib"
 alias dsrc="rm -rf venv && deactivate"
 # if in git repo then activate from root directory, or from current dir.
 src() {
