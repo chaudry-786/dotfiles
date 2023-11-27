@@ -1,29 +1,33 @@
 require("dapui").setup({
     layouts = { {
-        elements = { {
-            id = "scopes",
-            size = 0.40
-        }, {
-            id = "watches",
-            size = 0.40
-        }, {
-            id = "breakpoints",
-            size = 0.10
-        }, {
-            id = "stacks",
-            size = 0.10
-        }, },
+        elements = {
+            {
+                id = "scopes",
+                size = 0.40
+            },
+            {
+                id = "watches",
+                size = 0.40
+            },
+            {
+                id = "stacks",
+                size = 0.20
+            }
+        },
         position = "left",
         size = 40
     },
         {
-            elements = { {
-                id = "repl",
-                size = 0.5
-            }, {
-                id = "console",
-                size = 0.2
-            } },
+            elements = {
+                {
+                    id = "repl",
+                    size = 0.5
+                },
+                {
+                    id = "console",
+                    size = 0.5
+                },
+            },
             position = "bottom",
             size = 10
         }
@@ -199,7 +203,8 @@ local function createPythonDapConfig(name, program, args)
         pythonPath = python_path,
         program = program,
         args = args,
-        cwd = cwd
+        cwd = cwd,
+        console = 'integratedTerminal',
     }
 end
 
