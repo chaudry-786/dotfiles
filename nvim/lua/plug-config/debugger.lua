@@ -205,6 +205,7 @@ local function createPythonDapConfig(name, program, args)
         args = args,
         cwd = cwd,
         console = 'integratedTerminal',
+        justMyCode = true
     }
 end
 
