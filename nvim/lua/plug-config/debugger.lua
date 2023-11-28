@@ -93,7 +93,6 @@ local function startDebugger()
 end
 
 local function endDebugger()
-    dapui.close()
     UnmapDebugKeys()
     DebugMode = false
 end
@@ -115,6 +114,7 @@ end
 
 function ToggleDebugMode()
     if DebugMode then
+        dapui.close()
         vim.cmd("DapTerminate")
     else
         if firstIteration then
@@ -136,7 +136,7 @@ local function xO(desc)
 end
 -- will ask what config to start the debugger with
 keymap("n", "<Leader>dr", function() firstIteration = true; DebugMode = false; ToggleDebugMode() end, xO("Restart debugger"))
-keymap("n", "<Leader>de", function() vim.cmd("DapTerminate"); endDebugger() end, xO("Terminate Debugger"))
+keymap("n", "<Leader>de", function() dapui.close(); vim.cmd("DapTerminate"); endDebugger() end, xO("Terminate Debugger"))
 keymap("n", "<Leader>ds", function() vim.cmd("DapTerminate"); DebugMode = false; ToggleDebugMode() end, xO("Start Debugger"))
 keymap("n", "<Leader>tb", ":DapToggleBreakpoint<CR>", xO("Toggle breakpoint"))
 keymap("n", "<Leader>dc", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
