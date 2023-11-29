@@ -15,7 +15,8 @@ require "nvim-treesitter.configs".setup {
         "lua",
         "regex",
         "sql",
-        "rust"
+        "rust",
+        "yaml"
     },
 
     -- TS modules
