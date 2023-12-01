@@ -160,6 +160,8 @@ install_and_setup_zsh() {
 
     # auto suggestion plugin
     safe_git_clone "https://github.com/zsh-users/zsh-autosuggestions" ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    # command line syntax highlighting
+    safe_git_clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
     # fzf download and setup
     safe_git_clone "https://github.com/junegunn/fzf.git" "$HOME/.fzf" --depth 1

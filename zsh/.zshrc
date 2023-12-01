@@ -22,6 +22,7 @@ plugins=(
     ripgrep
     copyfile
     rust
+    zsh-syntax-highlighting
 )
 
 #------------------------------------------------
@@ -93,7 +94,6 @@ findmtime() {
 #------------------------------------------------
 # Utility Aliases
 #------------------------------------------------
-alias fp="fzf --preview 'batcat --style=numbers --color=always --line-range :500 {}'"
 alias cat="batcat --theme=gruvbox-dark"
 alias c="clear"
 alias e="exit"
