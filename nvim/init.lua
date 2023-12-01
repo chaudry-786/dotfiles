@@ -67,9 +67,6 @@ require("lazy").setup({
     end, config = function()
         require("plug-config/jukit")
     end },                                                  -- notebook REPL
-    -- { "puremourning/vimspector", config = function()
-    --     require("plug-config/vimspector")
-    -- end },                                                  -- Debugger
     {
         "rcarriga/nvim-dap-ui",
         dependencies = { "mfussenegger/nvim-dap",

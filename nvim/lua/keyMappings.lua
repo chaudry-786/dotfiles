@@ -2,65 +2,10 @@ local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local expr_opts = { noremap = true, silent = true, expr = true }
 
--- converts raw string input to termcodes to be fed as keys
-local function t(key)
-    return vim.api.nvim_replace_termcodes(key, true, true, true)
-end
-
 -- set space as leader
 keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
--- avoid repeating hjkl keys
-local id
-local function avoid_hjkl(mode, mov_keys)
-    for _, key in ipairs(mov_keys) do
-        local count = 0
-        keymap(mode, key, function()
-            if count >= 5 then
-                id = vim.notify("Hold it Cowboy!", vim.log.levels.WARN, {
-                    icon = "🤠",
-                    replace = id,
-                    keep = function()
-                        return count >= 5
-                    end,
-                })
-            else
-                count = count + 1
-                -- after 5 seconds decrement
-                vim.defer_fn(function()
-                    count = count - 1
-                end, 5000)
-                return key
-            end
-        end, { expr = true })
-    end
-end
-
--- Hard mode toggle
-HardMode = false
-function ToggleHardMode()
-    local modes = { "n", "v" }
-    local movement_keys = { "h", "j", "k", "l" }
-    if HardMode then
-        for _, mode in pairs(modes) do
-            for _, m_key in pairs(movement_keys) do
-                vim.api.nvim_del_keymap(mode, m_key)
-            end
-        end
-        vim.notify("Hard mode OFF", vim.log.levels.INFO, { timeout = 5 })
-    else
-        for _, mode in pairs(modes) do
-            avoid_hjkl(mode, movement_keys)
-        end
-        vim.notify("Hard mode ON", vim.log.levels.INFO, { timeout = 5 })
-    end
-    HardMode = not HardMode
-end
-
--- ToggleHardMode()
-keymap("n", "<leader>th", ":lua ToggleHardMode()<CR>", opts)
 
 -- do not copy delete and change command
 keymap({ "n", "v" }, "d", [["_d]], opts)
@@ -143,26 +88,6 @@ keymap("n", "<leader>ez", ":edit ~/.zshrc<cr>", opts)
 keymap("n", "<leader>es", ":CocCommand snippets.editSnippets<cr>", opts)
 keymap("n", "<leader>ec", ":CocConfig<cr>", opts)
 
--- reload Config and all the modules
-function _G.ReloadConfig()
-    local customUserModules = {
-        ["autocmds"] = true,
-        ["highlights"] = true,
-        ["keyMappings"] = true,
-        ["options"] = true,
-        ["status_column"] = true
-    }
-    for name, _ in pairs(package.loaded) do
-        if string.match(name, "^plug%-config") or customUserModules[name] then
-            package.loaded[name] = nil
-        end
-    end
-    dofile(vim.env.MYVIMRC)
-    vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO, { timeout = 5 })
-end
-
-keymap("n", "<leader>so", "<cmd>lua ReloadConfig()<CR>", opts)
-
 --  move code alt+arrows
 keymap("n", "<M-Up>", [[:<C-U>exec "exec 'norm m`' \| move -" . (1+v:count1)<CR>``]], opts)
 keymap("n", "<M-Down>", [[:<C-U>exec "exec 'norm m`' \| move +" . (0+v:count1)<CR>``]], opts)
@@ -173,10 +98,8 @@ keymap("v", "<M-Down>", [[:<C-U>exec "'<,'>move '>+" . (0+v:count1)<CR>gv]], opt
 
 -- keep jumps and search in middle also n and N are smart to go only one way
 -- when search is going either way (up or down).
-keymap("n", "n", function() return vim.v.searchforward == 1 and "nzz" or "Nzz" end,
-    expr_opts)
-keymap("n", "N", function() return vim.v.searchforward == 1 and "Nzz" or "nzz" end,
-    expr_opts)
+keymap("n", "n", function() return vim.v.searchforward == 1 and "nzz" or "Nzz" end, expr_opts)
+keymap("n", "N", function() return vim.v.searchforward == 1 and "Nzz" or "nzz" end, expr_opts)
 keymap("n", "<C-o>", "<C-o>zz", opts)
 keymap("n", "<C-i>", "<C-i>zz", opts)
 
@@ -186,7 +109,7 @@ keymap("n", "<leader>y", ":%y+<CR>", opts)
 -- escape: also clears highlighting
 keymap("n", "<esc>", "<Cmd>noh<return><esc>", opts)
 
--- indent and keep stay in visualMode
+-- indent and stay in visualMode
 keymap("v", ">", ">gv", opts)
 keymap("v", "<", "<gv", opts)
 
