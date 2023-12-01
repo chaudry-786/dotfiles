@@ -56,7 +56,7 @@ keymap("n", "]a", "<Plug>(coc-diagnostic-next)", { silent = true })
 
 -- goto code navigation.
 keymap("n", "gd", "<Plug>(coc-definition)", { silent = true })
-keymap("n", "gs", ":call CocAction('jumpDefinition', 'vsplit') <CR>", { silent = true })
+keymap("n", "gD", ":call CocAction('jumpDefinition', 'vsplit') <CR>", { silent = true })
 keymap("n", "gy", "<Plug>(coc-type-definition)", { silent = true })
 keymap("n", "gi", "<Plug>(coc-implementation)", { silent = true })
 keymap("n", "gr", "<Plug>(coc-references)", { silent = true })

@@ -11,14 +11,6 @@ function custom_actions.fzf_multi_select(prompt_bufnr)
     local num_selections = table.getn(picker:get_multi_selection())
 
     if num_selections > 1 then
-        local picker = action_state.get_current_picker(prompt_bufnr)
-
-        -- this will open all the files
-        -- for _, entry in ipairs(picker:get_multi_selection()) do
-        --     vim.cmd(string.format("%s %s", ":e!", entry.value))
-        -- end
-
-        -- send all items to quick fix list
         actions.send_selected_to_qflist(prompt_bufnr)
         actions.open_qflist(prompt_bufnr)
     else
@@ -26,7 +18,7 @@ function custom_actions.fzf_multi_select(prompt_bufnr)
     end
 end
 
--- do no preview large files
+-- do not preview large files
 local previewers = require("telescope.previewers")
 local new_maker = function(filepath, bufnr, opts)
     opts = opts or {}
