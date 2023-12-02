@@ -2,7 +2,11 @@ require("neorg").setup {
     load = {
         ["core.defaults"] = {},
         ["core.keybinds"] = {
-            config = { neorg_leader = "<leader>o" },
+            config = { neorg_leader = "<leader>o",
+                hook = function(keybinds)
+                    keybinds.unmap("norg", "n", "<CR>")
+                end,
+            },
         },
         ["core.concealer"] = {},
         ["core.dirman"] = {

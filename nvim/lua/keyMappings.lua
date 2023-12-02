@@ -166,6 +166,9 @@ keymap("n", "]Q", ":clast<CR>zz", opts)
 --fold movement
 keymap("", "[z", "zk", opts)
 keymap("", "]z", "zj", opts)
+keymap("n", "<CR>", "zA", opts)
+-- close current, go to next and open.
+keymap("n", "<C-CR>", "zCzjzOzz", opts)
 
 function ToggleSpellCheck()
     vim.opt.spell = not (vim.opt.spell:get())

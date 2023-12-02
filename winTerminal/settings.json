@@ -14,6 +14,18 @@
             }
         ]
     },
+    "keybindings": [
+        {
+            "command": "sendInput",
+            "keys": "shift+enter",
+            "input": "\u001b[13;2u"
+        },
+        {
+            "command": "sendInput",
+            "keys": "ctrl+enter",
+            "input": "\u001b[13;5u"
+        }
+    ],
     "schemes": [
         {
             "background": "#282828",
