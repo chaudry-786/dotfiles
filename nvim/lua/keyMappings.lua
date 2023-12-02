@@ -64,8 +64,17 @@ keymap("n", "<leader>p", [[match(getreg(), "\n$") == -1 ? "o<C-r><C-p>+<esc>" : 
 keymap("n", "<leader>P", [[match(getreg(), "\n$") == -1 ? "O<C-r><C-p>+<esc>" : "O<C-r><C-p>+<esc>\"_dd"]], expr_opts)
 
 -- move at the start and end of line easily
-keymap("", "H", "^", {})
-keymap("", "L", "$", {})
+keymap("", "L", "$", opts)
+-- Use 0 or ^ depending on current position.
+keymap("", "H", function()
+    local start_pos = vim.fn.col(".")
+    if start_pos ~= 1 then
+        vim.cmd("normal! ^")
+        if start_pos <= vim.fn.col(".") then
+            vim.cmd("normal! 0")
+        end
+    end
+end, opts)
 
 -- buffers shortcuts
 keymap("n", "<leader>l", ":bnext<CR>", opts)
