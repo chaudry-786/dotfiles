@@ -35,9 +35,20 @@ vim.api.nvim_create_autocmd("FileType",
 --fold movement
 keymap("", "[z", "zk", opts)
 keymap("", "]z", "zj", opts)
-keymap("n", "<CR>", "zA", opts)
--- close current, go to next and open.
-keymap("n", "<C-CR>", "zCzjzOzz", opts)
+keymap("n", "<CR>", "za", opts)
+-- toggle child folds recursively
+keymap("n", "<C-CR>", function()
+    if vim.fn.foldlevel(vim.fn.line('.')) == 0 then
+        -- line not in a fold.
+        return
+    end
+    local fold_status = vim.fn.foldclosed(vim.fn.line('.'))
+    if fold_status == -1 then
+        vim.cmd("normal! zxzc")
+    else
+        vim.cmd("normal! zA")
+    end
+end, opts)
 
 --------------------------------------------------
 -- AutoCmds
