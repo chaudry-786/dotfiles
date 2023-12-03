@@ -68,3 +68,11 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         vim.cmd("nnoremap <buffer> <CR> <CR>")
     end
 })
+-- update folds after the file is written
+vim.api.nvim_create_autocmd("BufWritePost", {
+    group = "CustomAutoCmds",
+    pattern = "*",
+    callback = function()
+        vim.cmd("normal! zx")
+    end
+})
