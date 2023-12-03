@@ -114,19 +114,3 @@ vim.api.nvim_create_autocmd("TermOpen", {
         vim.cmd("setlocal nospell")
     end
 })
-
--- do not map <CR> in qflist and cmdWin
-vim.api.nvim_create_autocmd("CmdwinEnter", {
-    group = "CustomAutoCmds",
-    pattern = "*",
-    callback = function()
-        vim.cmd("nnoremap <buffer> <CR> <CR>")
-    end
-})
-vim.api.nvim_create_autocmd("BufReadPost", {
-    group = "CustomAutoCmds",
-    pattern = "quickfix",
-    callback = function()
-        vim.cmd("nnoremap <buffer> <CR> <CR>")
-    end
-})

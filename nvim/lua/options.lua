@@ -33,29 +33,6 @@ set.writebackup = false
 set.swapfile = true                                     --swap files
 set.dir = os.getenv("HOME") .. "/tmp"                   --swap file directory
 
--- fold
-set.foldmethod = "expr"                                 --treesitter for folds
-set.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- set.foldtext = "v:lua.vim.treesitter.foldtext()"
-function Foldtext()
-    local text = vim.treesitter.foldtext()
-    local n_lines = vim.v.foldend - vim.v.foldstart
-    local text_lines = " lines"
-    if n_lines == 1 then
-        text_lines = " line"
-    end
-    table.insert(text, { " + " .. n_lines .. text_lines, { "Folded" } })
-    return text
-end
-vim.opt.foldtext = "v:lua.Foldtext()"
-
-vim.api.nvim_create_autocmd("FileType",
-    { group = "CustomAutoCmds", pattern = "sql", command = [[ setlocal foldmethod=indent ]] })
--- set.foldenable = false                                  --do not auto create folds when file opens
-set.foldnestmax = 10                                    --max nested fold level
-set.foldlevel = 0                                       --fold level: zr or zm
-set.fillchars = { fold = " ", foldopen = " ", foldclose = "", foldsep = " " }
-
 --4 spaces with tab
 set.tabstop = 4                                         --number of spaces that a <Tab> in the file counts for
 set.shiftwidth = 4                                      --this determines indent guide and formatting (invalid [--python--])

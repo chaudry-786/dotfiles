@@ -5,6 +5,7 @@ vim.api.nvim_create_augroup("CustomAutoCmds", { clear = true })
 require("options")
 require("keyMappings")
 require("autocmds")
+require("fold")
 
 -- Plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
