@@ -120,13 +120,13 @@ vim.api.nvim_create_autocmd("CmdwinEnter", {
     group = "CustomAutoCmds",
     pattern = "*",
     callback = function()
-        vim.cmd("nnoremap <CR> <CR>")
+        vim.cmd("nnoremap <buffer> <CR> <CR>")
     end
 })
 vim.api.nvim_create_autocmd("BufReadPost", {
     group = "CustomAutoCmds",
     pattern = "quickfix",
     callback = function()
-        vim.cmd("nnoremap <CR> <CR>")
+        vim.cmd("nnoremap <buffer> <CR> <CR>")
     end
 })
