@@ -14,16 +14,14 @@
             }
         ]
     },
-    "keybindings": [
+    "actions": [
         {
-            "command": "sendInput",
-            "keys": "shift+enter",
-            "input": "\u001b[13;2u"
+            "command": { "action": "sendInput", "input": "\u001b[13;2u" },
+            "keys": "shift+enter"
         },
         {
-            "command": "sendInput",
-            "keys": "ctrl+enter",
-            "input": "\u001b[13;5u"
+            "command": { "action": "sendInput", "input": "\u001b[13;5u" },
+            "keys": "ctrl+enter"
         }
     ],
     "schemes": [
