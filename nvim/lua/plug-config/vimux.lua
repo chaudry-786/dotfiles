@@ -17,7 +17,9 @@ local filetype_and_commands = {
     lua = [["clear; lua " . %s ]],
     javascript = [["clear; node " . %s ]],
     c = [["clear; gcc " . %s .  " -o " . expand("%%:t:r") . " && ./" . expand("%%:t:r")]],
-    rust = [["clear; cargo run"]]
+    rust = [["clear; cargo run"]],
+    sh = [["clear;  ./" . %s ]],
+
 }
 send_commands_to_tmux_pane(filetype_and_commands)
 
