@@ -225,8 +225,7 @@ dap.configurations.python = {
 ------------------------------------------------
 keymap("n", "<Leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", xO("Debug test"))
 keymap("n", "<Leader>tt", ":lua require('neotest').summary.toggle()<CR>", xO("Toggle test summary"))
--- run all the tests in the file
--- require("neotest").run.run(vim.fn.expand("%"))
+keymap("n", "<Leader><Leader>rT", ":lua require('neotest').run.run(vim.fn.expand('%'))<CR>", xO("Run all the tests in the file."))
 require("neotest").setup({
     adapters = {
         require("neotest-python")({
