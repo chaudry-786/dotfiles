@@ -114,3 +114,19 @@ vim.api.nvim_create_autocmd("TermOpen", {
         vim.cmd("setlocal nospell")
     end
 })
+
+-- Toggle autocommands: useful for executing macros and cdo
+vim.keymap.set("n", "<leader>tA", function()
+    local currentEventIgnore = vim.o.eventignore
+    if not string.find(currentEventIgnore, "all") then
+        if currentEventIgnore ~= "" then
+            vim.o.eventignore = currentEventIgnore .. ",all"
+        else
+            vim.o.eventignore = "all"
+        end
+        print("Auto Commands disabled.")
+    else
+        vim.o.eventignore = string.gsub(currentEventIgnore, ",?all", "")
+        print("Auto Commands re-enabled.")
+    end
+end, { noremap = true, silent = true })
