@@ -190,3 +190,9 @@ keymap('n', '<leader>tc', [[:lua ToggleConceallevel()<CR>]], opts)
 
 -- <Esc> to exit terminal-mode
 keymap("t", "<Esc>", [[<C-\><C-n>]], opts)
+
+-- execute macro with noautocmd
+keymap("n", "@", function()
+    vim.fn.execute("noautocmd norm! " .. vim.v.count1 .. "@" .. vim.fn.getcharstr() .. "<CR>")
+end,
+    { noremap = true, silent = true })
