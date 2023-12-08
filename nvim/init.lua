@@ -186,9 +186,5 @@ require("lazy").setup({
 -- PLUGINS configuration
 require("plug-config/gitConfig") -- git related plugs config
 
-
--- highlights
-require("highlights")
-
 -- ensures that all highlight groups have been set
 require("status_column")
