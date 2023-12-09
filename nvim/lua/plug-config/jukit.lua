@@ -36,7 +36,7 @@ local notebook_mappings = {
     -- ("n", "<leader>dda", ":call jukit#cells#delete_outputs(1)<cr>", "Delete saved outputs of all cells")},
 
     -- Conversion to files
-    { "n", "<leader>Cp", ":call jukit#convert#notebook_convert('jupyter-notebook')<cr>",
+    { "n", "<leader>Cb", ":call jukit#convert#notebook_convert('jupyter-notebook')<cr>",
         "Convert from ipynb to py or vice versa" },
     { "n", "<leader>Ch", ":call jukit#convert#save_nb_to_file(0, 1, 'html')<cr>", "Convert file to html" },
     { "n", "<leader>CH", ":call jukit#convert#save_nb_to_file(1, 1, 'html')<cr>",
