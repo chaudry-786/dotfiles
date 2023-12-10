@@ -8,127 +8,101 @@ keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-local function define_keymaps(mappings)
-    for _, mapping in ipairs(mappings) do
-        local mapping_opts = type(mapping[4]) == "table" and mapping[4] or
-            vim.tbl_extend("force", opts, { desc = mapping[4] })
-        if mapping[5] then mapping_opts.expr = true end
-        keymap(mapping[1], mapping[2], mapping[3], mapping_opts)
-    end
+local function map(mode, rhs, lhs, desc_or_opts, expr_mapping)
+    local mapping_opts = type(desc_or_opts) == "table" and desc_or_opts or
+        vim.tbl_extend("force", opts, { desc = desc_or_opts })
+    if expr_mapping then mapping_opts.expr = true end
+    keymap(mode, rhs, lhs, mapping_opts)
 end
 
-local mappings = {
-    ----------------------------------------
-    -- General
-    ----------------------------------------
-    { { "n", "v" }, "d",          [["_d]],                      "Delete without copying." },
-    { { "n", "v" }, "D",          [["_D]],                      "Delete to end of line without copying." },
-    { { "n", "v" }, "c",          [["_c]],                      "Change without copying." },
-    { { "n", "v" }, "C",          [["_C]],                      "Change to end of line without copying." },
-    { "",           "L",          "$",                          "Move to the end of the line" },
-    { "",           "H",          kmap_funs.goto_start_of_line, "Move to the start of the line", },
-    { "t",          "<Esc>",      [[<C-\><C-n>]],               "Exit terminal mode" },
-    { "n",          "@",          kmap_funs.execute_macro,      "Execute macro with noautocmd" },
-    { "n",          "<leader>y",  ":%y+<CR>",                   "Copy the whole buffer", },
-    { "n",          "<esc>",      "<Cmd>noh<return><esc>",      "Escape: Also clears highlighting", },
-    { "v",          ">",          ">gv",                        "Indent and stay in Visual mode", },
-    { "v",          "<",          "<gv",                        "Indent and stay in Visual mode", },
-    { "n",          "<leader>ts", kmap_funs.toggle_spelling,    "Toggle spelling" },
-    { "n", "<leader>tc",
-        [[:lua ToggleConceallevel()<CR>]], "Toggle conceal level" },
-    { "n", "<leader>?",
-        ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", "Fuzzy help for anything", },
+----------------------------------------
+-- General
+----------------------------------------
+map({ "n", "v" }, "d", [["_d]], "Delete without copying.")
+map({ "n", "v" }, "D", [["_D]], "Delete to end of line without copying.")
+map({ "n", "v" }, "c", [["_c]], "Change without copying.")
+map({ "n", "v" }, "C", [["_C]], "Change to end of line without copying.")
+map("", "L", "$", "Move to the end of the line")
+map("", "H", kmap_funs.goto_start_of_line, "Move to the start of the line")
+map("t", "<Esc>", [[<C-\><C-n>]], "Exit terminal mode")
+map("n", "@", kmap_funs.execute_macro, "Execute macro with noautocmd")
+map("n", "<leader>y", ":%y+<CR>", "Copy the whole buffer")
+map("n", "<esc>", "<Cmd>noh<return><esc>", "Escape: Also clears highlighting")
+map("v", ">", ">gv", "Indent and stay in Visual mode")
+map("v", "<", "<gv", "Indent and stay in Visual mode")
+map("n", "<leader>ts", kmap_funs.toggle_spelling, "Toggle spelling")
+map("n", "<leader>tc", [[:lua ToggleConceallevel()<CR>]], "Toggle conceal level")
+map("n", "<leader>?", ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", "Fuzzy help for anything")
 
-    ----------------------------------------
-    -- Buffers
-    ----------------------------------------
-    { "n", "<leader>l",         ":bnext<CR>",         "Switch to the next buffer" },
-    { "n", "<leader>h",         ":bprevious<CR>",     "Switch to the previous buffer" },
-    { "i", "<C-S>",             "<C-O>:update<CR>",   "Insert mode: Save and stay" },
-    { "n", "<C-S>",             ":update<CR>",        "Normal mode: Save" },
-    { "v", "<C-S>",             "<C-C>:update<CR>",   "Visual mode: Save" },
-    { "n", "<leader>q",         ":quit<CR>",          "Quit Vim" },
-    { "n", "<leader><leader>q", ":qall<CR>",          "Quit all windows" },
+----------------------------------------
+-- Buffers
+----------------------------------------
+map("n", "<leader>l", ":bnext<CR>", "Switch to the next buffer")
+map("n", "<leader>h", ":bprevious<CR>", "Switch to the previous buffer")
+map("i", "<C-S>", "<C-O>:update<CR>", "Insert mode: Save and stay")
+map("n", "<C-S>", ":update<CR>", "Normal mode: Save")
+map("v", "<C-S>", "<C-C>:update<CR>", "Visual mode: Save")
+map("n", "<leader>q", ":quit<CR>", "Quit Vim")
+map("n", "<leader><leader>q", ":qall<CR>", "Quit all windows")
 
-    ----------------------------------------
-    -- Windows
-    ----------------------------------------
-    { "n", "<leader>|",         ":vsplit<CR>",        "Vertical split window" },
-    { "n", "<leader>-",         ":split<CR>",         "Horizontal split window" },
-    { "n", "<leader>>",         "<c-w><c-r>",         "Rotate window right" },
-    { "n", "<leader><",         "<c-w><c-r>",         "Rotate window left" },
+----------------------------------------
+-- Windows
+----------------------------------------
+map("n", "<leader>|", ":vsplit<CR>", "Vertical split window")
+map("n", "<leader>-", ":split<CR>", "Horizontal split window")
+map("n", "<leader>>", "<c-w><c-r>", "Rotate window right")
+map("n", "<leader><", "<c-w><c-r>", "Rotate window left")
 
-    ----------------------------------------
-    -- Quick file edit
-    ----------------------------------------
-    { "n", "<leader>ev",        ":edit $MYVIMRC<CR>", "Edit vimrc file" },
-    { "n", "<leader>ez",        ":edit ~/.zshrc<CR>", "Edit zshrc file" },
-    { "n", "<leader>ec",        ":CocConfig<CR>",     "Edit Coc configuration" },
-    { "n", "<leader>es",
-        ":CocCommand snippets.editSnippets<CR>", "Edit Coc snippets" },
+----------------------------------------
+-- Quick file edit
+----------------------------------------
+map("n", "<leader>ev", ":edit $MYVIMRC<CR>", "Edit vimrc file")
+map("n", "<leader>ez", ":edit ~/.zshrc<CR>", "Edit zshrc file")
+map("n", "<leader>ec", ":CocConfig<CR>", "Edit Coc configuration")
+map("n", "<leader>es", ":CocCommand snippets.editSnippets<CR>", "Edit Coc snippets")
 
-    ----------------------------------------
-    -- Move code alt-arrows
-    ----------------------------------------
-    { "n", "<M-Up>",
-        [[:<C-U>exec "exec 'norm m`' \| move -" . (1+v:count1)<CR>``]], "Move code up" },
-    { "n", "<M-Down>",
-        [[:<C-U>exec "exec 'norm m`' \| move +" . (0+v:count1)<CR>``]], "Move code down" },
-    { "i", "<M-Up>",
-        [[<C-O>m`<C-O>:move -2<CR><C-O>``]], "Insert mode: Move code up" },
-    { "i", "<M-Down>",
-        [[<C-O>m`<C-O>:move +1<CR><C-O>``]], "Insert mode: Move code down" },
-    { "v", "<M-Up>",
-        [[:<C-U>exec "'<,'>move '<-" . (1+v:count1)<CR>gv]], "Visual mode: Move code up" },
-    { "v", "<M-Down>",
-        [[:<C-U>exec "'<,'>move '>+" . (0+v:count1)<CR>gv]], "Visual mode: Move code down" },
+----------------------------------------
+-- Move code alt-arrows
+----------------------------------------
+map("n", "<M-Up>", [[:<C-U>exec "exec 'norm m`' \| move -" . (1+v:count1)<CR>``]], "Move code up")
+map("n", "<M-Down>", [[:<C-U>exec "exec 'norm m`' \| move +" . (0+v:count1)<CR>``]], "Move code down")
+map("i", "<M-Up>", [[<C-O>m`<C-O>:move -2<CR><C-O>``]], "Insert mode: Move code up")
+map("i", "<M-Down>", [[<C-O>m`<C-O>:move +1<CR><C-O>``]], "Insert mode: Move code down")
+map("v", "<M-Up>", [[:<C-U>exec "'<,'>move '<-" . (1+v:count1)<CR>gv]], "Visual mode: Move code up")
+map("v", "<M-Down>", [[:<C-U>exec "'<,'>move '>+" . (0+v:count1)<CR>gv]], "Visual mode: Move code down")
 
-    ----------------------------------------
-    -- Smart jump and stay in the middle.
-    ----------------------------------------
-    { "n", "<C-o>", "<C-o>zz", "Keep jumps and search in the middle (Ctrl+O)", },
-    { "n", "<C-i>", "<C-i>zz", "Keep jumps and search in the middle (Ctrl+I)", },
-    { "n", "n", kmap_funs.smart_n,
-        "Keep jumps and search in the middle, go one way (up or down)", true,
-    },
-    { "n", "N", kmap_funs.smart_N,
-        "Keep jumps and search in the middle, go one way (up or down)", true,
-    },
+----------------------------------------
+-- Smart jump and stay in the middle.
+----------------------------------------
+map("n", "<C-o>", "<C-o>zz", "Keep jumps and search in the middle (Ctrl+O)")
+map("n", "<C-i>", "<C-i>zz", "Keep jumps and search in the middle (Ctrl+I)")
+map("n", "n", kmap_funs.smart_n, "Keep jumps and search in the middle, go one way (up or down)", true)
+map("n", "N", kmap_funs.smart_N, "Keep jumps and search in the middle, go one way (up or down)", true)
 
-    ----------------------------------------
-    -- Very magic mode.
-    ----------------------------------------
-    { "n", "/", [[/\v]], { noremap = true, desc = "Enable very magic for forward search" } },
-    { "n", "?", [[?\v]], { noremap = true, desc = "Enable very magic for backward search" }, },
-    { "c", "/",
-        kmap_funs.enable_very_magic, { noremap = true, desc = "Enable very magic in command mode" }, true },
+----------------------------------------
+-- Very magic mode.
+----------------------------------------
+map("n", "/", [[/\v]], { noremap = true, desc = "Enable very magic for forward search" })
+map("n", "?", [[?\v]], { noremap = true, desc = "Enable very magic for backward search" })
+map("c", "/", kmap_funs.enable_very_magic, { noremap = true, desc = "Enable very magic in command mode" }, true)
 
-    ----------------------------------------
-    -- Quickfix list
-    ----------------------------------------
-    { "n", "<leader>tq", kmap_funs.toggle_quickfix, "Toggle quickfix window" },
-    { "n", "[q",         ":cprevious<CR>zz",        "Jump to previous quickfix entry" },
-    { "n", "]q",         ":cnext<CR>zz",            "Jump to next quickfix entry" },
-    { "n", "[Q",         ":cfirst<CR>zz",           "Jump to first quickfix entry" },
-    { "n", "]Q",         ":clast<CR>zz",            "Jump to last quickfix entry" },
+----------------------------------------
+-- Quickfix list
+----------------------------------------
+map("n", "<leader>tq", kmap_funs.toggle_quickfix, "Toggle quickfix window")
+map("n", "[q", ":cprevious<CR>zz", "Jump to previous quickfix entry")
+map("n", "]q", ":cnext<CR>zz", "Jump to next quickfix entry")
+map("n", "[Q", ":cfirst<CR>zz", "Jump to first quickfix entry")
+map("n", "]Q", ":clast<CR>zz", "Jump to last quickfix entry")
 
-    ----------------------------------------
-    -- Paste
-    ----------------------------------------
-    { "n", "<leader>p",
-        [[match(getreg(), "\n$") == -1 ? "o<C-r><C-p>+<esc>" : "o<C-r><C-p>+<esc>\"_dd"]],
-        "Paste text on a new line, maintaining indent", true
-    },
-    { "n", "<leader>P",
-        [[match(getreg(), "\n$") == -1 ? "O<C-r><C-p>+<esc>" : "O<C-r><C-p>+<esc>\"_dd"]],
-        "Paste text on a new line above, maintaining indent", true
-    },
-    { "v", "p",
-        kmap_funs.better_paste_visual,
-        "Paste text on a new line above, maintaining indent", true
-    },
-}
-define_keymaps(mappings)
+----------------------------------------
+-- Paste
+----------------------------------------
+map("n", "<leader>p", [[match(getreg(), "\n$") == -1 ? "o<C-r><C-p>+<esc>" : "o<C-r><C-p>+<esc>\"_dd"]],
+    "Paste text on a new line, maintaining indent", true)
+map("n", "<leader>P", [[match(getreg(), "\n$") == -1 ? "O<C-r><C-p>+<esc>" : "O<C-r><C-p>+<esc>\"_dd"]],
+    "Paste text on a new line above, maintaining indent", true)
+map("v", "p", kmap_funs.better_paste_visual, "Paste text on a new line above, maintaining indent", true)
 
 local function betterPasteNormal(register)
     local cmd
