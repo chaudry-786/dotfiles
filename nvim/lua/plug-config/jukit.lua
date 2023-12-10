@@ -1,12 +1,9 @@
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true, buffer = true }
-local function xO(desc)
-    return vim.tbl_extend("force", opts, { desc = desc })
-end
 
 local function define_keymaps(mappings)
     for _, mapping in ipairs(mappings) do
-        keymap(mapping[1], mapping[2], mapping[3], xO(mapping[4]))
+        keymap(mapping[1], mapping[2], mapping[3], vim.tbl_extend("force", opts, { desc = mapping[4] }))
     end
 end
 

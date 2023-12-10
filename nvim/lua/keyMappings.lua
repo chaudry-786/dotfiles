@@ -155,36 +155,27 @@ local function enable_very_magic()
 end
 keymap("c", "/", enable_very_magic, { noremap = true, expr = true })
 
-function ToggleQuickfixList()
+--quick fix list
+keymap("n", "<leader>tq", function()
     for _, win in pairs(vim.fn.getwininfo()) do
-        if win["quickfix"] == 1 then
-            vim.cmd "cclose"
-            return
+        if win["quickfix"] == 1 then vim.cmd "cclose" return
         end
     end
     vim.cmd "copen"
-end
-
---quick fix list
-keymap("n", "<leader>tq", ":lua ToggleQuickfixList()<CR>", opts)
+end, opts)
 keymap("n", "[q", ":cprevious<CR>zz", opts)
 keymap("n", "]q", ":cnext<CR>zz", opts)
 keymap("n", "[Q", ":cfirst<CR>zz", opts)
 keymap("n", "]Q", ":clast<CR>zz", opts)
 
-function ToggleSpellCheck()
+keymap("n", "<leader>ts", function()
     vim.opt.spell = not (vim.opt.spell:get())
-end
-keymap("n", "<leader>ts", ":lua ToggleSpellCheck()<CR>", opts)
+end, opts)
 
 -- by default set this to 2
 vim.o.conceallevel = 2
 function ToggleConceallevel()
-    if vim.o.conceallevel == 2 then
-        vim.o.conceallevel = 0
-    else
-        vim.o.conceallevel = 2
-    end
+    vim.o.conceallevel = vim.o.conceallevel == 2 and 0 or 2
 end
 keymap('n', '<leader>tc', [[:lua ToggleConceallevel()<CR>]], opts)
 
