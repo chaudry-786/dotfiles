@@ -1,0 +1,92 @@
+local M = {}
+function M.goto_start_of_line()
+    local start_pos = vim.fn.col(".")
+    if start_pos ~= 1 then
+        vim.cmd("normal! ^")
+        if start_pos <= vim.fn.col(".") then
+            vim.cmd("normal! 0")
+        end
+    end
+end
+
+function M.enable_very_magic()
+    local cmdline, cmdtype = vim.fn.getcmdline(), vim.fn.getcmdtype()
+    if cmdtype ~= ":" then
+        return "/"
+    end
+    -- list of valid command-line inputs that trigger very magic mode
+    local valid_values = { "s", [['<,'>s]], "%s", "g", [['<,'>g]], "g!", [['<,'>g!]] }
+    if vim.tbl_contains(valid_values, cmdline) then
+        return "/\\v"
+    elseif cmdline == "v" then
+        return [[imgrep /\v/ **/*]] .. string.rep("<Left>", 6)
+    elseif cmdline == "vext" then
+        -- for "vext/" command, grep over current file extension
+        local current_extension = vim.fn.expand("%:e")
+        vim.fn.setcmdline("vimgrep /\\v/ **/*." .. current_extension, 12)
+        return
+    elseif string.match(cmdline, "^vext:") then
+        -- for "vext:ext1,ext2,ext3/" command, grep over specified extensions
+        local extensions = string.sub(cmdline, 6, -1) -- extract extensions from the command
+        vim.fn.setcmdline("vimgrep /\\v/ **/*.{" .. extensions .. ",}", 12)
+        return
+    end
+    return "/"
+end
+
+function M.toggle_quickfix()
+    for _, win in pairs(vim.fn.getwininfo()) do
+        if win["quickfix"] == 1 then
+            vim.cmd "cclose"
+            return
+        end
+    end
+    vim.cmd "copen"
+end
+
+function M.toggle_spelling()
+    vim.opt.spell = not vim.opt.spell:get()
+end
+
+-- by default set this to 2
+vim.o.conceallevel = 2
+function ToggleConceallevel()
+    vim.o.conceallevel = vim.o.conceallevel == 2 and 0 or 2
+end
+
+function M.execute_macro()
+    vim.fn.execute("noautocmd norm! " .. vim.v.count1 .. "@" .. vim.fn.getcharstr() .. "<CR>")
+end
+
+function M.smart_n()
+    return vim.v.searchforward == 1 and "nzz" or "Nzz"
+end
+
+function M.smart_N()
+    return vim.v.searchforward == 1 and "Nzz" or "nzz"
+end
+
+-- Friction points in nvim default paste behaviour which lead to this customization:
+-- 1) Doesn't indent pasted text.
+-- 2) In visual modes, it copies replaced text.
+-- 3) In visual mode, adds a new line break at the start pasted text.
+-- 4) Personal preference: in visual mode it should get rid of line
+--      break at the end of pasted text. so it would replace
+--      exactly the highlighted text.
+function M.better_paste_visual()
+    -- <C-r><C-p>+ :pastes in insert mode and maintains indent
+    local register_text = vim.fn.getreg()
+    local has_newline = string.match(register_text, "\n$") ~= nil
+
+    if has_newline and vim.fn.mode() == "v" then
+        register_text = string.gsub(register_text, "\n$", "")
+        vim.fn.setreg("z", register_text)
+        return [["_d"zP]]
+    elseif not has_newline and vim.fn.mode() == "V" then
+        return [["_dO<C-r><C-p>+<esc>]]
+    end
+
+    return [["_di<C-r><C-p>+<esc>]]
+end
+
+return M
