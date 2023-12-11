@@ -103,23 +103,9 @@ map("n", "<leader>p", [[match(getreg(), "\n$") == -1 ? "o<C-r><C-p>+<esc>" : "o<
 map("n", "<leader>P", [[match(getreg(), "\n$") == -1 ? "O<C-r><C-p>+<esc>" : "O<C-r><C-p>+<esc>\"_dd"]],
     "Paste text on a new line above, maintaining indent", true)
 map("v", "p", kmap_funs.better_paste_visual, "Paste text on a new line above, maintaining indent", true)
-
-local function betterPasteNormal(register)
-    local cmd
-    local pre_cursor = (register == "") and "" or '"'
-    if not register or register == "" then
-        cmd = [[match(getreg(), "\n$") == -1 ? "p" : "o<C-r><C-p>+<esc>\"_ddk"]]
-    else
-        cmd = string.format(
-            [[match(getreg('%s'), "\n$") == -1 ? "\"%sp" : "o<C-r><C-p>%s<esc>\"_ddk"]],
-            register, register, register)
-    end
-    keymap("n", pre_cursor .. register .. "p", cmd, expr_opts)
-end
-
 -- if new line at the end, paste below, also maintain indent and delete extra line
 -- for all registers
 for reg in ("abcdefghijklmnopqrstuvwxyz"):gmatch('.') do
-    betterPasteNormal(reg)
+    kmap_funs.betterPasteNormal(reg)
 end
-betterPasteNormal('')
+kmap_funs.betterPasteNormal('')

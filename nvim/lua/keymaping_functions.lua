@@ -89,4 +89,17 @@ function M.better_paste_visual()
     return [["_di<C-r><C-p>+<esc>]]
 end
 
+function M.betterPasteNormal(register)
+    local cmd
+    local pre_cursor = (register == "") and "" or '"'
+    if not register or register == "" then
+        cmd = [[match(getreg(), "\n$") == -1 ? "p" : "o<C-r><C-p>+<esc>\"_ddk"]]
+    else
+        cmd = string.format(
+            [[match(getreg('%s'), "\n$") == -1 ? "\"%sp" : "o<C-r><C-p>%s<esc>\"_ddk"]],
+            register, register, register)
+    end
+    vim.keymap.set("n", pre_cursor .. register .. "p", cmd, { noremap = true, silent = true, expr = true })
+end
+
 return M
