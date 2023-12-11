@@ -196,7 +196,7 @@ end
 -- Python configs
 ------------------------------------------------
 
-local function createPythonDapConfig(name, program, args)
+local function createPythonDapConfig(name, program, args, specific_cwd)
     local cwd = get_base_directory()
     local python_path = cwd .. "/venv/bin/python"
     return {
@@ -206,7 +206,7 @@ local function createPythonDapConfig(name, program, args)
         pythonPath = python_path,
         program = program,
         args = args,
-        cwd = cwd,
+        cwd = (specific_cwd) and specific_cwd or cwd,
         console = 'integratedTerminal',
         justMyCode = true
     }
@@ -215,7 +215,7 @@ end
 local base_dir = get_base_directory()
 local venv_dir = base_dir .. "/venv/bin/"
 dap.configurations.python = {
-    createPythonDapConfig("Current File", "${file}", getArgs),
+    createPythonDapConfig("Current File", "${file}", getArgs, "${fileDirname}"),
     createPythonDapConfig("Django", base_dir .. "/manage.py", { "runserver", "--noreload" }),
     createPythonDapConfig("Flask", venv_dir .. "flask", { "run" }),
 }
