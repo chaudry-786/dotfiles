@@ -6,12 +6,8 @@ if [ ! -d "$cache_dir" ]; then
     mkdir -p "$cache_dir"
 fi
 
-# Provides autocompletion for pytest test names.
-_pytest_complete() {
-    # Store the current context, state, and line arguments
-    local curcontext="$curcontext" state line
-    typeset -A opt_args
-
+# update the pytest completion cache
+_update_pytest_cache() {
     local cache_key="$(pwd | tr '/' '_')"  # Replace '/' with '_'
     local cache_file="$cache_dir/test_names_$cache_key.cache"
 
@@ -24,9 +20,27 @@ _pytest_complete() {
        [ ! -s "$cache_file" ]; then
         timeout 10 pytest --collect-only --continue-on-collection-errors -q 2>&1 | awk '/::test_/ { print $1 }' > "$cache_file"
     fi
+}
 
+# Set up chpwd hook to update cache in the background
+_update_cache_without_deactivating_venv(){
+    _update_pytest_cache &
+}
+add-zsh-hook chpwd _update_cache_without_deactivating_venv
+
+# Provides autocompletion for pytest test names.
+_pytest_complete() {
+    # Store the current context, state, and line arguments
+    local curcontext="$curcontext" state line
+    typeset -A opt_args
+
+    _update_pytest_cache
+
+    local cache_key="$(pwd | tr '/' '_')"  # Replace '/' with '_'
+    local cache_file="$cache_dir/test_names_$cache_key.cache"
     # Use cache for autocompletion
     compadd "$@" $(cat "$cache_file")
 }
+
 # Set up tab-completion for pytest
 compdef _pytest_complete pytest
