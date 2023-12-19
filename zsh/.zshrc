@@ -192,3 +192,15 @@ fi
 # Edit terminal command in NeoVim
 # ------------------------------------------------
 bindkey "^v" edit-command-line
+
+# ------------------------------------------------
+# Exa | ls alternative
+# ------------------------------------------------
+alias l.='exa -a | egrep "^\."'
+alias l='exa -F --icons --color=always --group-directories-first'
+alias la='exa -a --icons --color=always --group-directories-first'
+alias ll='exa -alF --icons --color=always --group-directories-first'
+alias ls='exa --icons --color=always --group-directories-first'
+lt() {
+    exa --tree --level="${1:-2}" --icons --color=always --group-directories-first
+}

@@ -93,7 +93,7 @@ install_packages() {
     # install curl first, because it's dependency on other installations
     $installer curl
 
-    local packages=("git" "ripgrep" "bat")
+    local packages=("git" "ripgrep" "bat" "exa")
 
     if [ "$machine" == "Mac" ]; then
         packages+=("reattach-to-user-namespace" "nodejs" "neovim" "git-delta")
@@ -117,9 +117,6 @@ install_packages() {
         curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
         sudo tar xf lazygit.tar.gz -C /usr/local/bin lazygit
 
-        #zoxide
-        curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
-        ln -sf "$HOME/.local/bin/zoxide" /usr/bin/zoxide
     fi
 
     for package in "${packages[@]}"; do
@@ -177,6 +174,10 @@ install_and_setup_zsh() {
 
     #pytest autocompletion
     ln -sf ~/dotfiles/zsh/completion_pytest.zsh ~/.completion_pytest.zsh
+
+    #zoxide
+    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+    ln -sf "$HOME/.local/bin/zoxide" /usr/bin/zoxide
 }
 
 
