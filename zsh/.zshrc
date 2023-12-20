@@ -202,5 +202,13 @@ alias la='exa -a --icons --color=always --group-directories-first'
 alias ll='exa -alF --icons --color=always --group-directories-first'
 alias ls='exa --icons --color=always --group-directories-first'
 lt() {
-    exa --tree --level="${1:-2}" --icons --color=always --group-directories-first
+    # # Check if the first argument is a number
+    if [[ $1 =~ ^[0-9]+$ ]]; then
+        level=$1
+        target_path=$2
+    else
+        level=2
+        target_path=$1
+    fi
+    exa --tree --level="$level" --icons --color=always --group-directories-first $target_path
 }
