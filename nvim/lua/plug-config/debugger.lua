@@ -78,6 +78,8 @@ function UnmapDebugKeys()
 end
 
 local function startDebugger()
+    -- close all windows except the current one
+    vim.cmd("only")
     -- create and trigger the autocommand to map keys
     local debug_filetype = vim.bo.filetype
     vim.api.nvim_create_augroup(debugAutocmdGroupName, { clear = true })
