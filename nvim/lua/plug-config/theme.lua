@@ -1,6 +1,8 @@
 require("rose-pine").setup({
-    disable_italics = true,
-    bold_vert_split = true,
+    styles = {
+        bold = true,
+        italic = false,
+    },
     highlight_groups = {
         Folded = { bg = "gold", blend = 6, fg = "subtle" },
         CocHighlightText = { bg = "subtle", blend = 30 },
