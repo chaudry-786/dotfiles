@@ -60,6 +60,8 @@ alias vc='nvim $(git diff --name-only --diff-filter=U | sed "s|^|$(git rev-parse
 alias vcs='nvim $(git diff --name-only --diff-filter=U | sed "s|^|$(git rev-parse --show-toplevel)/|" | fzf -m)'
 # open modified files between current branch and master | useful for PR reviews
 alias vdp='nvim $(git diff --name-only master...HEAD | sed "s|^|$(git rev-parse --show-toplevel)/|")'
+# show only modified files
+alias gstm='git status | grep modified'
 
 #------------------------------------------------
 # Python virtual Environment and Development
