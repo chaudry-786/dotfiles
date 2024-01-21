@@ -22,11 +22,11 @@ _update_pytest_cache() {
     fi
 }
 
-# Set up chpwd hook to update cache in the background
-_update_cache_without_deactivating_venv(){
-    _update_pytest_cache &
-}
-add-zsh-hook chpwd _update_cache_without_deactivating_venv
+# # Set up chpwd hook to update cache in the background
+# _update_cache_without_deactivating_venv(){
+#     _update_pytest_cache &
+# }
+# add-zsh-hook chpwd _update_cache_without_deactivating_venv
 
 # Provides autocompletion for pytest test names.
 _pytest_complete() {
