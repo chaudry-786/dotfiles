@@ -99,6 +99,15 @@ findmtime() {
 alias cat="batcat --theme=gruvbox-dark"
 alias c="clear"
 alias e="exit"
+
+#------------------------------------------------
+# Grep Aliases
+#------------------------------------------------
+grepm() {
+    # grep multiple
+    grep -rnl $1 | xargs grep $2
+}
+
 # launch nvim using Session file if it exists
 v() {
     src
