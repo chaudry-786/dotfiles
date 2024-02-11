@@ -72,12 +72,15 @@ map("v", "<M-Up>", [[:<C-U>exec "'<,'>move '<-" . (1+v:count1)<CR>gv]], "Visual 
 map("v", "<M-Down>", [[:<C-U>exec "'<,'>move '>+" . (0+v:count1)<CR>gv]], "Visual mode: Move code down")
 
 ----------------------------------------
--- Smart jump and stay in the middle.
+-- Smart jump, stay in the middle and don't
+-- jump on * and # (only highlight)
 ----------------------------------------
 map("n", "<C-o>", "<C-o>zz", "Keep jumps and search in the middle (Ctrl+O)")
 map("n", "<C-i>", "<C-i>zz", "Keep jumps and search in the middle (Ctrl+I)")
 map("n", "n", kmap_funs.smart_n, "Keep jumps and search in the middle, go one way (up or down)", true)
 map("n", "N", kmap_funs.smart_N, "Keep jumps and search in the middle, go one way (up or down)", true)
+map("n", "*", ":keepjumps normal! mi*`i<CR>", "Highlight occurrences of word under cursor (forward)")
+map("n", "#", ":keepjumps normal! mi#`i<CR>", "Highlight occurrences of word under cursor (backward)")
 
 ----------------------------------------
 -- Very magic mode.
