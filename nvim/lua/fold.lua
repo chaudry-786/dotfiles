@@ -12,18 +12,7 @@ set.foldlevel = 0 --fold level: zr or zm
 set.fillchars = { fold = " ", foldopen = " ", foldclose = "", foldsep = " " }
 -- set.foldenable = false                                  --do not fold when buffer loads
 
-function Foldtext()
-    local text = vim.treesitter.foldtext()
-    local n_lines = vim.v.foldend - vim.v.foldstart
-    local text_lines = " lines"
-    if n_lines == 1 then
-        text_lines = " line"
-    end
-    table.insert(text, { " + " .. n_lines .. text_lines, { "Folded" } })
-    return text
-end
-
-vim.opt.foldtext = "v:lua.Foldtext()"
+vim.opt.foldtext = ""
 
 -- non-treesitter methods for some files
 vim.api.nvim_create_autocmd("FileType",
