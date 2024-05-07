@@ -15,6 +15,9 @@ local function map(mode, rhs, lhs, desc_or_opts, expr_mapping)
     keymap(mode, rhs, lhs, mapping_opts)
 end
 
+if vim.g.vscode then
+    Vscode = require("vscode-neovim")
+end
 ----------------------------------------
 -- General
 ----------------------------------------
@@ -28,30 +31,45 @@ map("t", "<Esc>", [[<C-\><C-n>]], "Exit terminal mode")
 map("n", "@", kmap_funs.execute_macro, "Execute macro with noautocmd")
 map("n", "<leader>y", ":%y+<CR>", "Copy the whole buffer")
 map("n", "<esc>", "<Cmd>noh<return><esc>", "Escape: Also clears highlighting")
+if not vim.g.vscode then
+    map("n", "<leader>tc", [[:lua ToggleConceallevel()<CR>]], "Toggle conceal level")
+    map("n", "<leader>?", ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", "Fuzzy help for anything")
+end
+
 map("v", ">", ">gv", "Indent and stay in Visual mode")
 map("v", "<", "<gv", "Indent and stay in Visual mode")
 map("n", "<leader>ts", kmap_funs.toggle_spelling, "Toggle spelling")
-map("n", "<leader>tc", [[:lua ToggleConceallevel()<CR>]], "Toggle conceal level")
-map("n", "<leader>?", ":! tmux neww ~/dotfiles/scripts/chtfzf.sh -t <CR>", "Fuzzy help for anything")
 
 ----------------------------------------
 -- Buffers
 ----------------------------------------
-map("n", "<leader>l", ":bnext<CR>", "Switch to the next buffer")
-map("n", "<leader>h", ":bprevious<CR>", "Switch to the previous buffer")
+if not vim.g.vscode then
+    map("n", "<leader>l", ":bnext<CR>", "Switch to the next buffer")
+    map("n", "<leader>h", ":bprevious<CR>", "Switch to the previous buffer")
+    map("n", "<leader>q", ":quit<CR>", "Quit Vim")
+    map("n", "<leader><leader>q", ":qall<CR>", "Quit all windows")
+else
+    map("n", "<leader>l", kmap_funs.vscode_right_tab, "Switch to the next buffer")
+    map("n", "<leader>h", kmap_funs.vscode_left_tab, "Switch to the previous buffer")
+    map("n", "<leader>q", kmap_funs.vscode_quit, "Quit Vim")
+    map("n", "<leader><leader>q", kmap_funs.vscode_quit_all, "Quit all windows")
+end
 map("i", "<C-S>", "<C-O>:update<CR>", "Insert mode: Save and stay")
 map("n", "<C-S>", ":update<CR>", "Normal mode: Save")
 map("v", "<C-S>", "<C-C>:update<CR>", "Visual mode: Save")
-map("n", "<leader>q", ":quit<CR>", "Quit Vim")
-map("n", "<leader><leader>q", ":qall<CR>", "Quit all windows")
 
 ----------------------------------------
 -- Windows
 ----------------------------------------
-map("n", "<leader>|", ":vsplit<CR>", "Vertical split window")
-map("n", "<leader>-", ":split<CR>", "Horizontal split window")
-map("n", "<leader>>", "<c-w><c-r>", "Rotate window right")
-map("n", "<leader><", "<c-w><c-r>", "Rotate window left")
+if not vim.g.vscode then
+    map("n", "<leader>|", ":vsplit<CR>", "Vertical split window")
+    map("n", "<leader>-", ":split<CR>", "Horizontal split window")
+    map("n", "<leader>>", "<c-w><c-r>", "Rotate window right")
+    map("n", "<leader><", "<c-w><c-r>", "Rotate window left")
+else
+    map("n", "<leader>|", kmap_funs.vscode_vsplit, "Vertical split window")
+    map("n", "<leader>-", kmap_funs.vscode_hsplit, "Horizontal split window")
+end
 
 ----------------------------------------
 -- Quick file edit
@@ -87,6 +105,7 @@ map("n", "#", ":keepjumps normal! mi#`i<CR>", "Highlight occurrences of word und
 ----------------------------------------
 map("n", "/", [[/\v]], { noremap = true, desc = "Enable very magic for forward search" })
 map("n", "?", [[?\v]], { noremap = true, desc = "Enable very magic for backward search" })
+-- no vscode
 map("c", "/", kmap_funs.enable_very_magic, { noremap = true, desc = "Enable very magic in command mode" }, true)
 
 ----------------------------------------

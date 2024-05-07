@@ -102,4 +102,28 @@ function M.betterPasteNormal(register)
     vim.keymap.set("n", pre_cursor .. register .. "p", cmd, { noremap = true, silent = true, expr = true })
 end
 
+function M.vscode_right_tab()
+    Vscode.call("workbench.action.nextEditor")
+end
+
+function M.vscode_left_tab()
+    Vscode.call("workbench.action.previousEditor")
+end
+
+function M.vscode_quit()
+    Vscode.call("workbench.action.closeActiveEditor")
+end
+
+function M.vscode_quit_all()
+    Vscode.call("workbench.action.quit")
+end
+
+function M.vscode_vsplit()
+    Vscode.call("workbench.action.splitEditor")
+end
+
+function M.vscode_hsplit()
+    Vscode.call("workbench.action.splitEditorUp")
+end
+
 return M

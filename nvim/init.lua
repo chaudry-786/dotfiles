@@ -28,34 +28,36 @@ require("lazy").setup({
     { "rose-pine/neovim", config = function()
         require("plug-config/theme")
     end },                                                  -- Theme
-    "kyazdani42/nvim-web-devicons",                         -- File Icons
+    { "kyazdani42/nvim-web-devicons",
+        cond = not vim.g.vscode },                          -- File Icons
     { "kyazdani42/nvim-tree.lua", config = function()
         require("plug-config/nvimTree")
-    end },                                                  -- File explorer
+    end, cond = not vim.g.vscode },                         -- File explorer
     { "nvim-lualine/lualine.nvim", config = function()
         require("plug-config/lualine")
-    end },                                                  -- Status line
+    end, cond = not vim.g.vscode },                         -- Status line
     { "lukas-reineke/indent-blankline.nvim", config = function()
         require("ibl").setup {
             scope = { enabled = false },
         }
-    end },                                                  -- Indent guide
+    end, cond = not vim.g.vscode },                         -- Indent guide
     { "karb94/neoscroll.nvim", config = function()
         require("neoscroll").setup()
-    end },                                                  -- Smooth scroll
+    end, cond = not vim.g.vscode},                          -- Smooth scroll
     { "goolord/alpha-nvim", config = function()
         require("plug-config/alpha")
-    end },                                                  -- Startup screen
+    end, cond = not vim.g.vscode },                         -- Startup screen
     { "danilamihailov/beacon.nvim", init = function()
         vim.g.beacon_ignore_filetypes = { "NvimTree", "aerial" }
         vim.g.beacon_focus_gained = 1
-    end },                                                  -- Flashes cursor on movements (e.g jump between windows)
+    end, cond = not vim.g.vscode },                          -- Flashes cursor on movements (e.g jump between windows)
 
     ----------------------------------------
     -- Autocompletion And IDE Features
     ----------------------------------------
     { "neoclide/coc.nvim", branch = "release",
-        config = function() require("plug-config/coc") end }, -- Conquer of Completion
+        config = function() require("plug-config/coc") end,
+        cond = not vim.g.vscode },                          -- Conquer of Completion
     "honza/vim-snippets",                                   -- Snippets
     { "vim-test/vim-test", config = function()
         require("plug-config/vim-test")
@@ -186,5 +188,10 @@ require("lazy").setup({
 -- PLUGINS configuration
 require("plug-config/gitConfig") -- git related plugs config
 
--- ensures that all highlight groups have been set
-require("status_column")
+if not vim.g.vscode then
+    -- ensures that all highlight groups have been set
+    require("status_column")
+else
+    require("vscode_settings")
+end
+

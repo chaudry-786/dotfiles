@@ -29,3 +29,27 @@
 
 Installation script will install relevant packages and create links for config files.
 `cd ~ && git clone git@github.com:sabah1994/dotfiles.git && dotfiles/scripts/installation.sh`
+
+### Commong keymappings
+-- e = edit files
+-- f = find
+-- g = git
+-- r = run
+-- t = toggle
+-- c = cell
+-- s = surround
+
+-- movements
+-- []C = class
+-- []Q = first and last qfix list
+-- []a = diagnostics
+-- []f = function
+-- []h = git hunk
+-- []i = conditional
+-- []l = loop
+-- []q = qfix list
+
+
+### VSCode limitations
+    / mapping doesn't expand in command line.
+
