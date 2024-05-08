@@ -1,0 +1,17 @@
+[
+    {
+        "key": "ctrl+n",
+        "command": "workbench.view.explorer",
+        "when": "!explorerViewletVisible"
+    },
+    {
+        "key": "ctrl+n",
+        "command": "workbench.action.closeSidebar",
+        "when": "explorerViewletVisible"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus"
+    }
+]
