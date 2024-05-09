@@ -26,73 +26,114 @@ require("lazy").setup({
     -- UI
     ----------------------------------------
     -- Theme
-    { "rose-pine/neovim", config = function()
-        require("plug-config/theme")
-    end },
+    {
+        "rose-pine/neovim",
+        config = function()
+            require("plug-config/theme")
+        end
+    },
 
     -- File Icons
-    { "kyazdani42/nvim-web-devicons",
-        cond = not vim.g.vscode },
+    {
+        "kyazdani42/nvim-web-devicons",
+        cond = not vim.g.vscode
+    },
 
     -- File explorer
-    { "kyazdani42/nvim-tree.lua", config = function()
-        require("plug-config/nvimTree")
-    end, cond = not vim.g.vscode },
+    {
+        "kyazdani42/nvim-tree.lua",
+        config = function()
+            require("plug-config/nvimTree")
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Status line
-    { "nvim-lualine/lualine.nvim", config = function()
-        require("plug-config/lualine")
-    end, cond = not vim.g.vscode },
+    {
+        "nvim-lualine/lualine.nvim",
+        config = function()
+            require("plug-config/lualine")
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Indent guide
-    { "lukas-reineke/indent-blankline.nvim", config = function()
-        require("ibl").setup {
-            scope = { enabled = false },
-        }
-    end, cond = not vim.g.vscode },
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        config = function()
+            require("ibl").setup {
+                scope = { enabled = false },
+            }
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Smooth scroll
-    { "karb94/neoscroll.nvim", config = function()
-        require("neoscroll").setup()
-    end, cond = not vim.g.vscode },
+    {
+        "karb94/neoscroll.nvim",
+        config = function()
+            require("neoscroll").setup()
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Startup screen
-    { "goolord/alpha-nvim", config = function()
-        require("plug-config/alpha")
-    end, cond = not vim.g.vscode },
+    {
+        "goolord/alpha-nvim",
+        config = function()
+            require("plug-config/alpha")
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Flashes cursor on movements (e.g jump between windows)
-    { "danilamihailov/beacon.nvim", init = function()
-        vim.g.beacon_ignore_filetypes = { "NvimTree", "aerial" }
-        vim.g.beacon_focus_gained = 1
-    end, cond = not vim.g.vscode },
+    {
+        "danilamihailov/beacon.nvim",
+        init = function()
+            vim.g.beacon_ignore_filetypes = { "NvimTree", "aerial" }
+            vim.g.beacon_focus_gained = 1
+        end,
+        cond = not vim.g.vscode
+    },
 
 
     ----------------------------------------
     -- Autocompletion And IDE Features
     ----------------------------------------
     -- Conquer of Completion
-    { "neoclide/coc.nvim", branch = "release",
+    {
+        "neoclide/coc.nvim",
+        branch = "release",
         config = function() require("plug-config/coc") end,
-        cond = not vim.g.vscode },
+        cond = not vim.g.vscode
+    },
 
     -- Snippets
     "honza/vim-snippets",
 
     -- Test plugin
-    { "vim-test/vim-test", config = function()
-        require("plug-config/vim-test")
-    end, cond = not vim.g.vscode },
+    {
+        "vim-test/vim-test",
+        config = function()
+            require("plug-config/vim-test")
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- notebook REPL
-    { "luk400/vim-jukit", init = function()
-        vim.g.jukit_terminal = "nvimterm"
-        vim.g.jukit_in_style = 4
-        vim.g.jukit_mappings_ext_enabled = { "py", "ipynb" }
-        vim.g.jukit_mappings = 0
-    end, config = function()
-        require("plug-config/jukit")
-    end, cond = not vim.g.vscode },
+    {
+        "luk400/vim-jukit",
+        init = function()
+            vim.g.jukit_terminal = "nvimterm"
+            vim.g.jukit_in_style = 4
+            vim.g.jukit_mappings_ext_enabled = { "py", "ipynb" }
+            vim.g.jukit_mappings = 0
+        end,
+        config = function()
+            require("plug-config/jukit")
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Debugger
     {
@@ -106,12 +147,15 @@ require("lazy").setup({
         },
         config = function()
             require("plug-config/debugger")
-        end, cond = not vim.g.vscode
+        end,
+        cond = not vim.g.vscode
     },
 
-    { "williamboman/mason.nvim", config = function()
-        require("mason").setup()
-    end,
+    {
+        "williamboman/mason.nvim",
+        config = function()
+            require("mason").setup()
+        end,
         opts = { ensure_installed = { "debugpy" } },
         cond = not vim.g.vscode
     },
@@ -120,39 +164,53 @@ require("lazy").setup({
     -- Motions | Movements
     ----------------------------------------
     -- Easy movement around buffer
-    { "ggandor/leap.nvim", config = function()
-        local keymap = vim.keymap.set
-        require("leap").opts.safe_labels = {}
-        keymap("", "<leader>j", "<Plug>(leap-forward-to)", { silent = true })
-        keymap("", "<leader>k", "<Plug>(leap-backward-to)", { silent = true })
-    end, cond = not vim.g.vscode },
+    {
+        "ggandor/leap.nvim",
+        config = function()
+            local keymap = vim.keymap.set
+            require("leap").opts.safe_labels = {}
+            keymap("", "<leader>j", "<Plug>(leap-forward-to)", { silent = true })
+            keymap("", "<leader>k", "<Plug>(leap-backward-to)", { silent = true })
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Easy navigation between tmux panes and vim windows
-    { "alexghergh/nvim-tmux-navigation", config = function()
-        local nvim_tmux_nav = require('nvim-tmux-navigation')
-        local keymap = vim.keymap.set
-        nvim_tmux_nav.setup {
-            disable_when_zoomed = true
-        }
-        keymap({ "n", "t" }, "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
-        keymap({ "n", "t" }, "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
-        keymap({ "n", "t" }, "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
-        keymap({ "n", "t" }, "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
-    end, cond = not vim.g.vscode },
+    {
+        "alexghergh/nvim-tmux-navigation",
+        config = function()
+            local nvim_tmux_nav = require('nvim-tmux-navigation')
+            local keymap = vim.keymap.set
+            nvim_tmux_nav.setup {
+                disable_when_zoomed = true
+            }
+            keymap({ "n", "t" }, "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
+            keymap({ "n", "t" }, "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
+            keymap({ "n", "t" }, "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
+            keymap({ "n", "t" }, "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
+        end,
+        cond = not vim.g.vscode
+    },
 
 
     ----------------------------------------
     -- Text objects
     ----------------------------------------
     -- Easy text-object surrounding plugin
-    { "kylechui/nvim-surround", config = function()
-        require("plug-config/nvim-surround")
-    end },
+    {
+        "kylechui/nvim-surround",
+        config = function()
+            require("plug-config/nvim-surround")
+        end
+    },
 
     -- Common plugins bundled together (only using AI module
-    { "echasnovski/mini.nvim", config = function()
-        require("mini.ai").setup()
-    end },
+    {
+        "echasnovski/mini.nvim",
+        config = function()
+            require("mini.ai").setup()
+        end
+    },
 
 
     ----------------------------------------
@@ -166,38 +224,55 @@ require("lazy").setup({
     -- TreeSitter
     ----------------------------------------
     -- Syntax tree plugin
-    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
         dependencies = "nvim-treesitter/nvim-treesitter-textobjects",
         config = function()
             require("plug-config/treeSitter")
-        end },
+        end
+    },
 
 
     ----------------------------------------
     -- General
     ----------------------------------------
     -- Comment easily
-    { "numToStr/Comment.nvim", config = function()
-        require("Comment").setup()
-        vim.api.nvim_create_autocmd("FileType",
-            { group = "CustomAutoCmds", pattern = { "json" }, command = [[setlocal commentstring=//\ %s]] })
-    end },
+    {
+        "numToStr/Comment.nvim",
+        config = function()
+            require("Comment").setup()
+            vim.api.nvim_create_autocmd("FileType",
+                { group = "CustomAutoCmds", pattern = { "json" }, command = [[setlocal commentstring=//\ %s]] })
+        end
+    },
 
     -- Repeat macros and plug mappings with dot
-    { "tpope/vim-repeat", config = function()
-        vim.api.nvim_command([[silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)]])
-    end },
+    {
+        "tpope/vim-repeat",
+        config = function()
+            vim.api.nvim_command([[silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)]])
+        end
+    },
 
     -- Fuzzy finder
-    { "nvim-telescope/telescope.nvim",
-        dependencies = "nvim-lua/plenary.nvim", config = function()
-        require("plug-config/telescope")
-    end, cond = not vim.g.vscode },
+    {
+        "nvim-telescope/telescope.nvim",
+        dependencies = "nvim-lua/plenary.nvim",
+        config = function()
+            require("plug-config/telescope")
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Code outline
-    { "stevearc/aerial.nvim", config = function()
-        require("plug-config/aerial")
-    end, cond = not vim.g.vscode },
+    {
+        "stevearc/aerial.nvim",
+        config = function()
+            require("plug-config/aerial")
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Auto pairs
     "jiangmiao/auto-pairs",
@@ -206,29 +281,44 @@ require("lazy").setup({
     "windwp/nvim-ts-autotag",
 
     -- Which key
-    { "folke/which-key.nvim", config = function()
-        require("plug-config/whichKey")
-    end, cond = not vim.g.vscode },
+    {
+        "folke/which-key.nvim",
+        config = function()
+            require("plug-config/whichKey")
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Session management plugin
     { "tpope/vim-obsession", cond = not vim.g.vscode },
 
     -- Vim to tmux panes (e.g execute current file, run tests
-    { "preservim/vimux", config = function()
-        require("plug-config/vimux")
-    end, cond = not vim.g.vscode },
+    {
+        "preservim/vimux",
+        config = function()
+            require("plug-config/vimux")
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- Sane split resize with Alt-hjkl
-    { "mrjones2014/smart-splits.nvim", config = function()
-        require("plug-config/smart-splits")
-    end, cond = not vim.g.vscode },
+    {
+        "mrjones2014/smart-splits.nvim",
+        config = function()
+            require("plug-config/smart-splits")
+        end,
+        cond = not vim.g.vscode
+    },
 
     -- personal wiki
-    { "vimwiki/vimwiki", init = function()
-        vim.g.vimwiki_list = { { path = "$HOME/Dropbox/wiki" } }
-        vim.g.vimwiki_ext = ".md"
-        vim.g.vimwiki_global_ext = 0
-    end },
+    {
+        "vimwiki/vimwiki",
+        init = function()
+            vim.g.vimwiki_list = { { path = "$HOME/Dropbox/wiki" } }
+            vim.g.vimwiki_ext = ".md"
+            vim.g.vimwiki_global_ext = 0
+        end
+    },
 
     -- Better notes
     {
@@ -244,7 +334,8 @@ require("lazy").setup({
     {
         'cameron-wags/rainbow_csv.nvim',
         config = true,
-        cond = not vim.g.vscode }
+        cond = not vim.g.vscode
+    }
 })
 
 
