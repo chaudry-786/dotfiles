@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd("FileType",
 --fold movement
 keymap("", "[z", "zk", opts)
 keymap("", "]z", "zj", opts)
-keymap("n", "<CR>", "zA", opts)
+keymap("n", "<CR>", "za", opts)
 -- -- toggle child folds recursively
 keymap("n", "<C-CR>", function()
     if vim.fn.foldlevel(vim.fn.line('.')) == 0 then
