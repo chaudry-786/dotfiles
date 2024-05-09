@@ -190,6 +190,9 @@ install_font(){
     ./install.sh JetBrainsMono
 }
 
+setup_vscode () {
+    ln -sf ~/dotfiles/vscode/keybindings.json ~/.config/Code/User/keybindings.json
+}
 
 machine=$(what_os)
 if [ "$machine" == "Mac" ]
