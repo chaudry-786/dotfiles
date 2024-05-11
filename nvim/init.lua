@@ -30,7 +30,8 @@ require("lazy").setup({
         "rose-pine/neovim",
         config = function()
             require("plug-config/theme")
-        end
+        end,
+        cond = not vim.g.vscode
     },
 
     -- File Icons
