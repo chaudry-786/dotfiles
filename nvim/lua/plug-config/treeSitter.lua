@@ -22,6 +22,9 @@ require "nvim-treesitter.configs".setup {
     -- TS modules
     highlight = {
         enable = true,
+        disable = function()
+            return vim.g.vscode or false
+        end,
     },
     -- nvim-treesitter/nvim-treesitter-textobjects
     textobjects = {
