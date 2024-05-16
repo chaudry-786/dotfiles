@@ -114,3 +114,31 @@ end, { silent = true })
 keymap("n", "<leader>fc", function()
     Vscode.call("workbench.action.showCommands")
 end, { silent = true })
+
+-- Folds
+vim.cmd("nnoremap zM :call VSCodeNotify('editor.foldAll')<CR>")
+vim.cmd("nnoremap zR :call VSCodeNotify('editor.unfoldAll')<CR>")
+vim.cmd("nnoremap zc :call VSCodeNotify('editor.fold')<CR>")
+vim.cmd("nnoremap zC :call VSCodeNotify('editor.foldRecursively')<CR>")
+vim.cmd("nnoremap zo :call VSCodeNotify('editor.unfold')<CR>")
+vim.cmd("nnoremap zO :call VSCodeNotify('editor.unfoldRecursively')<CR>")
+vim.cmd("nnoremap za :call VSCodeNotify('editor.toggleFold')<CR>")
+vim.cmd("nnoremap <CR> :call VSCodeNotify('editor.toggleFold')<CR>")
+
+vim.cmd("nnoremap [z :call VSCodeNotify('editor.gotoPreviousFold')<CR>")
+vim.cmd("nnoremap ]z :call VSCodeNotify('editor.gotoNextFold')<CR>")
+
+local smart_fold_movement = [[
+function! MoveCursor(direction) abort
+    if(reg_recording() == '' && reg_executing() == '')
+        return 'g'.a:direction
+    else
+        return a:direction
+    endif
+endfunction
+
+nmap <expr> j MoveCursor('j')
+nmap <expr> k MoveCursor('k')
+]]
+
+vim.cmd(smart_fold_movement)
