@@ -39,5 +39,9 @@
         "key": "ctrl+[",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "inQuickOpen && !editorReadonly"
+    },
+    {
+        "key": "ctrl+t",
+        "command": "workbench.action.togglePanel"
     }
 ]
