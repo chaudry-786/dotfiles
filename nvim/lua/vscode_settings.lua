@@ -3,6 +3,7 @@ local expr_opts = { noremap = true, silent = true, expr = true }
 local opts = { noremap = true, silent = true }
 
 vim.cmd("highlight YankHighlight guibg=#5b737e blend=50")
+vim.opt.spell = false
 
 if vim.g.vscode then
     Vscode = require("vscode-neovim")
