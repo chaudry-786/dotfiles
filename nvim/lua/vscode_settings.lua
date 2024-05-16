@@ -103,3 +103,13 @@ keymap("n", "<leader>rC",
 -- { "n", "<leader>Cp", ":call jukit#convert#save_nb_to_file(0, 1, 'pdf')<cr>",  "Convert file to pdf" },
 -- { "n", "<leader>CP", ":call jukit#convert#save_nb_to_file(1, 1, 'pdf')<cr>",
 --     "Convert file to pdf and rerun all cells" }
+--
+
+
+-- Telescope
+keymap("n", "<leader>ff", function()
+    Vscode.call("workbench.action.quickOpen")
+end, { silent = true })
+keymap("n", "<leader>fc", function()
+    Vscode.call("workbench.action.showCommands")
+end, { silent = true })
