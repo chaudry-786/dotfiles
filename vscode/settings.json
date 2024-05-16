@@ -1,4 +1,6 @@
 {
     "workbench.colorTheme": "IntelliJ-ish Darcula",
-    "editor.fontFamily": "JetBrainsMonoNL Nerd Font Mono"
+    "editor.fontFamily": "JetBrainsMonoNL Nerd Font Mono",
+    // hide tabs
+    "workbench.editor.showTabs": "none"
 }
