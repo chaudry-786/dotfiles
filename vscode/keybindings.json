@@ -43,5 +43,13 @@
     {
         "key": "ctrl+t",
         "command": "workbench.action.togglePanel"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "workbench.action.navigateForward"
     }
 ]
