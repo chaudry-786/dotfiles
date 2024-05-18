@@ -33,6 +33,9 @@ vim.cmd("nnoremap <leader>cO :call VSCodeNotify('notebook.cell.insertCodeCellAbo
 -- Telescope
 vim.cmd("nnoremap <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>")
 vim.cmd("nnoremap <leader>fc :call VSCodeNotify('workbench.action.showCommands')<CR>")
+-- vim.cmd("nnoremap <leader>fg :call VSCodeNotify('find-it-faster.findWithinFiles')<CR>")
+-- vim.cmd("nnoremap <leader>fG :call VSCodeNotify('find-it-faster.findWithinFilesWithType')<CR>")
+vim.cmd("nnoremap <leader>fo :call VSCodeNotify('workbench.action.gotoSymbol')<CR>")
 
 -- Folds
 vim.cmd("nnoremap zM :call VSCodeNotify('editor.foldAll')<CR>")

@@ -13,6 +13,7 @@
     },
     "editor.smoothScrolling": true,
     "editor.lineNumbers": "relative",
-    "github.copilot.editor.enableAutoCompletions": false
+    "github.copilot.editor.enableAutoCompletions": false,
+    "editor.minimap.enabled": false,
+    "find-it-faster.general.killTerminalAfterUse" : true
 }
-
