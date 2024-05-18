@@ -11,5 +11,6 @@
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
-    "editor.smoothScrolling": true
+    "editor.smoothScrolling": true,
+    "editor.lineNumbers": "relative"
 }
