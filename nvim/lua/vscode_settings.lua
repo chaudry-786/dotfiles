@@ -10,75 +10,29 @@ if vim.g.vscode then
 end
 
 --  symbol renaming.
-keymap("n", "<leader>rn", function()
-    Vscode.call("editor.action.rename")
-end, {})
+vim.cmd([[nnoremap <leader>rn :call VSCodeNotify('editor.action.rename')<CR>]])
 
 -- formatting
-keymap("x", "<leader><leader>f", function()
-    Vscode.call("editor.action.formatSelection")
-end, {})
-keymap("n", "<leader><leader>f", function()
-    Vscode.call("editor.action.formatDocument")
-end, opts)
+vim.cmd([[xnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatSelection')<CR>]])
+vim.cmd([[nnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatDocument')<CR>]])
 
--- -- navigate diagnostics
-keymap("n", "]a", function()
-    Vscode.call("editor.action.marker.next")
-end, { silent = true })
-keymap("n", "[a", function()
-    Vscode.call("editor.action.marker.prev")
-end, { silent = true })
+-- navigate diagnostics
+vim.cmd("nnoremap ]a :call VSCodeNotify('editor.action.marker.next')<CR>")
+vim.cmd("nnoremap [a :call VSCodeNotify('editor.action.marker.prev')<CR>")
 
-keymap("i", "<c-j>",
-    function()
-        Vscode.call("selectNextSuggestion")
-    end,
-    opts)
+vim.cmd("inoremap <c-j> :call VSCodeNotify('selectNextSuggestion')<CR>")
 
-keymap("n", "<leader>rc",
-    function()
-        Vscode.call("notebook.cell.execute")
-    end,
-    opts)
-
-keymap("n", "<leader>rC",
-    function()
-        Vscode.call("notebook.cell.executeCellsAbove")
-    end,
-    opts)
-keymap("n", "[c",
-    function()
-        Vscode.call("notebook.focusPreviousEditor")
-        Vscode.call("notebook.centerActiveCell")
-    end,
-    opts)
-
-keymap("n", "]c",
-    function()
-        Vscode.call("notebook.focusNextEditor")
-        Vscode.call("notebook.centerActiveCell")
-    end,
-    opts)
-
-keymap("n", "<leader>co",
-    function()
-        Vscode.call("notebook.cell.insertCodeCellBelowAndFocusContainer")
-    end,
-    opts)
-keymap("n", "<leader>cO",
-    function()
-        Vscode.call("notebook.cell.insertCodeCellAboveAndFocusContainer")
-    end,
-    opts)
+-- cell mappings
+vim.cmd("nnoremap <leader>rc :call VSCodeNotify('notebook.cell.execute')<CR>")
+vim.cmd("nnoremap <leader>rC :call VSCodeNotify('notebook.cell.executeCellsAbove')<CR>")
+vim.cmd("nnoremap [c :call VSCodeNotify('notebook.focusPreviousEditor')<CR>")
+vim.cmd("nnoremap ]c :call VSCodeNotify('notebook.focusNextEditor')<CR>")
+vim.cmd("nnoremap <leader>co :call VSCodeNotify('notebook.cell.insertCodeCellBelowAndFocusContainer')<CR>")
+vim.cmd("nnoremap <leader>cO :call VSCodeNotify('notebook.cell.insertCodeCellAboveAndFocusContainer')<CR>")
 
 -- Telescope
-keymap("n", "<leader>ff", function()
-    Vscode.call("workbench.action.quickOpen")
-end, opts)
-keymap("n", "<leader>fc", function()
-    Vscode.call("workbench.action.showCommands")
-end, opts)
+vim.cmd("nnoremap <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>")
+vim.cmd("nnoremap <leader>fc :call VSCodeNotify('workbench.action.showCommands')<CR>")
 
 -- Folds
 vim.cmd("nnoremap zM :call VSCodeNotify('editor.foldAll')<CR>")
@@ -93,7 +47,7 @@ vim.cmd("nnoremap <CR> :call VSCodeNotify('editor.toggleFold')<CR>")
 vim.cmd("nnoremap [z :call VSCodeNotify('editor.gotoPreviousFold')<CR>")
 vim.cmd("nnoremap ]z :call VSCodeNotify('editor.gotoNextFold')<CR>")
 
-local smart_fold_movement = [[
+vim.cmd([[
 function! MoveCursor(direction) abort
     if(reg_recording() == '' && reg_executing() == '')
         return 'g'.a:direction
@@ -104,9 +58,8 @@ endfunction
 
 nmap <expr> j MoveCursor('j')
 nmap <expr> k MoveCursor('k')
-]]
+]])
 
-vim.cmd(smart_fold_movement)
 
 -- Debuger
 vim.cmd("nnoremap <leader>tb :call VSCodeNotify('editor.debug.action.toggleBreakpoint')<CR>")
