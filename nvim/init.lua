@@ -173,7 +173,6 @@ require("lazy").setup({
             keymap("", "<leader>j", "<Plug>(leap-forward-to)", { silent = true })
             keymap("", "<leader>k", "<Plug>(leap-backward-to)", { silent = true })
         end,
-        cond = not vim.g.vscode
     },
 
     -- Easy navigation between tmux panes and vim windows

@@ -29,6 +29,10 @@ vim.cmd("nnoremap [c :call VSCodeNotify('notebook.focusPreviousEditor')<CR>")
 vim.cmd("nnoremap ]c :call VSCodeNotify('notebook.focusNextEditor')<CR>")
 vim.cmd("nnoremap <leader>co :call VSCodeNotify('notebook.cell.insertCodeCellBelowAndFocusContainer')<CR>")
 vim.cmd("nnoremap <leader>cO :call VSCodeNotify('notebook.cell.insertCodeCellAboveAndFocusContainer')<CR>")
+vim.cmd("nnoremap <leader>cj :call VSCodeNotify('notebook.cell.joinBelow')<CR>")
+vim.cmd("nnoremap <leader>cJ :call VSCodeNotify('notebook.cell.joinAbove')<CR>")
+vim.cmd("nnoremap <leader>cs :call VSCodeNotify('notebook.cell.split')<CR>")
+vim.cmd("nnoremap <leader>cc :call VSCodeNotify('notebook.cell.clearOutputs')<CR>")
 
 -- Telescope
 vim.cmd("nnoremap <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>")
@@ -69,6 +73,10 @@ local debug_mode = false
 vim.cmd("nnoremap <leader>tb :call VSCodeNotify('editor.debug.action.toggleBreakpoint')<CR>")
 vim.cmd("nnoremap <leader>tB :call VSCodeNotify('workbench.debug.viewlet.action.removeAllBreakpoints')<CR>")
 vim.cmd("nnoremap <leader>dc :call VSCodeNotify('editor.debug.action.conditionalBreakpoint')<CR>")
+vim.cmd("nnoremap <leader><Down> :call VSCodeNotify('workbench.action.debug.continue')<CR>")
+vim.cmd("nnoremap <leader>dw :call VSCodeNotify('editor.debug.action.selectionToWatch')<CR>")
+vim.cmd("nnoremap <leader>dh :call VSCodeNotify('editor.debug.action.showDebugHover')<CR>")
+vim.cmd("nnoremap <leader>dr :call VSCodeNotify('editor.debug.action.selectionToRepl')<CR>")
 
 -- Start debugger
 function debug_start()
@@ -112,11 +120,6 @@ keymap("n", "<Leader>td", function()
         debug_start()
     end
 end, opts)
-
-vim.cmd("nnoremap <leader><Down> :call VSCodeNotify('workbench.action.debug.continue')<CR>")
-vim.cmd("nnoremap <leader>dw :call VSCodeNotify('editor.debug.action.selectionToWatch')<CR>")
-vim.cmd("nnoremap <leader>dh :call VSCodeNotify('editor.debug.action.showDebugHover')<CR>")
-vim.cmd("nnoremap <leader>dr :call VSCodeNotify('editor.debug.action.selectionToRepl')<CR>")
 
 
 -- Run file
