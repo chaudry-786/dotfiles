@@ -43,15 +43,5 @@
     {
         "key": "ctrl+t",
         "command": "workbench.action.togglePanel"
-    },
-    {
-        "key": "ctrl+u",
-        "command": "scrollPageUp",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+d",
-        "command": "scrollPageDown",
-        "when": "editorTextFocus"
     }
 ]
