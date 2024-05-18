@@ -1,6 +1,15 @@
 {
     "workbench.colorTheme": "IntelliJ-ish Darcula",
+    "workbench.editor.showTabs": "none",
+    "window.zoomLevel": 2,
+    "yaml.schemas": {
+        "/home/sabah/yaml_schemas/scrape.json": ["scrape*.yml"]
+    },
+    "redhat.telemetry.enabled": false,
+    "json.schemas": [],
     "editor.fontFamily": "JetBrainsMonoNL Nerd Font Mono",
-    // hide tabs
-    "workbench.editor.showTabs": "none"
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "editor.smoothScrolling": true
 }
