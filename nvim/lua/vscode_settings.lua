@@ -62,37 +62,54 @@ nmap <expr> k MoveCursor('k')
 
 
 -- Debuger
+local debug_mode = false
 vim.cmd("nnoremap <leader>tb :call VSCodeNotify('editor.debug.action.toggleBreakpoint')<CR>")
 vim.cmd("nnoremap <leader>tB :call VSCodeNotify('workbench.debug.viewlet.action.removeAllBreakpoints')<CR>")
 vim.cmd("nnoremap <leader>dc :call VSCodeNotify('editor.debug.action.conditionalBreakpoint')<CR>")
 
 -- Start debugger
-local function set_mappings()
+function debug_start()
     local filename = vim.fn.expand('%:t')
     if filename:match('%.ipynb[#%%]') then
-        vim.cmd("nnoremap <buffer> <leader>ds :call VSCodeNotify('jupyter.runAndDebugCell')<CR>")
+        vim.cmd(":call VSCodeNotify('jupyter.runAndDebugCell')")
     else
-        vim.cmd("nnoremap <buffer> <leader>ds :call VSCodeNotify('workbench.action.debug.start')<CR>")
+        vim.cmd(":call VSCodeNotify('workbench.action.debug.start')")
     end
     vim.cmd("nnoremap <Left> :call VSCodeNotify('workbench.action.debug.stepOut')<CR>")
     vim.cmd("nnoremap <Down> :call VSCodeNotify('workbench.action.debug.stepOver')<CR>")
     vim.cmd("nnoremap <Right> :call VSCodeNotify('workbench.action.debug.stepInto')<CR>")
     vim.cmd("nnoremap <Up> :call VSCodeNotify('workbench.action.debug.restart')<CR>")
+    debug_mode = true
 end
-vim.api.nvim_create_autocmd({ 'BufRead', }, {
-    pattern = '*',
-    callback = set_mappings,
-})
+
+keymap("n", "<Leader>ds", function()
+    debug_start()
+end, opts)
 
 -- End debugger
-keymap("n", "<leader>de", function()
+
+function debug_end()
     Vscode.call("workbench.action.debug.stop")
     Vscode.call("workbench.action.closeSidebar")
     vim.cmd("unmap <Left>")
     vim.cmd("unmap <Down>")
     vim.cmd("unmap <Right>")
     vim.cmd("unmap <Up>")
+    debug_mode = false
+end
+
+keymap("n", "<Leader>de", function()
+    debug_end()
 end, opts)
+
+keymap("n", "<Leader>td", function()
+    if debug_mode then
+        debug_end()
+    else
+        debug_start()
+    end
+end, opts)
+
 vim.cmd("nnoremap <leader><Down> :call VSCodeNotify('workbench.action.debug.continue')<CR>")
 vim.cmd("nnoremap <leader>dw :call VSCodeNotify('editor.debug.action.selectionToWatch')<CR>")
 vim.cmd("nnoremap <leader>dh :call VSCodeNotify('editor.debug.action.showDebugHover')<CR>")
