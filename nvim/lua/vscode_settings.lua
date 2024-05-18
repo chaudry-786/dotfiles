@@ -38,15 +38,13 @@ keymap("i", "<c-j>",
 
 keymap("n", "<leader>rc",
     function()
-        Vscode.call("jupyter.runcurrentcell")
-        print("another hello")
+        Vscode.call("notebook.cell.execute")
     end,
     opts)
 
 keymap("n", "<leader>rC",
     function()
-        Vscode.call("jupyter.runallcellsabove.palette")
-        print("another hello")
+        Vscode.call("notebook.cell.executeCellsAbove")
     end,
     opts)
 keymap("n", "[c",
@@ -63,6 +61,16 @@ keymap("n", "]c",
     end,
     opts)
 
+keymap("n", "<leader>co",
+    function()
+        Vscode.call("notebook.cell.insertCodeCellBelowAndFocusContainer")
+    end,
+    opts)
+keymap("n", "<leader>cO",
+    function()
+        Vscode.call("notebook.cell.insertCodeCellAboveAndFocusContainer")
+    end,
+    opts)
 
 -- Telescope
 keymap("n", "<leader>ff", function()
