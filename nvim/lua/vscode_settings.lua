@@ -9,20 +9,19 @@ if vim.g.vscode then
     Vscode = require("vscode-neovim")
 end
 
---  symbol renaming.
+------------------------------------------------------------------------------
+--- LSP
+------------------------------------------------------------------------------
 vim.cmd([[nnoremap <leader>rn :call VSCodeNotify('editor.action.rename')<CR>]])
-
--- formatting
 vim.cmd([[xnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatSelection')<CR>]])
 vim.cmd([[nnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatDocument')<CR>]])
-
--- navigate diagnostics
 vim.cmd("nnoremap ]a :call VSCodeNotify('editor.action.marker.next')<CR>")
 vim.cmd("nnoremap [a :call VSCodeNotify('editor.action.marker.prev')<CR>")
-
 vim.cmd("inoremap <c-j> :call VSCodeNotify('selectNextSuggestion')<CR>")
 
--- cell mappings
+------------------------------------------------------------------------------
+-- Jupyter notebook
+------------------------------------------------------------------------------
 vim.cmd("nnoremap <leader>rc :call VSCodeNotify('notebook.cell.execute')<CR>")
 vim.cmd("nnoremap <leader>rC :call VSCodeNotify('notebook.cell.executeCellsAbove')<CR>")
 vim.cmd("nnoremap [c :call VSCodeNotify('notebook.focusPreviousEditor')<CR>")
@@ -34,14 +33,18 @@ vim.cmd("nnoremap <leader>cJ :call VSCodeNotify('notebook.cell.joinAbove')<CR>")
 vim.cmd("nnoremap <leader>cs :call VSCodeNotify('notebook.cell.split')<CR>")
 vim.cmd("nnoremap <leader>cc :call VSCodeNotify('notebook.cell.clearOutputs')<CR>")
 
+------------------------------------------------------------------------------
 -- Telescope
+------------------------------------------------------------------------------
 vim.cmd("nnoremap <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>")
 vim.cmd("nnoremap <leader>fc :call VSCodeNotify('workbench.action.showCommands')<CR>")
 -- vim.cmd("nnoremap <leader>fg :call VSCodeNotify('find-it-faster.findWithinFiles')<CR>")
 -- vim.cmd("nnoremap <leader>fG :call VSCodeNotify('find-it-faster.findWithinFilesWithType')<CR>")
 vim.cmd("nnoremap <leader>fo :call VSCodeNotify('workbench.action.gotoSymbol')<CR>")
 
+------------------------------------------------------------------------------
 -- Folds
+------------------------------------------------------------------------------
 vim.cmd("nnoremap zM :call VSCodeNotify('editor.foldAll')<CR>")
 vim.cmd("nnoremap zR :call VSCodeNotify('editor.unfoldAll')<CR>")
 vim.cmd("nnoremap zc :call VSCodeNotify('editor.fold')<CR>")
@@ -68,7 +71,9 @@ nmap <expr> k MoveCursor('k')
 ]])
 
 
+------------------------------------------------------------------------------
 -- Debuger
+------------------------------------------------------------------------------
 local debug_mode = false
 vim.cmd("nnoremap <leader>tb :call VSCodeNotify('editor.debug.action.toggleBreakpoint')<CR>")
 vim.cmd("nnoremap <leader>tB :call VSCodeNotify('workbench.debug.viewlet.action.removeAllBreakpoints')<CR>")
@@ -98,7 +103,6 @@ keymap("n", "<Leader>ds", function()
 end, opts)
 
 -- End debugger
-
 function debug_end()
     Vscode.call("workbench.action.debug.stop")
     Vscode.call("workbench.action.closeSidebar")
@@ -108,7 +112,6 @@ function debug_end()
     vim.cmd("unmap <Up>")
     debug_mode = false
 end
-
 keymap("n", "<Leader>de", function()
     debug_end()
 end, opts)
@@ -122,7 +125,9 @@ keymap("n", "<Leader>td", function()
 end, opts)
 
 
+------------------------------------------------------------------------------
 -- Run file
+------------------------------------------------------------------------------
 function run_file()
     local filetype_and_commands = {
         py = "python %s",
@@ -155,12 +160,16 @@ end
 vim.api.nvim_set_keymap('n', '<leader>rf', ':lua run_file()<CR>',
     opts)
 
+------------------------------------------------------------------------------
 -- Tests
+------------------------------------------------------------------------------
 vim.cmd("nnoremap <leader>rt :call VSCodeNotify('testing.runAtCursor')<CR>")
 vim.cmd("nnoremap <leader>rT :call VSCodeNotify('testing.runAll')<CR>")
 vim.cmd("nnoremap <leader>dt :call VSCodeNotify('testing.debugAtCursor')<CR>")
 
+------------------------------------------------------------------------------
 -- Git
+------------------------------------------------------------------------------
 vim.cmd("nnoremap ]h :call VSCodeNotify('workbench.action.editor.previousChange')<CR>")
 vim.cmd("nnoremap [h :call VSCodeNotify('workbench.action.editor.nextChange')<CR>")
 vim.cmd("nnoremap <leader>ghp :call VSCodeNotify('editor.action.dirtydiff.next')<CR>")
