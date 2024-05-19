@@ -17,7 +17,6 @@ vim.cmd([[xnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatSel
 vim.cmd([[nnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatDocument')<CR>]])
 vim.cmd("nnoremap ]a :call VSCodeNotify('editor.action.marker.next')<CR>")
 vim.cmd("nnoremap [a :call VSCodeNotify('editor.action.marker.prev')<CR>")
-vim.cmd("inoremap <c-j> :call VSCodeNotify('selectNextSuggestion')<CR>")
 
 ------------------------------------------------------------------------------
 -- Jupyter notebook

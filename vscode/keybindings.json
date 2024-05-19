@@ -25,9 +25,29 @@
         "when": "neovim.mode != 'insert'"
     },
     {
+        "key": "ctrl+k",
+        "command": "selectPrevSuggestion",
+        "when": "neovim.mode == 'insert'"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.quickOpenNavigatePrevious",
+        "when": "inQuickOpen"
+    },
+    {
         "key": "ctrl+j",
         "command": "workbench.action.navigateDown",
         "when": "neovim.mode != 'insert'"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "selectNextSuggestion",
+        "when": "neovim.mode == 'insert'"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.quickOpenNavigateNext",
+        "when": "inQuickOpen"
     },
     {
         "key": "o",
