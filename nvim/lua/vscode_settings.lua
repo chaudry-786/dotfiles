@@ -82,6 +82,8 @@ vim.cmd("nnoremap <leader><Down> :call VSCodeNotify('workbench.action.debug.cont
 vim.cmd("nnoremap <leader>dw :call VSCodeNotify('editor.debug.action.selectionToWatch')<CR>")
 vim.cmd("nnoremap <leader>dh :call VSCodeNotify('editor.debug.action.showDebugHover')<CR>")
 vim.cmd("nnoremap <leader>dr :call VSCodeNotify('editor.debug.action.selectionToRepl')<CR>")
+vim.cmd([[nnoremap [b :call VSCodeNotify('editor.debug.action.goToPreviousBreakpoint')<CR>]])
+vim.cmd("nnoremap ]b :call VSCodeNotify('editor.debug.action.goToNextBreakpoint')<CR>>")
 
 -- Start debugger
 function debug_start()
