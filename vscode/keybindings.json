@@ -65,12 +65,14 @@
         "when": "inQuickOpen && !editorReadonly"
     },
     {
-        "key": "ctrl+t",
-        "command": "workbench.action.togglePanel"
+        "key": "ctrl+shift+t",
+        "command": "workbench.action.togglePanel",
+        "when": "!panelVisible || terminalFocus"
     },
     {
         "key": "ctrl+shift+t",
-        "command": "workbench.action.terminal.focus"
+        "command": "workbench.action.terminal.focus",
+        "when": "panelVisible && !terminalFocus"
     },
     {
         "key": "ctrl+o",
