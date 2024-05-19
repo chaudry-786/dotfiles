@@ -216,8 +216,8 @@ require("lazy").setup({
     ----------------------------------------
     -- Git
     ----------------------------------------
-    { "tpope/vim-fugitive",      cond = not vim.g.vscode }, -- Git integration
-    { "lewis6991/gitsigns.nvim", cond = not vim.g.vscode }, -- Git signs, hunk actions and text objects
+    { "tpope/vim-fugitive", },       -- Git integration
+    { "lewis6991/gitsigns.nvim", },  -- Git signs, hunk actions and text objects
 
 
     ----------------------------------------
@@ -339,9 +339,8 @@ require("lazy").setup({
 })
 
 
+require("plug-config/gitConfig") -- git related plugs config
 if not vim.g.vscode then
-    -- PLUGINS configuration
-    require("plug-config/gitConfig") -- git related plugs config
     -- ensures that all highlight groups have been set
     require("status_column")
 else

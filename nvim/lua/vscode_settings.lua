@@ -159,3 +159,11 @@ vim.api.nvim_set_keymap('n', '<leader>rf', ':lua run_file()<CR>',
 vim.cmd("nnoremap <leader>rt :call VSCodeNotify('testing.runAtCursor')<CR>")
 vim.cmd("nnoremap <leader>rT :call VSCodeNotify('testing.runAll')<CR>")
 vim.cmd("nnoremap <leader>dt :call VSCodeNotify('testing.debugAtCursor')<CR>")
+
+-- Git
+vim.cmd("nnoremap ]h :call VSCodeNotify('workbench.action.editor.previousChange')<CR>")
+vim.cmd("nnoremap [h :call VSCodeNotify('workbench.action.editor.nextChange')<CR>")
+vim.cmd("nnoremap <leader>ghp :call VSCodeNotify('editor.action.dirtydiff.next')<CR>")
+vim.cmd("nnoremap <leader>ghc :call VSCodeNotify('git.revertSelectedRanges')<CR>")
+vim.cmd("nnoremap <leader>gha :call VSCodeNotify('git.stageSelectedRanges')<CR>")
+vim.cmd("nnoremap <leader>ga :call VSCodeNotify('git.stage')<CR>")
