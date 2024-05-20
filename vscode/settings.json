@@ -1,19 +1,20 @@
 {
-    "workbench.colorTheme": "IntelliJ-ish Darcula",
-    "workbench.editor.showTabs": "none",
-    "window.zoomLevel": 2,
-    "yaml.schemas": {
-        "/home/sabah/yaml_schemas/scrape.json": ["scrape*.yml"]
-    },
-    "redhat.telemetry.enabled": false,
-    "json.schemas": [],
     "editor.fontFamily": "JetBrainsMonoNL Nerd Font Mono",
+    "editor.lineNumbers": "relative",
+    "editor.minimap.enabled": false,
+    "editor.smoothScrolling": true,
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
-    "editor.smoothScrolling": true,
-    "editor.lineNumbers": "relative",
+    "find-it-faster.general.killTerminalAfterUse": true,
     "github.copilot.editor.enableAutoCompletions": false,
-    "editor.minimap.enabled": false,
-    "find-it-faster.general.killTerminalAfterUse" : true
+    "json.schemas": [],
+    "redhat.telemetry.enabled": false,
+    "window.zoomLevel": 2,
+    "workbench.colorTheme": "IntelliJ-ish Darcula",
+    "workbench.editor.showTabs": "none",
+    "yaml.schemas": {
+        "/home/sabah/yaml_schemas/scrape.json": ["scrape*.yml"]
+    }
 }
+
