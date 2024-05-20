@@ -104,6 +104,16 @@
         "key": "ctrl+alt+shift+c",
         "command": "workbench.action.chat.openInEditor"
     },
+    {
+        "key": "[ c",
+        "command": "notebook.focusPreviousEditor",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
+    },
+    {
+        "key": "] c",
+        "command": "notebook.focusNextEditor",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
+    }
     // Remove comamnds
     {
         "key": "ctrl+f",
