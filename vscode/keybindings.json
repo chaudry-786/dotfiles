@@ -153,5 +153,10 @@
         "key": "ctrl+g",
         "command": "-workbench.action.terminal.goToRecentDirectory",
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+f",
+        "command": "-actions.find",
+        "when": "editorFocus || editorIsOpen"
     }
 ]
