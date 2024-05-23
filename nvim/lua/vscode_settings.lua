@@ -141,6 +141,9 @@ function run_file()
         sh = "sh %s"
     }
     local filename = vim.fn.expand("%:p")
+    if string.match(filename, "^vscode%-remote") then
+        filename = string.match(filename, "/home.*")
+    end
     local file_extension = vim.fn.expand("%:e")
     local command_template = filetype_and_commands[file_extension]
 
