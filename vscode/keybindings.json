@@ -90,18 +90,18 @@
         "key": "ctrl+alt+i",
         "command": "inlineChat.start"
     },
+    // {
+    //     "key": "ctrl+alt+shift+c",
+    //     "command": "runCommands",
+    //     "args": {
+    //         "commands": [
+    //             "workbench.action.chat.openInSidebar",
+    //             "workbench.action.chat.focusInput"
+    //         ]
+    //     }
+    // },
     {
         "key": "ctrl+alt+c",
-        "command": "runCommands",
-        "args": {
-            "commands": [
-                "workbench.action.chat.openInSidebar",
-                "workbench.action.chat.focusInput"
-            ]
-        }
-    },
-    {
-        "key": "ctrl+alt+shift+c",
         "command": "workbench.action.chat.openInEditor"
     },
     {
