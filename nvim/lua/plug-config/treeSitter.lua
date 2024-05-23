@@ -33,8 +33,6 @@ require "nvim-treesitter.configs".setup {
             -- Automatically jump forward to textobj, similar to targets.vim
             lookahead = true,
             keymaps = {
-                ["aC"] = "@class.outer",
-                ["iC"] = "@class.inner",
                 ["af"] = "@function.outer",
                 ["if"] = "@function.inner",
                 ["al"] = "@loop.outer",
@@ -48,13 +46,11 @@ require "nvim-treesitter.configs".setup {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
-                ["]C"] = "@class.outer",
                 ["]f"] = "@function.outer",
                 ["]l"] = "@loop.outer",
                 ["]i"] = "@conditional.outer",
             },
             goto_previous_start = {
-                ["[C"] = "@class.outer",
                 ["[f"] = "@function.outer",
                 ["[l"] = "@loop.outer",
                 ["[i"] = "@conditional.outer",

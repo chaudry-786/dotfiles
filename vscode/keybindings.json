@@ -110,10 +110,20 @@
         "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
     },
     {
+        "key": "[ shift+c",
+        "command": "notebook.focusTop",
+        "when": "notebookEditorFocused && !inputFocus"
+    },
+    {
         "key": "] c",
         "command": "notebook.focusNextEditor",
         "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
-    }
+    },
+    {
+        "key": "] shift+c",
+        "command": "notebook.focusBottom",
+        "when": "notebookEditorFocused && !inputFocus"
+    },
     // Remove comamnds
     {
         "key": "ctrl+f",
