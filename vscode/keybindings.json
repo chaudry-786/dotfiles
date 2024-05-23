@@ -124,6 +124,25 @@
         "command": "notebook.focusBottom",
         "when": "notebookEditorFocused && !inputFocus"
     },
+    // resize windows
+    {
+        "key": "alt+j",
+        "command": "workbench.action.increaseViewSize",
+        "when": "activeEditorGroupIndex != lastEditorGroupIndex"
+    },
+    {
+        "key": "alt+k",
+        "command": "workbench.action.decreaseViewSize",
+        "when": "activeEditorGroupIndex != 0"
+    },
+    {
+        "key": "alt+j",
+        "command": "workbench.action.terminal.resizePaneDown"
+    },
+    {
+        "key": "alt+k",
+        "command": "workbench.action.terminal.resizePaneUp"
+    },
     // Remove comamnds
     {
         "key": "ctrl+f",
