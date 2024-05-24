@@ -87,6 +87,10 @@
         "command": "workbench.action.closeActiveEditor"
     },
     {
+        "key": "ctrl+shift+q",
+        "command": "workbench.action.editorLayoutSingle"
+    },
+    {
         "key": "alt+i",
         "command": "inlineChat.start"
     },
@@ -155,3 +159,4 @@
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
     }
 ]
+
