@@ -13,6 +13,7 @@ end
 --- LSP
 ------------------------------------------------------------------------------
 vim.cmd([[nnoremap <leader>rn :call VSCodeNotify('editor.action.rename')<CR>]])
+vim.cmd([[nnoremap gr :call VSCodeNotify('editor.action.goToReferences')<CR>]])
 vim.cmd([[xnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatSelection')<CR>]])
 vim.cmd([[nnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatDocument')<CR>]])
 vim.cmd("nnoremap ]a :call VSCodeNotify('editor.action.marker.next')<CR>")
