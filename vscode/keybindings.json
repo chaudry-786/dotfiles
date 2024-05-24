@@ -143,6 +143,26 @@
         "key": "alt+k",
         "command": "workbench.action.terminal.resizePaneUp"
     },
+    {
+        "key": "left",
+        "command": "workbench.action.debug.stepOut",
+        "when": "inDebugMode && editorTextFocus"
+    },
+    {
+        "key": "down",
+        "command": "workbench.action.debug.stepOver",
+        "when": "inDebugMode && editorTextFocus"
+    },
+    {
+        "key": "right",
+        "command": "workbench.action.debug.stepInto",
+        "when": "inDebugMode && editorTextFocus"
+    },
+    {
+        "key": "up",
+        "command": "workbench.action.debug.restart",
+        "when": "inDebugMode && editorTextFocus"
+    },
     // Remove comamnds
     {
         "key": "ctrl+f",

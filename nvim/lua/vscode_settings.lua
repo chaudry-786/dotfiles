@@ -94,10 +94,6 @@ function debug_start()
     else
         vim.cmd(":call VSCodeNotify('workbench.action.debug.start')")
     end
-    vim.cmd("nnoremap <Left> :call VSCodeNotify('workbench.action.debug.stepOut')<CR>")
-    vim.cmd("nnoremap <Down> :call VSCodeNotify('workbench.action.debug.stepOver')<CR>")
-    vim.cmd("nnoremap <Right> :call VSCodeNotify('workbench.action.debug.stepInto')<CR>")
-    vim.cmd("nnoremap <Up> :call VSCodeNotify('workbench.action.debug.restart')<CR>")
     debug_mode = true
 end
 
@@ -109,10 +105,6 @@ end, opts)
 function debug_end()
     Vscode.call("workbench.action.debug.stop")
     Vscode.call("workbench.action.closeSidebar")
-    vim.cmd("unmap <Left>")
-    vim.cmd("unmap <Down>")
-    vim.cmd("unmap <Right>")
-    vim.cmd("unmap <Up>")
     debug_mode = false
 end
 keymap("n", "<Leader>de", function()
