@@ -162,6 +162,7 @@ vim.api.nvim_set_keymap('n', '<leader>rf', ':lua run_file()<CR>',
 -- Tests
 ------------------------------------------------------------------------------
 vim.cmd("nnoremap <leader>rt :call VSCodeNotify('testing.runAtCursor')<CR>")
+vim.cmd("nnoremap <leader>rl :call VSCodeNotify('testing.reRunLastRun')<CR>")
 vim.cmd("nnoremap <leader>rT :call VSCodeNotify('testing.runAll')<CR>")
 vim.cmd("nnoremap <leader>dt :call VSCodeNotify('testing.debugAtCursor')<CR>")
 
