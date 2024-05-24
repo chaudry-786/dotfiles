@@ -50,6 +50,16 @@
         "when": "inQuickOpen"
     },
     {
+        "key": "ctrl+l",
+        "command": "workbench.action.nextPanelView",
+        "when": "panelFocus"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.previousPanelView",
+        "when": "panelFocus"
+    },
+    {
         "key": "o",
         "command": "notebook.cell.insertCodeCellBelowAndFocusContainer",
         "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
@@ -136,16 +146,6 @@
     {
         "key": "alt+k",
         "command": "workbench.action.terminal.resizePaneUp"
-    },
-    {
-        "key": "alt+l",
-        "command": "workbench.action.nextPanelView",
-        "when": "panelFocus"
-    },
-    {
-        "key": "alt+h",
-        "command": "workbench.action.previousPanelView",
-        "when": "panelFocus"
     },
     // Remove comamnds
     {
