@@ -15,6 +15,12 @@
     "workbench.editor.showTabs": "none",
     "yaml.schemas": {
         "/home/sabah/yaml_schemas/scrape.json": ["scrape*.yml"]
-    }
+    },
+    "terminal.integrated.profiles.linux": {
+        "tmux-shell": {
+            "path": "tmux",
+            "args": ["new-session", "-A", "-s", "vscode:${workspaceFolder}"]
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "tmux-shell"
 }
-
