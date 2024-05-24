@@ -137,6 +137,16 @@
         "key": "alt+k",
         "command": "workbench.action.terminal.resizePaneUp"
     },
+    {
+        "key": "alt+l",
+        "command": "workbench.action.nextPanelView",
+        "when": "panelFocus"
+    },
+    {
+        "key": "alt+h",
+        "command": "workbench.action.previousPanelView",
+        "when": "panelFocus"
+    },
     // Remove comamnds
     {
         "key": "ctrl+f",
@@ -159,4 +169,3 @@
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
     }
 ]
-
