@@ -65,12 +65,12 @@
         "when": "inQuickOpen && !editorReadonly"
     },
     {
-        "key": "ctrl+shift+t",
+        "key": "alt+t",
         "command": "workbench.action.togglePanel",
         "when": "!panelVisible || terminalFocus"
     },
     {
-        "key": "ctrl+shift+t",
+        "key": "alt+t",
         "command": "workbench.action.terminal.focus",
         "when": "panelVisible && !terminalFocus"
     },
@@ -87,21 +87,11 @@
         "command": "workbench.action.closeActiveEditor"
     },
     {
-        "key": "ctrl+alt+i",
+        "key": "alt+i",
         "command": "inlineChat.start"
     },
-    // {
-    //     "key": "ctrl+alt+shift+c",
-    //     "command": "runCommands",
-    //     "args": {
-    //         "commands": [
-    //             "workbench.action.chat.openInSidebar",
-    //             "workbench.action.chat.focusInput"
-    //         ]
-    //     }
-    // },
     {
-        "key": "ctrl+alt+c",
+        "key": "alt+c",
         "command": "workbench.action.chat.openInEditor"
     },
     {
