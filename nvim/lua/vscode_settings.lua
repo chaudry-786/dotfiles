@@ -87,6 +87,13 @@ vim.cmd("nnoremap <leader>dr :call VSCodeNotify('editor.debug.action.selectionTo
 vim.cmd([[nnoremap [b :call VSCodeNotify('editor.debug.action.goToPreviousBreakpoint')<CR>]])
 vim.cmd("nnoremap ]b :call VSCodeNotify('editor.debug.action.goToNextBreakpoint')<CR>>")
 
+function set_debug_mapings()
+    vim.cmd("nnoremap <Left> :call VSCodeNotify('workbench.action.debug.stepOut')<CR>")
+    vim.cmd("nnoremap <Down> :call VSCodeNotify('workbench.action.debug.stepOver')<CR>")
+    vim.cmd("nnoremap <Right> :call VSCodeNotify('workbench.action.debug.stepInto')<CR>")
+    vim.cmd("nnoremap <Up> :call VSCodeNotify('workbench.action.debug.restart')<CR>")
+end
+
 -- Start debugger
 function debug_start()
     local filename = vim.fn.expand('%:t')
@@ -95,10 +102,7 @@ function debug_start()
     else
         vim.cmd(":call VSCodeNotify('workbench.action.debug.start')")
     end
-    vim.cmd("nnoremap <Left> :call VSCodeNotify('workbench.action.debug.stepOut')<CR>")
-    vim.cmd("nnoremap <Down> :call VSCodeNotify('workbench.action.debug.stepOver')<CR>")
-    vim.cmd("nnoremap <Right> :call VSCodeNotify('workbench.action.debug.stepInto')<CR>")
-    vim.cmd("nnoremap <Up> :call VSCodeNotify('workbench.action.debug.restart')<CR>")
+    set_debug_mapings()
     debug_mode = true
 end
 
@@ -173,7 +177,11 @@ vim.api.nvim_set_keymap('n', '<leader>rf', ':lua run_file()<CR>',
 vim.cmd("nnoremap <leader>rt :call VSCodeNotify('testing.runAtCursor')<CR>")
 vim.cmd("nnoremap <leader>rl :call VSCodeNotify('testing.reRunLastRun')<CR>")
 vim.cmd("nnoremap <leader>rT :call VSCodeNotify('testing.runAll')<CR>")
-vim.cmd("nnoremap <leader>dt :call VSCodeNotify('testing.debugAtCursor')<CR>")
+keymap("n", "<Leader>dt", function()
+    set_debug_mapings()
+    Vscode.action("testing.debugAtCursor")
+    debug_mode = true
+end, opts)
 
 ------------------------------------------------------------------------------
 -- Git
