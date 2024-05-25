@@ -35,6 +35,8 @@ vim.cmd("nnoremap <leader>cJ :call VSCodeNotify('notebook.cell.joinAbove')<CR>")
 vim.cmd("nnoremap <leader>cs :call VSCodeNotify('notebook.cell.split')<CR>")
 vim.cmd("nnoremap <leader>cc :call VSCodeNotify('notebook.cell.clearOutputs')<CR>")
 vim.cmd("nnoremap <leader>cC :call VSCodeNotify('notebook.clearAllCellsOutputs')<CR>")
+vim.cmd("nnoremap <leader>cx :call VSCodeNotify('notebook.cell.cancelExecution')<CR>")
+vim.cmd("nnoremap <leader>cd :call VSCodeNotify('notebook.cell.delete')<CR>")
 
 ------------------------------------------------------------------------------
 -- Telescope
