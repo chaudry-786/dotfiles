@@ -37,6 +37,8 @@ vim.cmd("nnoremap <leader>cc :call VSCodeNotify('notebook.cell.clearOutputs')<CR
 vim.cmd("nnoremap <leader>cC :call VSCodeNotify('notebook.clearAllCellsOutputs')<CR>")
 vim.cmd("nnoremap <leader>cx :call VSCodeNotify('notebook.cell.cancelExecution')<CR>")
 vim.cmd("nnoremap <leader>cd :call VSCodeNotify('notebook.cell.delete')<CR>")
+vim.cmd("nnoremap <leader>cm :call VSCodeNotify('notebook.cell.changeToMarkdown')<CR>")
+vim.cmd("nnoremap <leader>cM :call VSCodeNotify('notebook.cell.changeToCode')<CR>")
 
 ------------------------------------------------------------------------------
 -- Telescope
