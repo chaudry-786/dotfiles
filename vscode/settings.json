@@ -23,5 +23,9 @@
         }
     },
     "terminal.integrated.defaultProfile.linux": "tmux-shell",
-    "window.menuBarVisibility": "hidden"
+    "window.menuBarVisibility": "hidden",
+    // tests
+    "python.testing.pytestArgs": [".", "--continue-on-collection-errors"],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
