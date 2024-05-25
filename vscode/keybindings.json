@@ -151,7 +151,16 @@
         "key": "alt+r",
         "command": "testing.refreshTests"
     },
-    // Remove comamnds
+    {
+        "key": "alt+o",
+        "command": "workbench.action.openRecent"
+    },
+    {
+        "key": "alt+enter",
+        "command": "inlineChat.acceptChanges",
+        "when": "inlineChatHasProvider && inlineChatVisible && !inlineChatDocumentChanged || inlineChatHasProvider && inlineChatVisible && config.inlineChat.mode != 'preview'"
+    },
+    // Add your comment
     {
         "key": "ctrl+f",
         "command": "-workbench.action.terminal.focusFind",
@@ -171,5 +180,10 @@
         "key": "ctrl+v",
         "command": "-workbench.action.terminal.paste",
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "-inlineChat.acceptChanges",
+        "when": "inlineChatHasProvider && inlineChatVisible && !inlineChatDocumentChanged || inlineChatHasProvider && inlineChatVisible && config.inlineChat.mode != 'preview'"
     }
 ]
