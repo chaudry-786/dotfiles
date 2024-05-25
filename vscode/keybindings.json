@@ -147,6 +147,10 @@
         "key": "alt+k",
         "command": "workbench.action.terminal.resizePaneUp"
     },
+    {
+        "key": "alt+r",
+        "command": "testing.refreshTests"
+    },
     // Remove comamnds
     {
         "key": "ctrl+f",

@@ -22,5 +22,6 @@
             "args": ["new-session", "-A", "-s", "VS:${workspaceFolderBasename}"]
         }
     },
-    "terminal.integrated.defaultProfile.linux": "tmux-shell"
+    "terminal.integrated.defaultProfile.linux": "tmux-shell",
+    "window.menuBarVisibility": "hidden"
 }
