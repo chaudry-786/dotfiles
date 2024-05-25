@@ -7,7 +7,7 @@
         "asvetliakov.vscode-neovim": 1
     },
     "find-it-faster.general.killTerminalAfterUse": true,
-    "github.copilot.editor.enableAutoCompletions": false,
+    "editor.inlineSuggest.enabled": false,
     "json.schemas": [],
     "redhat.telemetry.enabled": false,
     "window.zoomLevel": 2,
