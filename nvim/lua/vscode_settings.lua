@@ -182,6 +182,11 @@ keymap("n", "<Leader>dt", function()
     Vscode.action("testing.debugAtCursor")
     debug_mode = true
 end, opts)
+keymap("n", "<Leader>dl", function()
+    set_debug_mapings()
+    Vscode.action("testing.debugLastRun")
+    debug_mode = true
+end, opts)
 
 ------------------------------------------------------------------------------
 -- Git
