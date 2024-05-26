@@ -109,3 +109,6 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "html",
     command = [[ set filetype=htmldjango ]]
 })
+
+-- to allow comments in JSON files
+vim.cmd("au BufRead,BufNewFile *.json set filetype=jsonc")
