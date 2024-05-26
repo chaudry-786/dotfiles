@@ -1,94 +1,5 @@
 [
-    {
-        "key": "ctrl+n",
-        "command": "workbench.view.explorer",
-        "when": "!explorerViewletVisible"
-    },
-    {
-        "key": "ctrl+n",
-        "command": "workbench.action.closeSidebar",
-        "when": "explorerViewletVisible"
-    },
-    {
-        "key": "ctrl+h",
-        "command": "workbench.action.focusPreviousGroup",
-        "when": "neovim.mode != 'insert'"
-    },
-    {
-        "key": "ctrl+l",
-        "command": "workbench.action.focusNextGroup",
-        "when": "neovim.mode != 'insert'"
-    },
-    {
-        "key": "ctrl+k",
-        "command": "workbench.action.navigateUp",
-        "when": "neovim.mode != 'insert'"
-    },
-    {
-        "key": "ctrl+k",
-        "command": "selectPrevSuggestion",
-        "when": "neovim.mode == 'insert'"
-    },
-    {
-        "key": "ctrl+k",
-        "command": "workbench.action.quickOpenNavigatePrevious",
-        "when": "inQuickOpen"
-    },
-    {
-        "key": "ctrl+j",
-        "command": "workbench.action.navigateDown",
-        "when": "neovim.mode != 'insert'"
-    },
-    {
-        "key": "ctrl+j",
-        "command": "selectNextSuggestion",
-        "when": "neovim.mode == 'insert'"
-    },
-    {
-        "key": "ctrl+j",
-        "command": "workbench.action.quickOpenNavigateNext",
-        "when": "inQuickOpen"
-    },
-    {
-        "key": "ctrl+l",
-        "command": "workbench.action.nextPanelView",
-        "when": "panelFocus"
-    },
-    {
-        "key": "ctrl+h",
-        "command": "workbench.action.previousPanelView",
-        "when": "panelFocus"
-    },
-    {
-        "key": "o",
-        "command": "notebook.cell.insertCodeCellBelowAndFocusContainer",
-        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
-    },
-    {
-        "key": "ctrl+enter",
-        "command": "notebook.cell.execute",
-        "when": "notebookCellListFocused || editorTextFocus && inputFocus && notebookEditorFocused"
-    },
-    {
-        "key": "shift+O",
-        "command": "notebook.cell.insertCodeCellAboveAndFocusContainer",
-        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
-    },
-    {
-        "key": "ctrl+[",
-        "command": "workbench.action.focusActiveEditorGroup",
-        "when": "inQuickOpen && !editorReadonly"
-    },
-    {
-        "key": "alt+t",
-        "command": "workbench.action.togglePanel",
-        "when": "!panelVisible || terminalFocus"
-    },
-    {
-        "key": "alt+t",
-        "command": "workbench.action.terminal.focus",
-        "when": "panelVisible && !terminalFocus"
-    },
+    // General
     {
         "key": "ctrl+o",
         "command": "workbench.action.navigateBack"
@@ -106,34 +17,79 @@
         "command": "workbench.action.editorLayoutSingle"
     },
     {
-        "key": "alt+i",
-        "command": "inlineChat.start"
+        "key": "alt+o",
+        "command": "workbench.action.openRecent"
     },
     {
-        "key": "alt+c",
-        "command": "workbench.action.chat.openInEditor"
+        "key": "alt+shift+o",
+        "command": "workbench.action.files.openFolder",
+        "when": "openFolderWorkspaceSupport"
+    },
+    //
+    // Tree explorer toggle
+    {
+        "key": "ctrl+n",
+        "command": "workbench.view.explorer",
+        "when": "!explorerViewletVisible"
     },
     {
-        "key": "[ c",
-        "command": "notebook.focusPreviousEditor",
-        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
+        "key": "ctrl+n",
+        "command": "workbench.action.closeSidebar",
+        "when": "explorerViewletVisible"
+    },
+    //
+    // Navigation between windows
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.focusPreviousGroup",
+        "when": "neovim.mode != 'insert'"
     },
     {
-        "key": "[ shift+c",
-        "command": "notebook.focusTop",
-        "when": "notebookEditorFocused && !inputFocus"
+        "key": "ctrl+j",
+        "command": "workbench.action.navigateDown",
+        "when": "neovim.mode != 'insert'"
     },
     {
-        "key": "] c",
-        "command": "notebook.focusNextEditor",
-        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
+        "key": "ctrl+k",
+        "command": "workbench.action.navigateUp",
+        "when": "neovim.mode != 'insert'"
     },
     {
-        "key": "] shift+c",
-        "command": "notebook.focusBottom",
-        "when": "notebookEditorFocused && !inputFocus"
+        "key": "ctrl+l",
+        "command": "workbench.action.focusNextGroup",
+        "when": "neovim.mode != 'insert'"
     },
-    // resize windows
+    //
+    // Auto-compeletion navigation
+    {
+        "key": "ctrl+j",
+        "command": "selectNextSuggestion",
+        "when": "neovim.mode == 'insert'"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "selectPrevSuggestion",
+        "when": "neovim.mode == 'insert'"
+    },
+    //
+    // Quick-open navigation and escape
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.quickOpenNavigatePrevious",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.quickOpenNavigateNext",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "ctrl+[",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "inQuickOpen && !editorReadonly"
+    },
+    //
+    // Resize windows
     {
         "key": "alt+j",
         "command": "workbench.action.increaseViewSize",
@@ -152,25 +108,83 @@
         "key": "alt+k",
         "command": "workbench.action.terminal.resizePaneUp"
     },
+    //
+    // Terminal-panel navigation
     {
-        "key": "alt+r",
-        "command": "testing.refreshTests"
+        "key": "ctrl+l",
+        "command": "workbench.action.nextPanelView",
+        "when": "panelFocus"
     },
     {
-        "key": "alt+o",
-        "command": "workbench.action.openRecent"
+        "key": "ctrl+h",
+        "command": "workbench.action.previousPanelView",
+        "when": "panelFocus"
+    },
+    // Terminal toggle
+    {
+        "key": "alt+t",
+        "command": "workbench.action.togglePanel",
+        "when": "!panelVisible || terminalFocus"
     },
     {
-        "key": "alt+shift+o",
-        "command": "workbench.action.files.openFolder",
-        "when": "openFolderWorkspaceSupport"
+        "key": "alt+t",
+        "command": "workbench.action.terminal.focus",
+        "when": "panelVisible && !terminalFocus"
+    },
+    //
+    // Notebook
+    {
+        "key": "o",
+        "command": "notebook.cell.insertCodeCellBelowAndFocusContainer",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
+    },
+    {
+        "key": "shift+O",
+        "command": "notebook.cell.insertCodeCellAboveAndFocusContainer",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
+    },
+    {
+        "key": "] c",
+        "command": "notebook.focusNextEditor",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
+    },
+    {
+        "key": "[ c",
+        "command": "notebook.focusPreviousEditor",
+        "when": "notebookEditorFocused && !inputFocus && !notebookOutputInputFocused"
+    },
+    {
+        "key": "] shift+c",
+        "command": "notebook.focusBottom",
+        "when": "notebookEditorFocused && !inputFocus"
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "notebook.cell.execute",
+        "when": "notebookCellListFocused || editorTextFocus && inputFocus && notebookEditorFocused"
+    },
+    //
+    // Github copilot
+    {
+        "key": "alt+i",
+        "command": "inlineChat.start"
+    },
+    {
+        "key": "alt+c",
+        "command": "workbench.action.chat.openInEditor"
     },
     {
         "key": "alt+enter",
         "command": "inlineChat.acceptChanges",
         "when": "inlineChatHasProvider && inlineChatVisible && !inlineChatDocumentChanged || inlineChatHasProvider && inlineChatVisible && config.inlineChat.mode != 'preview'"
     },
-    // Add your comment
+    //
+    // Tests
+    {
+        "key": "alt+r",
+        "command": "testing.refreshTests"
+    },
+    // Removed default mappings
     {
         "key": "ctrl+f",
         "command": "-workbench.action.terminal.focusFind",
