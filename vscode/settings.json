@@ -1,21 +1,31 @@
 {
+    // Editor settings
     "editor.fontFamily": "JetBrainsMonoNL Nerd Font Mono",
     "editor.lineNumbers": "relative",
     "editor.minimap.enabled": false,
     "editor.smoothScrolling": true,
+    "editor.inlineSuggest.enabled": false,
+
+    // Extension settings
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
     "find-it-faster.general.killTerminalAfterUse": true,
-    "editor.inlineSuggest.enabled": false,
     "json.schemas": [],
     "redhat.telemetry.enabled": false,
+
+    // UI settings
     "window.zoomLevel": 2,
     "workbench.colorTheme": "IntelliJ-ish Darcula",
     "workbench.editor.showTabs": "none",
+    "window.menuBarVisibility": "hidden",
+
+    // YAML settings
     "yaml.schemas": {
         "/home/sabah/yaml_schemas/scrape.json": ["scrape*.yml"]
     },
+
+    // Terminal settings
     "terminal.integrated.profiles.linux": {
         "tmux-shell": {
             "path": "tmux",
@@ -23,11 +33,13 @@
         }
     },
     "terminal.integrated.defaultProfile.linux": "tmux-shell",
-    "window.menuBarVisibility": "hidden",
-    // tests
+
+    // Python testing settings
     "python.testing.pytestArgs": [".", "--continue-on-collection-errors"],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
+
+    // Notebook settings
     "notebook.cellToolbarLocation": {
         "default": "right"
     }
