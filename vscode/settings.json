@@ -27,5 +27,8 @@
     // tests
     "python.testing.pytestArgs": [".", "--continue-on-collection-errors"],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "notebook.cellToolbarLocation": {
+        "default": "right"
+    }
 }
