@@ -175,7 +175,7 @@ search() {
     --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
     --delimiter : \
     --preview "batcat --color=always {1} --highlight-line {2}" \
-    --preview-window "up,60%,border-bottom,+{2}+3/3,~3" \
+    --preview-window "right,40%,border-bottom,+{2}+3/3,~3" \
     --bind "enter:become($EDITOR_COMMAND)"
 }
 # Define widget and bind CTRL-G to it

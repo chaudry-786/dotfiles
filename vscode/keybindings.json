@@ -25,6 +25,29 @@
         "command": "workbench.action.files.openFolder",
         "when": "openFolderWorkspaceSupport"
     },
+    {
+        "key": "ctrl+g",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {
+                    "command": "workbench.action.terminal.focus",
+                },
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "export TERM_PROGRAM=vscode && clear\n"
+                    }
+                },
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "\u0007\n"
+                    }
+                },
+            ]
+        },
+    },
     //
     // Tree explorer toggle
     {
@@ -219,5 +242,9 @@
         "key": "ctrl+enter",
         "command": "-notebook.cell.executeAndFocusContainer",
         "when": "notebookCellListFocused || editorTextFocus && inputFocus && notebookEditorFocused"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "-workbench.action.gotoLine"
     }
 ]

@@ -54,8 +54,12 @@ vim.cmd("nnoremap <leader>cM :call VSCodeNotify('notebook.cell.changeToCode')<CR
 ------------------------------------------------------------------------------
 vim.cmd("nnoremap <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>")
 vim.cmd("nnoremap <leader>fc :call VSCodeNotify('workbench.action.showCommands')<CR>")
--- vim.cmd("nnoremap <leader>fg :call VSCodeNotify('find-it-faster.findWithinFiles')<CR>")
--- vim.cmd("nnoremap <leader>fG :call VSCodeNotify('find-it-faster.findWithinFilesWithType')<CR>")
+keymap("n", "<leader>fg", function()
+    Vscode.call('workbench.action.terminal.focus')
+    Vscode.call('workbench.action.terminal.sendSequence', { args = { text = "export TERM_PROGRAM=vscode && clear" .. "\x0D" } })
+    Vscode.call('workbench.action.terminal.sendSequence', { args = { text = "\x07" .. "\x0D" } })
+end, opts)
+
 vim.cmd("nnoremap <leader>fo :call VSCodeNotify('workbench.action.gotoSymbol')<CR>")
 
 ------------------------------------------------------------------------------
