@@ -28,7 +28,8 @@ map({ "n", "v" }, "C", [["_C]], "Change to end of line without copying.")
 map("", "L", "$", "Move to the end of the line")
 map("", "H", kmap_funs.goto_start_of_line, "Move to the start of the line")
 map("t", "<Esc>", [[<C-\><C-n>]], "Exit terminal mode")
-map("n", "@", kmap_funs.execute_macro, "Execute macro with noautocmd")
+-- bug; copy doesn't work in macros
+-- map("n", "@", kmap_funs.execute_macro, "Execute macro with noautocmd")
 map("n", "<leader>y", ":%y+<CR>", "Copy the whole buffer")
 map("n", "<esc>", "<Cmd>noh<return><esc>", "Escape: Also clears highlighting")
 if not vim.g.vscode then
