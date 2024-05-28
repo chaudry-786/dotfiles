@@ -31,7 +31,7 @@
         "args": {
             "commands": [
                 {
-                    "command": "workbench.action.terminal.focus",
+                    "command": "workbench.action.terminal.focus"
                 },
                 {
                     "command": "workbench.action.terminal.sendSequence",
@@ -44,9 +44,9 @@
                     "args": {
                         "text": "\u0007\n"
                     }
-                },
+                }
             ]
-        },
+        }
     },
     //
     // Tree explorer toggle
@@ -59,6 +59,11 @@
         "key": "ctrl+n",
         "command": "workbench.action.closeSidebar",
         "when": "explorerViewletVisible"
+    },
+    {
+        "key": "y",
+        "command": "copyRelativeFilePath",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
     },
     //
     // Navigation between windows
@@ -248,3 +253,4 @@
         "command": "-workbench.action.gotoLine"
     }
 ]
+
