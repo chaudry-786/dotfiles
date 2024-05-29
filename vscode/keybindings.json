@@ -137,17 +137,6 @@
         "command": "workbench.action.terminal.resizePaneUp"
     },
     //
-    // Terminal-panel navigation
-    {
-        "key": "ctrl+l",
-        "command": "workbench.action.nextPanelView",
-        "when": "panelFocus"
-    },
-    {
-        "key": "ctrl+h",
-        "command": "workbench.action.previousPanelView",
-        "when": "panelFocus"
-    },
     // Terminal toggle
     {
         "key": "alt+t",
