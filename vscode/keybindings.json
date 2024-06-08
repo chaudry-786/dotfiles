@@ -116,6 +116,14 @@
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "inQuickOpen && !editorReadonly"
     },
+    {
+        "key": "ctrl+[",
+        "command": "type",
+        "args": {
+            "text": "\u001b"
+        },
+        "when": "neovim.init && neovim.mode == 'cmdline'"
+    },
     //
     // Resize windows
     {
@@ -242,4 +250,3 @@
         "command": "-workbench.action.gotoLine"
     }
 ]
-
