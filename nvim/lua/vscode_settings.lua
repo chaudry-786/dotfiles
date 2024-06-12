@@ -61,6 +61,7 @@ keymap("n", "<leader>fg", function()
 end, opts)
 
 vim.cmd("nnoremap <leader>fo :call VSCodeNotify('workbench.action.gotoSymbol')<CR>")
+vim.cmd("nnoremap <leader>ov :call VSCodeNotify('dataWrangler.openNotebookVariable')<CR>")
 
 ------------------------------------------------------------------------------
 -- Folds
