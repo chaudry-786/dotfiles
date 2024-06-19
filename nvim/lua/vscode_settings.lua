@@ -80,14 +80,18 @@ keymap("n", "<CR>", function()
     local current_line = vim.fn.line(".")
 
     local key = filename .. ":" .. current_line
-    if fold_table[key] then
-        -- Unfold the line
-        vim.cmd("call VSCodeNotify('editor.unfoldRecursively')")
-        fold_table[key] = false
-    else
+    if not fold_table[key] then
         -- Fold the line
         vim.cmd("call VSCodeNotify('editor.foldRecursively')")
-        fold_table[key] = true
+        fold_table[key] = "folded"
+    elseif fold_table[key] == "folded" then
+        -- Unfold the line
+        vim.cmd("call VSCodeNotify('editor.unfold')")
+        fold_table[key] = "unfolded"
+    else
+        -- Unfold the line recursively
+        vim.cmd("call VSCodeNotify('editor.unfoldRecursively')")
+        fold_table[key] = nil
     end
 end, opts)
 
