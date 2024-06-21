@@ -15,7 +15,14 @@ end
 vim.cmd([[nnoremap <leader>rn :call VSCodeNotify('editor.action.rename')<CR>]])
 vim.cmd([[nnoremap gr :call VSCodeNotify('editor.action.goToReferences')<CR>]])
 vim.cmd([[xnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatSelection')<CR>]])
-vim.cmd([[nnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatDocument')<CR>]])
+keymap("n", "<leader><leader>f", function()
+    local filename = vim.fn.expand('%:t')
+    if filename:match('%.ipynb[#%%]') then
+        vim.cmd(":call VSCodeNotify('notebook.formatCell')")
+    else
+        vim.cmd(":call VSCodeNotify('editor.action.formatDocument')")
+    end
+end, opts)
 vim.cmd("nnoremap ]a :call VSCodeNotify('editor.action.marker.next')<CR>")
 vim.cmd("nnoremap [a :call VSCodeNotify('editor.action.marker.prev')<CR>")
 
