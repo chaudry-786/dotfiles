@@ -157,6 +157,18 @@
         "when": "panelVisible && !terminalFocus"
     },
     //
+    // Debug Console toggle
+    {
+        "key": "alt+d",
+        "command": "workbench.debug.action.toggleRepl",
+        "when": "!debugConsoleVisible"
+    },
+    {
+        "key": "alt+d",
+        "command": "workbench.action.closePanel",
+        "when": "debugConsoleVisible"
+    },
+    //
     // Notebook
     {
         "key": "o",
