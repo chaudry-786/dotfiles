@@ -3,7 +3,8 @@ Ubuntu Extensions
     a) sudo apt-get install chrome-gnome-shell
     b) https://extensions.gnome.org/ install web browser extension to easily install extensions
             Option should pop up in gnome site to install extension
-    c) sudo apt install gnome-tweak-tool
+    c) install and enable this (https://extensions.gnome.org/extension/545/hide-top-bar/)
+    d) sudo apt install gnome-tweak-tool
 
 
 2) set key commands
