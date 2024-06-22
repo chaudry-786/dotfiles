@@ -1,26 +1,30 @@
 Ubuntu Extensions
-1) APP store download gnome extensions
-2) https://extensions.gnome.org/ install web browser extension to easily install extensions
-    Option should pop up in gnome site to install extension
-    Also Install "sudo apt-get install chrome-gnome-shell" for native host connection
-3) Installed extensions:
-    https://extensions.gnome.org/extension/307/dash-to-dock/
-    https://extensions.gnome.org/extension/1287/unite/
-4) disable wayland (cursor doesn't hide in kitty)
-    sudo vim /etc/gdm3/custom.conf
-    remove #
-    #WaylandEnable=false
-    restart sudo systemctl restart gdm3
-5) ensure Nividia graphic card is running:
-    run: nvidia-settings
-        if it's running it'll display card information along with stats.
-        turn on performance mode
+1) Ubuntu Extensions
+    a) sudo apt-get install chrome-gnome-shell
+    b) https://extensions.gnome.org/ install web browser extension to easily install extensions
+            Option should pop up in gnome site to install extension
+    c) sudo apt install gnome-tweak-tool
 
-To get, set and reset keys to move between work spaces:
-    get:        gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-right
-    Following have been set
-    set:        gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Control>Right']"
-    set:        gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Control>Left']"
+
+2) set key commands
+
+    list all commands:
+        gsettings list-keys org.gnome.desktop.wm.keybindings
+
+    get:
+        gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-right
+
+    set:
+        #move between workspaces
+        gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Control>Right']"
+        gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Control>Left']"
+
+        # maximise and unmaximize window with window+up and dow arros
+        gsettings set org.gnome.desktop.wm.keybindings maximize "['<Super>Up']"
+        gsettings set org.gnome.desktop.wm.keybindings  unmaximize "['<Super>Down']"
+
+        #map caps to ctrl
+        gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
 
     reset:      gsettings reset org.gnome.desktop.wm.keybindings switch-to-workspace-left
 
@@ -29,6 +33,8 @@ move window between monitors:
 move window between workspaces:
     caps +shift + alt + arrow
 
+3) ensure Nividia graphic card is running:
+    run: nvidia-settings
+        if it's running it'll display card information along with stats.
+        turn on performance mode
 
-Change CAPS LOCK to CTRL
-    Install and use gnome-tweak-tool > Keyboard & Mouse > Keyboard > Additional Layout Options > Caps Lock behaviour.
