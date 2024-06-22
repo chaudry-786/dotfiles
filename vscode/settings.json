@@ -1,6 +1,7 @@
 {
     // Editor settings
     "editor.fontFamily": "JetBrainsMonoNL Nerd Font",
+    "editor.fontSize": 14,
     "editor.lineNumbers": "relative",
     "editor.minimap.enabled": false,
     "editor.smoothScrolling": true,
