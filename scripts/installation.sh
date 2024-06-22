@@ -93,7 +93,7 @@ install_packages() {
     # install curl first, because it's dependency on other installations
     $installer curl
 
-    local packages=("git" "ripgrep" "bat" "exa")
+    local packages=("git" "ripgrep" "bat")
 
     if [ "$machine" == "Mac" ]; then
         packages+=("reattach-to-user-namespace" "nodejs" "neovim" "git-delta")
@@ -103,6 +103,7 @@ install_packages() {
         # node and npm installation
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
         nvm install node --lts
+        source ~/.zshrc
         npm install -g tree-sitter-cli
 
         # git-delta | better git diff
@@ -117,6 +118,12 @@ install_packages() {
         curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
         sudo tar xf lazygit.tar.gz -C /usr/local/bin lazygit
 
+        # pyenv
+        curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+        source ~/.zshrc
+        pyenv install -v 3.11.5
+        pyenv global 3.11.5
+        sudo apt install python3-venv
     fi
 
     for package in "${packages[@]}"; do
@@ -177,7 +184,7 @@ install_and_setup_zsh() {
 
     #zoxide
     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
-    ln -sf "$HOME/.local/bin/zoxide" /usr/bin/zoxide
+    sudo ln -sf "$HOME/.local/bin/zoxide" /usr/bin/zoxide
 }
 
 
@@ -186,7 +193,7 @@ install_font(){
     cd ~
     safe_git_clone "https://www.github.com/ryanoasis/nerd-fonts"  "$HOME/nerd-fonts" --filter=blob:none --sparse
     cd nerd-fonts
-    git sparse-checkout add patched-fonts/JetBrainsMono install.sh
+    git sparse-checkout add --skip-checks patched-fonts/JetBrainsMono install.sh
     ./install.sh JetBrainsMono
 }
 
@@ -237,5 +244,6 @@ ask_for_confirmation "install and setup Vim" install_and_setup_vim
 ask_for_confirmation "link files" link_files
 ask_for_confirmation "install languages" install_languages "$install_prefix"
 ask_for_confirmation "install font" install_font "$machine"
+ask_for_confirmation "Setup vscode" setup_vscode "$machine"
 
 echo -e "${GREEN} SUCCESSFULL"
