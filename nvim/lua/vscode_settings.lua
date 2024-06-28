@@ -88,16 +88,16 @@ keymap("n", "<CR>", function()
 
     local key = filename .. ":" .. current_line
     if not fold_table[key] then
-        -- Fold the line
-        vim.cmd("call VSCodeNotify('editor.foldRecursively')")
-        fold_table[key] = "folded"
-    elseif fold_table[key] == "folded" then
         -- Unfold the line
         vim.cmd("call VSCodeNotify('editor.unfold')")
         fold_table[key] = "unfolded"
-    else
+    elseif fold_table[key] == "unfolded" then
         -- Unfold the line recursively
         vim.cmd("call VSCodeNotify('editor.unfoldRecursively')")
+        fold_table[key] = "unfolded_recursively"
+    else
+        -- Fold the line
+        vim.cmd("call VSCodeNotify('editor.foldRecursively')")
         fold_table[key] = nil
     end
 end, opts)
@@ -167,6 +167,7 @@ function debug_end()
     vim.cmd("unmap <Up>")
     debug_mode = false
 end
+
 keymap("n", "<Leader>de", function()
     debug_end()
 end, opts)
@@ -244,3 +245,17 @@ vim.cmd("nnoremap <leader>ghp :call VSCodeNotify('editor.action.dirtydiff.next')
 vim.cmd("nnoremap <leader>ghu :call VSCodeNotify('git.revertSelectedRanges')<CR>")
 vim.cmd("nnoremap <leader>gha :call VSCodeNotify('git.stageSelectedRanges')<CR>")
 vim.cmd("nnoremap <leader>ga :call VSCodeNotify('git.stage')<CR>")
+
+------------------------------------------------------------------------------
+-- Autocommands
+------------------------------------------------------------------------------
+-- Automatically fold files
+vim.api.nvim_create_autocmd("BufReadPost", {
+    group = "CustomAutoCmds",
+    pattern = "*",
+    callback = function()
+        vim.defer_fn(function()
+            Vscode.action('editor.foldAll')
+        end, 500)
+    end
+})
