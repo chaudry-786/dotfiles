@@ -254,8 +254,10 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     group = "CustomAutoCmds",
     pattern = "*",
     callback = function()
-        vim.defer_fn(function()
-            Vscode.action('editor.foldAll')
-        end, 500)
+        if not debug_mode then
+            vim.defer_fn(function()
+                Vscode.action('editor.foldAll')
+            end, 500)
+        end
     end
 })
