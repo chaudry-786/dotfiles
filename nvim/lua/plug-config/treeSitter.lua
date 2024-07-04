@@ -7,6 +7,7 @@ require "nvim-treesitter.configs".setup {
         "vim",
         "comment",
         "json",
+        "jsonc",
         "javascript",
         "typescript",
         "html",
