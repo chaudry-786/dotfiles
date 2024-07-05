@@ -33,6 +33,25 @@ safe_git_clone() {
     git clone "$@" "$repo_url" "$destination"
 }
 
+setup_ubuntu() {
+    sudo apt-get install chrome-gnome-shell gnome-tweak-tool
+
+    # tip: list all commands:
+    # gsettings list-keys org.gnome.desktop.wm.keybindings
+
+    # SETUP KEYMAPPINGS
+    #move between workspaces
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Control>Right']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Control>Left']"
+
+    # maximise and unmaximize window with window+up and dow arros
+    # gsettings set org.gnome.desktop.wm.keybindings maximize "['<Super>Up']"
+    # gsettings set org.gnome.desktop.wm.keybindings  unmaximize "['<Super>Down']"
+
+    #map caps to ctrl
+    gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
+
+}
 
 install_and_setup_tmux () {
     $1 install tmux
@@ -98,7 +117,11 @@ install_packages() {
     if [ "$machine" == "Mac" ]; then
         packages+=("reattach-to-user-namespace" "nodejs" "neovim" "git-delta")
     elif [ "$machine" == "Linux" ]; then
-        packages+=("xclip" "g++" "gawk")
+        packages+=("xclip" "g++" "gawk" "build-essential")
+
+	for package in "${packages[@]}"; do
+	    $installer "$package"
+	done
 
         # node and npm installation
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
@@ -119,6 +142,7 @@ install_packages() {
         sudo tar xf lazygit.tar.gz -C /usr/local/bin lazygit
 
         # pyenv
+	    sudo apt install build-essential curl libbz2-dev libffi-dev liblzma-dev libncursesw5-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libxmlsec1-dev llvm make tk-dev wget xz-utils zlib1g-dev
         curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
         source ~/.zshrc
         pyenv install -v 3.11.5
@@ -126,9 +150,6 @@ install_packages() {
         sudo apt install python3-venv
     fi
 
-    for package in "${packages[@]}"; do
-        $installer "$package"
-    done
 }
 
 
@@ -212,6 +233,7 @@ then
 elif [[ "$machine" == "Linux" ]]; then
     echo "Machine Identified as Linux"
     install_prefix="sudo apt "
+    setup_ubuntu
 else
     echo "Machine not identified, exiting"
     exit 1
