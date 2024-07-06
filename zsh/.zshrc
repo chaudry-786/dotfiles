@@ -24,6 +24,7 @@ plugins=(
     copyfile
     rust
     zsh-syntax-highlighting
+    docker-compose
 )
 
 #------------------------------------------------
