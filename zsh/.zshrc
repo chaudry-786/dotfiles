@@ -25,6 +25,7 @@ plugins=(
     rust
     zsh-syntax-highlighting
     docker-compose
+    docker
 )
 
 #------------------------------------------------

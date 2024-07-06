@@ -1,33 +1,9 @@
 Ubuntu Extensions
 1) Ubuntu Extensions
-    a) sudo apt-get install chrome-gnome-shell
-    b) https://extensions.gnome.org/ install web browser extension to easily install extensions
+    a) https://extensions.gnome.org/ install web browser extension to easily install extensions
             Option should pop up in gnome site to install extension
-    c) install and enable this (https://extensions.gnome.org/extension/545/hide-top-bar/)
-    d) sudo apt install gnome-tweak-tool
+    b) install and enable this (https://extensions.gnome.org/extension/545/hide-top-bar/)
 
-
-2) set key commands
-
-    list all commands:
-        gsettings list-keys org.gnome.desktop.wm.keybindings
-
-    get:
-        gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-right
-
-    set:
-        #move between workspaces
-        gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Control>Right']"
-        gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Control>Left']"
-
-        # maximise and unmaximize window with window+up and dow arros
-        gsettings set org.gnome.desktop.wm.keybindings maximize "['<Super>Up']"
-        gsettings set org.gnome.desktop.wm.keybindings  unmaximize "['<Super>Down']"
-
-        #map caps to ctrl
-        gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
-
-    reset:      gsettings reset org.gnome.desktop.wm.keybindings switch-to-workspace-left
 
 move window between monitors:
     shift + win + arrow
