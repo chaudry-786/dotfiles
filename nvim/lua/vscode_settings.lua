@@ -63,7 +63,8 @@ vim.cmd("nnoremap <silent> <leader>ff :call VSCodeNotify('workbench.action.quick
 vim.cmd("nnoremap <silent> <leader>fc :call VSCodeNotify('workbench.action.showCommands')<CR>")
 keymap("n", "<leader>fg", function()
     Vscode.call('workbench.action.terminal.focus')
-    Vscode.call('workbench.action.terminal.sendSequence', { args = { text = "export TERM_PROGRAM=vscode && clear" .. "\x0D" } })
+    Vscode.call('workbench.action.terminal.sendSequence',
+        { args = { text = "export TERM_PROGRAM=vscode && clear" .. "\x0D" } })
     Vscode.call('workbench.action.terminal.sendSequence', { args = { text = "\x07" .. "\x0D" } })
 end, opts)
 
@@ -73,8 +74,6 @@ vim.cmd("nnoremap <silent> <leader>ov :call VSCodeNotify('dataWrangler.openNoteb
 ------------------------------------------------------------------------------
 -- Folds
 ------------------------------------------------------------------------------
-vim.cmd("nnoremap <silent> zM :call VSCodeNotify('editor.foldAll')<CR>")
-vim.cmd("nnoremap <silent> zR :call VSCodeNotify('editor.unfoldAll')<CR>")
 vim.cmd("nnoremap <silent> zc :call VSCodeNotify('editor.fold')<CR>")
 vim.cmd("nnoremap <silent> zC :call VSCodeNotify('editor.foldRecursively')<CR>")
 vim.cmd("nnoremap <silent> zo :call VSCodeNotify('editor.unfold')<CR>")
@@ -82,6 +81,27 @@ vim.cmd("nnoremap <silent> zO :call VSCodeNotify('editor.unfoldRecursively')<CR>
 vim.cmd("nnoremap <silent> za :call VSCodeNotify('editor.toggleFold')<CR>")
 
 local fold_table = {}
+keymap("n", "zM", function()
+    local filename = vim.fn.expand('%:p') .. ":"
+    for key, _ in pairs(fold_table) do
+        if string.sub(key, 1, string.len(filename)) == filename then
+            fold_table[key] = nil
+        end
+    end
+    vim.cmd("call VSCodeNotify('editor.foldAll')")
+end, opts)
+keymap("n", "zR", function()
+    local filename = vim.fn.expand('%:p')
+    local total_lines = vim.fn.line("$") -- Get the total number of lines in the file
+
+    for line = 1, total_lines do
+        local key = filename .. ":" .. line
+        fold_table[key] = "unfolded_recursively"
+    end
+
+    vim.cmd("call VSCodeNotify('editor.unfoldAll')")
+end, opts)
+
 keymap("n", "<CR>", function()
     local filename = vim.fn.expand('%:p')
     local current_line = vim.fn.line(".")
