@@ -6,6 +6,15 @@
     "editor.minimap.enabled": false,
     "editor.smoothScrolling": true,
     "editor.inlineSuggest.enabled": false,
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/*.code-search": true,
+        "**/venv": true,
+        "**/.venv": true,
+        "**/__pycache__": true,
+        "**/.git/": true
+    },
 
     // Extension settings
     "extensions.experimental.affinity": {
