@@ -6,7 +6,7 @@ To install ctrl+p "ext install {ext_name}"
 - Vscode Neovim: asvetliakov.vscode-neovim
 - Python: ms-python.python
 - Jupyter: ms-toolsai.jupyter
-- Github Copilot: ms-toolsai.jupyter
+- Github Copilot: GitHub.copilot
 - Prettier: esbenp.prettier-vscode
 - Data Wrangler: ms-toolsai.datawrangler
 - Remote Development: ms-vscode-remote.vscode-remote-extensionpack
