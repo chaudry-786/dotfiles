@@ -20,7 +20,6 @@ plugins=(
     history
     zsh-autosuggestions
     tmux
-    ripgrep
     copyfile
     rust
     zsh-syntax-highlighting
