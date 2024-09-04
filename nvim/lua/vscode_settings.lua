@@ -14,6 +14,7 @@ end
 ------------------------------------------------------------------------------
 vim.cmd([[nnoremap <silent> <leader>rn :call VSCodeNotify('editor.action.rename')<CR>]])
 vim.cmd([[nnoremap <silent> gr :call VSCodeNotify('editor.action.goToReferences')<CR>]])
+vim.cmd([[nnoremap <silent> gD :call VSCodeNotify('editor.action.revealDefinitionAside')<CR>]])
 vim.cmd([[xnoremap <leader><leader>f :call VSCodeNotify('editor.action.formatSelection')<CR>]])
 keymap("n", "<leader><leader>f", function()
     local filename = vim.fn.expand('%:t')
