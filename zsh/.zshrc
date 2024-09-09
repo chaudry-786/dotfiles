@@ -107,7 +107,7 @@ alias e="exit"
 #------------------------------------------------
 grepm() {
     # grep multiple
-    grep -rnl $1 | xargs grep $2
+    grep -rnl $1 | xargs grep -rnl $2
 }
 
 # launch nvim using Session file if it exists
