@@ -245,7 +245,27 @@ vim.api.nvim_set_keymap('n', '<leader>rf', ':lua run_file()<CR>',
 ------------------------------------------------------------------------------
 vim.cmd("nnoremap <silent> <leader>rt :call VSCodeNotify('testing.runAtCursor')<CR>")
 vim.cmd("nnoremap <silent> <leader>rl :call VSCodeNotify('testing.reRunLastRun')<CR>")
-vim.cmd("nnoremap <silent> <leader>rT :call VSCodeNotify('testing.runAll')<CR>")
+function run_tests()
+    local filetype_and_commands = {
+        py = "src; pytest . --disable-warnings -s",
+    }
+    local filename = vim.fn.expand("%:p")
+    if string.match(filename, "^vscode%-remote") then
+        filename = string.match(filename, "/home.*")
+    end
+    local file_extension = vim.fn.expand("%:e")
+    local command = filetype_and_commands[file_extension]
+
+    if command then
+        Vscode.call('workbench.action.terminal.focus')
+        Vscode.call('workbench.action.terminal.sendSequence', { args = { text = "clear" .. "\x0D" } })
+        Vscode.call('workbench.action.terminal.sendSequence', { args = { text = command .. "\x0D" } })
+    else
+        Vscode.notify("Unsupported file type: " .. file_extension)
+    end
+end
+vim.api.nvim_set_keymap('n', '<leader>rT', ':lua run_tests()<CR>',
+    opts)
 keymap("n", "<Leader>dt", function()
     set_debug_mapings()
     Vscode.action("testing.debugAtCursor")
