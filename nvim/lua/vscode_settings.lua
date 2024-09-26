@@ -167,6 +167,8 @@ function debug_start()
     local filename = vim.fn.expand('%:t')
     if filename:match('%.ipynb[#%%]') then
         vim.cmd(":call VSCodeNotify('jupyter.runAndDebugCell')")
+    elseif filename:match('^test_.*%.py$') or filename:match('.*_test%.py$') then
+        vim.cmd(":call VSCodeNotify('testing.debugAtCursor')")
     else
         vim.cmd(":call VSCodeNotify('workbench.action.debug.start')")
     end
