@@ -103,26 +103,8 @@ keymap("n", "zR", function()
     vim.cmd("call VSCodeNotify('editor.unfoldAll')")
 end, opts)
 
-keymap("n", "<CR>", function()
-    local filename = vim.fn.expand('%:p')
-    local current_line = vim.fn.line(".")
-
-    local key = filename .. ":" .. current_line
-    if not fold_table[key] then
-        -- Unfold the line
-        vim.cmd("call VSCodeNotify('editor.unfold')")
-        fold_table[key] = "unfolded"
-    elseif fold_table[key] == "unfolded" then
-        -- Unfold the line recursively
-        vim.cmd("call VSCodeNotify('editor.unfoldRecursively')")
-        fold_table[key] = "unfolded_recursively"
-    else
-        -- Fold the line
-        vim.cmd("call VSCodeNotify('editor.foldRecursively')")
-        fold_table[key] = nil
-    end
-end, opts)
-
+-- Recursivly fold and unfold
+vim.cmd("nnoremap <silent> <CR> :call VSCodeNotify('editor.toggleFold')<CR>")
 
 vim.cmd("nnoremap <silent> [z :call VSCodeNotify('editor.gotoPreviousFold')<CR>")
 vim.cmd("nnoremap <silent> ]z :call VSCodeNotify('editor.gotoNextFold')<CR>")
