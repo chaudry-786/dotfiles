@@ -104,7 +104,7 @@ keymap("n", "zR", function()
 end, opts)
 
 -- Recursivly fold and unfold
-vim.cmd("nnoremap <silent> <CR> :call VSCodeNotify('editor.toggleFold')<CR>")
+vim.cmd("nnoremap <silent> <CR> :call VSCodeNotify('editor.toggleFoldRecursively')<CR>")
 
 vim.cmd("nnoremap <silent> [z :call VSCodeNotify('editor.gotoPreviousFold')<CR>")
 vim.cmd("nnoremap <silent> ]z :call VSCodeNotify('editor.gotoNextFold')<CR>")
