@@ -274,6 +274,23 @@ vim.cmd("nnoremap <silent> <leader>ga :call VSCodeNotify('git.stage')<CR>")
 ------------------------------------------------------------------------------
 -- Snippets
 ------------------------------------------------------------------------------
+local function wait_for_normal_mode(original_line_number, original_line_content, current_word)
+    vim.defer_fn(function()
+        -- Check the current mode
+        local mode = vim.fn.mode()
+
+        -- If we're in normal mode, proceed with updating the line
+        if mode == "n" then
+            local new_line_content = vim.fn.getline(original_line_number)
+            if new_line_content ~= original_line_content then
+                local updated_line = new_line_content:gsub(current_word, "", 1)
+                vim.fn.setline(original_line_number, updated_line)
+            end
+        else
+            wait_for_normal_mode(original_line_number, original_line_content, current_word)
+        end
+    end, 100) -- Delay of 100ms between checks
+end
 -- snippet auto expension
 keymap("i", "<c-l>", function()
     local cursor_col = vim.fn.col(".")
@@ -290,13 +307,7 @@ keymap("i", "<c-l>", function()
     })
 
     -- Remove the trigger word if line content changed
-    vim.defer_fn(function()
-        local new_line_content = vim.fn.getline(original_line_number)
-        if new_line_content ~= original_line_content then
-            local updated_line = new_line_content:gsub(current_word, "", 1)
-            vim.fn.setline(original_line_number, updated_line)
-        end
-    end, 100)
+    wait_for_normal_mode(original_line_number, original_line_content, current_word)
 end, opts)
 
 

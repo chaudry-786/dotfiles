@@ -93,19 +93,28 @@
         "command": "vscode-neovim.send",
         "when": "neovim.mode == 'insert'",
         "args": "<C-l>"
-
+    },
+    {
+        "key": "ctrl+j",
+        "command": "jumpToNextSnippetPlaceholder",
+        "when": "neovim.mode == 'insert' && inSnippetMode"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "jumpToPrevSnippetPlaceholder",
+        "when": "neovim.mode == 'insert' && inSnippetMode"
     },
     //
     // Auto-compeletion navigation
     {
         "key": "ctrl+j",
         "command": "selectNextSuggestion",
-        "when": "neovim.mode == 'insert'"
+        "when": "neovim.mode == 'insert' && !inSnippetMode"
     },
     {
         "key": "ctrl+k",
         "command": "selectPrevSuggestion",
-        "when": "neovim.mode == 'insert'"
+        "when": "neovim.mode == 'insert' && !inSnippetMode"
     },
     //
     // Quick-open navigation and escape
