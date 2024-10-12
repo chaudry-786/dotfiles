@@ -17,6 +17,8 @@
     },
     "snippets.snipmate.enable": false,
     "snippets.userSnippetsDirectory": "~/.config/nvim/snippets/",
+    //use vscode snippets
+    "snippets.textmateSnippetsRoots": ["~/.config/Code/User/snippets/"],
     "snippets.ultisnips.pythonPrompt": false,
 
     // Signature settings
