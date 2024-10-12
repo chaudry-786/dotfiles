@@ -222,6 +222,7 @@ install_font(){
 setup_vscode () {
     ln -sf ~/dotfiles/vscode/keybindings.json ~/.config/Code/User/keybindings.json
     ln -sf ~/dotfiles/vscode/settings.json ~/.config/Code/User/settings.json
+    ln -sfn ~/dotfiles/vscode/snippets ~/.config/Code/User/snippets
 
 }
 
