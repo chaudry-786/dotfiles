@@ -272,6 +272,35 @@ vim.cmd("nnoremap <silent> <leader>gha :call VSCodeNotify('git.stageSelectedRang
 vim.cmd("nnoremap <silent> <leader>ga :call VSCodeNotify('git.stage')<CR>")
 
 ------------------------------------------------------------------------------
+-- Snippets
+------------------------------------------------------------------------------
+-- snippet auto expension
+keymap("i", "<c-l>", function()
+    local cursor_col = vim.fn.col(".")
+    local current_word = vim.fn.getline("."):sub(1, cursor_col):match("%w+$")
+    local original_line_number = vim.fn.line(".")
+    local original_line_content = vim.fn.getline(original_line_number)
+
+    -- Call the VSCode command to insert the snippet
+    Vscode.call("editor.action.insertSnippet", {
+        args = {
+            langId = vim.bo.filetype,
+            name = current_word
+        }
+    })
+
+    -- Remove the trigger word if line content changed
+    vim.defer_fn(function()
+        local new_line_content = vim.fn.getline(original_line_number)
+        if new_line_content ~= original_line_content then
+            local updated_line = new_line_content:gsub(current_word, "", 1)
+            vim.fn.setline(original_line_number, updated_line)
+        end
+    end, 100)
+end, opts)
+
+
+------------------------------------------------------------------------------
 -- Autocommands
 ------------------------------------------------------------------------------
 -- Automatically fold files

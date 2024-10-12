@@ -87,6 +87,14 @@
         "command": "workbench.action.focusNextGroup",
         "when": "neovim.mode != 'insert'"
     },
+    // Snippet
+    {
+        "key": "ctrl+l",
+        "command": "vscode-neovim.send",
+        "when": "neovim.mode == 'insert'",
+        "args": "<C-l>"
+
+    },
     //
     // Auto-compeletion navigation
     {
