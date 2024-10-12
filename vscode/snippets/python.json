@@ -3,7 +3,7 @@
   "db": {
     "prefix": "db",
     "body": [
-      "duckdb.query(${1:f}\"\"\"",
+      "duckdb.query(\"\"\"",
       "\tSELECT ${2:*} FROM ${3:df}",
       "\"\"\")"
     ],
@@ -12,7 +12,7 @@
   "dbw": {
     "prefix": "dbw",
     "body": [
-      "duckdb.query(${1:f}\"\"\"",
+      "duckdb.query(\"\"\"",
       "\tSELECT ${2:*} FROM ${3:df}",
       "\tWHERE ${4:condition}",
       "\"\"\")"
@@ -22,7 +22,7 @@
   "dbg": {
     "prefix": "dbg",
     "body": [
-      "duckdb.query(${1:f}\"\"\"",
+      "duckdb.query(\"\"\"",
       "\tSELECT ${2:column}, COUNT(*)",
       "\tFROM ${3:df}",
       "\tGROUP BY ${2:column}",
@@ -33,7 +33,7 @@
   "dbwg": {
     "prefix": "dbwg",
     "body": [
-      "duckdb.query(${1:f}\"\"\"",
+      "duckdb.query(\"\"\"",
       "\tSELECT ${2:column}, COUNT(*)",
       "\tFROM ${3:df}",
       "\tWHERE ${4:condition}",
@@ -45,7 +45,7 @@
   "dbwgh": {
     "prefix": "dbwgh",
     "body": [
-      "duckdb.query(${1:f}\"\"\"",
+      "duckdb.query(\"\"\"",
       "\tSELECT ${2:column}, COUNT(*)",
       "\tFROM ${3:df}",
       "\tWHERE ${4:condition}",
@@ -66,7 +66,7 @@
   "p": {
     "prefix": "p",
     "body": [
-      "print(${1:object})"
+      "print(${1})"
     ],
     "description": "print()"
   },
