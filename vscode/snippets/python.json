@@ -3,55 +3,60 @@
   "db": {
     "prefix": "db",
     "body": [
-      "duckdb.query(\"\"\"",
-      "\tSELECT ${2:*} FROM ${3:df}",
-      "\"\"\")"
+      "${1:output_df} = duckdb.query(\"\"\"",
+      "\tselect ${2:*} from ${3:df}",
+      "\"\"\")${1/^(.+)$/.to_df()/}",
+      "${1/^(\\w+)/display($1)/}",
     ],
-    "description": "Basic DuckDB SELECT * FROM"
+    "description": "basic duckdb select * from"
   },
   "dbw": {
     "prefix": "dbw",
     "body": [
-      "duckdb.query(\"\"\"",
+      "${1:output_df} = duckdb.query(\"\"\"",
       "\tSELECT ${2:*} FROM ${3:df}",
-      "\tWHERE ${4:condition}",
-      "\"\"\")"
+      "\tWHERE ${4:col_name} ${5:=} '${6:value}'",
+      "\"\"\")${1/^(.+)$/.to_df()/}",
+      "display(${1})"
     ],
     "description": "DuckDB SELECT with WHERE clause"
   },
   "dbg": {
     "prefix": "dbg",
     "body": [
-      "duckdb.query(\"\"\"",
+      "${1:output_df} = duckdb.query(\"\"\"",
       "\tSELECT ${2:column}, COUNT(*)",
       "\tFROM ${3:df}",
       "\tGROUP BY ${2:column}",
-      "\"\"\")"
+      "\"\"\")${1/^(.+)$/.to_df()/}",
+      "display(${1})"
     ],
     "description": "DuckDB GROUP BY"
   },
   "dbwg": {
     "prefix": "dbwg",
     "body": [
-      "duckdb.query(\"\"\"",
+      "${1:output_df} = duckdb.query(\"\"\"",
       "\tSELECT ${2:column}, COUNT(*)",
       "\tFROM ${3:df}",
-      "\tWHERE ${4:condition}",
+      "\tWHERE ${4:col_name} ${5:=} '${6:value}'",
       "\tGROUP BY ${2:column}",
-      "\"\"\")"
+      "\"\"\")${1/^(.+)$/.to_df()/}",
+      "display(${1})"
     ],
     "description": "DuckDB WHERE and GROUP BY"
   },
   "dbwgh": {
     "prefix": "dbwgh",
     "body": [
-      "duckdb.query(\"\"\"",
+      "${1:output_df} = duckdb.query(\"\"\"",
       "\tSELECT ${2:column}, COUNT(*)",
       "\tFROM ${3:df}",
-      "\tWHERE ${4:condition}",
+      "\tWHERE ${4:col_name} ${5:=} '${6:value}'",
       "\tGROUP BY ${2:column}",
-      "\tHAVING ${5:having_condition}",
-      "\"\"\")"
+      "\tHAVING ${7:col_name} ${8:=} '${9:=}'",
+      "\"\"\")${1/^(.+)$/.to_df()/}",
+      "display(${1})"
     ],
     "description": "DuckDB SELECT with WHERE, GROUP BY, and HAVING"
   },

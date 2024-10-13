@@ -15,6 +15,7 @@
         "**/__pycache__": true,
         "**/.git/": true
     },
+    "editor.suggest.snippetsPreventQuickSuggestions": true,
 
     // Extension settings
     "extensions.experimental.affinity": {
