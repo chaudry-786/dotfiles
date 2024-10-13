@@ -69,7 +69,8 @@ keymap("n", "<leader>fg", function()
     Vscode.call('workbench.action.terminal.sendSequence', { args = { text = "\x07" .. "\x0D" } })
 end, opts)
 
-vim.cmd("nnoremap <silent> <leader>fo :call VSCodeNotify('workbench.action.gotoSymbol')<CR>")
+keymap("n", "<leader>fo", function() Vscode.call('workbench.action.quickOpen', { args = { "@:" } }) end, opts)
+keymap("n", "<leader>fO", function() Vscode.call('workbench.action.quickOpen', { args = { "#" } }) end, opts)
 vim.cmd("nnoremap <silent> <leader>ov :call VSCodeNotify('dataWrangler.openNotebookVariable')<CR>")
 
 ------------------------------------------------------------------------------

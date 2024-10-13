@@ -71,6 +71,18 @@ require("telescope").setup({
             end
         },
     },
+    extensions = {
+        aerial = {
+            format_symbol = function(symbol_path, filetype)
+                if filetype == "json" or filetype == "yaml" then
+                    return table.concat(symbol_path, ".")
+                else
+                    return symbol_path[#symbol_path]
+                end
+            end,
+            show_columns = "symbols",
+        },
+    },
 })
 
 keymap("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>", opts)
@@ -79,6 +91,6 @@ keymap("n", "<leader>fc", ":Telescope commands<CR>", opts)
 keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
 keymap("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
 keymap("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
-keymap("n", "<leader>fo", ":Telescope vim_options<CR>", opts)
+keymap("n", "<leader>fo", ":Telescope aerial<CR>", opts)
 keymap("n", "<leader>fq", ":Telescope quickfix<CR>", opts)
 keymap("n", "<leader>fs", ":Telescope spell_suggest<CR>", opts)
