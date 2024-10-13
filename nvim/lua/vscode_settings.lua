@@ -275,31 +275,20 @@ vim.cmd("nnoremap <silent> <leader>ga :call VSCodeNotify('git.stage')<CR>")
 ------------------------------------------------------------------------------
 -- Snippets
 ------------------------------------------------------------------------------
-local function wait_for_normal_mode(original_line_number, original_line_content, current_word)
-    vim.defer_fn(function()
-        -- Check the current mode
-        local mode = vim.fn.mode()
-
-        -- If we're in normal mode, proceed with updating the line
-        if mode == "n" then
-            local new_line_content = vim.fn.getline(original_line_number)
-            if new_line_content ~= original_line_content then
-                local updated_line = new_line_content:gsub(current_word, "", 1)
-                vim.fn.setline(original_line_number, updated_line)
-            end
-        else
-            wait_for_normal_mode(original_line_number, original_line_content, current_word)
-        end
-    end, 100) -- Delay of 100ms between checks
-end
--- snippet auto expension
 keymap("i", "<c-l>", function()
     local cursor_col = vim.fn.col(".")
-    local current_word = vim.fn.getline("."):sub(1, cursor_col):match("[^%s]+$")
     local original_line_number = vim.fn.line(".")
     local original_line_content = vim.fn.getline(original_line_number)
+    local current_word = original_line_content:sub(1, cursor_col):match("[^%s]+$")
 
-    -- Call the VSCode command to insert the snippet
+    -- Return early if current_word is empty or nil
+    if not current_word or current_word == "" then return end
+
+    -- Step 1: Remove the trigger word from the line before snippet insertion
+    local updated_line = original_line_content:gsub(current_word, "", 1)
+    vim.fn.setline(original_line_number, updated_line)
+
+    -- Step 2: Try to insert the snippet using the VSCode command
     Vscode.call("editor.action.insertSnippet", {
         args = {
             langId = vim.bo.filetype,
@@ -307,10 +296,14 @@ keymap("i", "<c-l>", function()
         }
     })
 
-    -- Remove the trigger word if line content changed
-    wait_for_normal_mode(original_line_number, original_line_content, current_word)
+    -- Step 3: If snippet insertion failed, restore the trigger word
+    local new_line_content = vim.fn.getline(original_line_number)
+    -- If snippet insertion failed, restore the trigger word
+    if new_line_content == original_line_content:gsub(current_word, "", 1) then
+        vim.fn.setline(original_line_number, original_line_content)
+        vim.fn.cursor(original_line_number, cursor_col)
+    end
 end, opts)
-
 
 ------------------------------------------------------------------------------
 -- Autocommands
