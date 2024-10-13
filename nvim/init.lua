@@ -110,7 +110,10 @@ require("lazy").setup({
     },
 
     -- Snippets
-    "honza/vim-snippets",
+    {
+        "honza/vim-snippets",
+        cond = not vim.g.vscode
+    },
 
     -- Test plugin
     {
@@ -216,8 +219,16 @@ require("lazy").setup({
     ----------------------------------------
     -- Git
     ----------------------------------------
-    { "tpope/vim-fugitive", },       -- Git integration
-    { "lewis6991/gitsigns.nvim", },  -- Git signs, hunk actions and text objects
+    -- Git integration
+    {
+        "tpope/vim-fugitive",
+        cond = not vim.g.vscode
+    },
+    -- Git signs, hunk actions and text objects
+    {
+        "lewis6991/gitsigns.nvim",
+        cond = not vim.g.vscode
+    },
 
 
     ----------------------------------------
@@ -275,10 +286,16 @@ require("lazy").setup({
     },
 
     -- Auto pairs
-    "jiangmiao/auto-pairs",
+    {
+        "jiangmiao/auto-pairs",
+        cond = not vim.g.vscode
+    },
 
     -- Auto tag for typescript, javascript
-    "windwp/nvim-ts-autotag",
+    {
+        "windwp/nvim-ts-autotag",
+        cond = not vim.g.vscode
+    },
 
     -- Which key
     {
@@ -317,7 +334,8 @@ require("lazy").setup({
             vim.g.vimwiki_list = { { path = "$HOME/Dropbox/wiki" } }
             vim.g.vimwiki_ext = ".md"
             vim.g.vimwiki_global_ext = 0
-        end
+        end,
+        cond = not vim.g.vscode
     },
 
     -- Better notes
@@ -328,6 +346,7 @@ require("lazy").setup({
         config = function()
             require("plug-config/neorg")
         end,
+        cond = not vim.g.vscode
     },
 
     -- CSV highlighted
@@ -339,10 +358,10 @@ require("lazy").setup({
 })
 
 
-require("plug-config/gitConfig") -- git related plugs config
 if not vim.g.vscode then
     -- ensures that all highlight groups have been set
     require("status_column")
+    require("plug-config/gitConfig") -- git related plugs config
 else
     require("vscode_settings")
 end
