@@ -266,8 +266,8 @@ end, opts)
 ------------------------------------------------------------------------------
 -- Git
 ------------------------------------------------------------------------------
-vim.cmd("nnoremap <silent> ]h :call VSCodeNotify('workbench.action.editor.previousChange')<CR>")
-vim.cmd("nnoremap <silent> [h :call VSCodeNotify('workbench.action.editor.nextChange')<CR>")
+vim.cmd("nnoremap <silent> [h :call VSCodeNotify('workbench.action.editor.previousChange')<CR>")
+vim.cmd("nnoremap <silent> ]h :call VSCodeNotify('workbench.action.editor.nextChange')<CR>")
 vim.cmd("nnoremap <silent> <leader>ghp :call VSCodeNotify('editor.action.dirtydiff.next')<CR>")
 vim.cmd("nnoremap <silent> <leader>ghu :call VSCodeNotify('git.revertSelectedRanges')<CR>")
 vim.cmd("nnoremap <silent> <leader>gha :call VSCodeNotify('git.stageSelectedRanges')<CR>")
@@ -276,6 +276,8 @@ keymap("v", "<Leader>gha", function()
     os.execute("sleep 0.2")
 end, opts)
 vim.cmd("nnoremap <silent> <leader>ga :call VSCodeNotify('git.stage')<CR>")
+vim.cmd("nnoremap <silent> <leader>gb :call VSCodeNotify('gitlens.toggleLineBlame')<CR>")
+vim.cmd("nnoremap <silent> <leader>gB :call VSCodeNotify('gitlens.toggleFileBlame')<CR>")
 
 ------------------------------------------------------------------------------
 -- Snippets
