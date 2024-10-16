@@ -11,3 +11,4 @@ To install ctrl+p "ext install {ext_name}"
 - Data Wrangler: ms-toolsai.datawrangler
 - Remote Development: ms-vscode-remote.vscode-remote-extensionpack
 - Docker: ms-azuretools.vscode-docker
+- GitLens: eamodio.gitlens

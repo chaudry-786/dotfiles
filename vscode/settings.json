@@ -24,6 +24,8 @@
     "find-it-faster.general.killTerminalAfterUse": true,
     "json.schemas": [],
     "redhat.telemetry.enabled": false,
+    "gitlens.currentLine.enabled": false,
+    "gitlens.codeLens.enabled": false,
 
     // UI settings
     "window.zoomLevel": 2,
