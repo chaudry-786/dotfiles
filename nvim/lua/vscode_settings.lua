@@ -266,12 +266,19 @@ end, opts)
 ------------------------------------------------------------------------------
 -- Git
 ------------------------------------------------------------------------------
-vim.cmd("nnoremap <silent> ]h :call VSCodeNotify('workbench.action.editor.previousChange')<CR>")
-vim.cmd("nnoremap <silent> [h :call VSCodeNotify('workbench.action.editor.nextChange')<CR>")
+vim.cmd("nnoremap <silent> [h :call VSCodeNotify('workbench.action.editor.previousChange')<CR>")
+vim.cmd("nnoremap <silent> ]h :call VSCodeNotify('workbench.action.editor.nextChange')<CR>")
 vim.cmd("nnoremap <silent> <leader>ghp :call VSCodeNotify('editor.action.dirtydiff.next')<CR>")
 vim.cmd("nnoremap <silent> <leader>ghu :call VSCodeNotify('git.revertSelectedRanges')<CR>")
 vim.cmd("nnoremap <silent> <leader>gha :call VSCodeNotify('git.stageSelectedRanges')<CR>")
+keymap("v", "<Leader>gha", function()
+    Vscode.action("git.stageSelectedRanges")
+    os.execute("sleep 0.2")
+end, opts)
 vim.cmd("nnoremap <silent> <leader>ga :call VSCodeNotify('git.stage')<CR>")
+vim.cmd("nnoremap <silent> <leader>gb :call VSCodeNotify('gitlens.toggleLineBlame')<CR>")
+vim.cmd("nnoremap <silent> <leader>gB :call VSCodeNotify('gitlens.toggleFileBlame')<CR>")
+vim.cmd("nnoremap <silent> <leader>gc :call VSCodeNotify('git.clean')<CR>")
 
 ------------------------------------------------------------------------------
 -- Snippets
@@ -324,4 +331,9 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 keymap("n", "<leader>tf", function()
     fold_mode = not fold_mode
+    if fold_mode then
+        Vscode.notify("Fold mode disabled.")
+    else
+        Vscode.notify("Fold mode enabled.")
+    end
 end, opts)
