@@ -278,6 +278,7 @@ end, opts)
 vim.cmd("nnoremap <silent> <leader>ga :call VSCodeNotify('git.stage')<CR>")
 vim.cmd("nnoremap <silent> <leader>gb :call VSCodeNotify('gitlens.toggleLineBlame')<CR>")
 vim.cmd("nnoremap <silent> <leader>gB :call VSCodeNotify('gitlens.toggleFileBlame')<CR>")
+vim.cmd("nnoremap <silent> <leader>gc :call VSCodeNotify('git.clean')<CR>")
 
 ------------------------------------------------------------------------------
 -- Snippets
