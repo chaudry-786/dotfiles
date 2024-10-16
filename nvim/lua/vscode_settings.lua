@@ -271,6 +271,10 @@ vim.cmd("nnoremap <silent> [h :call VSCodeNotify('workbench.action.editor.nextCh
 vim.cmd("nnoremap <silent> <leader>ghp :call VSCodeNotify('editor.action.dirtydiff.next')<CR>")
 vim.cmd("nnoremap <silent> <leader>ghu :call VSCodeNotify('git.revertSelectedRanges')<CR>")
 vim.cmd("nnoremap <silent> <leader>gha :call VSCodeNotify('git.stageSelectedRanges')<CR>")
+keymap("v", "<Leader>gha", function()
+    Vscode.action("git.stageSelectedRanges")
+    os.execute("sleep 0.2")
+end, opts)
 vim.cmd("nnoremap <silent> <leader>ga :call VSCodeNotify('git.stage')<CR>")
 
 ------------------------------------------------------------------------------
