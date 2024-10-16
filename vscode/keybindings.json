@@ -65,6 +65,13 @@
         "command": "copyRelativeFilePath",
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
     },
+    // 
+    // Search explorer
+    {
+        "key": "ctrl+j",
+        "command": "search.action.focusSearchList",
+        "when": "sideBarFocus && activeViewlet == 'workbench.view.search'"
+    },
     //
     // Navigation between windows
     {
@@ -75,7 +82,7 @@
     {
         "key": "ctrl+j",
         "command": "workbench.action.navigateDown",
-        "when": "neovim.mode != 'insert'"
+        "when": "( terminalFocus || editorTextFocus  ) && neovim.mode != 'insert'"
     },
     {
         "key": "ctrl+k",
@@ -97,7 +104,7 @@
     {
         "key": "ctrl+j",
         "command": "jumpToNextSnippetPlaceholder",
-        "when": "neovim.mode == 'insert' && inSnippetMode"
+        "when": "editorTextFocus && neovim.mode == 'insert' && inSnippetMode"
     },
     {
         "key": "ctrl+k",
@@ -109,7 +116,7 @@
     {
         "key": "ctrl+j",
         "command": "selectNextSuggestion",
-        "when": "neovim.mode == 'insert' && !inSnippetMode"
+        "when": "editorTextFocus && suggestWidgetVisible && neovim.mode == 'insert' && !inSnippetMode"
     },
     {
         "key": "ctrl+k",
