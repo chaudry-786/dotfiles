@@ -38,6 +38,16 @@ keymap("n", "<CR>", function()
     end
 end, opts)
 
+local fold_mode = true
+keymap("n", "<leader>tf", function()
+    fold_mode = not fold_mode
+    if fold_mode then
+        vim.opt.foldenable = true
+    else
+        vim.opt.foldenable = false
+    end
+end, opts)
+
 --------------------------------------------------
 -- AutoCmds
 --------------------------------------------------

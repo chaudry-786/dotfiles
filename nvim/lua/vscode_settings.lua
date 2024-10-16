@@ -310,14 +310,18 @@ end, opts)
 -- Autocommands
 ------------------------------------------------------------------------------
 -- Automatically fold files
+local fold_mode = true
 vim.api.nvim_create_autocmd("BufReadPost", {
     group = "CustomAutoCmds",
     pattern = "*",
     callback = function()
-        if not debug_mode then
+        if fold_mode and not debug_mode then
             vim.defer_fn(function()
                 Vscode.action('editor.foldAll')
             end, 500)
         end
     end
 })
+keymap("n", "<leader>tf", function()
+    fold_mode = not fold_mode
+end, opts)
