@@ -62,13 +62,7 @@ vim.cmd("nnoremap <silent> <leader>cM :call VSCodeNotify('notebook.cell.changeTo
 ------------------------------------------------------------------------------
 vim.cmd("nnoremap <silent> <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>")
 vim.cmd("nnoremap <silent> <leader>fc :call VSCodeNotify('workbench.action.showCommands')<CR>")
-keymap("n", "<leader>fg", function()
-    Vscode.call('workbench.action.terminal.focus')
-    Vscode.call('workbench.action.terminal.sendSequence',
-        { args = { text = "export TERM_PROGRAM=vscode && clear" .. "\x0D" } })
-    Vscode.call('workbench.action.terminal.sendSequence', { args = { text = "\x07" .. "\x0D" } })
-end, opts)
-
+vim.cmd("nnoremap <silent> <leader>fg :call VSCodeNotify('workbench.action.findInFiles')<CR>")
 keymap("n", "<leader>fo", function() Vscode.call('workbench.action.quickOpen', { args = { "@:" } }) end, opts)
 keymap("n", "<leader>fO", function() Vscode.call('workbench.action.quickOpen', { args = { "#" } }) end, opts)
 vim.cmd("nnoremap <silent> <leader>ov :call VSCodeNotify('dataWrangler.openNotebookVariable')<CR>")
