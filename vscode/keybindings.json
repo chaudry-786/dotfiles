@@ -65,12 +65,17 @@
         "command": "copyRelativeFilePath",
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
     },
-    // 
+    //
     // Search explorer
     {
         "key": "enter",
         "command": "search.action.focusSearchList",
         "when": "activeViewlet == 'workbench.view.search' && inputFocus"
+    },
+    {
+        "key": "/",
+        "command": "workbench.action.findInFiles",
+        "when": "activeViewlet == 'workbench.view.search' && !inputFocus"
     },
     //
     // Navigation between windows
