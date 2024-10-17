@@ -23,30 +23,6 @@ vim.api.nvim_create_autocmd("TextYankPost",
         end
     })
 
--- At start, if no session loaded and Session.vim exists then start tracking session
-local sessionLoaded = false
-vim.api.nvim_create_autocmd("SessionLoadPost",
-    {
-        group = "CustomAutoCmds",
-        pattern = "*",
-        callback = function() sessionLoaded = true end
-    })
-vim.api.nvim_create_autocmd("VimEnter",
-    {
-        group = "CustomAutoCmds",
-        pattern = "*",
-        callback = function()
-            -- clear jumps
-            vim.cmd("clearjumps")
-            vim.defer_fn(function()
-                if not sessionLoaded and vim.fn.filereadable("Session.vim") == 1 then
-                    vim.cmd("Obsession")
-                end
-            end, 1000)
-        end
-    }
-)
-
 -- automatically, update qf on a given pattern for current buffer.
 vim.api.nvim_create_augroup("QfAutoCmds", { clear = true })
 local function create_qf_autocmds(qf_patterns)

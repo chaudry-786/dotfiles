@@ -78,15 +78,6 @@ require("lazy").setup({
         cond = not vim.g.vscode
     },
 
-    -- Startup screen
-    {
-        "goolord/alpha-nvim",
-        config = function()
-            require("plug-config/alpha")
-        end,
-        cond = not vim.g.vscode
-    },
-
     -- Flashes cursor on movements (e.g jump between windows)
     {
         "danilamihailov/beacon.nvim",
@@ -120,21 +111,6 @@ require("lazy").setup({
         "vim-test/vim-test",
         config = function()
             require("plug-config/vim-test")
-        end,
-        cond = not vim.g.vscode
-    },
-
-    -- notebook REPL
-    {
-        "luk400/vim-jukit",
-        init = function()
-            vim.g.jukit_terminal = "nvimterm"
-            vim.g.jukit_in_style = 4
-            vim.g.jukit_mappings_ext_enabled = { "py", "ipynb" }
-            vim.g.jukit_mappings = 0
-        end,
-        config = function()
-            require("plug-config/jukit")
         end,
         cond = not vim.g.vscode
     },
@@ -306,9 +282,6 @@ require("lazy").setup({
         cond = not vim.g.vscode
     },
 
-    -- Session management plugin
-    { "tpope/vim-obsession", cond = not vim.g.vscode },
-
     -- Vim to tmux panes (e.g execute current file, run tests
     {
         "preservim/vimux",
@@ -323,17 +296,6 @@ require("lazy").setup({
         "mrjones2014/smart-splits.nvim",
         config = function()
             require("plug-config/smart-splits")
-        end,
-        cond = not vim.g.vscode
-    },
-
-    -- personal wiki
-    {
-        "vimwiki/vimwiki",
-        init = function()
-            vim.g.vimwiki_list = { { path = "$HOME/Dropbox/wiki" } }
-            vim.g.vimwiki_ext = ".md"
-            vim.g.vimwiki_global_ext = 0
         end,
         cond = not vim.g.vscode
     },
