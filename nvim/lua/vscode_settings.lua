@@ -146,6 +146,8 @@ function debug_start()
         vim.cmd(":call VSCodeNotify('jupyter.runAndDebugCell')")
     elseif filename:match('^test_.*%.py$') or filename:match('.*_test%.py$') then
         vim.cmd(":call VSCodeNotify('testing.debugAtCursor')")
+    elseif filename:match('%.rs$') then
+        vim.cmd(":call VSCodeNotify('rust-analyzer.debug')")
     else
         vim.cmd(":call VSCodeNotify('workbench.action.debug.start')")
     end
