@@ -24,9 +24,11 @@ keymap("n", "<leader><leader>f", function()
         vim.cmd(":call VSCodeNotify('editor.action.formatDocument')")
     end
 end, opts)
-vim.cmd("nnoremap <silent> ]a :call VSCodeNotify('editor.action.marker.next')<CR>")
-vim.cmd("nnoremap <silent> [a :call VSCodeNotify('editor.action.marker.prev')<CR>")
-
+vim.cmd("nnoremap <silent> ]d :call VSCodeNotify('editor.action.marker.next')<CR>")
+vim.cmd("nnoremap <silent> [d :call VSCodeNotify('editor.action.marker.prev')<CR>")
+keymap({"n", "v"}, "<leader>R", function()
+    Vscode.call("editor.action.refactor")
+end, opts)
 ------------------------------------------------------------------------------
 -- Jupyter notebook
 ------------------------------------------------------------------------------
@@ -61,6 +63,7 @@ vim.cmd("nnoremap <silent> <leader>cM :call VSCodeNotify('notebook.cell.changeTo
 -- Telescope
 ------------------------------------------------------------------------------
 vim.cmd("nnoremap <silent> <leader>ff :call VSCodeNotify('workbench.action.quickOpen')<CR>")
+vim.cmd("nnoremap <silent> <leader>fb :call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup')<CR>")
 vim.cmd("nnoremap <silent> <leader>fc :call VSCodeNotify('workbench.action.showCommands')<CR>")
 vim.cmd("nnoremap <silent> <leader>fg :call VSCodeNotify('workbench.action.findInFiles')<CR>")
 keymap("n", "<leader>fo", function() Vscode.call('workbench.action.quickOpen', { args = { "@:" } }) end, opts)
@@ -275,6 +278,9 @@ vim.cmd("nnoremap <silent> <leader>ga :call VSCodeNotify('git.stage')<CR>")
 vim.cmd("nnoremap <silent> <leader>gb :call VSCodeNotify('gitlens.toggleLineBlame')<CR>")
 vim.cmd("nnoremap <silent> <leader>gB :call VSCodeNotify('gitlens.toggleFileBlame')<CR>")
 vim.cmd("nnoremap <silent> <leader>gc :call VSCodeNotify('git.clean')<CR>")
+vim.cmd("nnoremap <silent> <leader>gd :call VSCodeNotify('git.openChange')<CR>")
+-- Merge conflict editor
+vim.cmd("nnoremap <silent> <leader>gD :call VSCodeNotify('merge-conflict.compare')<CR>")
 
 ------------------------------------------------------------------------------
 -- Snippets
@@ -313,7 +319,7 @@ end, opts)
 -- Autocommands
 ------------------------------------------------------------------------------
 -- Automatically fold files
-local fold_mode = true
+local fold_mode = false
 vim.api.nvim_create_autocmd("BufReadPost", {
     group = "CustomAutoCmds",
     pattern = "*",
