@@ -149,10 +149,10 @@ keymap("n", "[b", ":call VSCodeNotify('editor.debug.action.goToPreviousBreakpoin
 keymap("n", "]b", ":call VSCodeNotify('editor.debug.action.goToNextBreakpoint')<CR>", "Debug: Go to next breakpoint")
 
 local function set_debug_mapings()
-    keymap("n", "<Left>", ":call VSCodeNotify('workbench.action.debug.stepOut')<CR>", { silent = true, desc = "Debug Step Out" })
-    keymap("n", "<Down>", ":call VSCodeNotify('workbench.action.debug.stepOver')<CR>", { silent = true, desc = "Debug Step Over" })
-    keymap("n", "<Right>", ":call VSCodeNotify('workbench.action.debug.stepInto')<CR>", { silent = true, desc = "Debug Step Into" })
-    keymap("n", "<Up>", ":call VSCodeNotify('workbench.action.debug.restart')<CR>", { silent = true, desc = "Debug Restart" })
+    keymap("n", "<Left>", ":call VSCodeNotify('workbench.action.debug.stepOut')<CR>", "Debug Step Out")
+    keymap("n", "<Down>", ":call VSCodeNotify('workbench.action.debug.stepOver')<CR>", "Debug Step Over")
+    keymap("n", "<Right>", ":call VSCodeNotify('workbench.action.debug.stepInto')<CR>", "Debug Step Into")
+    keymap("n", "<Up>", ":call VSCodeNotify('workbench.action.debug.restart')<CR>", "Debug Restart")
 end
 
 -- Start debugger
