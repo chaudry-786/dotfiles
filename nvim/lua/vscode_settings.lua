@@ -148,15 +148,15 @@ keymap("n", "<leader>dr", ":call VSCodeNotify('editor.debug.action.selectionToRe
 keymap("n", "[b", ":call VSCodeNotify('editor.debug.action.goToPreviousBreakpoint')<CR>", "Debug: Go to previous breakpoint")
 keymap("n", "]b", ":call VSCodeNotify('editor.debug.action.goToNextBreakpoint')<CR>", "Debug: Go to next breakpoint")
 
-function set_debug_mapings()
-    vim.cmd("nnoremap <silent> <Left> :call VSCodeNotify('workbench.action.debug.stepOut')<CR>")
-    vim.cmd("nnoremap <silent> <Down> :call VSCodeNotify('workbench.action.debug.stepOver')<CR>")
-    vim.cmd("nnoremap <silent> <Right> :call VSCodeNotify('workbench.action.debug.stepInto')<CR>")
-    vim.cmd("nnoremap <silent> <Up> :call VSCodeNotify('workbench.action.debug.restart')<CR>")
+local function set_debug_mapings()
+    keymap("n", "<Left>", ":call VSCodeNotify('workbench.action.debug.stepOut')<CR>", { silent = true, desc = "Debug Step Out" })
+    keymap("n", "<Down>", ":call VSCodeNotify('workbench.action.debug.stepOver')<CR>", { silent = true, desc = "Debug Step Over" })
+    keymap("n", "<Right>", ":call VSCodeNotify('workbench.action.debug.stepInto')<CR>", { silent = true, desc = "Debug Step Into" })
+    keymap("n", "<Up>", ":call VSCodeNotify('workbench.action.debug.restart')<CR>", { silent = true, desc = "Debug Restart" })
 end
 
 -- Start debugger
-function debug_start()
+local function debug_start()
     local filename = vim.fn.expand('%:t')
     if filename:match('%.ipynb[#%%]') then
         vim.cmd(":call VSCodeNotify('jupyter.runAndDebugCell')")
@@ -176,7 +176,7 @@ keymap("n", "<Leader>ds", function()
 end, "Debugger start")
 
 -- End debugger
-function debug_end()
+local function debug_end()
     Vscode.call("workbench.action.debug.stop")
     Vscode.call("workbench.action.closeSidebar")
     vim.cmd("unmap <Left>")
@@ -202,7 +202,7 @@ end, "Toggle debugger")
 ------------------------------------------------------------------------------
 -- Run file
 ------------------------------------------------------------------------------
-function run_file()
+local function run_file()
     local filetype_and_commands = {
         py = "python %s",
         lua = "lua %s",
@@ -234,7 +234,7 @@ function run_file()
     end
 end
 
-keymap('n', '<leader>rf', ':lua run_file()<CR>',
+keymap('n', '<leader>rf', run_file,
     "Run file in terminal")
 
 ------------------------------------------------------------------------------
@@ -242,7 +242,7 @@ keymap('n', '<leader>rf', ':lua run_file()<CR>',
 ------------------------------------------------------------------------------
 keymap("n", "<leader>rt", ":call VSCodeNotify('testing.runAtCursor')<CR>", "Testing: Run test at cursor")
 keymap("n", "<leader>rl", ":call VSCodeNotify('testing.reRunLastRun')<CR>", "Testing: Re-run last test")
-function run_tests()
+local function run_tests()
     local filetype_and_commands = {
         py = "src; pytest . --disable-warnings -s",
     }
@@ -262,7 +262,7 @@ function run_tests()
     end
 end
 
-keymap("n", "<leader>rT", ":lua run_tests()<CR>", "Testing: Run all tests")
+keymap("n", "<leader>rT", run_tests, "Testing: Run all tests")
 keymap("n", "<Leader>dt", function()
     set_debug_mapings()
     Vscode.action("testing.debugAtCursor")
