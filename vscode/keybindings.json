@@ -34,12 +34,12 @@
     //
     // Tree explorer toggle
     {
-        "key": "ctrl+n",
+        "key": "alt+n",
         "command": "workbench.view.explorer",
         "when": "!explorerViewletVisible"
     },
     {
-        "key": "ctrl+n",
+        "key": "alt+n",
         "command": "workbench.action.closeSidebar",
         "when": "explorerViewletVisible"
     },
@@ -193,12 +193,12 @@
     },
     // Search side window toggle
     {
-        "key": "alt+s",
+        "key": "alt+f",
         "command": "workbench.view.search",
         "when": "!searchViewletVisible"
     },
     {
-        "key": "alt+s",
+        "key": "alt+f",
         "command": "workbench.action.closeSidebar",
         "when": "searchViewletVisible"
     },
