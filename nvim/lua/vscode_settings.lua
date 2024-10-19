@@ -1,7 +1,4 @@
-local keymap = vim.keymap.set
 local keymap = map
-local expr_opts = { noremap = true, silent = true, expr = true }
-local opts = { noremap = true, silent = true }
 
 vim.cmd("highlight YankHighlight guibg=#5b737e blend=50")
 vim.opt.spell = false
@@ -90,19 +87,17 @@ local fold_table = {}
 
 -- Function to fold at a specific level
 local function set_fold_level(level)
-    local filename = vim.fn.expand('%:p')
     if level < 1 or level > 7 then
         print("Fold level must be between 1 and 7.")
         return
     end
-    vim.cmd(string.format("call VSCodeNotify('editor.foldLevel%d')", level))
+    local fold_command = string.format("editor.foldLevel%d", level)
+    Vscode.call(fold_command)
 end
 
-keymap("n", "zM", function()
-    local filename = vim.fn.expand('%:p')
-    fold_table[filename] = 7
-    set_fold_level(7)
-end, opts)
+keymap("n", "zM", ":call VSCodeNotify('editor.foldAll')<CR>", "Fully close all folds (fold level 1)")
+keymap("n", "zR", ":call VSCodeNotify('editor.unfoldAll')<CR>", "Fully open all folds (fold level 7)")
+-- BUG: not working
 keymap("n", "zm", function()
     local filename = vim.fn.expand('%:p')
     -- Get the current fold level, default to 7 if not set
@@ -110,13 +105,7 @@ keymap("n", "zm", function()
     current_level = math.max(1, current_level - 1)
     fold_table[filename] = current_level
     set_fold_level(current_level)
-end, opts)
-
-keymap("n", "zR", function()
-    local filename = vim.fn.expand('%:p')
-    fold_table[filename] = 1
-    set_fold_level(1)
-end, opts)
+end, "Close more folds by decreasing the current fold level")
 keymap("n", "zr", function()
     local filename = vim.fn.expand('%:p')
     -- Get the current fold level, default to 1 if not set
@@ -124,7 +113,7 @@ keymap("n", "zr", function()
     current_level = math.min(7, current_level + 1)
     fold_table[filename] = current_level
     set_fold_level(current_level)
-end, opts)
+end, "Open more folds by increasing the current fold level")
 
 -- Recursivly fold and unfold
 keymap("n", "<CR>", ":call VSCodeNotify('editor.toggleFoldRecursively')<CR>", "Fold: toggle fold recursively")
