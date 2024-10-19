@@ -8,14 +8,14 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Global variable
-function map(mode, rhs, lhs, desc_or_opts, expr_mapping)
+function map(mode, lhs, rhs, desc_or_opts, expr_mapping)
     local mapping_opts = type(desc_or_opts) == "table" and desc_or_opts or
         vim.tbl_extend("force", opts, { desc = desc_or_opts })
     if expr_mapping then mapping_opts.expr = true end
-    keymap(mode, rhs, lhs, mapping_opts)
+    keymap(mode, lhs, rhs, mapping_opts)
 
     -- Write mapping to File
-    kmap_funs.write_mapping_to_file( mode, rhs, mapping_opts.desc)
+    kmap_funs.write_mapping_to_file( mode, lhs, mapping_opts.desc)
 end
 
 if vim.g.vscode then
