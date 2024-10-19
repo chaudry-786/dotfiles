@@ -66,5 +66,8 @@
     // Notebook settings
     "notebook.cellToolbarLocation": {
         "default": "right"
-    }
+    },
+    //GIT
+    // smart diff strategy
+    "diffEditor.useInlineViewWhenSpaceIsLimited": true
 }
