@@ -25,29 +25,6 @@
         "command": "workbench.action.files.openFolder",
         "when": "openFolderWorkspaceSupport"
     },
-    {
-        "key": "ctrl+g",
-        "command": "runCommands",
-        "args": {
-            "commands": [
-                {
-                    "command": "workbench.action.terminal.focus"
-                },
-                {
-                    "command": "workbench.action.terminal.sendSequence",
-                    "args": {
-                        "text": "export TERM_PROGRAM=vscode && clear\n"
-                    }
-                },
-                {
-                    "command": "workbench.action.terminal.sendSequence",
-                    "args": {
-                        "text": "\u0007\n"
-                    }
-                }
-            ]
-        }
-    },
     //
     // Tree explorer toggle
     {
@@ -207,6 +184,28 @@
         "key": "alt+p",
         "command": "workbench.action.closePanel",
         "when": "problemsViewVisible"
+    },
+    // Search side window toggle
+    {
+        "key": "alt+s",
+        "command": "workbench.view.search",
+        "when": "!searchViewletVisible"
+    },
+    {
+        "key": "alt+s",
+        "command": "workbench.action.closeSidebar",
+        "when": "searchViewletVisible"
+    },
+    // Git  window toggle
+    {
+        "key": "alt+g",
+        "command": "workbench.view.scm",
+        "when": "activeViewlet != 'workbench.view.scm'"
+    },
+    {
+        "key": "alt+g",
+        "command": "workbench.action.closeSidebar",
+        "when": "activeViewlet == 'workbench.view.scm'"
     },
     //
     // Notebook

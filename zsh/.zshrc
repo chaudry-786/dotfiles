@@ -168,13 +168,6 @@ search() {
     RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
     INITIAL_QUERY="${*:-}"
     EDITOR_COMMAND="nvim {1} +{2}"
-    if [ "$TERM_PROGRAM" = "vscode" ]; then
-        EDITOR_COMMAND="code -g {1}:{2}"
-    fi
-    # WSL issue
-    if [ "$TERM_PROGRAM" = "vscode" ] && grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null; then
-        export VSCODE_IPC_HOOK_CLI=$(lsof | grep $USER | grep vscode-ipc | awk '{print $(NF-1)}' | head -n 1)
-    fi
     : | fzf --ansi --disabled --query "$INITIAL_QUERY" \
     --bind "start:reload:$RG_PREFIX {q}" \
     --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
