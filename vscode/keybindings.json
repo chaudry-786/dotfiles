@@ -10,7 +10,13 @@
     },
     {
         "key": "ctrl+q",
-        "command": "workbench.action.closeActiveEditor"
+        "command": "workbench.action.closeActiveEditor",
+        "when": "!isInDiffEditor"
+    },
+    {
+        "key": "ctrl+q",
+        "command": "git.closeAllDiffEditors",
+        "when": "isInDiffEditor"
     },
     {
         "key": "ctrl+shift+q",
