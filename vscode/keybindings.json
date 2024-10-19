@@ -177,13 +177,13 @@
     // Terminal toggle
     {
         "key": "alt+t",
-        "command": "workbench.action.togglePanel",
-        "when": "!panelVisible || terminalFocus"
+        "command": "workbench.action.closePanel",
+        "when": "terminalFocus"
     },
     {
         "key": "alt+t",
         "command": "workbench.action.terminal.focus",
-        "when": "panelVisible && !terminalFocus"
+        "when": "!terminalFocus"
     },
     //
     // Debug Console toggle
@@ -196,6 +196,17 @@
         "key": "alt+d",
         "command": "workbench.action.closePanel",
         "when": "debugConsoleVisible"
+    },
+    // Problems panel toggle
+    {
+        "key": "alt+p",
+        "command": "workbench.actions.view.problems",
+        "when": "!problemsViewVisible"
+    },
+    {
+        "key": "alt+p",
+        "command": "workbench.action.closePanel",
+        "when": "problemsViewVisible"
     },
     //
     // Notebook

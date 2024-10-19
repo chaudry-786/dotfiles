@@ -50,6 +50,13 @@
     "terminal.integrated.automationProfile.linux": {
         "path": "/bin/zsh"
     },
+    // some mappings in terminal don't work.
+    // they must be explicitly stated here not to be passed to shell.
+    "terminal.integrated.commandsToSkipShell": [
+      "workbench.debug.action.toggleRepl",
+      "workbench.action.closePanel",
+      "workbench.actions.view.problems"
+    ],
     // Testing
     "testing.automaticallyOpenPeekView": "never",
     // Python testing settings
