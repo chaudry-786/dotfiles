@@ -13,4 +13,4 @@ require("aerial").setup({
 })
 
 -- toggle
-vim.api.nvim_set_keymap("n", "<leader>to", ":AerialToggle <CR>", { silent = true, noremap = true })
+map("n", "<leader>to", ":AerialToggle <CR>", "Toggle outline.")

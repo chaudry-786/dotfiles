@@ -4,6 +4,7 @@ vim.api.nvim_create_augroup("CustomAutoCmds", { clear = true })
 -- Basic configuration
 require("options")
 require("keyMappings")
+local keymap = map
 require("autocmds")
 require("fold")
 
@@ -147,10 +148,9 @@ require("lazy").setup({
     {
         "ggandor/leap.nvim",
         config = function()
-            local keymap = vim.keymap.set
             require("leap").opts.safe_labels = {}
-            keymap("", "<leader>j", "<Plug>(leap-forward-to)", { silent = true })
-            keymap("", "<leader>k", "<Plug>(leap-backward-to)", { silent = true })
+            keymap("", "<leader>j", "<Plug>(leap-forward-to)", "Leap forward.")
+            keymap("", "<leader>k", "<Plug>(leap-backward-to)", "Leap backward.")
         end,
     },
 
@@ -159,14 +159,13 @@ require("lazy").setup({
         "alexghergh/nvim-tmux-navigation",
         config = function()
             local nvim_tmux_nav = require('nvim-tmux-navigation')
-            local keymap = vim.keymap.set
             nvim_tmux_nav.setup {
                 disable_when_zoomed = true
             }
-            keymap({ "n", "t" }, "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
-            keymap({ "n", "t" }, "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
-            keymap({ "n", "t" }, "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
-            keymap({ "n", "t" }, "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
+            keymap({ "n", "t" }, "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft, "Tmux/Vim navigation left.")
+            keymap({ "n", "t" }, "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown, "Tmux/Vim navigation down.")
+            keymap({ "n", "t" }, "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp, "Tmux/Vim navigation up.")
+            keymap({ "n", "t" }, "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight, "Tmux/Vim navigation right.")
         end,
         cond = not vim.g.vscode
     },

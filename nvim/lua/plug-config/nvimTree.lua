@@ -55,8 +55,7 @@ require("nvim-tree").setup({
         }
     },
 })
--- keyMappings
-vim.api.nvim_set_keymap("n", "<C-n>", ":NvimTreeToggle<CR>", { silent = true })
+map("n", "<C-n>", ":NvimTreeToggle<CR>", "Toggle file explorer.")
 
 -- cursorline
 vim.api.nvim_create_autocmd("BufEnter", {

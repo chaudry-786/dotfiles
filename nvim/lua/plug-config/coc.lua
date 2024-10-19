@@ -1,4 +1,4 @@
-local keymap = vim.api.nvim_set_keymap
+local keymap = map
 local expr_opts = { noremap = true, silent = true, expr = true }
 local opts = { noremap = true, silent = true }
 
@@ -30,36 +30,27 @@ vim.g["coc_global_extensions"] = {
 -------------------------------------------------
 -- Key Mappings
 -------------------------------------------------
--- toggle diagnostics
-keymap("n", "<leader>ta", ":call CocAction('diagnosticToggle')<CR>", {})
-
--- use CTRL-J and K to move through snippets and auto-completion
+keymap("n", "<leader>ta", ":call CocAction('diagnosticToggle')<CR>", "Toggle diagnostics")
 keymap("i", "<c-j>",
     [[coc#pum#visible() ? coc#pum#next(1) : coc#jumpable() ? "\<c-r>=coc#rpc#request('snippetNext', [])<cr>" : "\<c-j>"]],
-    expr_opts)
+    "use CTRL-J and K to move through snippets and auto-completion",true)
 keymap("i", "<c-k>",
     [[coc#pum#visible() ? coc#pum#prev(1) : coc#jumpable() ? "\<c-r>=coc#rpc#request('snippetPrev', [])<cr>" : "\<c-k>"]],
-    expr_opts)
-
--- use CR to complete
-keymap("i", "<CR>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], expr_opts)
-
--- use <C-space> to trigger completion.
-keymap("i", "<c-space>", [[coc#refresh()]], expr_opts)
-
--- expand snippet
-keymap("i", "<c-l>", [[<Plug>(coc-snippets-expand-jump)]], {})
+    "use CTRL-J and K to move through snippets and auto-completion",true)
+keymap("i", "<CR>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], "use CR to complete", true)
+keymap("i", "<c-space>", [[coc#refresh()]], "use <C-space> to trigger completion.", true)
+keymap("i", "<c-l>", [[<Plug>(coc-snippets-expand-jump)]], "Expand snippet")
 
 -- navigate diagnostics
-keymap("n", "[a", "<Plug>(coc-diagnostic-prev)", { silent = true })
-keymap("n", "]a", "<Plug>(coc-diagnostic-next)", { silent = true })
+keymap("n", "[a", "<Plug>(coc-diagnostic-prev)", "Previous diagnostic")
+keymap("n", "]a", "<Plug>(coc-diagnostic-next)", "Next diagnostic")
 
 -- goto code navigation.
-keymap("n", "gd", "<Plug>(coc-definition)", { silent = true })
-keymap("n", "gD", ":call CocAction('jumpDefinition', 'vsplit') <CR>", { silent = true })
-keymap("n", "gy", "<Plug>(coc-type-definition)", { silent = true })
-keymap("n", "gi", "<Plug>(coc-implementation)", { silent = true })
-keymap("n", "gr", "<Plug>(coc-references)", { silent = true })
+keymap("n", "gd", "<Plug>(coc-definition)", "Go to definition.")
+keymap("n", "gD", ":call CocAction('jumpDefinition', 'vsplit') <CR>", "Go to definition. (vertial split)")
+keymap("n", "gy", "<Plug>(coc-type-definition)", "Go to type definition.")
+keymap("n", "gi", "<Plug>(coc-implementation)", "Go to implementations.")
+keymap("n", "gr", "<Plug>(coc-references)", "Go to references")
 
 -- show documentation
 function Show_documentation()
@@ -74,17 +65,13 @@ function Show_documentation()
         )
     end
 end
-keymap("n", "K", ":lua Show_documentation() <CR>", opts)
-
--- symbol renaming.
-keymap("n", "<leader>rn", "<Plug>(coc-rename)", {})
+keymap("n", "K", ":lua Show_documentation() <CR>", "Show documentation. (Hover)")
+keymap("n", "<leader>rn", "<Plug>(coc-rename)", "Rename symbol.")
 
 -- formatting
-keymap("x", "<leader><leader>f", "<Plug>(coc-format-selected)", {})
-keymap("n", "<leader><leader>f", ":Format<CR>", opts)
-
--- show all diagnostics (errors and warnings).
-keymap("n", "<leader>a", ":<C-u>CocList diagnostics<CR>", opts)
+keymap("x", "<leader><leader>f", "<Plug>(coc-format-selected)", "Fromat selected code.")
+keymap("n", "<leader><leader>f", ":Format<CR>", "Format buffer.")
+keymap("n", "<leader>a", ":<C-u>CocList diagnostics<CR>", "Show all diagnostics (errors and warnings).")
 
 -------------------------------------------------
 -- AutoCommands | Commands

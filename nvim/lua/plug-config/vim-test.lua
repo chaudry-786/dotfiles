@@ -1,9 +1,8 @@
-local keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
-keymap("n", "<leader>rt", ":TestNearest<CR>", opts)
-keymap("n", "<leader>rT", ":TestFile<CR>", opts)
-keymap("n", "<leader>rl", ":TestLast<CR>", opts)
-keymap("n", "<leader>rs", ":TestSuite<CR>", opts)
+local keymap = map
+keymap("n", "<leader>rt", ":TestNearest<CR>", "Run nearest test.")
+keymap("n", "<leader>rT", ":TestFile<CR>", "Run tests on entire file.")
+keymap("n", "<leader>rl", ":TestLast<CR>", "Run last test.")
+keymap("n", "<leader>rs", ":TestSuite<CR>", "Run entire test suite.")
 
 -- global
 vim.g["test#strategy"] = "vimux"

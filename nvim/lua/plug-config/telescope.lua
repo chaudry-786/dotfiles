@@ -1,5 +1,4 @@
-local keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
+local keymap = map
 
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
@@ -85,12 +84,12 @@ require("telescope").setup({
     },
 })
 
-keymap("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>", opts)
-keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
-keymap("n", "<leader>fc", ":Telescope commands<CR>", opts)
-keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-keymap("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
-keymap("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
-keymap("n", "<leader>fo", ":Telescope aerial<CR>", opts)
-keymap("n", "<leader>fq", ":Telescope quickfix<CR>", opts)
-keymap("n", "<leader>fs", ":Telescope spell_suggest<CR>", opts)
+keymap("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>", "Telescope search within the current buffer")
+keymap("n", "<leader>fb", ":Telescope buffers<CR>", "Telescope find buffers")
+keymap("n", "<leader>fc", ":Telescope commands<CR>", "Telescope find commands")
+keymap("n", "<leader>ff", ":Telescope find_files<CR>", "Telescope find files")
+keymap("n", "<leader>fg", ":Telescope live_grep<CR>", "Telescope live grep")
+keymap("n", "<leader>fh", ":Telescope help_tags<CR>", "Telescope find help tags")
+keymap("n", "<leader>fo", ":Telescope aerial<CR>", "Telescope find outline")
+keymap("n", "<leader>fq", ":Telescope quickfix<CR>", "Telescope find quickfix entries")
+keymap("n", "<leader>fs", ":Telescope spell_suggest<CR>", "Telescope find spell suggestions")

@@ -30,4 +30,4 @@ vim.api.nvim_create_autocmd("FileType",
     })
 
 --org open
-vim.keymap.set("n", "<leader>oo", ":Neorg workspace notes<CR>")
+map("n", "<leader>oo", ":Neorg workspace notes<CR>", "Open Neorg workspace")

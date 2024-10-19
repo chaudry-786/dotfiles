@@ -1,7 +1,7 @@
 require("smart-splits").setup({})
 
--- alt+shift+hjkl
-vim.keymap.set("n", "<A-S-h>", require("smart-splits").resize_left)
-vim.keymap.set("n", "<A-S-j>", require("smart-splits").resize_down)
-vim.keymap.set("n", "<A-S-k>", require("smart-splits").resize_up)
-vim.keymap.set("n", "<A-S-l>", require("smart-splits").resize_right)
+-- alt+shift+hjkl smart resize
+map("n", "<A-S-h>", require("smart-splits").resize_left, "Resize window to the left")
+map("n", "<A-S-j>", require("smart-splits").resize_down, "Resize window down")
+map("n", "<A-S-k>", require("smart-splits").resize_up, "Resize window up")
+map("n", "<A-S-l>", require("smart-splits").resize_right, "Resize window to the right")

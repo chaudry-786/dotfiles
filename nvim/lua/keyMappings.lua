@@ -1,5 +1,4 @@
 local keymap = vim.keymap.set
-local expr_opts = { noremap = true, silent = true, expr = true }
 local opts = { noremap = true, silent = true }
 local kmap_funs = require("keymaping_functions")
 
@@ -8,11 +7,15 @@ keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-local function map(mode, rhs, lhs, desc_or_opts, expr_mapping)
+-- Global variable
+function map(mode, rhs, lhs, desc_or_opts, expr_mapping)
     local mapping_opts = type(desc_or_opts) == "table" and desc_or_opts or
         vim.tbl_extend("force", opts, { desc = desc_or_opts })
     if expr_mapping then mapping_opts.expr = true end
     keymap(mode, rhs, lhs, mapping_opts)
+
+    -- Write mapping to File
+    kmap_funs.write_mapping_to_file( mode, rhs, mapping_opts.desc)
 end
 
 if vim.g.vscode then

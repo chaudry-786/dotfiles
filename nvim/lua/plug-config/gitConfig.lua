@@ -46,18 +46,13 @@ require("gitsigns").setup {
 
 
 -- <<-------------------------Git Fugitive ----------------------------------->>
-local keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
-
-keymap("n", "<leader>gd", ":Gvdiffsplit<CR>", opts)
--- for resolving conflicts. use :diffget {buf_complete} to get change from target or source
-keymap("n", "<leader>gD", ":Gvdiffsplit!<CR>", opts)
--- " git checkout --filename at buffer level (use undo to revert checkout)
-keymap("n", "<leader>gc", ":Gread<CR>", opts)
--- "Git add --filename
-keymap("n", "<leader>ga", ":Gwrite<CR>", opts)
-keymap("n", "<leader>gb", ":G blame<CR>", opts)
-keymap("n", "<leader>gr", ":G reset<CR>", opts)
+local keymap = map
+keymap("n", "<leader>gd", ":Gvdiffsplit<CR>", "Git diff")
+keymap("n", "<leader>gD", ":Gvdiffsplit!<CR>", "Git diff split for resolving conflicts")
+keymap("n", "<leader>gc", ":Gread<CR>", "Git checkout file (revert buffer to last commit)")
+keymap("n", "<leader>ga", ":Gwrite<CR>", "Git add current file")
+keymap("n", "<leader>gb", ":G blame<CR>", "Git blame")
+keymap("n", "<leader>gr", ":G reset<CR>", "Git reset current file")
 -- " Notes: useful commands
 -- " Git difftool    - Open diff for current buffer in quickfix list
 -- " Git difftool -y - Open all git modified files in a new tab

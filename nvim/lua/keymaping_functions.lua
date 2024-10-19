@@ -126,4 +126,27 @@ function M.vscode_hsplit()
     Vscode.call("workbench.action.splitEditorUp")
 end
 
+-- remove file first
+local mapping_log = os.getenv("HOME") .. "/dotfiles/output_data/mappings.csv"
+os.remove(mapping_log)
+function M.write_mapping_to_file( mode_yes, key, description)
+    local file = io.open(mapping_log, "a")
+    if not file then
+        print("Could not open file for writing: " .. mapping_log)
+        return
+    end
+
+    -- Format modes for output
+    local mode_str = ""
+    if type(mode_yes) == "table" then
+        mode_str = table.concat(mode_yes, ", ") 
+    else
+        mode_str = mode_yes 
+    end
+
+    file:write(string.format("%s~%s~%s\n", mode_str, key, description))
+
+    file:close()
+end
+
 return M
