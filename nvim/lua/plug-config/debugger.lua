@@ -57,7 +57,7 @@ function MapDebugKeys()
     buff_keymap(0, "n", "<Left>", ":DapStepOut<CR>", opts)
     buff_keymap(0, "n", "<Right>", ":DapStepInto<CR>", opts)
     buff_keymap(0, "n", "<Down>", ":DapStepOver<CR>", opts)
-    buff_keymap(0, "n", "<Leader><Down>", ":DapContinue<CR>", opts)
+    buff_keymap(0, "n", "<leader><Down>", ":DapContinue<CR>", opts)
 
     -- keep track of buffers with debug keymaps
     DebugBuffers[vim.fn.bufnr()] = true
@@ -65,7 +65,7 @@ end
 
 -- unmap debug keys
 function UnmapDebugKeys()
-    local keysToUnmap = { "<Up>", "<Left>", "<Right>", "<Down>", "<Leader><Down>" }
+    local keysToUnmap = { "<Up>", "<Left>", "<Right>", "<Down>", "<leader><Down>" }
     for buff, _ in pairs(DebugBuffers) do
         if vim.fn.buflisted(buff) == 1 then
             for _, key in ipairs(keysToUnmap) do
@@ -137,16 +137,16 @@ function ToggleDebugMode()
 end
 
 -- will ask what config to start the debugger with
-keymap("n", "<Leader>dr", function() firstIteration = true; DebugMode = false; ToggleDebugMode() end, "Restart debugger")
-keymap("n", "<Leader>de", function() dapui.close(); vim.cmd("DapTerminate"); endDebugger() end, "Terminate Debugger")
-keymap("n", "<Leader>ds", function() vim.cmd("DapTerminate"); DebugMode = false; ToggleDebugMode() end, "Start Debugger")
-keymap("n", "<Leader>tb", ":DapToggleBreakpoint<CR>", "Toggle breakpoint")
-keymap("n", "<Leader>dc", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+keymap("n", "<leader>dr", function() firstIteration = true; DebugMode = false; ToggleDebugMode() end, "Restart debugger")
+keymap("n", "<leader>de", function() dapui.close(); vim.cmd("DapTerminate"); endDebugger() end, "Terminate Debugger")
+keymap("n", "<leader>ds", function() vim.cmd("DapTerminate"); DebugMode = false; ToggleDebugMode() end, "Start Debugger")
+keymap("n", "<leader>tb", ":DapToggleBreakpoint<CR>", "Toggle breakpoint")
+keymap("n", "<leader>dc", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
     "Conditional breakpoint")
-keymap("n", "<Leader>tB", ":lua require'dap'.clear_breakpoints()<CR>", "Clear breakpoints")
-keymap("n", "<Leader>dk", ":lua require('dapui').eval()<CR>", "Debug Eval")
-keymap("n", '<Leader>dK', ":lua require('dap.ui.widgets').hover()<CR>", "Debug Hover")
-keymap("n", "<Leader>dR", ":lua require('dapui').open({reset = true})<CR>", "Reset UI")
+keymap("n", "<leader>tB", ":lua require'dap'.clear_breakpoints()<CR>", "Clear breakpoints")
+keymap("n", "<leader>dk", ":lua require('dapui').eval()<CR>", "Debug Eval")
+keymap("n", '<leader>dK', ":lua require('dap.ui.widgets').hover()<CR>", "Debug Hover")
+keymap("n", "<leader>dR", ":lua require('dapui').open({reset = true})<CR>", "Reset UI")
 -- Toggle debugger
 keymap("n", "<F5>", ":lua ToggleDebugMode()<CR>", "Toggler debugger")
 keymap("n", "<leader>td", ":lua ToggleDebugMode()<CR>", "Toggle debugger")
@@ -222,9 +222,9 @@ dap.configurations.python = {
 ------------------------------------------------
 -- Neotest - Python
 ------------------------------------------------
-keymap("n", "<Leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", "Debug test")
-keymap("n", "<Leader>tt", ":lua require('neotest').summary.toggle()<CR>", "Toggle test summary")
-keymap("n", "<Leader><Leader>rT", ":lua require('neotest').run.run(vim.fn.expand('%'))<CR>", "Run all the tests in the file.")
+keymap("n", "<leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", "Debug test")
+keymap("n", "<leader>tt", ":lua require('neotest').summary.toggle()<CR>", "Toggle test summary")
+keymap("n", "<leader><leader>rT", ":lua require('neotest').run.run(vim.fn.expand('%'))<CR>", "Run all the tests in the file.")
 require("neotest").setup({
     adapters = {
         require("neotest-python")({

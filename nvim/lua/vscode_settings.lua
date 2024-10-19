@@ -171,7 +171,7 @@ local function debug_start()
     debug_mode = true
 end
 
-keymap("n", "<Leader>ds", function()
+keymap("n", "<leader>ds", function()
     debug_start()
 end, "Debugger start")
 
@@ -186,11 +186,11 @@ local function debug_end()
     debug_mode = false
 end
 
-keymap("n", "<Leader>de", function()
+keymap("n", "<leader>de", function()
     debug_end()
 end, "Debugger end")
 
-keymap("n", "<Leader>td", function()
+keymap("n", "<leader>td", function()
     if debug_mode then
         debug_end()
     else
@@ -263,12 +263,12 @@ local function run_tests()
 end
 
 keymap("n", "<leader>rT", run_tests, "Testing: Run all tests")
-keymap("n", "<Leader>dt", function()
+keymap("n", "<leader>dt", function()
     set_debug_mapings()
     Vscode.action("testing.debugAtCursor")
     debug_mode = true
 end, "Debug test at cusor.")
-keymap("n", "<Leader>dl", function()
+keymap("n", "<leader>dl", function()
     set_debug_mapings()
     Vscode.action("testing.debugLastRun")
     debug_mode = true
@@ -281,7 +281,7 @@ keymap("n", "[h", ":call VSCodeNotify('workbench.action.editor.previousChange')<
 keymap("n", "]h", ":call VSCodeNotify('workbench.action.editor.nextChange')<CR>", "Navigate: next change")
 keymap("n", "<leader>ghp", ":call VSCodeNotify('editor.action.dirtydiff.next')<CR>", "Git: go to next dirty diff")
 keymap("n", "<leader>ghu", ":call VSCodeNotify('git.revertSelectedRanges')<CR>", "Git: revert selected changes")
-keymap({ "v", "n" }, "<Leader>gha", function()
+keymap({ "v", "n" }, "<leader>gha", function()
     Vscode.action("git.stageSelectedRanges")
     os.execute("sleep 0.2")
 end, "Git: stage the currently selected lines or ranges.")
