@@ -46,12 +46,16 @@
         }
     },
     "terminal.integrated.defaultProfile.linux": "tmux-shell",
-
+    // launch debugger and tasks in default profile - issue when launching tasks with tmux
+    "terminal.integrated.automationProfile.linux": {
+        "path": "/bin/zsh"
+    },
+    // Testing
+    "testing.automaticallyOpenPeekView": "never",
     // Python testing settings
     "python.testing.pytestArgs": [".", "--continue-on-collection-errors"],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-
     // Notebook settings
     "notebook.cellToolbarLocation": {
         "default": "right"
