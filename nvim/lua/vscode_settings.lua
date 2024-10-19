@@ -278,9 +278,18 @@ vim.cmd("nnoremap <silent> <leader>ga :call VSCodeNotify('git.stage')<CR>")
 vim.cmd("nnoremap <silent> <leader>gb :call VSCodeNotify('gitlens.toggleLineBlame')<CR>")
 vim.cmd("nnoremap <silent> <leader>gB :call VSCodeNotify('gitlens.toggleFileBlame')<CR>")
 vim.cmd("nnoremap <silent> <leader>gc :call VSCodeNotify('git.clean')<CR>")
-vim.cmd("nnoremap <silent> <leader>gd :call VSCodeNotify('git.openChange')<CR>")
+-- workbench.action.editorLayoutSingle
+keymap("n", "<leader>gd", function()
+    Vscode.action("workbench.action.editorLayoutSingle")
+    os.execute("sleep 0.2")
+    Vscode.action("git.openChange")
+end, opts)
 -- Merge conflict editor
-vim.cmd("nnoremap <silent> <leader>gD :call VSCodeNotify('merge-conflict.compare')<CR>")
+keymap("n", "<leader>gD", function()
+    Vscode.action("workbench.action.editorLayoutSingle")
+    os.execute("sleep 0.2")
+    Vscode.action("merge-conflict.compare")
+end, opts)
 
 ------------------------------------------------------------------------------
 -- Snippets
