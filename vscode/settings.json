@@ -16,6 +16,7 @@
         "**/.git/": true
     },
     "editor.suggest.snippetsPreventQuickSuggestions": true,
+    "files.trimTrailingWhitespace": true,
 
     // Extension settings
     "extensions.experimental.affinity": {
