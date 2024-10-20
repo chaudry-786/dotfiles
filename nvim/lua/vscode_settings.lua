@@ -31,9 +31,7 @@ keymap("n", "<leader><leader>f", function()
 end, "Format document/cell.")
 keymap("n", "]d", v_c("editor.action.marker.nextInFiles"), "Jump to next error/warning in files")
 keymap("n", "[d", v_c("editor.action.marker.prevInFiles"), "Jump to previous error/warning in files")
-keymap({ "n", "v" }, "<leader>R", function()
-    Vscode.call("editor.action.refactor")
-end, "Refactor: show available refactoring options.")
+keymap({ "n", "v" }, "<leader>R", v_c("editor.action.refactor"), "Refactor: show available refactoring options.")
 
 ------------------------------------------------------------------------------
 -- Jupyter notebook

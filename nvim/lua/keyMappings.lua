@@ -101,14 +101,6 @@ else
 end
 
 ----------------------------------------
--- Quick file edit
-----------------------------------------
-map("n", "<leader>ev", ":edit $MYVIMRC<CR>", "Edit vimrc file")
-map("n", "<leader>ez", ":edit ~/.zshrc<CR>", "Edit zshrc file")
-map("n", "<leader>ec", ":CocConfig<CR>", "Edit Coc configuration")
-map("n", "<leader>es", ":CocCommand snippets.editSnippets<CR>", "Edit Coc snippets")
-
-----------------------------------------
 -- Move code alt-arrows
 ----------------------------------------
 map("n", "<M-Up>", [[:<C-U>exec "exec 'norm m`' \| move -" . (1+v:count1)<CR>``]], "Move code up")
