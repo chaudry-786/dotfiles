@@ -17,9 +17,9 @@ keymap("v", "<leader><leader>f", ":call VSCodeNotify('editor.action.formatSelect
 keymap("n", "<leader><leader>f", function()
     local filename = vim.fn.expand('%:t')
     if filename:match('%.ipynb[#%%]') then
-        vim.cmd(":call VSCodeNotify('notebook.formatCell')")
+        Vscode.call('notebook.formatCell')
     else
-        vim.cmd(":call VSCodeNotify('editor.action.formatDocument')")
+        Vscode.call("editor.action.formatDocument")
     end
 end, "Format document/cell.")
 keymap("n", "]d", ":call VSCodeNotify('editor.action.marker.nextInFiles')<CR>", "Jump to next error/warning in files")
