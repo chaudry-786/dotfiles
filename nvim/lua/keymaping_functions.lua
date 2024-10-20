@@ -129,7 +129,7 @@ end
 -- XXXX KEYPRESS ANALYSIS XXXX --
 local mapping_log = os.getenv("HOME") .. "/dotfiles/output_data/mappings.csv"
 os.remove(mapping_log)
-function M.write_mapping_to_file( mode_yes, key, description, rhs_type)
+function M.write_mapping_to_file(mode_yes, key, description, rhs_type)
     local file = io.open(mapping_log, "a")
     if not file then
         print("Could not open file for writing: " .. mapping_log)
@@ -156,16 +156,34 @@ local key_logs_file = log_dir .. "/" .. prefix .. "_key_logs_" .. today_date .. 
 -- Ensure the vim_analysis directory exists
 os.execute("mkdir -p " .. log_dir)
 
-function M.log_keypress(lhs, rhs_desc)
-    local timestamp = os.date("%Y-%m-%d %H:%M:%S")
-    local log_entry = string.format("[%s]~%s~%s\n", timestamp, lhs, rhs_desc)
-    -- Open the log file and append the log entry
+local log_buffer = {}
+local is_writing = false
+local function flush_buffer()
+    if is_writing then return end
+    is_writing = true
+
     local file = io.open(key_logs_file, "a")
     if file then
-        file:write(log_entry)
+        for _, log_entry in ipairs(log_buffer) do
+            file:write(log_entry)
+        end
         file:close()
+        log_buffer = {}
     else
         print("Error: Cannot open log file!")
     end
+
+    is_writing = false
 end
+
+function M.log_keypress(lhs, rhs_desc)
+    local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+    local log_entry = string.format("[%s]~%s~%s\n", timestamp, lhs, rhs_desc)
+    table.insert(log_buffer, log_entry)
+
+    if #log_buffer >= 10 then
+        flush_buffer()
+    end
+end
+
 return M
