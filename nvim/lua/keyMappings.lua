@@ -9,8 +9,13 @@ vim.g.maplocalleader = " "
 
 -- Global variable
 function map(mode, lhs, rhs, desc_or_opts, expr_mapping)
-    local mapping_opts = type(desc_or_opts) == "table" and desc_or_opts or
-        vim.tbl_extend("force", opts, { desc = desc_or_opts })
+    local mapping_opts
+    if type(desc_or_opts) == "table" then
+        mapping_opts = desc_or_opts
+    else
+        -- Description passed, add it to default opts
+        mapping_opts = vim.tbl_extend("force", opts, { desc = desc_or_opts })
+    end
     if expr_mapping then mapping_opts.expr = true end
     keymap(mode, lhs, rhs, mapping_opts)
 
