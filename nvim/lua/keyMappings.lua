@@ -17,10 +17,29 @@ function map(mode, lhs, rhs, desc_or_opts, expr_mapping)
         mapping_opts = vim.tbl_extend("force", opts, { desc = desc_or_opts })
     end
     if expr_mapping then mapping_opts.expr = true end
+    --  ----------------ANALYSIS PIECE----------------
+    -- -- Wrap the rhs in a function to log the keypress and execute the original rhs
+    -- local original_rhs = rhs
+    -- local wrapped_rhs = function()
+    --     -- Log key press asyhncerounsly.
+    --     vim.defer_fn(function()
+    --         kmap_funs.log_keypress(lhs, mapping_opts.desc or "No description")
+    --     end, 1)
+    --     -- log_keypress(lhs, mapping_opts.desc or "No description")
+    --
+    --     -- Execute the original rhs (handle both strings and functions)
+    --     if type(original_rhs) == "string" then
+    --         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(original_rhs, true, false, true), "n", false)
+    --     elseif type(original_rhs) == "function" then
+    --         original_rhs()
+    --     end
+    -- end
+    -- keymap(mode, lhs, wrapped_rhs, mapping_opts)
+
     keymap(mode, lhs, rhs, mapping_opts)
 
     -- Write mapping to File
-    kmap_funs.write_mapping_to_file( mode, lhs, mapping_opts.desc)
+    kmap_funs.write_mapping_to_file(mode, lhs, mapping_opts.desc)
 end
 
 if vim.g.vscode then

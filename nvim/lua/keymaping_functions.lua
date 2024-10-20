@@ -126,7 +126,7 @@ function M.vscode_hsplit()
     Vscode.call("workbench.action.splitEditorUp")
 end
 
--- remove file first
+-- XXXX KEYPRESS ANALYSIS XXXX --
 local mapping_log = os.getenv("HOME") .. "/dotfiles/output_data/mappings.csv"
 os.remove(mapping_log)
 function M.write_mapping_to_file( mode_yes, key, description)
@@ -139,9 +139,9 @@ function M.write_mapping_to_file( mode_yes, key, description)
     -- Format modes for output
     local mode_str = ""
     if type(mode_yes) == "table" then
-        mode_str = table.concat(mode_yes, ", ") 
+        mode_str = table.concat(mode_yes, ", ")
     else
-        mode_str = mode_yes 
+        mode_str = mode_yes
     end
 
     file:write(string.format("%s~%s~%s\n", mode_str, key, description))
@@ -149,4 +149,17 @@ function M.write_mapping_to_file( mode_yes, key, description)
     file:close()
 end
 
+local key_logs_file = os.getenv("HOME") .. "/dotfiles/output_data/key_logs.txt"
+function M.log_keypress(lhs, rhs_desc)
+    local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+    local log_entry = string.format("[%s]~%s~%s\n", timestamp, lhs, rhs_desc)
+    -- Open the log file and append the log entry
+    local file = io.open(key_logs_file, "a")
+    if file then
+        file:write(log_entry)
+        file:close()
+    else
+        print("Error: Cannot open log file!")
+    end
+end
 return M
