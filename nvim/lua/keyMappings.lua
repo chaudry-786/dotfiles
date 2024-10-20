@@ -28,6 +28,9 @@ function map(mode, lhs, rhs, desc_or_opts, expr_mapping)
             vim.defer_fn(function()
                 kmap_funs.log_keypress(lhs, mapping_opts.desc or "No description")
             end, 1)
+            if expr_mapping then
+                return original_rhs()
+            end
             original_rhs()
         end
     else
