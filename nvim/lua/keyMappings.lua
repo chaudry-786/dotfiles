@@ -18,25 +18,22 @@ function map(mode, lhs, rhs, desc_or_opts, expr_mapping)
     end
     if expr_mapping then mapping_opts.expr = true end
     --  ----------------ANALYSIS PIECE----------------
-    -- -- Wrap the rhs in a function to log the keypress and execute the original rhs
-    -- local original_rhs = rhs
-    -- local wrapped_rhs = function()
-    --     -- Log key press asyhncerounsly.
-    --     vim.defer_fn(function()
-    --         kmap_funs.log_keypress(lhs, mapping_opts.desc or "No description")
-    --     end, 1)
-    --     -- log_keypress(lhs, mapping_opts.desc or "No description")
-    --
-    --     -- Execute the original rhs (handle both strings and functions)
-    --     if type(original_rhs) == "string" then
-    --         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(original_rhs, true, false, true), "n", false)
-    --     elseif type(original_rhs) == "function" then
-    --         original_rhs()
-    --     end
-    -- end
-    -- keymap(mode, lhs, wrapped_rhs, mapping_opts)
-
-    keymap(mode, lhs, rhs, mapping_opts)
+    --  NOTE: String type mappings are not yet tracked. too many issues
+    local original_rhs = rhs
+    local wrapped_rhs
+    if type(original_rhs) == "function" then
+        -- Wrap the function to log the keypress
+        wrapped_rhs = function()
+            -- Log key press asynchronously.
+            vim.defer_fn(function()
+                kmap_funs.log_keypress(lhs, mapping_opts.desc or "No description")
+            end, 1)
+            original_rhs()
+        end
+    else
+        wrapped_rhs = original_rhs
+    end
+    keymap(mode, lhs, wrapped_rhs, mapping_opts)
 
     -- Write mapping to File
     local rhs_type = (type(rhs) == "string") and "string" or "function"

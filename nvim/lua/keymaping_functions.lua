@@ -149,7 +149,13 @@ function M.write_mapping_to_file( mode_yes, key, description, rhs_type)
     file:close()
 end
 
-local key_logs_file = os.getenv("HOME") .. "/dotfiles/output_data/key_logs.txt"
+local prefix = vim.g.vscode and "vscode" or "nvim"
+local today_date = os.date("%Y-%m-%d")
+local log_dir = os.getenv("HOME") .. "/vim_analysis"
+local key_logs_file = log_dir .. "/" .. prefix .. "_key_logs_" .. today_date .. ".txt"
+-- Ensure the vim_analysis directory exists
+os.execute("mkdir -p " .. log_dir)
+
 function M.log_keypress(lhs, rhs_desc)
     local timestamp = os.date("%Y-%m-%d %H:%M:%S")
     local log_entry = string.format("[%s]~%s~%s\n", timestamp, lhs, rhs_desc)
