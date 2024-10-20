@@ -266,12 +266,6 @@ require("lazy").setup({
         cond = not vim.g.vscode
     },
 
-    -- Auto tag for typescript, javascript
-    {
-        "windwp/nvim-ts-autotag",
-        cond = not vim.g.vscode
-    },
-
     -- Which key
     {
         "folke/which-key.nvim",
