@@ -7,13 +7,20 @@ if vim.g.vscode then
     Vscode = require("vscode-neovim")
 end
 
+-- Wrap vscode command
+local function v_c(command_name)
+    return function()
+        Vscode.call(command_name)
+    end
+end
+
 ------------------------------------------------------------------------------
 --- LSP
 ------------------------------------------------------------------------------
-keymap("n", "<leader>rn", ":call VSCodeNotify('editor.action.rename')<CR>", "Refactor: rename")
-keymap("n", "gr", ":call VSCodeNotify('editor.action.goToReferences')<CR>", "Go to references")
-keymap("n", "gD", ":call VSCodeNotify('editor.action.revealDefinitionAside')<CR>", "Reveal definition aside")
-keymap("v", "<leader><leader>f", ":call VSCodeNotify('editor.action.formatSelection')<CR>", "Format selection")
+keymap("n", "<leader>rn", v_c("editor.action.rename"), "Refactor: rename")
+keymap("n", "gr", v_c("editor.action.goToReferences"), "Go to references")
+keymap("n", "gD", v_c("editor.action.revealDefinitionAside"), "Reveal definition aside")
+keymap("v", "<leader><leader>f", v_c("editor.action.formatSelection"), "Format selection")
 keymap("n", "<leader><leader>f", function()
     local filename = vim.fn.expand('%:t')
     if filename:match('%.ipynb[#%%]') then
@@ -22,17 +29,17 @@ keymap("n", "<leader><leader>f", function()
         Vscode.call("editor.action.formatDocument")
     end
 end, "Format document/cell.")
-keymap("n", "]d", ":call VSCodeNotify('editor.action.marker.nextInFiles')<CR>", "Jump to next error/warning in files")
-keymap("n", "[d", ":call VSCodeNotify('editor.action.marker.prevInFiles')<CR>", "Jump to previous error/warning in files")
-keymap({"n", "v"}, "<leader>R", function()
+keymap("n", "]d", v_c("editor.action.marker.nextInFiles"), "Jump to next error/warning in files")
+keymap("n", "[d", v_c("editor.action.marker.prevInFiles"), "Jump to previous error/warning in files")
+keymap({ "n", "v" }, "<leader>R", function()
     Vscode.call("editor.action.refactor")
 end, "Refactor: show available refactoring options.")
 
 ------------------------------------------------------------------------------
 -- Jupyter notebook
 ------------------------------------------------------------------------------
-keymap("n", "<leader>rc", ":call VSCodeNotify('notebook.cell.execute')<CR>", "Notebook: execute the current cell")
-keymap("n", "<leader>rC", ":call VSCodeNotify('notebook.cell.executeCellsAbove')<CR>", "Notebook: execute all cells above the current one")
+keymap("n", "<leader>rc", v_c("notebook.cell.execute"), "Notebook: execute the current cell")
+keymap("n", "<leader>rC", v_c("notebook.cell.executeCellsAbove"), "Notebook: execute all cells above the current one")
 -- BUG: when action origins from markdown cell then center is not executed
 keymap("n", "[c", function()
     Vscode.call("notebook.focusPreviousEditor")
@@ -45,43 +52,46 @@ keymap("n", "]c", function()
     os.execute("sleep " .. tonumber(0.1))
     Vscode.call("notebook.centerActiveCell")
 end, "Notebook: focus next cell and center it")
-keymap("n", "[C", ":call VSCodeNotify('notebook.focusTop')<CR>", "Notebook: focus on the top cell")
-keymap("n", "]C", ":call VSCodeNotify('notebook.focusBottom')<CR>", "Notebook: focus on the bottom cell")
-keymap("n", "<leader>co", ":call VSCodeNotify('notebook.cell.insertCodeCellBelowAndFocusContainer')<CR>", "Notebook: insert a code cell below and focus it")
-keymap("n", "<leader>cO", ":call VSCodeNotify('notebook.cell.insertCodeCellAboveAndFocusContainer')<CR>", "Notebook: insert a code cell above and focus it")
-keymap("n", "<leader>cj", ":call VSCodeNotify('notebook.cell.joinBelow')<CR>", "Notebook: join the current cell with the cell below")
-keymap("n", "<leader>cJ", ":call VSCodeNotify('notebook.cell.joinAbove')<CR>", "Notebook: join the current cell with the cell above")
-keymap("n", "<leader>cs", ":call VSCodeNotify('notebook.cell.split')<CR>", "Notebook: split the current cell")
-keymap("n", "<leader>cc", ":call VSCodeNotify('notebook.cell.clearOutputs')<CR>", "Notebook: clear outputs of the current cell")
-keymap("n", "<leader>cC", ":call VSCodeNotify('notebook.clearAllCellsOutputs')<CR>", "Notebook: clear outputs of all cells")
-keymap("n", "<leader>cx", ":call VSCodeNotify('notebook.cell.cancelExecution')<CR>", "Notebook: cancel the execution of the current cell")
-keymap("n", "<leader>cd", ":call VSCodeNotify('notebook.cell.delete')<CR>", "Notebook: delete the current cell")
-keymap("n", "<leader>cm", ":call VSCodeNotify('notebook.cell.changeToMarkdown')<CR>", "Notebook: change the current cell to Markdown")
-keymap("n", "<leader>cM", ":call VSCodeNotify('notebook.cell.changeToCode')<CR>", "Notebook: change the current cell to Code")
+keymap("n", "[C", v_c("notebook.focusTop"), "Notebook: focus on the top cell")
+keymap("n", "]C", v_c("notebook.focusBottom"), "Notebook: focus on the bottom cell")
+keymap("n", "<leader>co", v_c("notebook.cell.insertCodeCellBelowAndFocusContainer"),
+    "Notebook: insert a code cell below and focus it")
+keymap("n", "<leader>cO", v_c("notebook.cell.insertCodeCellAboveAndFocusContainer"),
+    "Notebook: insert a code cell above and focus it")
+keymap("n", "<leader>cj", v_c("notebook.cell.joinBelow"), "Notebook: join the current cell with the cell below")
+keymap("n", "<leader>cJ", v_c("notebook.cell.joinAbove"), "Notebook: join the current cell with the cell above")
+keymap("n", "<leader>cs", v_c("notebook.cell.split"), "Notebook: split the current cell")
+keymap("n", "<leader>cc", v_c("notebook.cell.clearOutputs"), "Notebook: clear outputs of the current cell")
+keymap("n", "<leader>cC", v_c("notebook.clearAllCellsOutputs"), "Notebook: clear outputs of all cells")
+keymap("n", "<leader>cx", v_c("notebook.cell.cancelExecution"), "Notebook: cancel the execution of the current cell")
+keymap("n", "<leader>cd", v_c("notebook.cell.delete"), "Notebook: delete the current cell")
+keymap("n", "<leader>cm", v_c("notebook.cell.changeToMarkdown"), "Notebook: change the current cell to Markdown")
+keymap("n", "<leader>cM", v_c("notebook.cell.changeToCode"), "Notebook: change the current cell to Code")
 
 ------------------------------------------------------------------------------
 -- Telescope
 ------------------------------------------------------------------------------
-keymap("n", "<leader>ff", ":call VSCodeNotify('workbench.action.quickOpen')<CR>", "Quick Open: open the file navigator")
-keymap("n", "<leader>fb", ":call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup')<CR>", "Quick Open: open the previously used editor")
-keymap("n", "<leader>fc", ":call VSCodeNotify('workbench.action.showCommands')<CR>", "Command Palette: show available commands")
-keymap("n", "<leader>fg", ":call VSCodeNotify('workbench.action.findInFiles')<CR>", "Find: search across files")
+keymap("n", "<leader>ff", v_c("workbench.action.quickOpen"), "Quick Open: open the file navigator")
+keymap("n", "<leader>fb", v_c("workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"),
+    "Quick Open: open the previously used editor")
+keymap("n", "<leader>fc", v_c("workbench.action.showCommands"), "Command Palette: show available commands")
+keymap("n", "<leader>fg", v_c("workbench.action.findInFiles"), "Find: search across files")
 keymap("n", "<leader>fo", function()
     Vscode.call('workbench.action.quickOpen', { args = { ":@" } })
 end, "Quick Open: navigate to a recent file")
 keymap("n", "<leader>fO", function()
     Vscode.call('workbench.action.quickOpen', { args = { "#" } })
 end, "Quick Open: navigate to a recent symbol")
-keymap("n", "<leader>ov", ":call VSCodeNotify('dataWrangler.openNotebookVariable')<CR>", "Notebook: open the variable viewer in Data Wrangler")
+keymap("n", "<leader>ov", v_c("dataWrangler.openNotebookVariable"), "Notebook: open the variable viewer in Data Wrangler")
 
 ------------------------------------------------------------------------------
 -- Folds
 ------------------------------------------------------------------------------
-keymap("n", "zc", ":call VSCodeNotify('editor.fold')<CR>", "Fold: fold the current code block")
-keymap("n", "zC", ":call VSCodeNotify('editor.foldRecursively')<CR>", "Fold: fold all code blocks recursively")
-keymap("n", "zo", ":call VSCodeNotify('editor.unfold')<CR>", "Unfold: unfold the current code block")
-keymap("n", "zO", ":call VSCodeNotify('editor.unfoldRecursively')<CR>", "Unfold: unfold all code blocks recursively")
-keymap("n", "za", ":call VSCodeNotify('editor.toggleFold')<CR>", "Toggle Fold: toggle the folding state of the current code block")
+keymap("n", "zc", v_c("editor.fold"), "Fold: fold the current code block")
+keymap("n", "zC", v_c("editor.foldRecursively"), "Fold: fold all code blocks recursively")
+keymap("n", "zo", v_c("editor.unfold"), "Unfold: unfold the current code block")
+keymap("n", "zO", v_c("editor.unfoldRecursively"), "Unfold: unfold all code blocks recursively")
+keymap("n", "za", v_c("editor.toggleFold"), "Toggle Fold: toggle the folding state of the current code block")
 
 local fold_table = {}
 
@@ -95,8 +105,8 @@ local function set_fold_level(level)
     Vscode.call(fold_command)
 end
 
-keymap("n", "zM", ":call VSCodeNotify('editor.foldAll')<CR>", "Fully close all folds (fold level 1)")
-keymap("n", "zR", ":call VSCodeNotify('editor.unfoldAll')<CR>", "Fully open all folds (fold level 7)")
+keymap("n", "zM", v_c("editor.foldAll"), "Fully close all folds (fold level 1)")
+keymap("n", "zR", v_c("editor.unfoldAll"), "Fully open all folds (fold level 7)")
 -- BUG: not working
 keymap("n", "zm", function()
     local filename = vim.fn.expand('%:p')
@@ -116,9 +126,9 @@ keymap("n", "zr", function()
 end, "Open more folds by increasing the current fold level")
 
 -- Recursivly fold and unfold
-keymap("n", "<CR>", ":call VSCodeNotify('editor.toggleFoldRecursively')<CR>", "Fold: toggle fold recursively")
-keymap("n", "[z", ":call VSCodeNotify('editor.gotoPreviousFold')<CR>", "Fold: go to previous fold")
-keymap("n", "]z", ":call VSCodeNotify('editor.gotoNextFold')<CR>", "Fold: go to next fold")
+keymap("n", "<CR>", v_c("editor.toggleFoldRecursively"), "Fold: toggle fold recursively")
+keymap("n", "[z", v_c("editor.gotoPreviousFold"), "Fold: go to previous fold")
+keymap("n", "]z", v_c("editor.gotoNextFold"), "Fold: go to next fold")
 
 vim.cmd([[
 function! MoveCursor(direction) abort
@@ -138,34 +148,34 @@ nmap <expr> k MoveCursor('k')
 -- Debuger
 ------------------------------------------------------------------------------
 local debug_mode = false
-keymap("n", "<leader>tb", ":call VSCodeNotify('editor.debug.action.toggleBreakpoint')<CR>", "Debug: Toggle breakpoint")
-keymap("n", "<leader>tB", ":call VSCodeNotify('workbench.debug.viewlet.action.removeAllBreakpoints')<CR>", "Debug: Remove all breakpoints")
-keymap("n", "<leader>dc", ":call VSCodeNotify('editor.debug.action.conditionalBreakpoint')<CR>", "Debug: Set conditional breakpoint")
-keymap("n", "<leader><Down>", ":call VSCodeNotify('workbench.action.debug.continue')<CR>", "Debug: Continue execution")
-keymap("n", "<leader>dw", ":call VSCodeNotify('editor.debug.action.selectionToWatch')<CR>", "Debug: Add selection to watch")
-keymap("n", "<leader>dh", ":call VSCodeNotify('editor.debug.action.showDebugHover')<CR>", "Debug: Show debug hover information")
-keymap("n", "<leader>dr", ":call VSCodeNotify('editor.debug.action.selectionToRepl')<CR>", "Debug: Send selection to REPL")
-keymap("n", "[b", ":call VSCodeNotify('editor.debug.action.goToPreviousBreakpoint')<CR>", "Debug: Go to previous breakpoint")
-keymap("n", "]b", ":call VSCodeNotify('editor.debug.action.goToNextBreakpoint')<CR>", "Debug: Go to next breakpoint")
+keymap("n", "<leader>tb", v_c("editor.debug.action.toggleBreakpoint"), "Debug: Toggle breakpoint")
+keymap("n", "<leader>tB", v_c("workbench.debug.viewlet.action.removeAllBreakpoints"), "Debug: Remove all breakpoints")
+keymap("n", "<leader>dc", v_c("editor.debug.action.conditionalBreakpoint"), "Debug: Set conditional breakpoint")
+keymap("n", "<leader><Down>", v_c("workbench.action.debug.continue"), "Debug: Continue execution")
+keymap("n", "<leader>dw", v_c("editor.debug.action.selectionToWatch"), "Debug: Add selection to watch")
+keymap("n", "<leader>dh", v_c("editor.debug.action.showDebugHover"), "Debug: Show debug hover information")
+keymap("n", "<leader>dr", v_c("editor.debug.action.selectionToRepl"), "Debug: Send selection to REPL")
+keymap("n", "[b", v_c("editor.debug.action.goToPreviousBreakpoint"), "Debug: Go to previous breakpoint")
+keymap("n", "]b", v_c("editor.debug.action.goToNextBreakpoint"), "Debug: Go to next breakpoint")
 
 local function set_debug_mapings()
-    keymap("n", "<Left>", ":call VSCodeNotify('workbench.action.debug.stepOut')<CR>", "Debug Step Out")
-    keymap("n", "<Down>", ":call VSCodeNotify('workbench.action.debug.stepOver')<CR>", "Debug Step Over")
-    keymap("n", "<Right>", ":call VSCodeNotify('workbench.action.debug.stepInto')<CR>", "Debug Step Into")
-    keymap("n", "<Up>", ":call VSCodeNotify('workbench.action.debug.restart')<CR>", "Debug Restart")
+    keymap("n", "<Left>", v_c("workbench.action.debug.stepOut"), "Debug Step Out")
+    keymap("n", "<Down>", v_c("workbench.action.debug.stepOver"), "Debug Step Over")
+    keymap("n", "<Right>", v_c("workbench.action.debug.stepInto"), "Debug Step Into")
+    keymap("n", "<Up>", v_c("workbench.action.debug.restart"), "Debug Restart")
 end
 
 -- Start debugger
 local function debug_start()
     local filename = vim.fn.expand('%:t')
     if filename:match('%.ipynb[#%%]') then
-        vim.cmd(":call VSCodeNotify('jupyter.runAndDebugCell')")
+        Vscode.call('jupyter.runAndDebugCell')
     elseif filename:match('^test_.*%.py$') or filename:match('.*_test%.py$') then
-        vim.cmd(":call VSCodeNotify('testing.debugAtCursor')")
+        Vscode.call('testing.debugAtCursor')
     elseif filename:match('%.rs$') then
-        vim.cmd(":call VSCodeNotify('rust-analyzer.debug')")
+        Vscode.call('rust-analyzer.debug')
     else
-        vim.cmd(":call VSCodeNotify('workbench.action.debug.start')")
+        Vscode.call('workbench.action.debug.start')
     end
     set_debug_mapings()
     debug_mode = true
@@ -240,8 +250,8 @@ keymap('n', '<leader>rf', run_file,
 ------------------------------------------------------------------------------
 -- Tests
 ------------------------------------------------------------------------------
-keymap("n", "<leader>rt", ":call VSCodeNotify('testing.runAtCursor')<CR>", "Testing: Run test at cursor")
-keymap("n", "<leader>rl", ":call VSCodeNotify('testing.reRunLastRun')<CR>", "Testing: Re-run last test")
+keymap("n", "<leader>rt", v_c("testing.runAtCursor"), "Testing: Run test at cursor")
+keymap("n", "<leader>rl", v_c("testing.reRunLastRun"), "Testing: Re-run last test")
 local function run_tests()
     local filetype_and_commands = {
         py = "src; pytest . --disable-warnings -s",
@@ -277,21 +287,21 @@ end, "Debug last run test.")
 ------------------------------------------------------------------------------
 -- Git
 ------------------------------------------------------------------------------
-keymap("n", "[h", ":call VSCodeNotify('workbench.action.editor.previousChange')<CR>", "Navigate: previous change")
-keymap("n", "]h", ":call VSCodeNotify('workbench.action.editor.nextChange')<CR>", "Navigate: next change")
-keymap("n", "<leader>ghp", ":call VSCodeNotify('editor.action.dirtydiff.next')<CR>", "Git: go to next dirty diff")
-keymap("n", "<leader>ghu", ":call VSCodeNotify('git.revertSelectedRanges')<CR>", "Git: revert selected changes")
+keymap("n", "[h", v_c("workbench.action.editor.previousChange"), "Navigate: previous change")
+keymap("n", "]h", v_c("workbench.action.editor.nextChange"), "Navigate: next change")
+keymap("n", "<leader>ghp", v_c("editor.action.dirtydiff.next"), "Git: go to next dirty diff")
+keymap("n", "<leader>ghu", v_c("git.revertSelectedRanges"), "Git: revert selected changes")
 keymap({ "v", "n" }, "<leader>gha", function()
     Vscode.action("git.stageSelectedRanges")
     os.execute("sleep 0.2")
 end, "Git: stage the currently selected lines or ranges.")
-keymap("n", "<leader>ga", ":call VSCodeNotify('git.stage')<CR>", "Git: stage changes for the current file.")
-keymap("n", "<leader>gb", ":call VSCodeNotify('gitlens.toggleLineBlame')<CR>", "GitLens: toggle blame information for the current line.")
-keymap("n", "<leader>gB", ":call VSCodeNotify('gitlens.toggleFileBlame')<CR>", "GitLens: toggle blame information for the entire file.")
-keymap("n", "<leader>gc", ":call VSCodeNotify('git.clean')<CR>", "Git: clean untracked files from the working directory.")
-keymap("n", "<leader>gr", ":call VSCodeNotify('git.unstage')<CR>", "Git: unstage changes from the current file.")
-keymap("n", "<leader>gd", ":call VSCodeNotify('git.openChange')<CR>", "Git: open a diff for the changes in the current file.")
-keymap("n", "<leader>gD", ":call VSCodeNotify('merge-conflict.compare')<CR>", "Merge Conflict: compare changes between branches.")
+keymap("n", "<leader>ga", v_c("git.stage"), "Git: stage changes for the current file.")
+keymap("n", "<leader>gb", v_c("gitlens.toggleLineBlame"), "GitLens: toggle blame information for the current line.")
+keymap("n", "<leader>gB", v_c("gitlens.toggleFileBlame"), "GitLens: toggle blame information for the entire file.")
+keymap("n", "<leader>gc", v_c("git.clean"), "Git: clean untracked files from the working directory.")
+keymap("n", "<leader>gr", v_c("git.unstage"), "Git: unstage changes from the current file.")
+keymap("n", "<leader>gd", v_c("git.openChange"), "Git: open a diff for the changes in the current file.")
+keymap("n", "<leader>gD", v_c("merge-conflict.compare"), "Merge Conflict: compare changes between branches.")
 
 ------------------------------------------------------------------------------
 -- Snippets

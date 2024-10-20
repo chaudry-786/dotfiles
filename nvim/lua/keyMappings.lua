@@ -39,7 +39,8 @@ function map(mode, lhs, rhs, desc_or_opts, expr_mapping)
     keymap(mode, lhs, rhs, mapping_opts)
 
     -- Write mapping to File
-    kmap_funs.write_mapping_to_file(mode, lhs, mapping_opts.desc)
+    local rhs_type = (type(rhs) == "string") and "string" or "function"
+    kmap_funs.write_mapping_to_file(mode, lhs, mapping_opts.desc, rhs_type)
 end
 
 if vim.g.vscode then

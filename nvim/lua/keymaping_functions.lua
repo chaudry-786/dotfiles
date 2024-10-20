@@ -129,7 +129,7 @@ end
 -- XXXX KEYPRESS ANALYSIS XXXX --
 local mapping_log = os.getenv("HOME") .. "/dotfiles/output_data/mappings.csv"
 os.remove(mapping_log)
-function M.write_mapping_to_file( mode_yes, key, description)
+function M.write_mapping_to_file( mode_yes, key, description, rhs_type)
     local file = io.open(mapping_log, "a")
     if not file then
         print("Could not open file for writing: " .. mapping_log)
@@ -144,7 +144,7 @@ function M.write_mapping_to_file( mode_yes, key, description)
         mode_str = mode_yes
     end
 
-    file:write(string.format("%s~%s~%s\n", mode_str, key, description))
+    file:write(string.format("%s~%s~%s~%s\n", mode_str, key, description, rhs_type))
 
     file:close()
 end
