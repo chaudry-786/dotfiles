@@ -128,20 +128,20 @@ keymap("n", "<CR>", v_c("editor.toggleFoldRecursively"), "Fold: toggle fold recu
 keymap("n", "[z", v_c("editor.gotoPreviousFold"), "Fold: go to previous fold")
 keymap("n", "]z", v_c("editor.gotoNextFold"), "Fold: go to next fold")
 
-vim.cmd([[
-function! MoveCursor(direction) abort
-    if(reg_recording() == '' && reg_executing() == '')
-        return 'g'.a:direction
+map('n', 'j', function()
+    if vim.fn.reg_recording() == '' and vim.fn.reg_executing() == '' then
+        return 'gj'
     else
-        return a:direction
-    endif
-endfunction
-
-nmap <expr> j MoveCursor('j')
-nmap <expr> k MoveCursor('k')
-]])
-
-
+        return 'j'
+    end
+end, { remap = true }, true)
+map('n', 'k', function()
+    if vim.fn.reg_recording() == '' and vim.fn.reg_executing() == '' then
+        return 'gk'
+    else
+        return 'k'
+    end
+end, { remap = true }, true)
 ------------------------------------------------------------------------------
 -- Debuger
 ------------------------------------------------------------------------------

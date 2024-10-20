@@ -31,7 +31,6 @@ Installation script will install relevant packages and create links for config f
 `cd ~ && git clone git@github.com:sabah1994/dotfiles.git && dotfiles/scripts/installation.sh`
 
 ### Commong keymappings
--- e = edit files
 -- f = find
 -- g = git
 -- r = run

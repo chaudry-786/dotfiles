@@ -102,6 +102,22 @@ function M.betterPasteNormal(register)
     vim.keymap.set("n", pre_cursor .. register .. "p", cmd, { noremap = true, silent = true, expr = true })
 end
 
+function M.paste_on_below_line()
+    if vim.fn.match(vim.fn.getreg(), "\n$") == -1 then
+        return "o<C-r><C-p>+<esc>"
+    else
+        return "o<C-r><C-p>+<esc>\"_dd"
+    end
+end
+
+function M.paste_on_above_line()
+    if vim.fn.match(vim.fn.getreg(), "\n$") == -1 then
+        return "O<C-r><C-p>+<esc>"
+    else
+        return "O<C-r><C-p>+<esc>\"_dd"
+    end
+end
+
 function M.vscode_right_tab()
     Vscode.call("workbench.action.nextEditor")
 end
