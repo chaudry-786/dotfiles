@@ -15,6 +15,13 @@ local function v_c(command_name)
 end
 
 ------------------------------------------------------------------------------
+--- General
+------------------------------------------------------------------------------
+-- swap windows
+map("n", "<leader>>", v_c("workbench.action.moveActiveEditorGroupRight"), "Rotate window right")
+map("n", "<leader><", v_c("workbench.action.moveActiveEditorGroupLeft"), "Rotate window left")
+
+------------------------------------------------------------------------------
 --- LSP
 ------------------------------------------------------------------------------
 keymap("n", "<leader>rn", v_c("editor.action.rename"), "Refactor: rename")
