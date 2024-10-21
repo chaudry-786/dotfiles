@@ -1,0 +1,20 @@
+{
+    "vscode-neovim.useWSL": true,
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "remote.SSH.remotePlatform": {
+        "migration_server": "linux"
+    },
+    "python.defaultInterpreterPath": "/home/sabah/Desktop/development/scrapes/venv/bin/python",
+    "python.pythonPath": "/home/sabah/Desktop/development/scrapes/venv/bin/python",
+    "python.venvPath": "/home/sabah/Desktop/development/scrapes/venv/bin/python",
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "git.openRepositoryInParentFolders": "never",
+    "remote.autoForwardPortsSource": "hybrid",
+    "extensions.autoUpdate": false,
+    "python.terminal.activateEnvInCurrentTerminal": false
+}
