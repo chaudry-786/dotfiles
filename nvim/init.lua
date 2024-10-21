@@ -149,8 +149,8 @@ require("lazy").setup({
         "ggandor/leap.nvim",
         config = function()
             require("leap").opts.safe_labels = {}
-            keymap("", "<leader>j", function() require('leap').leap({}) end, "Leap forward.")
-            keymap("", "<leader>k", function() require('leap').leap { backward = true } end, "Leap backward.")
+            keymap("", "s", function() require('leap').leap({}) end, "Leap forward.")
+            keymap("", "S", function() require('leap').leap { backward = true } end, "Leap backward.")
         end,
     },
 

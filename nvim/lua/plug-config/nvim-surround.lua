@@ -6,8 +6,8 @@ require("nvim-surround").setup({
         normal_line = "yS",
         normal_cur = "<Nop>",
         normal_cur_line = "<Nop>",
-        visual = "s",
-        visual_line = "S",
+        visual = "<leader>s",
+        visual_line = "<leader>S",
         delete = "ds",
         change = "cs",
     }
