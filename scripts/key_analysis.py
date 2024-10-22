@@ -77,6 +77,7 @@ def aggregate_logs_df(logs_df, max_levels=5):
         GROUP BY key
         """
     ).to_df()
+    print(f"Total active keys {len(usage_counts)}")
 
     # Apply logarithmic scaling to usage counts
     usage_counts["log_usage"] = np.log1p(
@@ -113,6 +114,8 @@ def combine_mappings_with_metric(key_hierarchies, agg_df, active_only):
         if key in key_hierarchies:
             key_hierarchies[key]["usage_count"] = count
             key_hierarchies[key]["bucket_level"] = bucket_level
+        else:
+            print(f"{ key } not found in all mappings")
 
     # If active_only is True, filter out keys with usage_count of 0
     if active_only:
