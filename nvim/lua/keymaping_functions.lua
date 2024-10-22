@@ -143,7 +143,7 @@ function M.vscode_hsplit()
 end
 
 -- XXXX KEYPRESS ANALYSIS XXXX --
-local mapping_log = os.getenv("HOME") .. "/dotfiles/output_data/mappings.csv"
+local mapping_log = os.getenv("HOME") .. "/vim_analysis/all_mappings.csv"
 os.remove(mapping_log)
 function M.write_mapping_to_file(mode_yes, key, description, rhs_type)
     local file = io.open(mapping_log, "a")
