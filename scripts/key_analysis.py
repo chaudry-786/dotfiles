@@ -1,10 +1,12 @@
 import pandas as pd
+import argparse
 import duckdb
 import re
 import glob
 from pyvis.network import Network
 import webbrowser
 import numpy as np
+from datetime import datetime, timedelta
 
 
 def generate_key_hierarchies(df, key_column="key", description_column="desc"):
@@ -25,7 +27,7 @@ def generate_key_hierarchies(df, key_column="key", description_column="desc"):
     key_hierarchies = {}
 
     # Iterate over each row in the DataFrame to build the hierarchy based on key and description
-    for index, row in df.iterrows():
+    for _, row in df.iterrows():
         full_key = row[key_column]
         description = row[description_column]
 
@@ -37,16 +39,28 @@ def generate_key_hierarchies(df, key_column="key", description_column="desc"):
     return key_hierarchies
 
 
-def read_key_logs_as_df(pattern):
+def read_key_logs_as_df(pattern, time_period_in_days=None):
     all_data = []
 
     files = glob.glob(pattern)
 
     for file in files:
         df = pd.read_csv(file, delimiter="~", names=["datetime", "key", "description"])
+
+        df["datetime"] = pd.to_datetime(
+            df["datetime"].str.strip("[]"), format="%Y-%m-%d %H:%M:%S", errors="coerce"
+        )
+
         all_data.append(df)
+
     if all_data:
-        return pd.concat(all_data, ignore_index=True)
+        combined_df = pd.concat(all_data, ignore_index=True)
+        print(f"Length of entire data { len(combined_df)}")
+        if time_period_in_days is not None:
+            cutoff_date = datetime.now() - timedelta(days=time_period_in_days)
+            combined_df = combined_df[combined_df["datetime"] >= cutoff_date]
+        print(f"Returning rows { len( combined_df ) }")
+        return combined_df
     else:
         raise ValueError("No data found in logs.")
 
@@ -90,7 +104,7 @@ def aggregate_logs_df(logs_df, max_levels=5):
     return output_df
 
 
-def combine_mappings_with_metric(key_hierarchies, agg_df):
+def combine_mappings_with_metric(key_hierarchies, agg_df, active_only):
     for _, row in agg_df.iterrows():
         key = row["key"]
         count = row["usage_count"]
@@ -99,6 +113,13 @@ def combine_mappings_with_metric(key_hierarchies, agg_df):
         if key in key_hierarchies:
             key_hierarchies[key]["usage_count"] = count
             key_hierarchies[key]["bucket_level"] = bucket_level
+
+    # If active_only is True, filter out keys with usage_count of 0
+    if active_only:
+        key_hierarchies = {
+            k: v for k, v in key_hierarchies.items() if v.get("usage_count", 0) > 0
+        }
+
     return key_hierarchies
 
 
@@ -185,21 +206,65 @@ def create_key_hierarchy_network(key_hierarchies):
     return output_file
 
 
-# Define file paths
-place_of_execution = "vscode"
-ALL_KEYMAPPINGS = "/home/sabah/vim_analysis/all_mappings.csv"
-KEY_LOGS = f"/home/sabah/vim_analysis/{place_of_execution}_key_logs*.txt"
-
-all_keymappings_df = pd.read_csv(
-    ALL_KEYMAPPINGS, delimiter="~", names=["mode", "key", "desc", "rhs_type"]
-)
-
-key_hierarchies = generate_key_hierarchies(all_keymappings_df)
-key_logs_df = read_key_logs_as_df(KEY_LOGS)
-
-agg_df = aggregate_logs_df(key_logs_df)
+# Function to parse time range (you can expand this logic as needed)
+def parse_time_range(time_range):
+    if time_range.endswith("w"):
+        return int(time_range[:-1]) * 7  # Convert weeks to days
+    elif time_range.endswith("m"):
+        return int(time_range[:-1]) * 30  # Approximate months to days
+    elif time_range.endswith("y"):
+        return int(time_range[:-1]) * 365  # Convert years to days
+    else:
+        raise ValueError(f"Invalid time range format: {time_range}. Use 1w, 2m, 1y.")
 
 
-key_hierarchies = combine_mappings_with_metric(key_hierarchies, agg_df)
-netowrk_file = create_key_hierarchy_network(key_hierarchies)
-webbrowser.open(netowrk_file)
+if __name__ == "__main__":
+    # Set up command-line argument parser
+    parser = argparse.ArgumentParser(description="Process key mappings and logs.")
+
+    # Add the time range flag
+    parser.add_argument(
+        "-t",
+        "--time_range",
+        type=str,
+        default="6m",
+        help="Specify the time range (e.g., 1w, 2m, 1y) to filter key logs.",
+    )
+
+    # Whether to show all keys or only active keys.
+    parser.add_argument(
+        "--display",
+        type=str,
+        choices=["all", "active"],
+        default="active",
+        help="Choose whether to display 'all' key mappings or 'active' ones within the time range.",
+    )
+
+    args = parser.parse_args()
+    if args.time_range:
+        time_period_in_days = parse_time_range(args.time_range)
+        print(f"Filtering logs for the last {time_period_in_days} days.")
+    else:
+        time_period_in_days = None
+
+    # Define file paths
+    execution_environment = "vscode"
+    ALL_KEYMAPPINGS = "/home/sabah/vim_analysis/all_mappings.csv"
+    KEY_LOGS = f"/home/sabah/vim_analysis/{execution_environment}_key_logs*.txt"
+
+    all_keymappings_df = pd.read_csv(
+        ALL_KEYMAPPINGS, delimiter="~", names=["mode", "key", "desc", "rhs_type"]
+    )
+
+    key_hierarchies = generate_key_hierarchies(all_keymappings_df)
+    key_logs_df = read_key_logs_as_df(KEY_LOGS, time_period_in_days)
+
+    agg_df = aggregate_logs_df(key_logs_df)
+
+    key_hierarchies = combine_mappings_with_metric(
+        key_hierarchies, agg_df, active_only=(args.display == "active")
+    )
+
+    print(f"Total keys to display {len(key_hierarchies)}")
+    netowrk_file = create_key_hierarchy_network(key_hierarchies)
+    webbrowser.open(netowrk_file)
