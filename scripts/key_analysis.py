@@ -94,10 +94,71 @@ def combine_mappings_with_metric(key_hierarchies, agg_df):
     for _, row in agg_df.iterrows():
         key = row["key"]
         count = row["usage_count"]
+        bucket_level = row["bucket_level"]
 
         if key in key_hierarchies:
             key_hierarchies[key]["usage_count"] = count
+            key_hierarchies[key]["bucket_level"] = bucket_level
     return key_hierarchies
+
+
+def get_node_color(bucket_level, usage_count):
+    if usage_count == 0:
+        return "#FFFACD"
+
+    green_shades = {
+        1: "#A8E6A8",
+        2: "#76D976",
+        3: "#43CC43",
+        4: "#2EB82E",
+        5: "#1F7A1F",
+    }
+
+    # Check explicitly if the bucket_level exists in green_shades
+    if bucket_level in green_shades:
+        return green_shades[bucket_level]
+    else:
+        raise ValueError(
+            f"Invalid bucket_level: {bucket_level}. Expected a value between 1 and 5."
+        )
+
+
+def add_node(network, node):
+    current_key = ""
+    usage_count = node.get("usage_count", 0)
+    bucket_level = node.get("bucket_level", 1)
+    description = node.get("desc", None)
+
+    scale = 30
+    node_size = bucket_level * scale
+
+    for i, key in enumerate(node["heirarchy"]):
+        current_key += f"-{key}"
+
+        # Add node with size based on bucket level
+        if i == len(node["heirarchy"]) - 1:
+            network.add_node(
+                current_key,
+                label=key,
+                title=f"Usage Count: {usage_count}\n Desc: {description} \n Bucket level: {bucket_level}",
+                level=i + 1,
+                value=int(scale / 2) if usage_count == 0 else node_size,
+                color=get_node_color(bucket_level, usage_count),
+            )
+        else:
+            network.add_node(
+                current_key,
+                label=key,
+                title=f"Parent",
+                level=i + 1,
+                value=int(scale / 2),
+                color="#D3D3D3",
+            )
+
+        if i > 0:
+            network.add_edge(current_key[: -len(key) - 1], current_key)
+
+    return network
 
 
 def create_key_hierarchy_network(key_hierarchies):
@@ -107,31 +168,11 @@ def create_key_hierarchy_network(key_hierarchies):
         bgcolor="#222222",
         font_color="white",
         directed=True,
-        filter_menu=True,
+        # filter_menu=True,
     )
 
-    for full_key, hierarchy_data in key_hierarchies.items():
-        current_key = ""
-        usage_count = hierarchy_data.get("usage_count", 0)
-        bucket_level = hierarchy_data.get("bucket_level", 1)  # Default to level 1
-
-        # Size scaling based on bucket level
-        node_size = bucket_level * 20
-
-        for i, key in enumerate(hierarchy_data["heirarchy"]):
-            current_key += f"-{key}"
-
-            # Add node with size based on bucket level
-            net.add_node(
-                current_key,
-                label=key,
-                title=f"Usage Count: {usage_count}",
-                level=i + 1,
-                value=node_size,
-            )
-
-            if i > 0:
-                net.add_edge(current_key[: -len(key) - 1], current_key)
+    for _, hierarchy_data in key_hierarchies.items():
+        net = add_node(net, hierarchy_data)
 
     # Smooth edges for better visualization
     net.set_edge_smooth("continuous")
@@ -149,13 +190,14 @@ place_of_execution = "vscode"
 ALL_KEYMAPPINGS = "/home/sabah/vim_analysis/all_mappings.csv"
 KEY_LOGS = f"/home/sabah/vim_analysis/{place_of_execution}_key_logs*.txt"
 
-df = pd.read_csv(
+all_keymappings_df = pd.read_csv(
     ALL_KEYMAPPINGS, delimiter="~", names=["mode", "key", "desc", "rhs_type"]
 )
 
-key_hierarchies = generate_key_hierarchies(df)
-logs_df = read_key_logs_as_df(KEY_LOGS)
-agg_df = aggregate_logs_df(logs_df)
+key_hierarchies = generate_key_hierarchies(all_keymappings_df)
+key_logs_df = read_key_logs_as_df(KEY_LOGS)
+
+agg_df = aggregate_logs_df(key_logs_df)
 
 
 key_hierarchies = combine_mappings_with_metric(key_hierarchies, agg_df)
