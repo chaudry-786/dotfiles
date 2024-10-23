@@ -77,6 +77,12 @@ e_map("v", ">", ">gv", "Indent and stay in Visual mode")
 e_map("v", "<", "<gv", "Indent and stay in Visual mode")
 map("n", "<leader>ts", kmap_funs.toggle_spelling, "Toggle spelling")
 
+-- DON'T RELY ON HJKL
+map("", "hh", kmap_funs.do_nothing, "DO NOT USE HJKL")
+map("", "jj", kmap_funs.do_nothing, "DO NOT USE HJKL")
+map("", "kk", kmap_funs.do_nothing, "DO NOT USE HJKL")
+map("", "ll", kmap_funs.do_nothing, "DO NOT USE HJKL")
+
 ----------------------------------------
 -- Buffers and save
 ----------------------------------------

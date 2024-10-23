@@ -142,6 +142,10 @@ function M.vscode_hsplit()
     Vscode.call("workbench.action.splitEditorUp")
 end
 
+function M.do_nothing()
+    return
+end
+
 -- XXXX KEYPRESS ANALYSIS XXXX --
 local mapping_log = os.getenv("HOME") .. "/vim_analysis/all_mappings.csv"
 os.remove(mapping_log)
