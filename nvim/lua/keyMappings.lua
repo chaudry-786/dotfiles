@@ -46,15 +46,10 @@ end
 if vim.g.vscode then
     Vscode = require("vscode-neovim")
 end
--- Just track
-local function j_t(command)
-    return function ()
-        return command
-    end
-end
-local function e_map(mode,lhs, rhs, desc)
-    map(mode, lhs, j_t(rhs), desc, true)
 
+-- Just track function, purely for tracking mappings.
+function e_map(mode, lhs, rhs, desc)
+    map(mode, lhs, function() return rhs end, desc, true)
 end
 ----------------------------------------
 -- General
