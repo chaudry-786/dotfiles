@@ -158,8 +158,4 @@ map("n", "<leader>p", kmap_funs.paste_on_below_line, "Paste text on a new line, 
 map("n", "<leader>P", kmap_funs.paste_on_above_line, "Paste text on a new line above, maintaining indent", true)
 map("v", "p", kmap_funs.better_paste_visual, "Paste text on a new line above, maintaining indent", true)
 -- if new line at the end, paste below, also maintain indent and delete extra line
--- for all registers
-for reg in ("abcdefghijklmnopqrstuvwxyz"):gmatch('.') do
-    kmap_funs.betterPasteNormal(reg)
-end
 kmap_funs.betterPasteNormal('')
