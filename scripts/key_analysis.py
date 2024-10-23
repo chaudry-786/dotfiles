@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import argparse
 import duckdb
@@ -7,10 +8,10 @@ from pyvis.network import Network
 import webbrowser
 import numpy as np
 from datetime import datetime, timedelta
+import numpy as np
 
 
 def generate_key_hierarchies(df, key_column="key", description_column="desc"):
-
     def split_key_into_hierarchy(key):
         # Use regex to separate out parts that are within <...> and treat them as separate entities
         parts = re.split(r"(<[^>]+>)", key)
@@ -63,9 +64,6 @@ def read_key_logs_as_df(pattern, time_period_in_days=None):
         return combined_df
     else:
         raise ValueError("No data found in logs.")
-
-
-import numpy as np
 
 
 def aggregate_logs_df(logs_df, max_levels=5):
@@ -252,8 +250,10 @@ if __name__ == "__main__":
 
     # Define file paths
     execution_environment = "vscode"
-    ALL_KEYMAPPINGS = "/home/sabah/vim_analysis/all_mappings.csv"
-    KEY_LOGS = f"/home/sabah/vim_analysis/{execution_environment}_key_logs*.txt"
+    ALL_KEYMAPPINGS = os.environ.get("HOME") + "/vim_analysis/all_mappings.csv"
+    KEY_LOGS = (
+        os.environ.get("HOME") + f"/vim_analysis/{execution_environment}_key_logs*.txt"
+    )
 
     all_keymappings_df = pd.read_csv(
         ALL_KEYMAPPINGS, delimiter="~", names=["mode", "key", "desc", "rhs_type"]
