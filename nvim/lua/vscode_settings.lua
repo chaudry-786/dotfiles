@@ -18,8 +18,8 @@ end
 --- General
 ------------------------------------------------------------------------------
 -- swap windows
-map("n", "<leader>>", v_c("workbench.action.moveActiveEditorGroupRight"), "Rotate window right")
-map("n", "<leader><", v_c("workbench.action.moveActiveEditorGroupLeft"), "Rotate window left")
+keymap("n", "<leader>>", v_c("workbench.action.moveActiveEditorGroupRight"), "Rotate window right")
+keymap("n", "<leader><", v_c("workbench.action.moveActiveEditorGroupLeft"), "Rotate window left")
 
 ------------------------------------------------------------------------------
 --- LSP
