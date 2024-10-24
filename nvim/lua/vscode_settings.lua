@@ -176,7 +176,8 @@ local function debug_start()
     if filename:match('%.ipynb[#%%]') then
         Vscode.call('jupyter.runAndDebugCell')
     elseif filename:match('^test_.*%.py$') or filename:match('.*_test%.py$') then
-        Vscode.call('testing.debugAtCursor')
+        -- Async call
+        Vscode.action('testing.debugAtCursor')
     elseif filename:match('%.rs$') then
         Vscode.call('rust-analyzer.debug')
     else
