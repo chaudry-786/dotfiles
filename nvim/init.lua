@@ -146,11 +146,20 @@ require("lazy").setup({
     ----------------------------------------
     -- Easy movement around buffer
     {
-        "ggandor/leap.nvim",
+        "folke/flash.nvim",
+        opts = {
+            modes = {
+                char = {
+                    -- disable f,F,t and T
+                    enabled = false,
+                },
+            },
+        },
         config = function()
-            require("leap").opts.safe_labels = {}
-            keymap("", "s", function() require('leap').leap({}) end, "Leap forward.")
-            keymap("", "S", function() require('leap').leap { backward = true } end, "Leap backward.")
+            map({ "n", "x", "o" }, "s", function() require("flash").jump() end, "Flash")
+            map({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, "Flash Treesitter")
+            map({ "o" }, "r", function() require("flash").remote() end, "Remote Flash")
+            map({ "o", "x" }, "R", function() require("flash").treesitter_search() end, "Treesitter Search")
         end,
     },
 
