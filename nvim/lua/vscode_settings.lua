@@ -97,6 +97,7 @@ keymap("n", "zC", v_c("editor.foldRecursively"), "Fold: fold all code blocks rec
 keymap("n", "zo", v_c("editor.unfold"), "Unfold: unfold the current code block")
 keymap("n", "zO", v_c("editor.unfoldRecursively"), "Unfold: unfold all code blocks recursively")
 keymap("n", "za", v_c("editor.toggleFold"), "Toggle Fold: toggle the folding state of the current code block")
+keymap("n", "zA", v_c("editor.toggleFoldRecursively"), "Fold: toggle fold recursively")
 
 local fold_table = {}
 
@@ -130,8 +131,6 @@ keymap("n", "zr", function()
     set_fold_level(current_level)
 end, "Open more folds by increasing the current fold level")
 
--- Recursivly fold and unfold
-keymap("n", "<CR>", v_c("editor.toggleFoldRecursively"), "Fold: toggle fold recursively")
 keymap("n", "[z", v_c("editor.gotoPreviousFold"), "Fold: go to previous fold")
 keymap("n", "]z", v_c("editor.gotoNextFold"), "Fold: go to next fold")
 

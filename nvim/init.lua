@@ -169,7 +169,8 @@ require("lazy").setup({
             -- LEAN
             map({ "n", "x", "o" }, "s", function() require("flash").jump({ search = { multi_window = false }, }) end,
                 "Flash")
-            map({ "o", "x", "n" }, "S", function()
+            map({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, "Flash Treesitter")
+            map({ "o", "x", "n" }, "<CR>", function()
                 require("flash").jump({
                     search = { mode = "search", max_length = 0, multi_window = false },
                     label = { after = { 0, 0 } },
