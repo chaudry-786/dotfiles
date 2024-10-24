@@ -156,20 +156,9 @@ require("lazy").setup({
             },
         },
         config = function()
-            -- map({ "n", "x", "o" }, "s", function() require("flash").jump() end, "Flash")
-            -- map({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, "Flash Treesitter")
-            -- map({ "o" }, "r", function() require("flash").remote() end, "Remote Flash")
-            -- map({ "o", "x" }, "R", function() require("flash").treesitter_search() end, "Treesitter Search")
-            -- map({ "o", "x", "n" }, "<leader>j", function() require("flash").jump({
-            --     search = { mode = "search", max_length = 0 },
-            --     label = { after = { 0, 0 } },
-            --     pattern = "^"
-            -- }) end, "Line wise jump.")
-
-            -- LEAN
             map({ "n", "x", "o" }, "s", function() require("flash").jump({ search = { multi_window = false }, }) end,
                 "Flash")
-            map({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, "Flash Treesitter")
+            map({ "n", "x", "o" }, "gs", function() require("flash").treesitter() end, "Flash Treesitter")
             map({ "o", "x", "n" }, "<CR>", function()
                 require("flash").jump({
                     search = { mode = "search", max_length = 0, multi_window = false },
