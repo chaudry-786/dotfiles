@@ -268,6 +268,15 @@ if __name__ == "__main__":
         key_hierarchies, agg_df, active_only=(args.display == "active")
     )
 
-    print(f"Total keys to display {len(key_hierarchies)}")
-    netowrk_file = create_key_hierarchy_network(key_hierarchies)
+    # We add nodes with stats first which might be also be parent. network respects the first add.
+    # this way we can reflect heat on such keys (parent and key of action. e.g y,d)
+    sorted_key_hierarchies = dict(
+        sorted(
+            key_hierarchies.items(),
+            key=lambda item: len(item[1]["heirarchy"]),
+        )
+    )
+
+    print(f"Total keys to display {len(sorted_key_hierarchies)}")
+    netowrk_file = create_key_hierarchy_network(sorted_key_hierarchies)
     webbrowser.open(netowrk_file)
