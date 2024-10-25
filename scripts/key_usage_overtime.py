@@ -44,14 +44,19 @@ KEY_LOGS = os.path.join(
     os.environ.get("HOME"), f"vim_analysis/{execution_environment}_key_logs*.txt"
 )
 
-try:
-    key_logs_df = read_and_group_key_logs(KEY_LOGS, frequency="D")
-    top_keys = key_logs_df["key"].unique()[:10]
-    min_date, max_date = key_logs_df["datetime"].min(), key_logs_df["datetime"].max()
-except ValueError as e:
-    print(e)
-    key_logs_df = pd.DataFrame()
+# Read and group key logs
+key_logs_df = read_and_group_key_logs(KEY_LOGS, frequency="D")
+if key_logs_df.empty:
+    raise ValueError("No valid data found after processing key logs.")
 
+# Get all unique keys and top keys
+all_keys = key_logs_df["key"].unique().tolist()  # Get all unique keys
+top_keys = (
+    key_logs_df["key"].value_counts().nlargest(10).index.tolist()
+)  # Get top 10 keys
+min_date, max_date = key_logs_df["datetime"].min(), key_logs_df["datetime"].max()
+
+# App layout with pre-selected top keys
 app.layout = dbc.Container(
     [
         html.H1("Key Usage Over Time", className="text-center"),
@@ -64,9 +69,28 @@ app.layout = dbc.Container(
         ),
         dcc.Dropdown(
             id="key-dropdown",
-            options=[{"label": key, "value": key} for key in top_keys],
-            value=top_keys.tolist() if len(top_keys) > 0 else [],
+            options=[
+                {
+                    "label": html.Span(
+                        [key],
+                        style={
+                            "color": "#343a40",
+                            "font-size": 20,
+                        },
+                    ),
+                    "value": key,
+                }
+                for key in all_keys
+            ],
+            value=top_keys,
             multi=True,
+            placeholder="Select keys",
+            style={
+                "backgroundColor": "#e9f7fe",  # Soft blue background
+                "color": "#0056b3",  # Dark blue text
+                "border": "2px solid #6c757d",
+                "borderRadius": "4px",
+            },
         ),
         dcc.Graph(id="usage-graph", style={"height": "80vh"}),
     ],
@@ -84,7 +108,7 @@ app.layout = dbc.Container(
 )
 def update_graph(selected_keys, start_date, end_date):
     if not selected_keys:
-        return px.line(title="No keys selected")
+        return px.line(title="Select keys to view usage.")
 
     filtered_df = key_logs_df[
         (key_logs_df["key"].isin(selected_keys))
