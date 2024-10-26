@@ -148,9 +148,11 @@ function M.move_if_count(direction)
     local use_wrapped_movement = vim.g.vscode and vim.fn.reg_recording() == '' and vim.fn.reg_executing() == ''
     -- Execute only if a count is set
     if vim.v.count == 0 then
-        os.execute("sleep " .. tonumber(3))
-        return nil
+        return
     end
+    vim.defer_fn(function()
+        M.log_keypress(direction, "COUNT ONLY HJKL")
+    end, 1)
     if direction == "j" and use_wrapped_movement then
         return "gj"
     elseif direction == "k" and use_wrapped_movement then

@@ -73,10 +73,12 @@ e_map("v", "<", "<gv", "Indent and stay in Visual mode")
 map("n", "<leader>ts", kmap_funs.toggle_spelling, "Toggle spelling")
 
 -- Only use HJKL when count is passed before
-map("", "h", function() return kmap_funs.move_if_count("h") end, "COUNT ONLY HJKL", true)
-map("", "j", function() return kmap_funs.move_if_count("j") end, "COUNT ONLY HJKL", true)
-map("", "k", function() return kmap_funs.move_if_count("k") end, "COUNT ONLY HJKL", true)
-map("", "l", function() return kmap_funs.move_if_count("l") end, "COUNT ONLY HJKL", true)
+-- TEMPORARY measure to avoid using HJKL
+local expr_opts = { noremap = true, silent = true, expr = true}
+vim.keymap.set("", "h", function() return kmap_funs.move_if_count("h") end, expr_opts)
+vim.keymap.set("", "j", function() return kmap_funs.move_if_count("j") end, expr_opts)
+vim.keymap.set("", "k", function() return kmap_funs.move_if_count("k") end, expr_opts)
+vim.keymap.set("", "l", function() return kmap_funs.move_if_count("l") end, expr_opts)
 
 ----------------------------------------
 -- Buffers and save
