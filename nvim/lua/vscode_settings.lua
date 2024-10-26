@@ -25,8 +25,9 @@ keymap("n", "<leader><", v_c("workbench.action.moveActiveEditorGroupLeft"), "Rot
 --- LSP
 ------------------------------------------------------------------------------
 keymap("n", "<leader>rn", v_c("editor.action.rename"), "Refactor: rename")
-keymap("n", "gr", v_c("editor.action.goToReferences"), "Go to references")
+keymap("n", "gd", v_c("editor.action.revealDefinition"), "Go to definition")
 keymap("n", "gD", v_c("editor.action.revealDefinitionAside"), "Reveal definition aside")
+keymap("n", "gr", v_c("editor.action.goToReferences"), "Go to references")
 keymap("v", "<leader><leader>f", v_c("editor.action.formatSelection"), "Format selection")
 keymap("n", "<leader><leader>f", function()
     local filename = vim.fn.expand('%:t')

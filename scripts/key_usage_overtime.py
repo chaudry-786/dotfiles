@@ -49,11 +49,8 @@ key_logs_df = read_and_group_key_logs(KEY_LOGS, frequency="D")
 if key_logs_df.empty:
     raise ValueError("No valid data found after processing key logs.")
 
-# Get all unique keys and top keys
-all_keys = key_logs_df["key"].unique().tolist()  # Get all unique keys
-top_keys = (
-    key_logs_df["key"].value_counts().nlargest(10).index.tolist()
-)  # Get top 10 keys
+all_keys = key_logs_df["key"].unique().tolist()
+top_keys = ( key_logs_df["key"].value_counts().nlargest(10).index.tolist())
 min_date, max_date = key_logs_df["datetime"].min(), key_logs_df["datetime"].max()
 
 # App layout with pre-selected top keys
