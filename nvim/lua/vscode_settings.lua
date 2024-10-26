@@ -134,20 +134,6 @@ end, "Open more folds by increasing the current fold level")
 keymap("n", "[z", v_c("editor.gotoPreviousFold"), "Fold: go to previous fold")
 keymap("n", "]z", v_c("editor.gotoNextFold"), "Fold: go to next fold")
 
-map('n', 'j', function()
-    if vim.fn.reg_recording() == '' and vim.fn.reg_executing() == '' then
-        return 'gj'
-    else
-        return 'j'
-    end
-end, { remap = true }, true)
-map('n', 'k', function()
-    if vim.fn.reg_recording() == '' and vim.fn.reg_executing() == '' then
-        return 'gk'
-    else
-        return 'k'
-    end
-end, { remap = true }, true)
 ------------------------------------------------------------------------------
 -- Debuger
 ------------------------------------------------------------------------------

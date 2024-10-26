@@ -146,6 +146,23 @@ function M.do_nothing()
     return
 end
 
+-- Only allow HJKL if cout is passed.
+-- For VS Code return the wraped movement (fold issue)
+function M.move_if_count(direction)
+    local use_wrapped_movement = vim.g.vscode and vim.fn.reg_recording() == '' and vim.fn.reg_executing() == ''
+    -- Execute only if a count is set
+    if vim.v.count == 0 then
+        return nil
+    end
+    if direction == "j" and use_wrapped_movement then
+        return "gj"
+    elseif direction == "k" and use_wrapped_movement then
+        return "gk"
+    else
+        return direction
+    end
+end
+
 -- XXXX KEYPRESS ANALYSIS XXXX --
 local mapping_log = os.getenv("HOME") .. "/vim_analysis/all_mappings.csv"
 os.remove(mapping_log)

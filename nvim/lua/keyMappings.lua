@@ -72,11 +72,11 @@ e_map("v", ">", ">gv", "Indent and stay in Visual mode")
 e_map("v", "<", "<gv", "Indent and stay in Visual mode")
 map("n", "<leader>ts", kmap_funs.toggle_spelling, "Toggle spelling")
 
--- DON'T RELY ON HJKL
-map("", "hh", kmap_funs.do_nothing, "DO NOT USE HJKL")
-map("", "jj", kmap_funs.do_nothing, "DO NOT USE HJKL")
-map("", "kk", kmap_funs.do_nothing, "DO NOT USE HJKL")
-map("", "ll", kmap_funs.do_nothing, "DO NOT USE HJKL")
+-- Only use HJKL when count is passed before
+map("", "h", function() return kmap_funs.move_if_count("h") end, "COUNT ONLY HJKL", true)
+map("", "j", function() return kmap_funs.move_if_count("j") end, "COUNT ONLY HJKL", true)
+map("", "k", function() return kmap_funs.move_if_count("k") end, "COUNT ONLY HJKL", true)
+map("", "l", function() return kmap_funs.move_if_count("l") end, "COUNT ONLY HJKL", true)
 
 ----------------------------------------
 -- Buffers and save
