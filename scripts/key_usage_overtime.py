@@ -24,6 +24,11 @@ def read_and_group_key_logs(pattern, frequency="D"):
         combined_df = pd.concat(all_data, ignore_index=True)
         combined_df = combined_df.dropna(subset=["datetime"])
 
+        original_count = combined_df.shape[0]
+        # Drop duplicates and calculate dropped rows
+        combined_df = combined_df.drop_duplicates()
+        print(f"Number of rows dropped due to duplicates: {original_count - combined_df.shape[0]}")
+
         if combined_df.empty:
             raise ValueError("No valid data found in logs after dropping NaT values.")
 
