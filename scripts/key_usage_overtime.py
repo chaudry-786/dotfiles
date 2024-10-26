@@ -83,11 +83,18 @@ app.layout = dbc.Container(
             multi=True,
             placeholder="Select keys",
             style={
-                "backgroundColor": "#e9f7fe",  # Soft blue background
-                "color": "#0056b3",  # Dark blue text
+                "backgroundColor": "#e9f7fe",
+                "color": "#0056b3",
                 "border": "2px solid #6c757d",
                 "borderRadius": "4px",
             },
+        ),
+        dbc.Button(
+            "Show Percentage",
+            id="percentage-button",
+            n_clicks=0,
+            color="primary",
+            className="mb-3",
         ),
         dcc.Graph(id="usage-graph", style={"height": "80vh"}),
     ],
@@ -101,17 +108,25 @@ app.layout = dbc.Container(
         Input("key-dropdown", "value"),
         Input("date-range-picker", "start_date"),
         Input("date-range-picker", "end_date"),
+        Input("percentage-button", "n_clicks"),
     ],
 )
-def update_graph(selected_keys, start_date, end_date):
-    if not selected_keys:
-        return px.line(title="Select keys to view usage.")
-
-    filtered_df = key_logs_df[
-        (key_logs_df["key"].isin(selected_keys))
-        & (key_logs_df["datetime"] >= start_date)
-        & (key_logs_df["datetime"] <= end_date)
+def update_graph(selected_keys, start_date, end_date, n_clicks):
+    # Time range filter.
+    date_filtered_df = key_logs_df[
+        (key_logs_df["datetime"] >= start_date) & (key_logs_df["datetime"] <= end_date)
     ]
+
+    # Selected key filter
+    filtered_df = date_filtered_df[date_filtered_df["key"].isin(selected_keys)]
+
+    y_axis_label = "Key Usage Count"
+    # Work out percentage
+    if n_clicks % 2 == 1:
+        daily_totals = date_filtered_df.groupby("datetime")["count"].transform("sum")
+        filtered_df["count"] = (filtered_df["count"] / daily_totals) * 100
+        y_axis_label = "Usage Percentage (%)"
+
 
     fig = px.line(
         filtered_df,
@@ -119,6 +134,7 @@ def update_graph(selected_keys, start_date, end_date):
         y="count",
         color="key",
         title="Key Usage Over Time",
+        labels={"count": y_axis_label},
         line_shape="spline",
         markers=True,
     )
