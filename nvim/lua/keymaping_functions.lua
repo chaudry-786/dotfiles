@@ -142,16 +142,13 @@ function M.vscode_hsplit()
     Vscode.call("workbench.action.splitEditorUp")
 end
 
-function M.do_nothing()
-    return
-end
-
 -- Only allow HJKL if cout is passed.
 -- For VS Code return the wraped movement (fold issue)
 function M.move_if_count(direction)
     local use_wrapped_movement = vim.g.vscode and vim.fn.reg_recording() == '' and vim.fn.reg_executing() == ''
     -- Execute only if a count is set
     if vim.v.count == 0 then
+        os.execute("sleep " .. tonumber(3))
         return nil
     end
     if direction == "j" and use_wrapped_movement then
