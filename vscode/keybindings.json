@@ -48,6 +48,17 @@
         "command": "copyRelativeFilePath",
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
     },
+    // Scroll fix
+    {
+        "command": "vscode-neovim.send",
+        "key": "ctrl+d",
+        "args": "<C-d>jk",
+    },
+    {
+        "command": "vscode-neovim.send",
+        "key": "ctrl+u",
+        "args": "<C-u>jk",
+    },
     //
     // Search explorer
     {
@@ -314,6 +325,14 @@
     {
         "key": "ctrl+e",
         "command": "-workbench.action.quickOpen"
-    }
+    },
+    // scroll fix (delete default mappings)
+    {
+        "command": "-vscode-neovim.send",
+        "key": "ctrl+d"
+    },
+    {
+        "command": "-vscode-neovim.send",
+        "key": "ctrl+u"
+    },
 ]
-
