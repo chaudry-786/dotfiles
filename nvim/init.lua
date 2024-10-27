@@ -122,6 +122,7 @@ require("lazy").setup({
         dependencies = { "mfussenegger/nvim-dap",
             -- neotest
             "nvim-neotest/neotest",
+            "nvim-neotest/nvim-nio",
             "nvim-lua/plenary.nvim",
             "antoinemadec/FixCursorHold.nvim",
             "nvim-neotest/neotest-python"
