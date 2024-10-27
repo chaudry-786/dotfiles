@@ -147,14 +147,6 @@ require("lazy").setup({
     -- Easy movement around buffer
     {
         "folke/flash.nvim",
-        opts = {
-            modes = {
-                char = {
-                    -- disable f,F,t and T
-                    enabled = false,
-                },
-            },
-        },
         config = function()
             require("plug-config/flash")
         end,

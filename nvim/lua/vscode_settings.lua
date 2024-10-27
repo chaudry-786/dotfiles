@@ -10,7 +10,11 @@ end
 -- Wrap vscode command
 local function v_c(command_name, args)
     return function()
-        Vscode.call(command_name, { args = args or {} })
+        if args then
+            Vscode.call(command_name, args)
+        else
+            Vscode.call(command_name)
+        end
     end
 end
 

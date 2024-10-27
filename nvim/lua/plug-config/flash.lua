@@ -1,12 +1,20 @@
+require("flash").setup({
+    modes = {
+        char = {
+            -- disable f,F,t and T
+            enabled = false,
+        },
+    },
+})
 local flash = require("flash")
-map({"n", "x", "o"}, "s", function()
+map({ "n", "x", "o" }, "s", function()
     flash.jump({
         search = {
             multi_window = false
         }
     })
 end, "Flash: Jump")
-map({"n", "x", "o"}, "gs", function()
+map({ "n", "x", "o" }, "gs", function()
     flash.treesitter_search({
         label = {
             rainbow = {
@@ -21,10 +29,9 @@ map({"n", "x", "o"}, "gs", function()
         search = {
             multi_window = false
         }
-
     })
 end, "Flash Treesitter: Search")
-map({"n", "x", "o"}, "gS", function()
+map({ "n", "x", "o" }, "gS", function()
     flash.treesitter({
         label = {
             rainbow = {
@@ -38,7 +45,7 @@ map({"n", "x", "o"}, "gS", function()
         }
     })
 end, "Flash Treesitter")
-map({"o", "x", "n"}, "<CR>", function()
+map({ "o", "x", "n" }, "<CR>", function()
     flash.jump({
         search = {
             mode = "search",
@@ -46,7 +53,7 @@ map({"o", "x", "n"}, "<CR>", function()
             multi_window = false
         },
         label = {
-            after = {0, 0}
+            after = { 0, 0 }
         },
         pattern = "^"
     })
