@@ -113,7 +113,6 @@ require("lazy").setup({
         config = function()
             require("plug-config/vim-test")
         end,
-        cond = not vim.g.vscode
     },
 
     -- Debugger

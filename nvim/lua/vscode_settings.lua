@@ -255,29 +255,9 @@ keymap('n', '<leader>rf', run_file,
 ------------------------------------------------------------------------------
 -- Tests
 ------------------------------------------------------------------------------
-keymap("n", "<leader>rt", v_c("testing.runAtCursor"), "Testing: Run test at cursor")
-keymap("n", "<leader>rl", v_c("testing.reRunLastRun"), "Testing: Re-run last test")
-local function run_tests()
-    local filetype_and_commands = {
-        py = "src; pytest . --disable-warnings -s",
-    }
-    local filename = vim.fn.expand("%:p")
-    if string.match(filename, "^vscode%-remote") then
-        filename = string.match(filename, "/home.*")
-    end
-    local file_extension = vim.fn.expand("%:e")
-    local command = filetype_and_commands[file_extension]
-
-    if command then
-        Vscode.call('workbench.action.terminal.focus')
-        Vscode.call('workbench.action.terminal.sendSequence', { args = { text = "clear" .. "\x0D" } })
-        Vscode.call('workbench.action.terminal.sendSequence', { args = { text = command .. "\x0D" } })
-    else
-        Vscode.notify("Unsupported file type: " .. file_extension)
-    end
-end
-
-keymap("n", "<leader>rT", run_tests, "Testing: Run all tests")
+-- Other mappings in vim-test
+keymap("n", "<leader><leader>rt", v_c("testing.runAtCursor"), "Testing: Run test at cursor")
+keymap("n", "<leader><leader>rl", v_c("testing.reRunLastRun"), "Testing: Re-run last test")
 keymap("n", "<leader>dt", function()
     set_debug_mapings()
     Vscode.action("testing.debugAtCursor")
