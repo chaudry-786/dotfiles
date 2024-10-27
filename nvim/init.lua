@@ -291,17 +291,6 @@ require("lazy").setup({
         cond = not vim.g.vscode
     },
 
-    -- Better notes
-    {
-        "nvim-neorg/neorg",
-        build = ":Neorg sync-parsers",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = function()
-            require("plug-config/neorg")
-        end,
-        cond = not vim.g.vscode
-    },
-
     -- CSV highlighted
     {
         'cameron-wags/rainbow_csv.nvim',
