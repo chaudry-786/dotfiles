@@ -119,12 +119,7 @@ require("lazy").setup({
     {
         "rcarriga/nvim-dap-ui",
         dependencies = { "mfussenegger/nvim-dap",
-            -- neotest
-            "nvim-neotest/neotest",
             "nvim-neotest/nvim-nio",
-            "nvim-lua/plenary.nvim",
-            "antoinemadec/FixCursorHold.nvim",
-            "nvim-neotest/neotest-python"
         },
         config = function()
             require("plug-config/debugger")

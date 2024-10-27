@@ -219,23 +219,6 @@ dap.configurations.python = {
     createPythonDapConfig("Flask", venv_dir .. "flask", { "run" }),
 }
 
-------------------------------------------------
--- Neotest - Python
-------------------------------------------------
-keymap("n", "<leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", "Debug test")
-keymap("n", "<leader>tt", ":lua require('neotest').summary.toggle()<CR>", "Toggle test summary")
-keymap("n", "<leader><leader>rT", ":lua require('neotest').run.run(vim.fn.expand('%'))<CR>", "Run all the tests in the file.")
-require("neotest").setup({
-    adapters = {
-        require("neotest-python")({
-            dap = { justMyCode = true },
-            python = venv_dir .. "python",
-            runner = "pytest",
-        })
-    }
-})
-
-
 -- SIGNS
 vim.api.nvim_set_hl(0, "yellow", { fg = "#FFFF00", bg = "#1f1d2e" })
 vim.api.nvim_set_hl(0, "red", { fg = "#ff0000", bg = "#1f1d2e" })
