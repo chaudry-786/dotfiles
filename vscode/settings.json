@@ -17,6 +17,8 @@
     },
     "editor.suggest.snippetsPreventQuickSuggestions": true,
     "files.trimTrailingWhitespace": true,
+    // ctrl+alt to see the hints
+    "editor.inlayHints.enabled": "offUnlessPressed",
 
     // Extension settings
     "extensions.experimental.affinity": {
