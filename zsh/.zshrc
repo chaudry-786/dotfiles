@@ -234,3 +234,11 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
+# Function to open VS Code in the current window, with WSL compatibility
+code() {
+    if grep -qi "microsoft" /proc/version &> /dev/null; then
+        # If running in WSL, set VSCODE_IPC_HOOK_CLI for code command
+        export VSCODE_IPC_HOOK_CLI=$(lsof | grep $USER | grep vscode-ipc | awk '{print $(NF-1)}' | head -n 1)
+    fi
+    command code -r "$@"
+}
