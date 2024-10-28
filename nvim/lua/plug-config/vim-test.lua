@@ -8,16 +8,19 @@ if vim.g.vscode then
     -- Custom vim-test Strategy for VS Code Terminal
     -- Runs test commands in the VS Code terminal when using Neovim in VS Code.
     -- Focuses the terminal, clears it, and sends the test command.
+    local vscode = require("vscode-neovim")
+    function VSCodeStrategyLua(cmd)
+        -- Remove 'vscode-remote://wsl%2Bubuntu' prefix from the command
+        local clean_cmd = cmd:gsub([[vscode%-remote://wsl%%2Bubuntu]], "")
+        vscode.action("workbench.action.terminal.focus")
+        vscode.action("workbench.action.terminal.sendSequence", { args = { text = "clear\n" } })
+        vscode.action("workbench.action.terminal.sendSequence", { args = { text = clean_cmd .. "\n" } })
+        vscode.action("workbench.action.focusActiveEditorGroup")
+    end
+
     vim.cmd([[
         function! VSCodeStrategy(cmd)
-            " Optional: Focus the VS Code terminal
-            call VSCodeNotify('workbench.action.terminal.focus')
-            " Clear the terminal
-            call VSCodeNotify('workbench.action.terminal.sendSequence', {'text': "clear\n"})
-            " Send the test command to the terminal
-            call VSCodeNotify('workbench.action.terminal.sendSequence', {'text': a:cmd . "\n"})
-            " Focus back on the editor
-            call VSCodeNotify('workbench.action.focusActiveEditorGroup')
+            lua VSCodeStrategyLua(vim.api.nvim_eval("a:cmd"))
         endfunction
 
     let g:test#custom_strategies = {'vscode': function('VSCodeStrategy')}
