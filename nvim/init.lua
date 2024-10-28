@@ -109,7 +109,7 @@ require("lazy").setup({
 
     -- Test plugin
     {
-        "vim-test/vim-test",
+        "chaudry-786/vim-test",
         config = function()
             require("plug-config/vim-test")
         end,
