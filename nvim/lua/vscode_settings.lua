@@ -87,10 +87,10 @@ keymap("n", "<leader>fb", v_c("workbench.action.quickOpenPreviousRecentlyUsedEdi
 keymap("n", "<leader>fc", v_c("workbench.action.showCommands"), "Command Palette: show available commands")
 -- Grep/Replace
 keymap("n", "<leader>fG", v_c("editor.actions.findWithArgs", { searchString = "", isRegex = true }),
-    "Find: search across files")
+    "Find: search across current buffer")
 keymap("v", "<leader>fG",
     v_c("editor.actions.findWithArgs", { searchString = "", isRegex = true, findInSelection = true, }),
-    "Find: search selection across files")
+    "Find: search across current buffer")
 keymap("n", "<leader>fg", v_c("workbench.action.findInFiles", { query = "", isRegex = true }),
     "Find: search across files")
 keymap("v", "<leader>fg", v_c("workbench.action.findInFiles", { searchString = "${selectedText}", isRegex = true }),
