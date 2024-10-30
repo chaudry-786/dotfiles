@@ -179,6 +179,10 @@
         "command": "workbench.action.terminal.focus",
         "when": "!terminalFocus"
     },
+    {
+        "key": "alt+shift+t",
+        "command": "workbench.action.toggleMaximizedPanel"
+    },
     //
     // Debug Console toggle
     {
