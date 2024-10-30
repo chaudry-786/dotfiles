@@ -95,7 +95,7 @@ keymap("n", "<leader>fg", v_c("workbench.action.findInFiles", { query = "", isRe
     "Find: search across files")
 keymap("v", "<leader>fg", v_c("workbench.action.findInFiles", { searchString = "${selectedText}", isRegex = true }),
     "Find: search selection across files")
-keymap("n", "<leader>fo", v_c("workbench.action.quickOpen", { args = { ":@" } }),
+keymap("n", "<leader>fo", v_c("workbench.action.quickOpen", { args = { "@:" } }),
     "Quick Open: navigate to symbols in the current file")
 keymap("n", "<leader>fO", v_c("workbench.action.quickOpen", { args = { "#" } }),
     "Quick Open: navigate to symbols in the entire project")
