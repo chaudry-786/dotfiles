@@ -52,3 +52,8 @@ Installation script will install relevant packages and create links for config f
 ### VSCode limitations
     / mapping doesn't expand in command line.
 
+
+WISH list:
+    django aliasas
+    run django shell form jupyet notebook
+        https://stackoverflow.com/questions/35483328/how-do-i-set-up-jupyter-ipython-notebook-for-django
