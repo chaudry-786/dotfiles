@@ -10,8 +10,16 @@ move window between monitors:
 move window between workspaces:
     caps +shift + alt + arrow
 
-3) ensure Nividia graphic card is running:
+2) ensure Nividia graphic card is running:
     run: nvidia-settings
         if it's running it'll display card information along with stats.
         turn on performance mode
 
+
+3) Ubuntu secondary monitor focus issue
+    fix: https://askubuntu.com/questions/640805/gnome-shell-multi-desktop-changes-focus-to-other-screen
+    sudo apt install dconf-editor
+
+    - Using dconf-editor (as your user, not root), navigate to org -> gnome -> desktop -> wm -> preferences
+
+    - Select focus mode and change it to mouse
