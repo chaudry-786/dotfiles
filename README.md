@@ -57,3 +57,4 @@ WISH list:
     django aliasas
     run django shell form jupyet notebook
         https://stackoverflow.com/questions/35483328/how-do-i-set-up-jupyter-ipython-notebook-for-django
+    GraphQL extension: https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql
