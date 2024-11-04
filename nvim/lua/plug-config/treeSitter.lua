@@ -10,6 +10,7 @@ require "nvim-treesitter.configs".setup {
         "jsonc",
         "javascript",
         "typescript",
+        "tsx",
         "html",
         "htmldjango",
         "css",
