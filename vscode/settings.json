@@ -35,6 +35,7 @@
     "workbench.colorTheme": "IntelliJ-ish Darcula",
     "workbench.editor.showTabs": "none",
     "window.menuBarVisibility": "hidden",
+    "workbench.activityBar.location": "hidden", // alt+a to toggle
 
     // YAML settings
     "yaml.schemas": {
@@ -58,7 +59,8 @@
     "terminal.integrated.commandsToSkipShell": [
       "workbench.debug.action.toggleRepl",
       "workbench.action.closePanel",
-      "workbench.actions.view.problems"
+      "workbench.actions.view.problems",
+      "workbench.action.toggleActivityBarVisibility"
     ],
     // Testing
     "testing.automaticallyOpenPeekView": "never",

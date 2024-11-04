@@ -229,6 +229,12 @@
         "when": "activeViewlet == 'workbench.view.scm'"
     },
     //
+    // Activity bar toggle
+    {
+        "key": "alt+a",
+        "command": "workbench.action.toggleActivityBarVisibility"
+    },
+    //
     // Notebook
     {
         "key": "o",
