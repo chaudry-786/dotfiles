@@ -147,9 +147,9 @@ end
 function M.move_if_count(direction)
     local use_wrapped_movement = vim.g.vscode and vim.fn.reg_recording() == '' and vim.fn.reg_executing() == ''
     -- Execute only if a count is set
-    if vim.v.count == 0 then
-        return
-    end
+    -- if vim.v.count == 0 then
+    --     return
+    -- end
     vim.defer_fn(function()
         M.log_keypress(direction, "COUNT ONLY HJKL")
     end, 1)
