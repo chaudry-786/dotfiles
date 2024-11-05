@@ -195,6 +195,16 @@
         "command": "workbench.action.closePanel",
         "when": "debugConsoleVisible"
     },
+    {
+        "key": "alt+shift+d",
+        "command": "workbench.view.debug",
+        "when": "!view.workbench.debug.variablesView.visible"
+    },
+    {
+        "key": "alt+shift+d",
+        "command": "workbench.action.closeSidebar",
+        "when": "view.workbench.debug.variablesView.visible"
+    },
     // Problems panel toggle
     {
         "key": "alt+p",
