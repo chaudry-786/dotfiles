@@ -61,8 +61,8 @@
       "workbench.action.closePanel",
       "workbench.actions.view.problems",
       "workbench.action.toggleActivityBarVisibility",
-      "workbench.action.closeSidebar"
-
+      "workbench.action.closeSidebar",
+      "workbench.action.openRecent"
     ],
     // Testing
     "testing.automaticallyOpenPeekView": "never",
