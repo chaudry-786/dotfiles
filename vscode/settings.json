@@ -60,7 +60,9 @@
       "workbench.debug.action.toggleRepl",
       "workbench.action.closePanel",
       "workbench.actions.view.problems",
-      "workbench.action.toggleActivityBarVisibility"
+      "workbench.action.toggleActivityBarVisibility",
+      "workbench.action.closeSidebar"
+
     ],
     // Testing
     "testing.automaticallyOpenPeekView": "never",
