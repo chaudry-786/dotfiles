@@ -10,7 +10,7 @@ set.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 set.foldnestmax = 10
 set.foldlevel = 0 --fold level: zr or zm
 set.fillchars = { fold = " ", foldopen = " ", foldclose = "", foldsep = " " }
--- set.foldenable = false                                  --do not fold when buffer loads
+set.foldenable = false                                  --do not fold when buffer loads
 
 vim.opt.foldtext = ""
 

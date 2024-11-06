@@ -110,6 +110,7 @@ keymap("n", "zo", v_c("editor.unfold"), "Unfold: unfold the current code block")
 keymap("n", "zO", v_c("editor.unfoldRecursively"), "Unfold: unfold all code blocks recursively")
 keymap("n", "za", v_c("editor.toggleFold"), "Toggle Fold: toggle the folding state of the current code block")
 keymap("n", "zA", v_c("editor.toggleFoldRecursively"), "Fold: toggle fold recursively")
+keymap("n", "<CR>", v_c("editor.toggleFoldRecursively"), "Fold: toggle fold recursively")
 
 local fold_table = {}
 
