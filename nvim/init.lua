@@ -6,7 +6,6 @@ require("options")
 require("keyMappings")
 local keymap = map
 require("autocmds")
-require("fold")
 
 -- Plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -296,6 +295,7 @@ require("lazy").setup({
 
 
 if not vim.g.vscode then
+    require("fold")
     -- ensures that all highlight groups have been set
     require("status_column")
     require("plug-config/gitConfig") -- git related plugs config
