@@ -355,4 +355,9 @@
         "command": "-vscode-neovim.send",
         "key": "ctrl+u"
     },
+
+    {
+        "key": "ctrl+r",
+        "command": "-workbench.action.openRecent"
+    },
 ]
