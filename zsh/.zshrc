@@ -110,12 +110,12 @@ grepm() {
     grep -rnl $1 | xargs grep -rnl $2
 }
 
-# launch nvim using Session file if it exists
+# Launch VSCode if in VSCode, otherwise launch Neovim with session setup
 v() {
-    src
-    if [ -f "Session.vim" ] && [ $# -eq 0 ]; then
-        nvim -S Session.vim
+    if [ "$IN_VSCODE" = "true" ]; then
+        code "$@"
     else
+        src
         nvim "$@"
     fi
 }

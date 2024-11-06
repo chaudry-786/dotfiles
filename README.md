@@ -59,4 +59,3 @@ WISH list:
         https://stackoverflow.com/questions/35483328/how-do-i-set-up-jupyter-ipython-notebook-for-django
     GraphQL extension: https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql
     Postman VS code: https://marketplace.visualstudio.com/items?itemName=Postman.postman-for-vscode
-    v alias should launch vscode if run from vscode terminal
