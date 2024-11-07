@@ -220,7 +220,7 @@ end, "Toggle debugger")
 ------------------------------------------------------------------------------
 local function run_file()
     local filetype_and_commands = {
-        py = "python %s",
+        py = "src; python %s",
         lua = "lua %s",
         js = "node %s",
         c = "gcc %s -o %s && ./%s",
