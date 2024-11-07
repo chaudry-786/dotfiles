@@ -245,5 +245,5 @@ code() {
 
 # Set blinking cursor style only if inside VS Code
 if [ "$IN_VSCODE" = "true" ]; then
-    echo -e '\e[5 q'
+    echo '\e[5 q'
 fi
