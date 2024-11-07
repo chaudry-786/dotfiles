@@ -21,6 +21,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local vscode = vim.g.vscode
 require("lazy").setup({
     ----------------------------------------
     -- UI
@@ -31,13 +32,13 @@ require("lazy").setup({
         config = function()
             require("plug-config/theme")
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- File Icons
     {
         "kyazdani42/nvim-web-devicons",
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- File explorer
@@ -46,7 +47,7 @@ require("lazy").setup({
         config = function()
             require("plug-config/nvimTree")
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Status line
@@ -55,7 +56,7 @@ require("lazy").setup({
         config = function()
             require("plug-config/lualine")
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Indent guide
@@ -66,7 +67,7 @@ require("lazy").setup({
                 scope = { enabled = false },
             }
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Smooth scroll
@@ -75,7 +76,7 @@ require("lazy").setup({
         config = function()
             require("neoscroll").setup()
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Flashes cursor on movements (e.g jump between windows)
@@ -85,7 +86,7 @@ require("lazy").setup({
             vim.g.beacon_ignore_filetypes = { "NvimTree", "aerial" }
             vim.g.beacon_focus_gained = 1
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
 
@@ -97,13 +98,13 @@ require("lazy").setup({
         "neoclide/coc.nvim",
         branch = "release",
         config = function() require("plug-config/coc") end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Snippets
     {
         "honza/vim-snippets",
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Test plugin
@@ -123,7 +124,7 @@ require("lazy").setup({
         config = function()
             require("plug-config/debugger")
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     {
@@ -132,7 +133,7 @@ require("lazy").setup({
             require("mason").setup()
         end,
         opts = { ensure_installed = { "debugpy" } },
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     ----------------------------------------
@@ -159,7 +160,7 @@ require("lazy").setup({
             keymap({ "n", "t" }, "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp, "Tmux/Vim navigation up.")
             keymap({ "n", "t" }, "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight, "Tmux/Vim navigation right.")
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
 
@@ -189,12 +190,12 @@ require("lazy").setup({
     -- Git integration
     {
         "tpope/vim-fugitive",
-        cond = not vim.g.vscode
+        cond = not vscode
     },
     -- Git signs, hunk actions and text objects
     {
         "lewis6991/gitsigns.nvim",
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
 
@@ -240,7 +241,7 @@ require("lazy").setup({
         config = function()
             require("plug-config/telescope")
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Code outline
@@ -249,13 +250,13 @@ require("lazy").setup({
         config = function()
             require("plug-config/aerial")
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Auto pairs
     {
         "jiangmiao/auto-pairs",
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Which key
@@ -264,7 +265,7 @@ require("lazy").setup({
         config = function()
             require("plug-config/whichKey")
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Vim to tmux panes (e.g execute current file, run tests
@@ -273,7 +274,7 @@ require("lazy").setup({
         config = function()
             require("plug-config/vimux")
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- Sane split resize with Alt-hjkl
@@ -282,19 +283,19 @@ require("lazy").setup({
         config = function()
             require("plug-config/smart-splits")
         end,
-        cond = not vim.g.vscode
+        cond = not vscode
     },
 
     -- CSV highlighted
     {
         'cameron-wags/rainbow_csv.nvim',
         config = true,
-        cond = not vim.g.vscode
+        cond = not vscode
     }
 })
 
 
-if not vim.g.vscode then
+if not vscode then
     require("fold")
     -- ensures that all highlight groups have been set
     require("status_column")
