@@ -167,7 +167,12 @@ source ~/.fzf-tab/fzf-tab.plugin.zsh
 search() {
     RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
     INITIAL_QUERY="${*:-}"
-    EDITOR_COMMAND="nvim {1} +{2}"
+    # Check if in VSCode and set editor command accordingly
+    if [ "$IN_VSCODE" = "true" ]; then
+        EDITOR_COMMAND="code -r -g {1}:{2}"
+    else
+        EDITOR_COMMAND="nvim {1} +{2}"
+    fi
     : | fzf --ansi --disabled --query "$INITIAL_QUERY" \
     --bind "start:reload:$RG_PREFIX {q}" \
     --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
