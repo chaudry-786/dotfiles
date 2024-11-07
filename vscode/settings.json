@@ -24,7 +24,6 @@
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
-    "find-it-faster.general.killTerminalAfterUse": true,
     "json.schemas": [],
     "redhat.telemetry.enabled": false,
     "gitlens.currentLine.enabled": false,
@@ -36,6 +35,10 @@
     "workbench.editor.showTabs": "none",
     "window.menuBarVisibility": "hidden",
     "workbench.activityBar.location": "hidden", // alt+a to toggle
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorWidth": 3,
+    "editor.cursorWidth": 3,
+
 
     // YAML settings
     "yaml.schemas": {
