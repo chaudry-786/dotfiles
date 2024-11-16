@@ -38,7 +38,8 @@
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.cursorWidth": 3,
     "editor.cursorWidth": 3,
-
+    "workbench.tree.indent": 32,
+    "workbench.tree.renderIndentGuides": "always",
 
     // YAML settings
     "yaml.schemas": {
