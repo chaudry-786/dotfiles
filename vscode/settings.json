@@ -68,12 +68,12 @@
     // some mappings in terminal don't work.
     // they must be explicitly stated here not to be passed to shell.
     "terminal.integrated.commandsToSkipShell": [
-      "workbench.debug.action.toggleRepl",
-      "workbench.action.closePanel",
-      "workbench.actions.view.problems",
-      "workbench.action.toggleActivityBarVisibility",
-      "workbench.action.closeSidebar",
-      "workbench.action.openRecent"
+        "workbench.debug.action.toggleRepl",
+        "workbench.action.closePanel",
+        "workbench.actions.view.problems",
+        "workbench.action.toggleActivityBarVisibility",
+        "workbench.action.closeSidebar",
+        "workbench.action.openRecent"
     ],
     // Testing
     "testing.automaticallyOpenPeekView": "never",
@@ -87,5 +87,23 @@
     },
     //GIT
     // smart diff strategy
-    "diffEditor.useInlineViewWhenSpaceIsLimited": true
+    "diffEditor.useInlineViewWhenSpaceIsLimited": true,
+
+    // Prettier settings
+    "prettier.tabWidth": 4,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }
