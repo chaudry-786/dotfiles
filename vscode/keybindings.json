@@ -52,12 +52,12 @@
     {
         "command": "vscode-neovim.send",
         "key": "ctrl+d",
-        "args": "<C-d>jk",
+        "args": "<C-d>jk"
     },
     {
         "command": "vscode-neovim.send",
         "key": "ctrl+u",
-        "args": "<C-u>jk",
+        "args": "<C-u>jk"
     },
     //
     // Search explorer
@@ -284,6 +284,16 @@
     },
     {
         "key": "alt+c",
+        "command": "workbench.action.toggleAuxiliaryBar",
+        "when": "activeAuxiliary"
+    },
+    {
+        "key": "alt+c",
+        "command": "workbench.action.chat.openInSidebar",
+        "when": "!auxiliaryBarFocus || !activeAuxiliary"
+    },
+    {
+        "key": "alt+shift+c",
         "command": "workbench.action.chat.openInEditor"
     },
     {
@@ -359,5 +369,5 @@
     {
         "key": "ctrl+r",
         "command": "-workbench.action.openRecent"
-    },
+    }
 ]
