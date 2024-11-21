@@ -20,6 +20,7 @@
     // ctrl+alt to see the hints
     "editor.inlayHints.enabled": "offUnlessPressed",
     "editor.detectIndentation": false,
+    "search.quickOpen.history.filterSortOrder": "recency",
 
     // Extension settings
     "extensions.experimental.affinity": {
