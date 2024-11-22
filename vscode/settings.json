@@ -19,6 +19,8 @@
     "files.trimTrailingWhitespace": true,
     // ctrl+alt to see the hints
     "editor.inlayHints.enabled": "offUnlessPressed",
+    "editor.detectIndentation": false,
+    "search.quickOpen.history.filterSortOrder": "recency",
 
     // Extension settings
     "extensions.experimental.affinity": {
@@ -107,5 +109,11 @@
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "Prettier-SQL.keywordCase": "upper"
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "Prettier-SQL.keywordCase": "upper",
 }
