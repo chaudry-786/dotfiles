@@ -106,5 +106,6 @@
     },
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "Prettier-SQL.keywordCase": "upper"
 }
