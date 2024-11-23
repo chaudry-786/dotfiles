@@ -32,8 +32,18 @@ keymap("n", "<leader>rn", v_c("editor.action.rename"), "Refactor: rename")
 keymap("n", "gd", v_c("editor.action.revealDefinition"), "Go to definition")
 keymap("n", "gD", v_c("editor.action.revealDefinitionAside"), "Reveal definition aside")
 keymap("n", "gr", v_c("editor.action.goToReferences"), "Go to references")
-keymap("v", "<leader><leader>f", v_c("editor.action.formatSelection"), "Format selection")
-keymap("v", "<leader><leader>F", v_c("prettier-sql-vscode.format-selection"), "Format SQL selection")
+keymap("v", "<leader><leader>f", function()
+    -- Apply default visual format or SQL specific if 'select' is found in query
+    if vim.fn.mode() == 'v' or vim.fn.mode() == 'V' then
+        local visual_text = table.concat(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos(".")), "\n")
+        if string.find(string.lower(visual_text), "select") then
+            Vscode.call("prettier-sql-vscode.format-selection")
+            return
+        end
+    end
+    Vscode.call("editor.action.formatSelection")
+end, "Format document/cell.")
+
 keymap("n", "<leader><leader>f", function()
     local filename = vim.fn.expand('%:t')
     if filename:match('%.ipynb[#%%]') then
