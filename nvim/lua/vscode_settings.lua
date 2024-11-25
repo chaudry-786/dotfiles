@@ -1,4 +1,5 @@
 local keymap = map
+vim = vim
 
 vim.cmd("highlight YankHighlight guibg=#5b737e blend=50")
 vim.opt.spell = false
@@ -32,13 +33,65 @@ keymap("n", "<leader>rn", v_c("editor.action.rename"), "Refactor: rename")
 keymap("n", "gd", v_c("editor.action.revealDefinition"), "Go to definition")
 keymap("n", "gD", v_c("editor.action.revealDefinitionAside"), "Reveal definition aside")
 keymap("n", "gr", v_c("editor.action.goToReferences"), "Go to references")
+
+local function add_tripel_quotes(original_visual_text)
+    local cursor_pos = vim.fn.getpos(".")
+    local o_pos = vim.fn.getpos("v")
+    local visual_text = table.concat(vim.fn.getregion(o_pos, cursor_pos), "\n")
+
+    if visual_text == original_visual_text then
+        Vscode.notify("Text not changed, not doing anything.")
+        return
+    end
+
+    local start_pos
+    local end_pos
+
+    -- Combine line and col number to find true start position
+    if (cursor_pos[2] + cursor_pos[3]) < (o_pos[2] + o_pos[3]) then
+        start_pos = o_pos
+        end_pos = cursor_pos
+    else
+        start_pos = cursor_pos
+        end_pos = o_pos
+    end
+
+    local start_line = vim.fn.getline(start_pos[2])
+    local preceeding_text = string.sub(start_line, start_pos[3] - 3, start_pos[3] - 1)
+    -- Workout how many quotes to add
+    local quote_starting_pos = string.find(preceeding_text, [["+$]])
+    local quotest_to_add
+    if quote_starting_pos == nil then
+        quotest_to_add = string.rep([["]], 3)
+    else
+        quotest_to_add = string.rep([["]], quote_starting_pos - 1)
+    end
+    local line_to_udpate = start_line:gsub('()', { [start_pos[3]] = quotest_to_add })
+    vim.fn.setline(start_pos[2], line_to_udpate)
+
+    -- End quotes
+    local end_line = vim.fn.getline(end_pos[2])
+    local after_text = string.sub(end_line, end_pos[3] + 1, end_pos[3] + 4)
+    -- Workout how many quotes to add
+    local quote_starting_pos = string.find(after_text, [[^"+]])
+    if quote_starting_pos == nil then
+        quotest_to_add = string.rep([["]], 3)
+    else
+        quotest_to_add = string.rep([["]], 3 - quote_starting_pos)
+    end
+    local line_to_udpate = end_line:gsub('()', { [end_pos[3] + 1] = quotest_to_add })
+    vim.fn.setline(end_pos[2], line_to_udpate)
+end
+
 keymap("v", "<leader><leader>f", function()
     -- Apply default visual format or SQL specific if 'select' is found in query
     if vim.fn.mode() == 'v' or vim.fn.mode() == 'V' then
         local visual_text = table.concat(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos(".")), "\n")
         if string.find(string.lower(visual_text), "select") then
             Vscode.call("prettier-sql-vscode.format-selection")
-            return
+            vim.defer_fn(function()
+                add_tripel_quotes(visual_text)
+            end, 100)
         end
     end
     Vscode.call("editor.action.formatSelection")
