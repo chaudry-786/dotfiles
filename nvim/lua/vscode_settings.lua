@@ -62,7 +62,9 @@ local function add_tripel_quotes(original_visual_text)
     local quote_starting_pos = string.find(preceeding_text, [["+$]])
     local quotest_to_add
     if quote_starting_pos == nil then
-        quotest_to_add = string.rep([["]], 3)
+        -- If double quote doesn't exist, then return
+        return
+        -- quotest_to_add = string.rep([["]], 3)
     else
         quotest_to_add = string.rep([["]], quote_starting_pos - 1)
     end
@@ -75,7 +77,9 @@ local function add_tripel_quotes(original_visual_text)
     -- Workout how many quotes to add
     local quote_starting_pos = string.find(after_text, [[^"+]])
     if quote_starting_pos == nil then
-        quotest_to_add = string.rep([["]], 3)
+        -- If double quote doesn't exist, then return
+        return
+        -- quotest_to_add = string.rep([["]], 3)
     else
         quotest_to_add = string.rep([["]], 3 - quote_starting_pos)
     end
