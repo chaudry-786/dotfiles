@@ -21,6 +21,16 @@
     "editor.inlayHints.enabled": "offUnlessPressed",
     "editor.detectIndentation": false,
     "search.quickOpen.history.filterSortOrder": "recency",
+    // Next-JS, better file names
+    "workbench.editor.customLabels.patterns": {
+        "**/app/**/layout.tsx": "${dirname} - ${filename}.${extname}",
+        "**/app/**/page.tsx": "${dirname} - ${filename}.${extname}",
+        "**/app/**/loading.tsx": "${dirname} - ${filename}.${extname}",
+        "**/app/**/not-found.tsx": "${dirname} - ${filename}.${extname}",
+        "**/app/**/error.tsx": "${dirname} - ${filename}.${extname}",
+        "**/app/**/route.ts": "${dirname} - ${filename}.${extname}",
+        "**/app/**/template.tsx": "${dirname} - ${filename}.${extname}"
+    },
 
     // Extension settings
     "extensions.experimental.affinity": {
