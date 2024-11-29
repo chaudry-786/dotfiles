@@ -47,7 +47,6 @@
     "workbench.editor.showTabs": "none",
     "window.menuBarVisibility": "hidden",
     "workbench.activityBar.location": "hidden", // alt+a to toggle
-    "workbench.sideBar.location": "right",
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.cursorWidth": 3,
     "editor.cursorWidth": 3,
