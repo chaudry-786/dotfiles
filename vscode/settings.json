@@ -127,4 +127,9 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "Prettier-SQL.keywordCase": "upper",
+
+    // Tailwind
+    "tailwind-fold.foldStyle": "QUOTES",
+    "tailwind-fold.showTailwindImage": false
+
 }
