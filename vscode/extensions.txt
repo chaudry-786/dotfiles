@@ -1,7 +1,7 @@
 asvetliakov.vscode-neovim
 bradlc.vscode-tailwindcss
 burkeholland.simple-react-snippets
-csantiago132.intellij-ish-darcula-theme
+nicohlr.pycharm
 dbaeumer.vscode-eslint
 eamodio.gitlens
 esbenp.prettier-vscode

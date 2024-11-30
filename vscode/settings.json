@@ -43,7 +43,7 @@
 
     // UI settings
     "window.zoomLevel": 2,
-    "workbench.colorTheme": "IntelliJ-ish Darcula",
+    "workbench.colorTheme": "PyCharm Night Theme",
     "workbench.editor.showTabs": "none",
     "window.menuBarVisibility": "hidden",
     "workbench.activityBar.location": "hidden", // alt+a to toggle
