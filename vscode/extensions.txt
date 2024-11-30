@@ -1,10 +1,13 @@
 asvetliakov.vscode-neovim
 bradlc.vscode-tailwindcss
 burkeholland.simple-react-snippets
-nicohlr.pycharm
 dbaeumer.vscode-eslint
 eamodio.gitlens
 esbenp.prettier-vscode
+github.copilot
+github.copilot-chat
+inferrinizzard.prettier-sql-vscode
+magicstack.magicpython
 mechatroner.rainbow-csv
 mquandalle.graphql
 ms-azuretools.vscode-docker
@@ -26,6 +29,7 @@ ms-vscode.extension-test-runner
 ms-vscode.remote-explorer
 ms-vscode.remote-server
 msjsdiag.vscode-react-native
+nicohlr.pycharm
 redhat.vscode-yaml
 sumneko.lua
 xadillax.viml
