@@ -417,3 +417,9 @@ keymap("n", "<leader>tf", function()
         Vscode.notify("Fold mode enabled.")
     end
 end, "Toggle Fold Mode: Enable or disable fold mode and notify the user.")
+
+
+------------------------------------------------------------------------------
+-- Extension setting
+------------------------------------------------------------------------------
+keymap("n", "<leader>tc", v_c("tailwind-fold.toggleAutoFold"), "Tailwind conceal toggle")
