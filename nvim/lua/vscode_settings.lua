@@ -153,14 +153,6 @@ keymap("n", "<leader>ff", v_c("workbench.action.quickOpen"), "Quick Open: open t
 keymap("n", "<leader>fb", v_c("workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"),
     "Quick Open: open the previously used editor")
 keymap("n", "<leader>fc", v_c("workbench.action.showCommands"), "Command Palette: show available commands")
--- Grep/Replace
-keymap("n", "<leader>fG",
-    v_c("editor.actions.findWithArgs", { args = { searchString = "hi", isRegex = true, replaceString = "" } }),
-    "Find: search across current buffer")
-keymap("v", "<leader>fG",
-    v_c("editor.actions.findWithArgs",
-        { args = { searchString = "", isRegex = true, findInSelection = true, replaceString = "" }, }),
-    "Find: search across current buffer")
 keymap("n", "<leader>fg", v_c("workbench.action.findInFiles", { args = { query = "", isRegex = true } }),
     "Find: search across files")
 keymap("v", "<leader>fg",
@@ -171,6 +163,17 @@ keymap("n", "<leader>fo", v_c("workbench.action.quickOpen", { args = { "@:" } })
 keymap("n", "<leader>fO", v_c("workbench.action.quickOpen", { args = { "#" } }),
     "Quick Open: navigate to symbols in the entire project")
 keymap("n", "<leader>ov", v_c("dataWrangler.openNotebookVariable"), "Notebook: open the variable viewer in Data Wrangler")
+
+------------------------------------------------------------------------------
+-- Replace | Substitute
+------------------------------------------------------------------------------
+keymap("n", "<leader>s",
+    v_c("editor.actions.findWithArgs", { args = { searchString = "", isRegex = true, replaceString = "" } }),
+    "Find: search across current buffer")
+keymap("v", "<leader>s",
+    v_c("editor.actions.findWithArgs",
+        { args = { searchString = "", isRegex = true, findInSelection = true, replaceString = "" }, }),
+    "Find: search across current buffer")
 
 ------------------------------------------------------------------------------
 -- Folds
