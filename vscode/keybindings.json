@@ -31,6 +31,12 @@
         "command": "workbench.action.files.openFolder",
         "when": "openFolderWorkspaceSupport"
     },
+    // Redo
+    {
+        "command": "vscode-neovim.send",
+        "key": "ctrl+r",
+        "args": "<C-r>"
+    },
     //
     // Tree explorer toggle
     {
