@@ -297,6 +297,7 @@ local function run_file()
         py = "src; python %s",
         lua = "lua %s",
         js = "node %s",
+        tsx = "node %s",
         c = "gcc %s -o %s && ./%s",
         rs = "cargo run",
         sh = "sh %s"
