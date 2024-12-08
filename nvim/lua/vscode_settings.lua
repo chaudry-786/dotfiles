@@ -25,6 +25,8 @@ end
 -- swap windows
 keymap("n", "<leader>>", v_c("workbench.action.moveActiveEditorGroupRight"), "Rotate window right")
 keymap("n", "<leader><", v_c("workbench.action.moveActiveEditorGroupLeft"), "Rotate window left")
+keymap("n", "u", v_c("undo"), "Undo")
+keymap("n", "<C-r>", v_c("redo"), "Redo")
 
 ------------------------------------------------------------------------------
 --- LSP
