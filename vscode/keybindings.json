@@ -87,12 +87,18 @@
     {
         "key": "ctrl+j",
         "command": "workbench.action.navigateDown",
-        "when": "( terminalFocus || editorTextFocus  ) && neovim.mode != 'insert'"
+        "when": "( terminalFocus || editorTextFocus  ) && neovim.mode != 'insert' && !panelMaximized"
     },
     {
         "key": "ctrl+k",
         "command": "workbench.action.navigateUp",
-        "when": "neovim.mode != 'insert'"
+        "when": "neovim.mode != 'insert' && !panelMaximized"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "\u000b" },
+        "when": "panelMaximized"
     },
     {
         "key": "ctrl+l",
@@ -375,5 +381,24 @@
     {
         "key": "ctrl+r",
         "command": "-workbench.action.openRecent"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "-vscode-neovim.send-cmdline",
+        "when": "neovim.init && neovim.mode == 'cmdline'"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "-vscode-neovim.send",
+        "when": "editorTextFocus && neovim.ctrlKeysNormal.j && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "-vscode-neovim.send",
+        "when": "editorTextFocus && neovim.ctrlKeysInsert.j && neovim.init && neovim.mode == 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "-workbench.action.togglePanel"
     }
 ]
