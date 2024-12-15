@@ -269,14 +269,12 @@ end, "Debugger start")
 local function debug_end()
     Vscode.call("workbench.action.debug.stop")
     Vscode.call("workbench.action.closeSidebar")
-    vim.cmd("map <Left> <Nop>")
-    vim.cmd("map <Down> <Nop>")
-    vim.cmd("map <Right> <Nop>")
-    vim.cmd("map <Up> <Nop>")
+    vim.cmd("unmap <Left>")
+    vim.cmd("unmap <Down>")
+    vim.cmd("unmap <Right>")
+    vim.cmd("unmap <Up>")
     debug_mode = false
 end
--- Disable arrow keys
-debug_end()
 
 keymap("n", "<leader>de", function()
     debug_end()

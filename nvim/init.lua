@@ -164,6 +164,25 @@ require("lazy").setup({
     },
 
 
+    -- Multiple cursor
+    {
+        init = function()
+            vim.cmd([[
+            let g:VM_maps = {}
+            let g:VM_maps['Find Under']         = '<C-m>'
+            let g:VM_maps['Find Subword Under'] = '<C-m>'
+        ]])
+        end,
+        "mg979/vim-visual-multi",
+        config = function()
+            vim.cmd("highlight VM_Mono guibg=#FFD700 guifg=#000000")  -- Gold background, black text
+            vim.cmd("highlight VM_Cursor guibg=#FF4500 guifg=#FFFFFF")  -- OrangeRed background, white text
+            vim.cmd("highlight VM_Extend guibg=#32CD32 guifg=#000000")  -- LimeGreen background, black text
+            vim.cmd("highlight VM_Insert guibg=#1E90FF guifg=#FFFFFF")  -- DodgerBlue background, white text
+        end
+        -- For all the keys: help visual-multi
+    },
+
     ----------------------------------------
     -- Text objects
     ----------------------------------------
@@ -291,7 +310,7 @@ require("lazy").setup({
         'cameron-wags/rainbow_csv.nvim',
         config = true,
         cond = not vscode
-    }
+    },
 })
 
 

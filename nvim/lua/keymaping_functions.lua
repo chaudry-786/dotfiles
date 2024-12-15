@@ -14,11 +14,12 @@ end
 local M = {}
 function M.goto_start_of_line()
     local start_pos = vim.fn.col(".")
-    if start_pos ~= 1 then
-        vim.cmd("normal! ^")
-        if start_pos <= vim.fn.col(".") then
-            vim.cmd("normal! 0")
-        end
+    local line_content = vim.fn.getline(".")
+    local first_non_blank = vim.fn.match(line_content, '\\S')
+    if ( start_pos - 1 ) > first_non_blank then
+        return "^"
+    else
+        return "0"
     end
 end
 
