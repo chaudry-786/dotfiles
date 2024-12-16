@@ -13,6 +13,7 @@ end
 
 local M = {}
 function M.goto_start_of_line()
+    -- Moves cursor to start of line ("0") or first non-blank character ("^").
     local start_pos = vim.fn.col(".")
     local line_content = vim.fn.getline(".")
     local first_non_blank = vim.fn.match(line_content, '\\S')
