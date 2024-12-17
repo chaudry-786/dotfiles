@@ -58,9 +58,10 @@ e_map({ "n", "v" }, "d", [["_d]], "Delete without copying.")
 e_map({ "n", "v" }, "D", [["_D]], "Delete to end of line without copying.")
 e_map({ "n", "v" }, "c", [["_c]], "Change without copying.")
 e_map({ "n", "v" }, "C", [["_C]], "Change to end of line without copying.")
-e_map("", "L", "$", "Move to the end of the line")
+-- Note: Changing to vimscript because lua mappings didn't work with multicursor
+-- e_map("", "L", "$", "Move to the end of the line")
+vim.cmd([[map L $]])
 -- map("", "H", kmap_funs.goto_start_of_line, "Dynamic: Move to the start of the line", true)
--- Note: above mappings doesn't work with multi cursors, this does
 vim.cmd([[map H 0]])
 e_map("t", "<Esc>", [[<C-\><C-n>]], "Exit terminal mode")
 e_map("n", "<leader>y", ":%y+<CR>", "Copy the whole buffer")
