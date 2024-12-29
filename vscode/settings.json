@@ -129,6 +129,8 @@
     // Tailwind
     "tailwind-fold.foldStyle": "QUOTES",
     "tailwind-fold.showTailwindImage": false,
-    "tailwind-fold.autoFold": false
+    "tailwind-fold.autoFold": false,
 
+    // Data wrangler
+    "dataWrangler.panels.displayOnTabFocus": false
 }
