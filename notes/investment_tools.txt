@@ -1,0 +1,35 @@
+Install Extension:
+    https://addons.mozilla.org/en-US/firefox/addon/big-search/
+
+Add these custom engines
+{
+    "stock_chart": {
+        "dname": "Stock Chart",
+        "full_url": "https://stockcharts.com/sc3/ui/?s={0}"
+    },
+    "Open Insider": {
+        "dname": "Open Insider",
+        "full_url": "http://openinsider.com/search?q={0}"
+    },
+    "SEC": {
+        "dname": "SEC",
+        "full_url": "https://www.sec.gov/cgi-bin/browse-edgar?company=&match=&CIK={0}&filenum=&State=&Country=&SIC=&owner=exclude&Find=Find+Companies&action=getcompany#contentDiv"
+    },
+    "Seeking Alpha": {
+        "dname": "Seeking Alpha",
+        "full_url": "https://seekingalpha.com/symbol/{0}"
+    },
+    "Whale Wisdom": {
+        "dname": "Whale Wisdom",
+        "full_url": "https://whalewisdom.com/stock/{0}"
+    },
+    "Yahoo Finance": {
+        "dname": "Yahoo Finance",
+        "full_url": "https://finance.yahoo.com/quote/{0}/"
+    },
+    "VizualStocks": {
+        "dname": "VizualStocks",
+        "full_url": "https://vizualstocks.com/premium/companies?ticker={0}"
+    }
+}
+
