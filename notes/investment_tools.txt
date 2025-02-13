@@ -30,6 +30,10 @@ Add these custom engines
     "VizualStocks": {
         "dname": "VizualStocks",
         "full_url": "https://vizualstocks.com/premium/companies?ticker={0}"
+    },
+    "StockanAlysis": {
+        "dname": "StockanAlysis",
+        "full_url": "https://stockanalysis.com/stocks/{0}/"
     }
 }
 
