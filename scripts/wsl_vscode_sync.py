@@ -36,9 +36,9 @@ def sync_settings(settings_file, wsl_settings_file, windows_settings_path):
 
 settings_file_path = "/home/sabah/dotfiles/vscode/settings.json"
 wsl_settings_file_path = "/home/sabah/dotfiles/vscode/wsl_settings.json"
-windows_settings_path = "/mnt/c/Users/7021ov/AppData/Roaming/Code/User/settings.json"
+windows_settings_path = "/mnt/c/Users/Sabah.Din/AppData/Roaming/Code/User/settings.json"
 sync_settings(settings_file_path, wsl_settings_file_path, windows_settings_path)
 
 
 # Copy keybinding file
-shutil.copy("/home/sabah/dotfiles/vscode/keybindings.json", "/mnt/c/Users/7021ov/AppData/Roaming/Code/User/keybindings.json")
+shutil.copy("/home/sabah/dotfiles/vscode/keybindings.json", "/mnt/c/Users/Sabah.Din/AppData/Roaming/Code/User/keybindings.json")

@@ -157,12 +157,12 @@ install_packages() {
 install_and_setup_vim(){
 
     # stable release neovim
-    curl -L -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
+    curl -L -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz
     rm -rf "$HOME/nvim_extracted"
     mkdir "$HOME/nvim_extracted"
-    tar xzvf nvim-linux64.tar.gz -C "$HOME/nvim_extracted"
-    sudo ln -sf "$HOME/nvim_extracted/nvim-linux64/bin/nvim" "/usr/bin/nvim"
-    rm nvim-linux64.tar.gz
+    tar xzvf nvim-linux-x86_64.tar.gz -C "$HOME/nvim_extracted"
+    sudo ln -sf "$HOME/nvim_extracted/nvim-linux-x86_64/bin/nvim" "/usr/bin/nvim"
+    rm nvim-linux-x86_64.tar.gz
 
     # link the config folder
     ln -sfn ~/dotfiles/nvim ~/.config/nvim
@@ -217,6 +217,9 @@ install_font(){
     cd nerd-fonts
     git sparse-checkout add --skip-checks patched-fonts/JetBrainsMono install.sh
     ./install.sh JetBrainsMono
+
+    # Note: for Windows, download and install font manually.
+    # https://www.nerdfonts.com/font-downloads
 }
 
 setup_vscode () {
