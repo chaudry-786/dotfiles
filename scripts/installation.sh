@@ -118,7 +118,7 @@ install_packages() {
     if [ "$machine" == "Mac" ]; then
         packages+=("reattach-to-user-namespace" "nodejs" "neovim" "git-delta")
     elif [ "$machine" == "Linux" ]; then
-        packages+=("xclip" "g++" "gawk" "build-essential")
+        packages+=("xclip" "g++" "gawk" "build-essential" "unzip")
 
 	for package in "${packages[@]}"; do
 	    $installer "$package"
@@ -149,6 +149,14 @@ install_packages() {
         pyenv install -v 3.11.5
         pyenv global 3.11.5
         sudo apt install python3-venv
+
+        # Exa
+        curl -L -O https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip
+        rm -rf "$HOME/exa_extracted"
+        mkdir "$HOME/exa_extracted"
+        unzip exa-linux-x86_64-v0.10.1.zip -d "$HOME/exa_extracted"
+        sudo ln -sf "$HOME/exa_extracted/bin/exa" "/usr/bin/exa"
+        rm exa-linux-x86_64-v0.10.1.zip
     fi
 
 }
