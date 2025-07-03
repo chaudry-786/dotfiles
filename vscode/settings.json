@@ -133,5 +133,11 @@
     "tailwind-fold.autoFold": false,
 
     // Data wrangler
-    "dataWrangler.panels.displayOnTabFocus": false
+    "dataWrangler.panels.displayOnTabFocus": false,
+
+    // Don't show output window (annoying vimcode bug)
+    "workbench.view.showQuietly": {
+        "workbench.panel.output": true
+    }
+
 }
