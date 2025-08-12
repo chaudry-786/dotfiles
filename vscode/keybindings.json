@@ -319,6 +319,15 @@
         "key": "alt+r",
         "command": "testing.refreshTests"
     },
+    // Journal
+    {
+        "key": "ctrl+shift+j",
+        "command": "vscode.open",
+        "args": {
+            "scheme": "file",
+            "path": "/home/sabah/Dropbox/journal/daily_dump.md"
+        }
+    },
     // Removed default mappings
     {
         "key": "ctrl+f",
