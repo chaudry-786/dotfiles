@@ -34,6 +34,10 @@ safe_git_clone() {
 }
 
 setup_ubuntu() {
+    if [[ $(grep -i Microsoft /proc/version) ]]; then
+        echo "MAchine identified as WSL. No action needed from setup_ubuntu"
+        return 0
+    fi
     sudo apt-get install chrome-gnome-shell gnome-tweak-tool
 
     # tip: list all commands:
