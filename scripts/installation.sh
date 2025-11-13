@@ -226,7 +226,7 @@ install_and_setup_zsh() {
 install_font(){
     # insatll jetBrainsMono Nerd Font
     if [[ $(grep -i Microsoft /proc/version) ]]; then
-        echo "For WSL/Windows please download fonts from and install manually. (Drap and Drop) "
+        echo "For WSL/Windows please download fonts from and install manually. (Drag and Drop) "
         echo "https://www.nerdfonts.com/font-downloads"
     else
         cd ~
