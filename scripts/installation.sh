@@ -177,6 +177,7 @@ install_and_setup_vim(){
     rm nvim-linux-x86_64.tar.gz
 
     # link the config folder
+    mkdir -p ~/.config
     ln -sfn ~/dotfiles/nvim ~/.config/nvim
 
     #Neovim Python virtualenv
