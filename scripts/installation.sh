@@ -220,14 +220,16 @@ install_and_setup_zsh() {
 
 install_font(){
     # insatll jetBrainsMono Nerd Font
-    cd ~
-    safe_git_clone "https://www.github.com/ryanoasis/nerd-fonts"  "$HOME/nerd-fonts" --filter=blob:none --sparse
-    cd nerd-fonts
-    git sparse-checkout add --skip-checks patched-fonts/JetBrainsMono install.sh
-    ./install.sh JetBrainsMono
-
-    # Note: for Windows, download and install font manually.
-    # https://www.nerdfonts.com/font-downloads
+    if [[ $(grep -i Microsoft /proc/version) ]]; then
+        echo "For WSL/Windows please download fonts from and install manually. (Drap and Drop) "
+        echo "https://www.nerdfonts.com/font-downloads"
+    else
+        cd ~
+        safe_git_clone "https://www.github.com/ryanoasis/nerd-fonts"  "$HOME/nerd-fonts" --filter=blob:none --sparse
+        cd nerd-fonts
+        git sparse-checkout add --skip-checks patched-fonts/JetBrainsMono install.sh
+        ./install.sh JetBrainsMono
+    fi
 }
 
 setup_vscode () {
