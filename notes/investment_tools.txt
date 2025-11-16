@@ -1,5 +1,7 @@
 finra market for vond info.
 https://finra-markets.morningstar.com/MarketData/Default.jsp
+Sector performance
+https://digital.fidelity.com/prgw/digital/research/sector
 
 Install Extension:
     https://addons.mozilla.org/en-US/firefox/addon/big-search/
