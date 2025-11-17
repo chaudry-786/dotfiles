@@ -33,12 +33,20 @@ def sync_settings(settings_file, wsl_settings_file, windows_settings_path):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
+# # NOTE: Set this before running
+WINDOWS_BASE_PATH = "/mnt/c/Users/n548755/AppData/Roaming/Code/User"
+WSL_BASE_PATH = "/home/sabah/dotfiles"
 
-settings_file_path = "/home/sabah/dotfiles/vscode/settings.json"
-wsl_settings_file_path = "/home/sabah/dotfiles/vscode/wsl_settings.json"
-windows_settings_path = "/mnt/c/Users/Sabah.Din/AppData/Roaming/Code/User/settings.json"
+settings_file_path = f"{WSL_BASE_PATH}/vscode/settings.json"
+wsl_settings_file_path = f"{WSL_BASE_PATH}/vscode/wsl_settings.json"
+windows_settings_path = f"{WINDOWS_BASE_PATH}/settings.json"
 sync_settings(settings_file_path, wsl_settings_file_path, windows_settings_path)
 
-
 # Copy keybinding file
-shutil.copy("/home/sabah/dotfiles/vscode/keybindings.json", "/mnt/c/Users/Sabah.Din/AppData/Roaming/Code/User/keybindings.json")
+shutil.copy(f"{WSL_BASE_PATH}/vscode/keybindings.json", f"{WINDOWS_BASE_PATH}/keybindings.json")
+
+# Copy snippets
+snippets_dir_wsl = f"{WSL_BASE_PATH}/vscode/snippets/"
+snippet_files = os.listdir(f"{WSL_BASE_PATH}/vscode/snippets/")
+for f in snippet_files:
+    shutil.copy(f"{snippets_dir_wsl}/{f}", f"{WINDOWS_BASE_PATH}/snippets/{f}")
