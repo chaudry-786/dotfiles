@@ -37,15 +37,16 @@ def sync_settings(settings_file, wsl_settings_file, windows_settings_path):
 WINDOWS_BASE_PATH = "/mnt/c/Users/n548755/AppData/Roaming/Code/User"
 WSL_BASE_PATH = "/home/sabah/dotfiles"
 
+# 1) Merge and copy settings files
 settings_file_path = f"{WSL_BASE_PATH}/vscode/settings.json"
 wsl_settings_file_path = f"{WSL_BASE_PATH}/vscode/wsl_settings.json"
 windows_settings_path = f"{WINDOWS_BASE_PATH}/settings.json"
 sync_settings(settings_file_path, wsl_settings_file_path, windows_settings_path)
 
-# Copy keybinding file
+# 2) Copy keybinding file
 shutil.copy(f"{WSL_BASE_PATH}/vscode/keybindings.json", f"{WINDOWS_BASE_PATH}/keybindings.json")
 
-# Copy snippets
+# 3) Copy snippets
 snippets_dir_wsl = f"{WSL_BASE_PATH}/vscode/snippets/"
 snippet_files = os.listdir(f"{WSL_BASE_PATH}/vscode/snippets/")
 for f in snippet_files:
