@@ -300,7 +300,7 @@ local function run_file()
         tsx = "node %s",
         c = "gcc %s -o %s && ./%s",
         rs = "cargo run",
-        sh = "sh %s"
+        sh = "bash %s"
     }
     local filename = vim.fn.expand("%:p")
     if string.match(filename, "^vscode%-remote") then
