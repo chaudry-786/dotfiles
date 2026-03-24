@@ -117,7 +117,7 @@ install_packages() {
     # install curl first, because it's dependency on other installations
     $installer curl
 
-    local packages=("git" "ripgrep" "bat")
+    local packages=("git" "bat")
 
     if [ "$machine" == "Mac" ]; then
         packages+=("reattach-to-user-namespace" "nodejs" "neovim" "git-delta")
@@ -127,6 +127,11 @@ install_packages() {
 	for package in "${packages[@]}"; do
 	    $installer "$package"
 	done
+
+        # RIPGREP
+        RIPGREP_VERSION=$(curl -s "https://api.github.com/repos/BurntSushi/ripgrep/releases/latest" | grep -Po '"tag_name": "\K[0-9.]+')
+        wget -qO ripgrep.deb "https://github.com/BurntSushi/ripgrep/releases/latest/download/ripgrep_${RIPGREP_VERSION}-1_amd64.deb"
+        sudo apt install -y ./ripgrep.deb
 
         # node and npm installation
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash

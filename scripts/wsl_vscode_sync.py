@@ -44,10 +44,10 @@ windows_settings_path = f"{WINDOWS_BASE_PATH}/settings.json"
 sync_settings(settings_file_path, wsl_settings_file_path, windows_settings_path)
 
 # 2) Copy keybinding file
-shutil.copy(f"{WSL_BASE_PATH}/vscode/keybindings.json", f"{WINDOWS_BASE_PATH}/keybindings.json")
+shutil.copyfile(f"{WSL_BASE_PATH}/vscode/keybindings.json", f"{WINDOWS_BASE_PATH}/keybindings.json")
 
 # 3) Copy snippets
 snippets_dir_wsl = f"{WSL_BASE_PATH}/vscode/snippets/"
 snippet_files = os.listdir(f"{WSL_BASE_PATH}/vscode/snippets/")
 for f in snippet_files:
-    shutil.copy(f"{snippets_dir_wsl}/{f}", f"{WINDOWS_BASE_PATH}/snippets/{f}")
+    shutil.copyfile(f"{snippets_dir_wsl}/{f}", f"{WINDOWS_BASE_PATH}/snippets/{f}")
