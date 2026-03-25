@@ -2,6 +2,8 @@ import json
 import os
 import re
 import shutil
+import subprocess
+import getpass
 
 
 def load_json_without_comments(json_file):
@@ -33,8 +35,31 @@ def sync_settings(settings_file, wsl_settings_file, windows_settings_path):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
-# # NOTE: Set this before running
-WINDOWS_BASE_PATH = "/mnt/c/Users/n548755/AppData/Roaming/Code/User"
+def get_windows_username():
+    pwsh = shutil.which("powershell.exe")
+    if pwsh:
+        try:
+            completed = subprocess.run(
+                [pwsh, "-NoProfile", "-Command", "$env:UserName"],
+                capture_output=True,
+                text=True,
+                check=False,
+                timeout=2
+            )
+            username = completed.stdout.strip()
+            if username:
+                return username
+        except Exception:
+                # Ask the user instead of raising an error
+            username = input("Could not detect Windows username. Please enter your Windows username: ").strip()
+            if username:
+                return username
+            else:
+                raise ValueError("User name not provided")
+
+# NOTE: Set this before running
+WINDOW_USER = get_windows_username()
+WINDOWS_BASE_PATH = f"/mnt/c/Users/{WINDOW_USER}/AppData/Roaming/Code/User"
 WSL_BASE_PATH = "/home/sabah/dotfiles"
 
 # 1) Merge and copy settings files
