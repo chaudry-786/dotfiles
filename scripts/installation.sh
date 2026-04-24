@@ -34,6 +34,7 @@ safe_git_clone() {
 }
 
 setup_ubuntu() {
+    sudo apt update && sudo apt upgrade -y
     if [[ $(grep -i Microsoft /proc/version) ]]; then
         echo "MAchine identified as WSL. No action needed from setup_ubuntu"
         return 0
@@ -243,6 +244,9 @@ install_font(){
 }
 
 setup_vscode () {
+    # install extensions
+    cat vscode/extensions.txt | xargs -L 1 code --install-extension
+
     if [[ $(grep -i Microsoft /proc/version) ]]; then
         python3 ~/dotfiles/scripts/wsl_vscode_sync.py
     else
