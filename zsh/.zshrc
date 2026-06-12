@@ -119,6 +119,7 @@ v() {
         nvim "$@"
     fi
 }
+alias vim="nvim"
 copydir() {
     echo -n "$PWD" | xclip -selection clipboard
 }

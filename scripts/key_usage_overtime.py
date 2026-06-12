@@ -148,4 +148,4 @@ def update_graph(selected_keys, start_date, end_date, n_clicks):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run(debug=True)

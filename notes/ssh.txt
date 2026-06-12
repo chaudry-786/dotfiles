@@ -1,6 +1,6 @@
 # example git
-#   e.g git clone personal:sabah1994/dotfiles
-#   e.g git remote add origin personal:sabah1994/dotfiles
+#   e.g git clone personal:chaudry-786/dotfiles
+#   e.g git remote add origin personal:chaudry-786/dotfiles
 
 # example ssh
 #   ssh personal
