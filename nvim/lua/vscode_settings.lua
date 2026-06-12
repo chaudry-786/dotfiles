@@ -247,13 +247,19 @@ end
 -- Start debugger
 local function debug_start()
     local filename = vim.fn.expand('%:t')
+    -- python notebook
     if filename:match('%.ipynb[#%%]') then
         Vscode.call('jupyter.runAndDebugCell')
+    -- python test file
     elseif filename:match('^test_.*%.py$') or filename:match('.*_test%.py$') then
         -- Async call
         Vscode.action('testing.debugAtCursor')
+    -- Rust
     elseif filename:match('%.rs$') then
         Vscode.call('rust-analyzer.debug')
+    -- react-native
+    elseif filename:match('%.tsx$') then
+            Vscode.call('expo.debug.start')
     else
         Vscode.call('workbench.action.debug.start')
     end
