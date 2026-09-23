@@ -31,6 +31,12 @@
         "command": "workbench.action.files.openFolder",
         "when": "openFolderWorkspaceSupport"
     },
+    {
+      "key": "shift+enter",
+      "command": "workbench.action.terminal.sendSequence",
+      "args": { "text": "\u001b\r" },
+      "when": "terminalFocus"
+    },
     // Redo
     {
         "command": "vscode-neovim.send",
