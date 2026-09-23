@@ -19,6 +19,7 @@ local filetype_and_commands = {
     c = [["clear; gcc " . %s .  " -o " . expand("%%:t:r") . " && ./" . expand("%%:t:r")]],
     rust = [["clear; cargo run"]],
     sh = [["clear;  ./" . %s ]],
+    typescriptreact = [[ "clear; npx ts-node " . %s ]]
 
 }
 send_commands_to_tmux_pane(filetype_and_commands)
