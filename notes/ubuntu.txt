@@ -23,3 +23,11 @@ move window between workspaces:
     - Using dconf-editor (as your user, not root), navigate to org -> gnome -> desktop -> wm -> preferences
 
     - Select focus mode and change it to mouse
+
+
+4) alt+tab behaivour fix
+    # Disable app-group switching for Alt+Tab
+    gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
+
+    # Enable individual window switching for Alt+Tab
+    gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
