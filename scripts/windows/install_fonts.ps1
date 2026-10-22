@@ -1,5 +1,5 @@
 # Install all .ttf files in -Source for the current user (no admin rights needed).
-# Called from scripts/install/wsl.sh
+# Called from scripts/setup/wsl.sh
 param(
     [Parameter(Mandatory = $true)][string]$Source
 )

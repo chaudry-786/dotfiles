@@ -32,10 +32,10 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-source "$DOTFILES/scripts/install/common.sh"
-source "$DOTFILES/scripts/install/components.sh"
-source "$DOTFILES/scripts/install/updates.sh"
-source "$DOTFILES/scripts/install/wsl.sh"
+source "$DOTFILES/scripts/setup/common.sh"
+source "$DOTFILES/scripts/setup/components.sh"
+source "$DOTFILES/scripts/setup/updates.sh"
+source "$DOTFILES/scripts/setup/wsl.sh"
 
 STEPS=(base zsh packages tmux kitty vim link languages font vscode terminal)
 # no associative arrays: macOS ships bash 3.2

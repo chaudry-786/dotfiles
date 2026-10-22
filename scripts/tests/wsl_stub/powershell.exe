@@ -1,5 +1,5 @@
 #!/bin/bash
-# Fake powershell.exe for utils/test_wsl.sh. Emulates the few commands the
+# Fake powershell.exe for scripts/test_wsl.sh. Emulates the few commands the
 # installer sends to Windows, on a fake C: drive in /mnt/c. Output uses CRLF
 # like the real one. Every command is logged to $WIN_LOG.
 

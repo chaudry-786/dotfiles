@@ -29,7 +29,7 @@ what_os(){
     echo "$machine"
 }
 
-# DOTFILES_WSL=1 forces WSL mode (used by utils/test_wsl.sh)
+# DOTFILES_WSL=1 forces WSL mode (used by scripts/test_wsl.sh)
 is_wsl() {
     [ "${DOTFILES_WSL:-}" = 1 ] && return 0
     grep -qi microsoft /proc/version 2>/dev/null

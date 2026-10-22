@@ -1,4 +1,4 @@
-"""Tests for the WSL -> Windows sync scripts. Run: python3 utils/test_wsl_sync.py"""
+"""Tests for the WSL -> Windows sync scripts. Run: python3 scripts/test_wsl_sync.py"""
 
 import json
 import os
