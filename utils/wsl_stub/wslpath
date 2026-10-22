@@ -1,0 +1,16 @@
+#!/bin/bash
+# Fake wslpath for utils/test_wsl.sh: C:\a\b <-> /mnt/c/a/b
+case "$1" in
+    -u)
+        p="${2//\\//}"
+        drive=$(echo "${p:0:1}" | tr '[:upper:]' '[:lower:]')
+        echo "/mnt/$drive${p:2}"
+        ;;
+    -w)
+        p="${2#/mnt/}"
+        drive=$(echo "${p:0:1}" | tr '[:lower:]' '[:upper:]')
+        rest="${p:1}"
+        echo "$drive:${rest//\//\\}"
+        ;;
+    *) echo "fake wslpath: unsupported $*" >&2; exit 1 ;;
+esac

@@ -1,19 +1,17 @@
 {
-    "alwayShowTabs": false,
+    "alwaysShowTabs": false,
     "profiles": {
-        "list": [
-            {
-                "font": {
-                    "face": "JetBrainsMonoNL Nerd Font",
-                    "size": 12
-                },
-                "hidden": true,
-                "padding": "0",
-                "scrollbarState": "hidden",
-                "colorSchema": "Gruvbox Dark"
-            }
-        ]
+        "defaults": {
+            "font": {
+                "face": "JetBrainsMonoNL Nerd Font",
+                "size": 12
+            },
+            "padding": "0",
+            "scrollbarState": "hidden",
+            "colorScheme": "Gruvbox Dark"
+        }
     },
+    "actions": [],
     "keybindings": [
         {
             "id": "User.sendInput.8882FD6D",

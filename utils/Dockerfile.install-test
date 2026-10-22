@@ -1,0 +1,18 @@
+# Fresh Ubuntu with a sudo user, in the state README.md starts from (git + ssh
+# installed, no curl). Used by utils/test_install.sh and utils/test_wsl.sh
+ARG UBUNTU=24.04
+FROM ubuntu:${UBUNTU}
+
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y sudo git openssh-client ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# ubuntu images >= 23.04 ship a default "ubuntu" user with uid 1000
+RUN (userdel -r ubuntu 2>/dev/null || true) \
+    && useradd -m -s /bin/bash tester \
+    && echo "tester ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/tester
+
+USER tester
+ENV USER=tester HOME=/home/tester
+WORKDIR /home/tester
+COPY --chown=tester:tester . /home/tester/dotfiles
