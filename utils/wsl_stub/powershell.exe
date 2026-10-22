@@ -1,0 +1,68 @@
+#!/bin/bash
+# Fake powershell.exe for utils/test_wsl.sh. Emulates the few commands the
+# installer sends to Windows, on a fake C: drive in /mnt/c. Output uses CRLF
+# like the real one. Every command is logged to $WIN_LOG.
+
+cmd="${*: -1}"
+echo "$cmd" >> "${WIN_LOG:-/tmp/win.log}"
+
+C=/mnt/c
+LOCAL="$C/Users/tester/AppData/Local"
+CODE_DIR="$LOCAL/Programs/Microsoft VS Code"
+FAKE="$C/.fake"
+mkdir -p "$FAKE"
+
+out() { printf '%s\r\n' "$@"; }
+
+case "$cmd" in
+    *"GetEnvironmentVariable('LOCALAPPDATA')"*) out 'C:\Users\tester\AppData\Local' ;;
+    *"GetEnvironmentVariable('APPDATA')"*) out 'C:\Users\tester\AppData\Roaming' ;;
+    *"GetEnvironmentVariable('TEMP')"*) out 'C:\Users\tester\AppData\Local\Temp' ;;
+    *"Get-Command winget"*) out winget ;;
+    *"winget install"*"Microsoft.VisualStudioCode"*)
+        mkdir -p "$CODE_DIR/bin"
+        touch "$CODE_DIR/bin/code.cmd"
+        # WSL side CLI: log calls, list what was installed
+        cat > "$CODE_DIR/bin/code" <<'EOF'
+#!/bin/bash
+echo "$*" >> /mnt/c/.fake/wsl-code.log
+EOF
+        chmod +x "$CODE_DIR/bin/code"
+        out "Successfully installed"
+        ;;
+    *"winget install"*"Microsoft.WindowsTerminal"*)
+        mkdir -p "$LOCAL/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState"
+        out "Successfully installed"
+        ;;
+    *"winget list"*) out "No installed package found matching input criteria." ;;
+    *"code.cmd'"*)
+        args="${cmd#*code.cmd\' }"
+        if [ "$args" = "--list-extensions" ]; then
+            [ -f "$FAKE/win-extensions.txt" ] && sed 's/$/\r/' "$FAKE/win-extensions.txt"
+        else
+            # shellcheck disable=SC2086
+            set -- $args
+            while [ $# -gt 0 ]; do
+                [ "$1" = --install-extension ] && { echo "$2" >> "$FAKE/win-extensions.txt"; shift; }
+                shift
+            done
+        fi
+        ;;
+    *"install_fonts.ps1' -Source '"*)
+        src="${cmd##*-Source \'}"
+        src=$(wslpath -u "${src%\'}")
+        mkdir -p "$LOCAL/Microsoft/Windows/Fonts"
+        for f in "$src"/*.ttf; do
+            cp "$f" "$LOCAL/Microsoft/Windows/Fonts/"
+            echo "$(basename "${f%.ttf}") (TrueType)" >> "$FAKE/font-registry.txt"
+        done
+        out "Installed fonts"
+        ;;
+    *"Get-ItemProperty"*"Fonts"*)
+        name="${cmd##*\).\'}"
+        name="${name%\'}"
+        grep -qxF "$name" "$FAKE/font-registry.txt" 2>/dev/null && out "C:\\fonts\\$name"
+        ;;
+    *) echo "fake powershell: unknown command: $cmd" >&2; exit 1 ;;
+esac
+exit 0

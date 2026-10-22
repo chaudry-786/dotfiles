@@ -1,305 +1,283 @@
 #!/bin/bash
+#
+# One script to install and update everything (Ubuntu, WSL + Windows, Mac).
+# Safe to re-run: installs what's missing, then offers available updates.
+#
+# Usage: installation.sh [-y|--yes] [--check] [--skip step1,step2,...]
+#   -y, --yes   don't ask: install everything missing and apply all updates
+#   --check     only report what's missing and what can be updated (exit 1 if anything)
+#   --skip      comma separated steps to skip:
+#               base,zsh,packages,tmux,kitty,vim,link,languages,font,vscode,terminal
+#
+# See README.md for what to run on a fresh Ubuntu / Windows (WSL) machine.
 
 # Exit on error
 set -e
 
-what_os(){
-    unameOut="$(uname -s)"
-    case "${unameOut}" in
-        Linux*)     machine=Linux;;
-        Darwin*)    machine=Mac;;
-        CYGWIN*)    machine=Cygwin;;
-        MINGW*)     machine=MinGw;;
-        *)          machine="UNKNOWN:${unameOut}"
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ASSUME_YES=false
+CHECK_ONLY=false
+SKIP_STEPS=","
+
+usage() { sed -n '3,14p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -y|--yes) ASSUME_YES=true ;;
+        --check) CHECK_ONLY=true ;;
+        --skip) SKIP_STEPS=",$2,"; shift ;;
+        -h|--help) usage; exit 0 ;;
+        *) echo "Unknown option: $1"; usage; exit 1 ;;
     esac
-    echo "$machine"
+    shift
+done
+
+source "$DOTFILES/scripts/install/common.sh"
+source "$DOTFILES/scripts/install/components.sh"
+source "$DOTFILES/scripts/install/updates.sh"
+source "$DOTFILES/scripts/install/wsl.sh"
+
+STEPS=(base zsh packages tmux kitty vim link languages font vscode terminal)
+# no associative arrays: macOS ships bash 3.2
+step_desc() {
+    case "$1" in
+        base) echo "base tools$(gnome_desktop && echo " and GNOME settings")" ;;
+        zsh) echo "Zsh, oh-my-zsh and plugins" ;;
+        packages) echo "packages (node, python, lazygit, ...)" ;;
+        tmux) echo "Tmux" ;;
+        kitty) echo "Kitty" ;;
+        vim) echo "Neovim" ;;
+        link) echo "config links" ;;
+        languages) echo "languages (gcc, lua)" ;;
+        font) echo "JetBrainsMonoNL Nerd Font" ;;
+        vscode) echo "VS Code and extensions" ;;
+        terminal) echo "Windows Terminal" ;;
+    esac
 }
+DECLINED_STEPS=","
 
-
-safe_git_clone() {
-    local repo_url=$1
-    local destination=$2
-    # Replace tilde with the home directory path
-    destination=$(eval echo "$destination")
-    shift 2
-
-    # Check if the destination directory already exists
-    if [ -d "$destination" ]; then
-        echo "Removing existing directory: $destination"
-        rm -rf "$destination"
+step_enabled() {
+    [[ $SKIP_STEPS == *",$1,"* ]] && return 1
+    [[ $DECLINED_STEPS == *",$1,"* ]] && return 1
+    [ "$1" == base ] && [ "$machine" != "Linux" ] && return 1
+    # Windows Terminal is used on WSL instead of kitty
+    if is_wsl; then
+        [ "$1" != kitty ]
+    else
+        [ "$1" != terminal ]
     fi
-
-    # Clone the repository with any additional arguments provided
-    git clone "$@" "$repo_url" "$destination"
 }
-
-setup_ubuntu() {
-    sudo apt update && sudo apt upgrade -y
-    if [[ $(grep -i Microsoft /proc/version) ]]; then
-        echo "MAchine identified as WSL. No action needed from setup_ubuntu"
-        return 0
-    fi
-    sudo apt-get install chrome-gnome-shell gnome-tweak-tool
-
-    # tip: list all commands:
-    # gsettings list-keys org.gnome.desktop.wm.keybindings
-
-    # SETUP KEYMAPPINGS
-    #move between workspaces
-    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Control>Right']"
-    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Control>Left']"
-
-    # maximise and unmaximize window with window+up and dow arros
-    # gsettings set org.gnome.desktop.wm.keybindings maximize "['<Super>Up']"
-    # gsettings set org.gnome.desktop.wm.keybindings  unmaximize "['<Super>Down']"
-
-    #map caps to ctrl
-    gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
-
-}
-
-install_and_setup_tmux () {
-    $1 install tmux
-    cd ~/
-    ln -sf ~/dotfiles/tmux/.tmux.conf ~/.tmux.conf
-    safe_git_clone "https://github.com/tmux-plugins/tpm" "$HOME/.tmux/plugins/tpm"
-}
-
-
-install_and_setup_kitty () {
-    # install kitty
-    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-    mkdir -p ~/.local/bin
-    ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/
-    cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
-    sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
-    sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
-
-    # link config file
-    mkdir -p ~/.config/kitty
-    ln -sf ~/dotfiles/kitty/kitty.conf ~/.config/kitty/kitty.conf
-}
-
-
-link_files () {
-    # link gitignore
-    ln -sf ~/dotfiles/git/.gitconfig ~/.gitconfig
-    ln -sf ~/dotfiles/git/.gitignore ~/.gitignore
-
-    # rg uses this in non-git repos
-    ln -sf ~/dotfiles/git/.gitignore ~/.ignore
-
-    # clang-format
-    ln -sf ~/dotfiles/langSettings/.clang-format ~/.clang-format
-}
-
 
 install_homebrew(){
-    which -s brew
-    if [[ $? != 0 ]] ; then
+    if ! has brew; then
         echo "==================================="
         echo "Installing Homebrew"
         echo "==================================="
-        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
 }
 
+# Check everything the script needs before changing anything, and tell the
+# user how to fix what's missing.
+preflight() {
+    local errors=() warnings=()
 
-install_languages() {
-    # gcc and make
-    $1 install build-essential
-    $1 install lua5.3
-}
+    [ "$(id -u)" -ne 0 ] || errors+=("Don't run this as root or with sudo. Run it as your normal user, it uses sudo itself.")
 
-
-install_packages() {
-    local installer="$1 install"
-
-    # install curl first, because it's dependency on other installations
-    $installer curl
-
-    local packages=("git" "bat")
-
-    if [ "$machine" == "Mac" ]; then
-        packages+=("reattach-to-user-namespace" "nodejs" "neovim" "git-delta")
-    elif [ "$machine" == "Linux" ]; then
-        packages+=("xclip" "g++" "gawk" "build-essential" "unzip")
-
-	for package in "${packages[@]}"; do
-	    $installer "$package"
-	done
-
-        # RIPGREP
-        RIPGREP_VERSION=$(curl -s "https://api.github.com/repos/BurntSushi/ripgrep/releases/latest" | grep -Po '"tag_name": "\K[0-9.]+')
-        wget -qO ripgrep.deb "https://github.com/BurntSushi/ripgrep/releases/latest/download/ripgrep_${RIPGREP_VERSION}-1_amd64.deb"
-        sudo apt install -y ./ripgrep.deb
-
-        # node and npm installation
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-        nvm install node --lts
-        source ~/.zshrc
-        npm install -g tree-sitter-cli
-
-        # git-delta | better git diff
-        gitDeltaFile="git-delta_x.xx.x_amd64.deb"
-        curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" \
-        | grep "browser_download_url.*amd64.deb" | grep -v "musl" \
-        | cut -d : -f 2,3 | tr -d \" | wget -qi - -O "$gitDeltaFile"
-        sudo dpkg -i "$gitDeltaFile" && rm "$gitDeltaFile"
-
-        # lazy git
-        LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v*([^"]+)".*/\1/')
-        curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-        sudo tar xf lazygit.tar.gz -C /usr/local/bin lazygit
-
-        # pyenv
-	    sudo apt install build-essential curl libbz2-dev libffi-dev liblzma-dev libncursesw5-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libxmlsec1-dev llvm make tk-dev wget xz-utils zlib1g-dev
-        curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-        source ~/.zshrc
-        pyenv install -v 3.11.5
-        pyenv global 3.11.5
-        sudo apt install python3-venv
-
-        # Exa
-        curl -L -O https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip
-        rm -rf "$HOME/exa_extracted"
-        mkdir "$HOME/exa_extracted"
-        unzip exa-linux-x86_64-v0.10.1.zip -d "$HOME/exa_extracted"
-        sudo ln -sf "$HOME/exa_extracted/bin/exa" "/usr/bin/exa"
-        rm exa-linux-x86_64-v0.10.1.zip
+    if [ "$machine" == "Linux" ]; then
+        has apt-get || errors+=("Only Ubuntu/Debian (apt) is supported.")
+        [ "$(uname -m)" == x86_64 ] || errors+=("Only x86_64 is supported (lazygit, neovim and exa are downloaded as x86_64 builds).")
+        has sudo || errors+=("sudo is not installed.")
     fi
 
-}
+    if ! timeout 10 bash -c '</dev/tcp/github.com/443' 2>/dev/null; then
+        errors+=("No internet connection (can't reach github.com).")
+    fi
 
+    local free_kb
+    free_kb=$(df -Pk "$HOME" | awk 'NR==2 {print $4}')
+    [ "${free_kb:-0}" -gt $((5 * 1024 * 1024)) ] || warnings+=("Less than 5GB free in $HOME, the installation needs about 3GB.")
 
-install_and_setup_vim(){
+    if is_wsl; then
+        case "$DOTFILES" in
+            /mnt/*) warnings+=("The dotfiles are on the Windows drive ($DOTFILES). Clone them inside WSL (~/dotfiles), it's much faster.") ;;
+        esac
+        local win_error
+        if win_error=$(win_init 2>&1); then
+            win_init
+            if { step_enabled vscode || step_enabled terminal; } && ! win_has_winget; then
+                errors+=("winget is missing on Windows (needed for VS Code and Windows Terminal).
+       Install 'App Installer' from the Microsoft Store, or skip with: --skip vscode,terminal")
+            fi
+        else
+            errors+=("${win_error#*ERROR:* }")
+        fi
+    fi
 
-    # stable release neovim
-    curl -L -O https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz
-    rm -rf "$HOME/nvim_extracted"
-    mkdir "$HOME/nvim_extracted"
-    tar xzvf nvim-linux-x86_64.tar.gz -C "$HOME/nvim_extracted"
-    sudo ln -sf "$HOME/nvim_extracted/nvim-linux-x86_64/bin/nvim" "/usr/bin/nvim"
-    rm nvim-linux-x86_64.tar.gz
+    local w
+    for w in "${warnings[@]}"; do warn "$w"; done
+    if [ ${#errors[@]} -gt 0 ]; then
+        echo -e "${RED}Can't continue:${NC}"
+        for w in "${errors[@]}"; do echo -e "  - $w"; done
+        exit 1
+    fi
 
-    # link the config folder
-    mkdir -p ~/.config
-    ln -sfn ~/dotfiles/nvim ~/.config/nvim
-
-    #Neovim Python virtualenv
-    rm -rf ~/vim_venv
-    python3 -m venv ~/vim_venv
-    source ~/vim_venv/bin/activate
-    pip install black neovim
-}
-
-
-install_and_setup_zsh() {
-
-    # install zsh and oh-my-zsh
-    $1 install zsh
-    chsh -s $(which zsh)
-    rm -rf ~/.oh-my-zsh
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
-
-    # auto suggestion plugin
-    safe_git_clone "https://github.com/zsh-users/zsh-autosuggestions" ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    # command line syntax highlighting
-    safe_git_clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-
-    # fzf download and setup
-    safe_git_clone "https://github.com/junegunn/fzf.git" "$HOME/.fzf" --depth 1
-    yes | ~/.fzf/install
-
-    #fzf-tab (replaces zsh default tab completion with fuzzy finder)
-    safe_git_clone "https://github.com/Aloxaf/fzf-tab.git" "$HOME/.fzf-tab"
-    #sourced in ~/.zshrc
-
-    #download p10k theme
-    safe_git_clone "https://github.com/romkatv/powerlevel10k.git" "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" --depth 1
-    ln -sf ~/dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
-
-    #pytest autocompletion
-    ln -sf ~/dotfiles/zsh/completion_pytest.zsh ~/.completion_pytest.zsh
-
-    #zoxide
-    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
-    sudo ln -sf "$HOME/.local/bin/zoxide" /usr/bin/zoxide
-}
-
-
-install_font(){
-    # insatll jetBrainsMono Nerd Font
-    if [[ $(grep -i Microsoft /proc/version) ]]; then
-        echo "For WSL/Windows please download fonts from and install manually. (Drag and Drop) "
-        echo "https://www.nerdfonts.com/font-downloads"
-    else
-        cd ~
-        safe_git_clone "https://www.github.com/ryanoasis/nerd-fonts"  "$HOME/nerd-fonts" --filter=blob:none --sparse
-        cd nerd-fonts
-        git sparse-checkout add --skip-checks patched-fonts/JetBrainsMono install.sh
-        ./install.sh JetBrainsMono
+    # ask for the password once now, and keep sudo alive during the long steps
+    # (pyenv compiles python) so an unattended run doesn't stop at a prompt
+    if [ "$machine" == "Linux" ]; then
+        echo "sudo is needed to install packages."
+        sudo -v || die "Your user needs sudo rights."
+        ( while kill -0 $$ 2>/dev/null; do sudo -n true; sleep 50; done ) >/dev/null 2>&1 &
     fi
 }
 
-setup_vscode () {
-    # install extensions
-    cat vscode/extensions.txt | xargs -L 1 code --install-extension
+# Show what is installed and what will be installed, then ask once.
+# Sets INSTALL_STEPS. Returns 1 in --check mode if anything is missing.
+plan_steps() {
+    local step missing missing_any=0
+    INSTALL_STEPS=()
+    echo
+    echo -e "${BOLD}Plan:${NC}"
+    for step in "${STEPS[@]}"; do
+        if ! step_enabled "$step"; then
+            [[ $SKIP_STEPS == *",$step,"* ]] && echo -e "  -  $(step_desc "$step") (skipped)"
+            continue
+        fi
+        missing=$("missing_$step")
+        if [ -z "$missing" ]; then
+            echo -e "  ${GREEN}✓${NC}  $(step_desc "$step")"
+        else
+            echo -e "  ${YELLOW}+${NC}  $(step_desc "$step"): $(echo "$missing" | paste -sd, - | sed 's/,/, /g')"
+            INSTALL_STEPS+=("$step")
+            missing_any=1
+        fi
+    done
+    echo
+    if [ ${#INSTALL_STEPS[@]} -eq 0 ]; then
+        info "Everything is installed"
+    elif is_wsl && [[ " ${INSTALL_STEPS[*]} " == *" vscode "* || " ${INSTALL_STEPS[*]} " == *" terminal "* || " ${INSTALL_STEPS[*]} " == *" font "* ]]; then
+        echo "Windows apps (VS Code, Windows Terminal, font) are installed for your Windows user, no admin needed."
+        echo "Windows may show a progress window while winget runs."
+        echo
+    fi
+    [ "$CHECK_ONLY" = true ] && return $missing_any
+    return 0
+}
 
-    if [[ $(grep -i Microsoft /proc/version) ]]; then
-        python3 ~/dotfiles/scripts/wsl_vscode_sync.py
-    else
-        ln -sf ~/dotfiles/vscode/keybindings.json ~/.config/Code/User/keybindings.json
-        ln -sf ~/dotfiles/vscode/settings.json ~/.config/Code/User/settings.json
-        ln -sfn ~/dotfiles/vscode/snippets ~/.config/Code/User/snippets
+# Install the planned steps: all, per step, or none
+run_steps() {
+    local step choice=all
+    if [ ${#INSTALL_STEPS[@]} -gt 0 ] && [ "$ASSUME_YES" != true ]; then
+        read -r -n 1 -p "Install the steps marked + ? [y]es all / [c]hoose per step / [n]o: " choice
+        echo
+        case "$choice" in
+            [Yy]) choice=all ;;
+            [Cc]) choice=ask ;;
+            *) choice=none ;;
+        esac
+    fi
+    for step in "${STEPS[@]}"; do
+        step_enabled "$step" || continue
+        if [[ " ${INSTALL_STEPS[*]} " != *" $step "* ]]; then
+            ! declare -F "relink_$step" >/dev/null || "relink_$step"
+            continue
+        fi
+        if [ "$choice" == none ] || { [ "$choice" == ask ] && ! ask_yn "Install $(step_desc "$step")?"; }; then
+            DECLINED_STEPS+="$step,"
+            continue
+        fi
+        info "Installing $(step_desc "$step")"
+        "install_$step"
+    done
+}
+
+# Check that every enabled step is complete, and that the tools are available
+# from an interactive zsh (the way they are used), which also checks ~/.zshrc.
+verify_install() {
+    info "Verifying installation"
+    local step missing problems=""
+    for step in "${STEPS[@]}"; do
+        step_enabled "$step" || continue
+        missing=$("missing_$step")
+        [ -n "$missing" ] && problems+="$(step_desc "$step"): $(echo "$missing" | paste -sd, -)"$'\n'
+    done
+
+    local tools=()
+    step_enabled zsh && tools+=(fzf zoxide)
+    step_enabled packages && [ "$machine" == "Linux" ] && tools+=(node npm tree-sitter pyenv python rg delta lazygit exa)
+    step_enabled tmux && tools+=(tmux)
+    step_enabled vim && tools+=(nvim)
+    if [ ${#tools[@]} -gt 0 ] && has zsh && [ -f ~/.zshrc ]; then
+        missing=$(zsh -i -c 'for t in "$@"; do command -v "$t" >/dev/null || echo "$t"; done' zsh "${tools[@]}" 2>/dev/null </dev/null || true)
+        [ -n "$missing" ] && problems+="not found in zsh: $(echo "$missing" | paste -sd, -)"$'\n'
     fi
 
+    if [ -n "$problems" ]; then
+        echo -e "${RED}Installation incomplete:${NC}"
+        echo -n "$problems"
+        return 1
+    fi
+    echo -e "${GREEN}Everything is installed${NC}"
+}
 
+# Things only the user can do, shown at the end
+next_steps() {
+    local steps=()
+    if step_enabled zsh && [ "$machine" == "Linux" ] && [ "$(basename "${SHELL:-}")" != zsh ]; then
+        if is_wsl; then
+            steps+=("Close this terminal and open a new one: zsh is now your shell.")
+        else
+            steps+=("Log out and back in: zsh is now your shell (open a new terminal until then).")
+        fi
+    fi
+    if is_wsl; then
+        step_enabled terminal && steps+=("Restart Windows Terminal to load the font and settings.")
+        step_enabled vscode && steps+=("Open projects from WSL with: code <folder>")
+    fi
+    if [ -z "$(git config --global user.email 2>/dev/null)" ]; then
+        steps+=("Set your git identity (not in ~/.gitconfig, that file is linked to the dotfiles repo):
+       git config --file ~/.config/git/config user.name \"Your Name\"
+       git config --file ~/.config/git/config user.email \"you@example.com\"")
+    fi
+    [ ${#steps[@]} -gt 0 ] || return 0
+    echo
+    echo -e "${BOLD}Next steps:${NC}"
+    local i
+    for i in "${!steps[@]}"; do echo -e "  $((i + 1)). ${steps[$i]}"; done
 }
 
 machine=$(what_os)
-if [ "$machine" == "Mac" ]
-then
+if [ "$machine" == "Mac" ]; then
     echo "Machine Identifies as Mac"
-    install_homebrew
-    install_prefix="brew "
+    APT="brew"
 elif [[ "$machine" == "Linux" ]]; then
-    echo "Machine Identified as Linux"
-    install_prefix="sudo apt "
-    setup_ubuntu
+    echo "Machine Identified as Linux$(is_wsl && echo " (WSL)")"
+    APT="sudo DEBIAN_FRONTEND=noninteractive apt-get -y"
 else
     echo "Machine not identified, exiting"
     exit 1
 fi
 
-
-function ask_for_confirmation() {
-    local action="$1"
-    shift
-    local func_to_execute="$1"
-    shift
-    read -p "Would you like to $action? (y/n): " -n 1 -r
-    echo # Move to a new line after user input
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        $func_to_execute "$@"  # Execute the function passed as an argument along with its arguments
-        return 0  # Return success (0) if the user confirms
-    fi
-}
-
-
-GREEN='\033[0;32m'
-
 echo "Welcome to the installation script!"
 
-ask_for_confirmation "install and setup Zsh" install_and_setup_zsh "$install_prefix"
-ask_for_confirmation "install packages" install_packages "$install_prefix"
-ask_for_confirmation "install and setup Tmux" install_and_setup_tmux "$install_prefix"
-ask_for_confirmation "install and setup Kitty" install_and_setup_kitty
-ask_for_confirmation "install and setup Vim" install_and_setup_vim
-ask_for_confirmation "link files" link_files
-ask_for_confirmation "install languages" install_languages "$install_prefix"
-ask_for_confirmation "install font" install_font "$machine"
-ask_for_confirmation "Setup vscode" setup_vscode "$machine"
+preflight
+if [ "$machine" == "Mac" ]; then
+    [ "$CHECK_ONLY" = true ] || install_homebrew
+else
+    $APT update -qq
+fi
 
-echo -e "${GREEN} SUCCESSFULL"
+status=0
+plan_steps || status=1
+[ "$CHECK_ONLY" = true ] || run_steps
+collect_updates
+apply_updates || status=1
+if [ "$CHECK_ONLY" = true ]; then
+    [ ${#UPD_NAMES[@]} -eq 0 ] || status=1
+    exit $status
+fi
+
+verify_install || exit 1
+next_steps
+[ $status -eq 0 ] || exit 1
+echo -e "${GREEN} SUCCESSFULL${NC}"

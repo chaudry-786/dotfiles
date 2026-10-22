@@ -1,78 +1,59 @@
-import json
+"""Copy VS Code settings from the dotfiles (in WSL) to VS Code on Windows.
+
+Windows VS Code can't follow links into WSL, so the files are copied:
+  - vscode/settings.json + vscode/wsl_settings.json are merged into settings.json
+  - vscode/keybindings.json and vscode/snippets/*.json are copied
+"""
+
 import os
-import re
 import shutil
-import subprocess
-import getpass
+import sys
+
+from wsl_common import DOTFILES, get_windows_env, load_jsonc, to_wsl_path, write_json
 
 
-def load_json_without_comments(json_file):
-    with open(json_file, "r") as f:
-        content = f.read()
-    content = re.sub(r"\/\/.*", "", content)
-    return json.loads(content)
+def merge_settings(settings_file, wsl_settings_file):
+    """wsl_settings.json overrides settings.json; nested objects such as
+    "[python]" are merged key by key."""
+    merged = load_jsonc(settings_file)
+    for key, value in load_jsonc(wsl_settings_file).items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            value = {**merged[key], **value}
+        if key in merged and merged[key] != value:
+            print(f"wsl_settings.json overrides {key}")
+        merged[key] = value
+    return merged
 
 
-def sync_settings(settings_file, wsl_settings_file, windows_settings_path):
+def sync(dotfiles, windows_user_dir):
+    vscode_dir = os.path.join(dotfiles, "vscode")
+
+    # 1) Merge and copy settings files
+    settings = merge_settings(os.path.join(vscode_dir, "settings.json"), os.path.join(vscode_dir, "wsl_settings.json"))
+    write_json(os.path.join(windows_user_dir, "settings.json"), settings)
+
+    # 2) Copy keybinding file
+    shutil.copyfile(os.path.join(vscode_dir, "keybindings.json"), os.path.join(windows_user_dir, "keybindings.json"))
+
+    # 3) Copy snippets
+    snippets_dir = os.path.join(windows_user_dir, "snippets")
+    os.makedirs(snippets_dir, exist_ok=True)
+    for f in os.listdir(os.path.join(vscode_dir, "snippets")):
+        if f.endswith((".json", ".code-snippets")):
+            shutil.copyfile(os.path.join(vscode_dir, "snippets", f), os.path.join(snippets_dir, f))
+
+    print(f"VS Code settings synced to: {windows_user_dir}")
+
+
+def main():
+    windows_user_dir = os.path.join(to_wsl_path(get_windows_env("APPDATA")), "Code", "User")
     try:
-        base_settings = load_json_without_comments(settings_file)
-        wsl_settings = load_json_without_comments(wsl_settings_file)
+        sync(DOTFILES, windows_user_dir)
+    except (ValueError, OSError) as e:
+        print(f"Error: {e}", file=sys.stderr)
+        return 1
+    return 0
 
-        duplicate_keys = set(base_settings.keys()) & set(wsl_settings.keys())
-        if duplicate_keys:
-            raise ValueError(f"Duplicate keys found: {', '.join(duplicate_keys)}")
 
-        merged_settings = {**base_settings, **wsl_settings}
-        os.makedirs(os.path.dirname(windows_settings_path), exist_ok=True)
-
-        with open(windows_settings_path, "w") as outfile:
-            json.dump(merged_settings, outfile, indent=4)
-
-        print(f"Settings merged and saved to: {windows_settings_path}")
-
-    except ValueError as ve:
-        print(f"Error: {ve}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-
-def get_windows_username():
-    pwsh = shutil.which("powershell.exe")
-    if pwsh:
-        try:
-            completed = subprocess.run(
-                [pwsh, "-NoProfile", "-Command", "$env:UserName"],
-                capture_output=True,
-                text=True,
-                check=False,
-                timeout=2
-            )
-            username = completed.stdout.strip()
-            if username:
-                return username
-        except Exception:
-                # Ask the user instead of raising an error
-            username = input("Could not detect Windows username. Please enter your Windows username: ").strip()
-            if username:
-                return username
-            else:
-                raise ValueError("User name not provided")
-
-# NOTE: Set this before running
-WINDOW_USER = get_windows_username()
-WINDOWS_BASE_PATH = f"/mnt/c/Users/{WINDOW_USER}/AppData/Roaming/Code/User"
-WSL_BASE_PATH = "/home/sabah/dotfiles"
-
-# 1) Merge and copy settings files
-settings_file_path = f"{WSL_BASE_PATH}/vscode/settings.json"
-wsl_settings_file_path = f"{WSL_BASE_PATH}/vscode/wsl_settings.json"
-windows_settings_path = f"{WINDOWS_BASE_PATH}/settings.json"
-sync_settings(settings_file_path, wsl_settings_file_path, windows_settings_path)
-
-# 2) Copy keybinding file
-shutil.copyfile(f"{WSL_BASE_PATH}/vscode/keybindings.json", f"{WINDOWS_BASE_PATH}/keybindings.json")
-
-# 3) Copy snippets
-snippets_dir_wsl = f"{WSL_BASE_PATH}/vscode/snippets/"
-snippet_files = os.listdir(f"{WSL_BASE_PATH}/vscode/snippets/")
-for f in snippet_files:
-    shutil.copyfile(f"{snippets_dir_wsl}/{f}", f"{WINDOWS_BASE_PATH}/snippets/{f}")
+if __name__ == "__main__":
+    sys.exit(main())

@@ -4,8 +4,6 @@ burkeholland.simple-react-snippets
 dbaeumer.vscode-eslint
 eamodio.gitlens
 esbenp.prettier-vscode
-github.copilot
-github.copilot-chat
 inferrinizzard.prettier-sql-vscode
 magicstack.magicpython
 mechatroner.rainbow-csv
