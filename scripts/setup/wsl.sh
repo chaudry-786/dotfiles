@@ -97,7 +97,7 @@ win_install_vscode() {
 win_relink_vscode() {
     win_code_dir >/dev/null || return 0
     has python3 || pkg_install python3
-    python3 "$DOTFILES/scripts/wsl_vscode_sync.py"
+    python3 "$DOTFILES/scripts/setup/wsl_vscode_sync.py"
 }
 
 #------------------------------------------------
@@ -114,7 +114,7 @@ win_install_fonts() {
     tmp="$(to_wsl "$WIN_TEMP")/dotfiles-fonts"
     rm -rf "$tmp"
     mkdir -p "$tmp"
-    cp "$1"/*.ttf "$DOTFILES/scripts/windows/install_fonts.ps1" "$tmp/"
+    cp "$1"/*.ttf "$DOTFILES/scripts/setup/install_fonts.ps1" "$tmp/"
     win_ps "& '$(to_win "$tmp")\\install_fonts.ps1' -Source '$(to_win "$tmp")'"
     rm -rf "$tmp"
     win_font_installed || die "Font installation on Windows failed"
@@ -143,7 +143,7 @@ win_install_terminal() {
 win_relink_terminal() {
     win_terminal_installed || return 0
     has python3 || pkg_install python3
-    python3 "$DOTFILES/scripts/wsl_terminal_sync.py"
+    python3 "$DOTFILES/scripts/setup/wsl_terminal_sync.py"
 }
 
 #------------------------------------------------

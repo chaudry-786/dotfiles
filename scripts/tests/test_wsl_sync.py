@@ -1,4 +1,4 @@
-"""Tests for the WSL -> Windows sync scripts. Run: python3 scripts/test_wsl_sync.py"""
+"""Tests for the WSL -> Windows sync scripts. Run by scripts/test_wsl.sh, or: python3 scripts/tests/test_wsl_sync.py"""
 
 import json
 import os
@@ -6,7 +6,7 @@ import sys
 import tempfile
 import unittest
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "setup"))
 
 import wsl_terminal_sync  # noqa: E402
 import wsl_vscode_sync  # noqa: E402
@@ -37,7 +37,7 @@ class TestJsonc(unittest.TestCase):
 
     def test_repo_files_parse(self):
         for rel in ("vscode/settings.json", "vscode/wsl_settings.json", "vscode/keybindings.json",
-                    "winTerminal/settings.json"):
+                    "windows-terminal/settings.json"):
             with self.subTest(rel):
                 load_jsonc(os.path.join(DOTFILES, rel))
 
@@ -87,7 +87,7 @@ class TestTerminalSync(unittest.TestCase):
     }
 
     def test_merge_keeps_existing(self):
-        ours = load_jsonc(os.path.join(DOTFILES, "winTerminal", "settings.json"))
+        ours = load_jsonc(os.path.join(DOTFILES, "windows-terminal", "settings.json"))
         merged = wsl_terminal_sync.merge(self.CURRENT, ours)
 
         self.assertEqual(merged["defaultProfile"], "{guid-1}")

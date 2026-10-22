@@ -133,6 +133,7 @@ Re-running it is safe: anything already installed is skipped.
 | `vim` | neovim nightly, its plugins (versions from `nvim/lazy-lock.json`), python venv `~/vim_venv` | same |
 | `link` | links `.gitconfig`, `.gitignore`, `.clang-format` | same |
 | `languages` | gcc/make (build-essential), lua 5.3 | same |
+| `docker` | Docker Engine + compose (Docker's apt repo), your user in the `docker` group | same, inside WSL (turns on systemd if needed). Skipped if Docker Desktop's WSL integration already provides `docker` |
 | `font` | JetBrainsMonoNL Nerd Font (latest release) | installed on **Windows** for your user |
 | `vscode` | VS Code (.deb, updates through apt), extensions, settings linked | VS Code on **Windows** (winget), extensions on Windows and in WSL, settings copied |
 | `terminal` | — | Windows Terminal (winget); font, theme and keybindings merged into its settings (your profiles are kept, a backup is written); Ubuntu set as the default profile |
@@ -184,7 +185,7 @@ installation.sh --skip font,vscode      # skip steps (names from the table above
 - `scripts/test_install.sh [ubuntu-version]` installs on a fresh Ubuntu docker container, re-runs it, and checks
   that updates are detected (default 24.04, also tested on 26.04).
 - `scripts/test_wsl.sh` runs the WSL path in docker, with a fake Windows (`scripts/tests/wsl_stub`).
-- `python3 scripts/test_wsl_sync.py` runs the unit tests for the VS Code / Windows Terminal settings sync.
+  It also runs the unit tests for the VS Code / Windows Terminal settings sync (`scripts/tests/test_wsl_sync.py`).
 
 ---
 

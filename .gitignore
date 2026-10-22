@@ -1,1 +1,8 @@
 *.add.spl
+
+# python / notebooks
+__pycache__/
+*.pyc
+venv/
+.venv/
+.ipynb_checkpoints/

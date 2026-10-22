@@ -5,7 +5,8 @@ import os
 import shutil
 import subprocess
 
-DOTFILES = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# scripts/setup/wsl_common.py -> repo root
+DOTFILES = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 POWERSHELL_FALLBACK = "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
 

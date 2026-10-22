@@ -20,7 +20,7 @@ build_test_image() {
     context=$(mktemp -d)
     (
         cd "$DOTFILES"
-        { git ls-files; git ls-files --others --exclude-standard -- scripts ':!scripts/lib' ':!scripts/*.html'; } \
+        { git ls-files; git ls-files --others --exclude-standard -- scripts ':!scripts/lib'; } \
             | while read -r f; do [ -e "$f" ] && echo "$f"; done \
             | tar -cf - -T - | tar -C "$context" -xf -
     )

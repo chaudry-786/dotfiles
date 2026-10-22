@@ -7,7 +7,7 @@
 #   -y, --yes   don't ask: install everything missing and apply all updates
 #   --check     only report what's missing and what can be updated (exit 1 if anything)
 #   --skip      comma separated steps to skip:
-#               base,zsh,packages,tmux,kitty,vim,link,languages,font,vscode,terminal
+#               base,zsh,packages,tmux,kitty,vim,link,languages,docker,font,vscode,terminal
 #
 # See README.md for what to run on a fresh Ubuntu / Windows (WSL) machine.
 
@@ -37,7 +37,7 @@ source "$DOTFILES/scripts/setup/components.sh"
 source "$DOTFILES/scripts/setup/updates.sh"
 source "$DOTFILES/scripts/setup/wsl.sh"
 
-STEPS=(base zsh packages tmux kitty vim link languages font vscode terminal)
+STEPS=(base zsh packages tmux kitty vim link languages docker font vscode terminal)
 # no associative arrays: macOS ships bash 3.2
 step_desc() {
     case "$1" in
@@ -49,6 +49,7 @@ step_desc() {
         vim) echo "Neovim" ;;
         link) echo "config links" ;;
         languages) echo "languages (gcc, lua)" ;;
+        docker) echo "Docker (engine, compose)" ;;
         font) echo "JetBrainsMonoNL Nerd Font" ;;
         vscode) echo "VS Code and extensions" ;;
         terminal) echo "Windows Terminal" ;;
@@ -207,6 +208,7 @@ verify_install() {
     step_enabled packages && [ "$machine" == "Linux" ] && tools+=(node npm tree-sitter pyenv python rg delta lazygit exa)
     step_enabled tmux && tools+=(tmux)
     step_enabled vim && tools+=(nvim)
+    step_enabled docker && tools+=(docker)
     if [ ${#tools[@]} -gt 0 ] && has zsh && [ -f ~/.zshrc ]; then
         # only read our own marked lines: .zshrc may print things (e.g. cursor codes in VS Code)
         missing=$(zsh -i -c 'for t in "$@"; do command -v "$t" >/dev/null || echo "MISSING:$t"; done' zsh "${tools[@]}" 2>/dev/null </dev/null \
@@ -232,6 +234,9 @@ next_steps() {
             steps+=("Log out and back in: zsh is now your shell (open a new terminal until then).")
         fi
     fi
+    [ "${DOCKER_GROUP_ADDED:-}" = true ] && steps+=("Log out and back in (WSL: open a new terminal) to use docker without sudo.")
+    [ "${WSL_SYSTEMD_ENABLED:-}" = true ] && ! systemd_running &&
+        steps+=("Docker needs systemd, which is now turned on: run 'wsl --shutdown' in PowerShell, then reopen Ubuntu.")
     if is_wsl; then
         step_enabled terminal && steps+=("Restart Windows Terminal to load the font and settings.")
         step_enabled vscode && steps+=("Open projects from WSL with: code <folder>")

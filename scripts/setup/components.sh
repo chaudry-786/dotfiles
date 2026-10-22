@@ -374,7 +374,7 @@ relink_link() {
     ln -sf "$DOTFILES/git/.gitignore" ~/.ignore
 
     # clang-format
-    ln -sf "$DOTFILES/langSettings/.clang-format" ~/.clang-format
+    ln -sf "$DOTFILES/clang/.clang-format" ~/.clang-format
 }
 
 #------------------------------------------------
@@ -396,6 +396,95 @@ install_languages() {
     else
         pkg_install lua
     fi
+}
+
+#------------------------------------------------
+# docker: Docker Engine + compose from Docker's apt repo
+#------------------------------------------------
+DOCKER_APT_PACKAGES=(docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin)
+# Ubuntu's own builds conflict with docker-ce
+DOCKER_CONFLICTS=(docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc)
+
+# group membership as configured, not just for this (possibly older) login
+in_docker_group() {
+    id -nG "$(id -un)" | tr ' ' '\n' | grep -qx docker
+}
+
+systemd_running() {
+    [ "$(cat /proc/1/comm 2>/dev/null)" == systemd ]
+}
+
+missing_docker() {
+    if ! has docker; then
+        echo "docker"
+        return 0
+    fi
+    docker compose version >/dev/null 2>&1 || echo "docker compose"
+    # Docker Desktop's WSL integration has no docker group, that's fine
+    if [ "$machine" == "Linux" ] && getent group docker >/dev/null && ! in_docker_group; then
+        echo "docker group"
+    fi
+    return 0
+}
+
+install_docker() {
+    if [ "$machine" == "Mac" ]; then
+        brew install --cask docker
+        return 0
+    fi
+    if ! has docker || { dpkg -s docker-ce >/dev/null 2>&1 && ! docker compose version >/dev/null 2>&1; }; then
+        install_docker_engine
+    fi
+    if getent group docker >/dev/null && ! in_docker_group; then
+        sudo usermod -aG docker "$(id -un)"
+        DOCKER_GROUP_ADDED=true
+    fi
+    # Docker Engine needs systemd, which older WSL setups don't run
+    if is_wsl && ! systemd_running; then
+        enable_wsl_systemd
+    fi
+    if systemd_running; then
+        sudo systemctl enable --now docker || warn "Could not start the docker service"
+    fi
+}
+
+install_docker_engine() {
+    local conflicts codename
+    conflicts=$(dpkg-query -W -f='${Status} ${Package}\n' "${DOCKER_CONFLICTS[@]}" 2>/dev/null | awk '/^install ok installed/ {print $4}')
+    # shellcheck disable=SC2086
+    [ -z "$conflicts" ] || sudo DEBIAN_FRONTEND=noninteractive apt-get remove -y $conflicts
+
+    # keep an existing Docker apt source (e.g. one added by hand), two would conflict
+    if ! grep -qs download.docker.com /etc/apt/sources.list.d/*; then
+        sudo install -m 0755 -d /etc/apt/keyrings
+        sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+        sudo chmod a+r /etc/apt/keyrings/docker.asc
+        codename=$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+        # a brand-new Ubuntu release can take a while to get Docker packages
+        if ! curl -fsI "https://download.docker.com/linux/ubuntu/dists/$codename/Release" >/dev/null; then
+            warn "Docker has no packages for $codename yet, using noble (24.04)"
+            codename=noble
+        fi
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $codename stable" \
+            | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+        $APT update -qq
+    fi
+    pkg_install "${DOCKER_APT_PACKAGES[@]}"
+}
+
+enable_wsl_systemd() {
+    if grep -qsE '^[[:space:]]*systemd[[:space:]]*=[[:space:]]*true' /etc/wsl.conf; then
+        WSL_SYSTEMD_ENABLED=true
+        return 0
+    fi
+    if grep -qsE '^[[:space:]]*systemd[[:space:]]*=' /etc/wsl.conf; then
+        sudo sed -i -E 's/^[[:space:]]*systemd[[:space:]]*=.*/systemd=true/' /etc/wsl.conf
+    elif grep -qs '^\[boot\]' /etc/wsl.conf; then
+        sudo sed -i '/^\[boot\]/a systemd=true' /etc/wsl.conf
+    else
+        printf '[boot]\nsystemd=true\n' | sudo tee -a /etc/wsl.conf >/dev/null
+    fi
+    WSL_SYSTEMD_ENABLED=true
 }
 
 #------------------------------------------------
