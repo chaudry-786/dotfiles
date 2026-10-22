@@ -8,7 +8,8 @@ UPD_NEW=()
 UPD_CMDS=()
 
 # apt packages worth showing on their own; the rest go in one "other" item
-APT_TRACKED=(zsh tmux git curl bat ripgrep git-delta fontconfig xclip gawk unzip lua5.3 code)
+APT_TRACKED=(zsh tmux git curl bat ripgrep git-delta fontconfig xclip gawk unzip lua5.3 code
+    docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin)
 
 add_update() {
     UPD_NAMES+=("$1")
@@ -155,7 +156,7 @@ check_vscode_updates() {
 
 collect_updates() {
     info "Checking for updates..."
-    if step_enabled packages || step_enabled zsh || step_enabled tmux || step_enabled languages; then
+    if step_enabled packages || step_enabled zsh || step_enabled tmux || step_enabled languages || step_enabled docker; then
         check_apt_updates
     fi
     local step

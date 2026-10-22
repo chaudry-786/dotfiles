@@ -1,4 +1,4 @@
-"""Merge winTerminal/settings.json from the dotfiles into Windows Terminal's settings.
+"""Merge windows-terminal/settings.json from the dotfiles into Windows Terminal's settings.
 
 Your existing profiles and settings are kept. From the dotfiles file:
   - top level settings (e.g. alwaysShowTabs) are set
@@ -104,7 +104,7 @@ def sync_file(settings_path, ours, distro=None):
 
 
 def sync(local_app_data, distro=None):
-    ours = load_jsonc(os.path.join(DOTFILES, "winTerminal", "settings.json"))
+    ours = load_jsonc(os.path.join(DOTFILES, "windows-terminal", "settings.json"))
     synced = 0
     for app_dir, settings_file in TERMINAL_SETTINGS:
         app_dir = os.path.join(local_app_data, app_dir)
@@ -116,7 +116,7 @@ def sync(local_app_data, distro=None):
         for kb in undefined_actions(merged):
             print(
                 f"Warning: keybinding {kb.get('keys')} -> {kb['id']} has no action. "
-                "Add the action to winTerminal/settings.json",
+                "Add the action to windows-terminal/settings.json",
                 file=sys.stderr,
             )
     if not synced:

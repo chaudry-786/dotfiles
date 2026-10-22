@@ -1,5 +1,0 @@
-pandas
-duckdb
-pyvis
-dash
-dash_bootstrap_templates
