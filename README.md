@@ -71,25 +71,32 @@ Clone into the Linux home (`~/dotfiles`), not into `/mnt/c/...`. The Windows dri
 
 ## SSH key for GitHub
 
-Needed to clone (and later push) the dotfiles. Run inside Ubuntu / WSL:
+Needed to clone (and later push) the dotfiles. Paste this whole block into the Ubuntu / WSL terminal:
 ```bash
-# 1. create the key (press enter to accept the location; a passphrase is optional)
-ssh-keygen -t ed25519 -C "you@example.com" -f ~/.ssh/id_ed25519
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+[ -f ~/.ssh/id_ed25519 ] || ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)" -f ~/.ssh/id_ed25519
+grep -q '^Host personal' ~/.ssh/config 2>/dev/null || cat >> ~/.ssh/config <<'EOF'
 
-# 2. add the "personal" host alias used by this repo's remote (personal:chaudry-786/dotfiles)
-cat >> ~/.ssh/config <<'EOF'
 Host personal github.com
     HostName github.com
     User git
     IdentityFile ~/.ssh/id_ed25519
 EOF
 chmod 600 ~/.ssh/config
-
-# 3. print the public key
-cat ~/.ssh/id_ed25519.pub
+echo; echo "Add this key at https://github.com/settings/ssh/new"; echo; cat ~/.ssh/id_ed25519.pub
 ```
-4. Copy the printed line and add it as a new key at <https://github.com/settings/ssh/new>.
-5. Test it with `ssh -T personal`. The first time, type `yes`. It should answer "Hi chaudry-786! You've successfully authenticated".
+It does the following:
+- creates the key `~/.ssh/id_ed25519`. When asked for a passphrase, press enter twice for none, or type one.
+- adds the `personal` host alias to `~/.ssh/config`. This repo's remote uses that alias (`personal:chaudry-786/dotfiles`).
+- prints the public key.
+
+Running it again is safe: an existing key and alias are kept.
+
+Then:
+1. Open **<https://github.com/settings/ssh/new>**. Give the key a title, e.g. the machine name. Paste the printed
+   line (starting with `ssh-ed25519`) into **Key**, then click **Add SSH key**.
+2. Test it with `ssh -T personal`. The first time, type `yes`. It should answer
+   *"Hi chaudry-786! You've successfully authenticated, but GitHub does not provide shell access."*
 
 ---
 
