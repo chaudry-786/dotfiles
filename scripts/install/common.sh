@@ -8,6 +8,8 @@ BOLD='\033[1m'
 NC='\033[0m'
 
 STATE_DIR="$HOME/.local/state/dotfiles"
+# pip's "new release of pip" notice is noise here
+export PIP_DISABLE_PIP_VERSION_CHECK=1
 ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
 info() { echo -e "${BOLD}==>${NC} $*"; }

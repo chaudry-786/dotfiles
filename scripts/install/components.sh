@@ -452,14 +452,16 @@ fetch_nerd_font() {
 #------------------------------------------------
 # vscode (on WSL: VS Code on Windows, see wsl.sh)
 #------------------------------------------------
+# LC_ALL=C: sort and comm must agree on the order. With a UTF-8 locale they
+# don't on Ubuntu 26.04 (uutils sort follows the locale, comm doesn't).
 vscode_extensions() {
     { grep -v '^[[:space:]]*$' "$DOTFILES/vscode/extensions.txt"; is_wsl && echo "ms-vscode-remote.remote-wsl"; } \
-        | tr '[:upper:]' '[:lower:]' | sort -u
+        | tr '[:upper:]' '[:lower:]' | LC_ALL=C sort -u
 }
 
 # prints extensions from $1 (newline separated, installed) missing in vscode_extensions
 missing_extensions_from() {
-    comm -23 <(vscode_extensions) <(echo "$1" | tr -d '\r' | tr '[:upper:]' '[:lower:]' | sort -u)
+    LC_ALL=C comm -23 <(vscode_extensions) <(echo "$1" | tr -d '\r' | tr '[:upper:]' '[:lower:]' | LC_ALL=C sort -u)
 }
 
 vscode_user_dir() {

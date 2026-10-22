@@ -208,7 +208,9 @@ verify_install() {
     step_enabled tmux && tools+=(tmux)
     step_enabled vim && tools+=(nvim)
     if [ ${#tools[@]} -gt 0 ] && has zsh && [ -f ~/.zshrc ]; then
-        missing=$(zsh -i -c 'for t in "$@"; do command -v "$t" >/dev/null || echo "$t"; done' zsh "${tools[@]}" 2>/dev/null </dev/null || true)
+        # only read our own marked lines: .zshrc may print things (e.g. cursor codes in VS Code)
+        missing=$(zsh -i -c 'for t in "$@"; do command -v "$t" >/dev/null || echo "MISSING:$t"; done' zsh "${tools[@]}" 2>/dev/null </dev/null \
+            | sed -n 's/^.*MISSING://p' || true)
         [ -n "$missing" ] && problems+="not found in zsh: $(echo "$missing" | paste -sd, -)"$'\n'
     fi
 
