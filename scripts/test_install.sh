@@ -6,15 +6,15 @@
 #   2. re-run with --check: nothing missing, nothing to update
 #   3. downgrade lazygit: --check must report it, --yes must update it
 #
-# Usage: utils/test_install.sh [ubuntu-version]   (default: 24.04)
+# Usage: scripts/test_install.sh [ubuntu-version]   (default: 24.04)
 # Extra installation.sh args can be given via INSTALL_ARGS, e.g.
-#   INSTALL_ARGS="--skip vscode,font" utils/test_install.sh 26.04
+#   INSTALL_ARGS="--skip vscode,font" scripts/test_install.sh 26.04
 
 set -eo pipefail
 
 UBUNTU_VERSION="${1:-24.04}"
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-source "$DOTFILES/utils/docker_common.sh"
+source "$DOTFILES/scripts/tests/docker_common.sh"
 
 build_test_image "$UBUNTU_VERSION"
 

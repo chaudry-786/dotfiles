@@ -1,5 +1,5 @@
 #!/bin/bash
-# Fake wslpath for utils/test_wsl.sh: C:\a\b <-> /mnt/c/a/b
+# Fake wslpath for scripts/test_wsl.sh: C:\a\b <-> /mnt/c/a/b
 case "$1" in
     -u)
         p="${2//\\//}"

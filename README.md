@@ -181,10 +181,10 @@ installation.sh --skip font,vscode      # skip steps (names from the table above
 ```
 
 ### Testing the installer
-- `utils/test_install.sh [ubuntu-version]` installs on a fresh Ubuntu docker container, re-runs it, and checks
+- `scripts/test_install.sh [ubuntu-version]` installs on a fresh Ubuntu docker container, re-runs it, and checks
   that updates are detected (default 24.04, also tested on 26.04).
-- `utils/test_wsl.sh` runs the WSL path in docker, with a fake Windows (`utils/wsl_stub`).
-- `python3 utils/test_wsl_sync.py` runs the unit tests for the VS Code / Windows Terminal settings sync.
+- `scripts/test_wsl.sh` runs the WSL path in docker, with a fake Windows (`scripts/tests/wsl_stub`).
+- `python3 scripts/test_wsl_sync.py` runs the unit tests for the VS Code / Windows Terminal settings sync.
 
 ---
 

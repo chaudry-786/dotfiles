@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# Shared by utils/test_install.sh and utils/test_wsl.sh
+# Shared by scripts/test_install.sh and scripts/test_wsl.sh
 
 DOCKER=docker
 if ! docker info >/dev/null 2>&1; then
@@ -10,7 +10,7 @@ if ! docker info >/dev/null 2>&1; then
     fi
 fi
 
-# Build a fresh Ubuntu image (utils/Dockerfile.install-test) with the dotfiles
+# Build a fresh Ubuntu image (scripts/tests/Dockerfile.install-test) with the dotfiles
 # in /home/tester/dotfiles. Sets IMAGE.
 build_test_image() {
     IMAGE="dotfiles-install-test:$1"
@@ -20,10 +20,10 @@ build_test_image() {
     context=$(mktemp -d)
     (
         cd "$DOTFILES"
-        { git ls-files; git ls-files --others --exclude-standard -- scripts/install scripts/windows 'scripts/*.py' utils; } \
+        { git ls-files; git ls-files --others --exclude-standard -- scripts ':!scripts/lib' ':!scripts/*.html'; } \
             | while read -r f; do [ -e "$f" ] && echo "$f"; done \
             | tar -cf - -T - | tar -C "$context" -xf -
     )
-    $DOCKER build -q --build-arg UBUNTU="$1" -f "$DOTFILES/utils/Dockerfile.install-test" -t "$IMAGE" "$context" >/dev/null
+    $DOCKER build -q --build-arg UBUNTU="$1" -f "$DOTFILES/scripts/tests/Dockerfile.install-test" -t "$IMAGE" "$context" >/dev/null
     rm -rf "$context"
 }
